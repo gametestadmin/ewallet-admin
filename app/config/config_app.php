@@ -51,7 +51,7 @@ $config_apps = array(
         'host'        => 'localhost',
         'username'    => 'root',
         'password'    => '',
-        'dbname'      => 'temp_games',
+        'dbname'      => 'bo',
         'charset'     => 'utf8',
     )
 );
