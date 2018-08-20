@@ -6,14 +6,20 @@ $namespaces = array(
     'Backoffice\Controllers' => __DIR__ . '/../controllers/',
     'System\Language' => __DIR__ . '/../system/language/',
     'System\Library' => __DIR__ . '/../system/libraries/',
-//    'Security\Libraries' => __DIR__ . '/../libraries/Security',
+    'System\Models' => __DIR__ . '/../system/models/',
+    'System\Datalayer' => __DIR__ . '/../system/datalayer/',
+
 //    'Log\Libraries' => __DIR__ . '/../libraries/Log',
+//    'Security\Libraries' => __DIR__ . '/../libraries/Security',
+
+//    'Frontend\Widgets' => __DIR__ . '/../libraries/Widgets/',
+
+
 //    'Tangkas\Libraries' => __DIR__ . '/../libraries/Tangkas',
 //    'Language\Libraries' => __DIR__ . '/../libraries/Language',
 //    'Plugins\Libraries' => __DIR__ . '/../libraries/Plugins',
 //    'Volt\Libraries' => __DIR__ . '/../libraries/Volt',
 //    'Frontend\Libraries' => __DIR__ . '/../libraries/Frontend',
-//    'Frontend\Widgets' => __DIR__ . '/../libraries/Widgets/',
 //    'System\Libraries\Language' => __DIR__ . '/../libraries/Language',
 //    'System\Libraries' => __DIR__ . '/../system/libraries/',
 //    'System\Models' => __DIR__ . '/../system/models/',

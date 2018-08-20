@@ -1,24 +1,23 @@
+{% set dirRoot = "" %}
+{% if viewInModule is defined and viewInModule == TRUE %}
+{% set dirRoot = "../../" %}
+{% endif %}
+
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <link rel="dns-prefetch" href="http://www.google-analytics.com">
-        <link rel="dns-prefetch" href="http://www.googletagmanager.com">
-        {% block title %}{{get_title()}}{% endblock %}
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport' />
-        <meta name="application-name" content="xxx" />
-        <meta name="description" content="xxx" />
-        <meta name="keywords" content="xxx" />
-        <meta name="author" content="xxx" />
-    </head>
+    {% include dirRoot~'layouts/elements/head' %}
     <body>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-xs-12">
-                    {{ content() }}
+    template = {{template}} / environment = {{environment}}
+        {% include dirRoot~'layouts/elements/header' %}
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    {% include dirRoot~'layouts/elements/notification' %}
+                        {{ content() }}
+                    </div>
                 </div>
             </div>
-        </div>
+        {% include dirRoot~'layouts/elements/footer' %}
+        {% include dirRoot~'layouts/elements/js_footer' %}
     </body>
 </html>
