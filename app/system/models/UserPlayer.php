@@ -242,7 +242,6 @@ class UserPlayer extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->setSchema("backoffice");
         $this->setSource("user_player");
         $this->hasMany('id', 'System\Model\StatementGame', 'player', ['alias' => 'StatementGame']);
         $this->hasMany('id', 'System\Model\StatementGame014', 'player', ['alias' => 'StatementGame014']);

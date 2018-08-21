@@ -242,7 +242,6 @@ class UserGameHistoricalPositionTaking extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->setSchema("backoffice");
         $this->setSource("user_game_historical_position_taking");
     }
 

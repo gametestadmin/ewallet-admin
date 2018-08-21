@@ -300,7 +300,6 @@ class User extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->setSchema("backoffice");
         $this->setSource("user");
         $this->hasMany('id', 'System\Model\StatementGame', 'agent', ['alias' => 'StatementGame']);
         $this->hasMany('id', 'System\Model\StatementGame014', 'agent', ['alias' => 'StatementGame014']);

@@ -184,7 +184,6 @@ class UserAuthWebserviceResponse extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->setSchema("backoffice");
         $this->setSource("user_auth_webservice_response");
         $this->belongsTo('user_auth', 'System\Model\UserAuth', 'id', ['alias' => 'UserAuth']);
         $this->belongsTo('user_auth_webservice_request', 'System\Model\UserAuthWebserviceRequest', 'id', ['alias' => 'UserAuthWebserviceRequest']);

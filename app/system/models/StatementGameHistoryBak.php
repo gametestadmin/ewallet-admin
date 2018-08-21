@@ -358,7 +358,6 @@ class StatementGameHistoryBak extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->setSchema("backoffice");
         $this->setSource("statement_game_history_bak");
         $this->belongsTo('agent', 'System\Model\User', 'id', ['alias' => 'User']);
         $this->belongsTo('game', 'System\Model\Game', 'id', ['alias' => 'Game']);

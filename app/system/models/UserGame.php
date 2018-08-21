@@ -184,7 +184,6 @@ class UserGame extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->setSchema("backoffice");
         $this->setSource("user_game");
         $this->belongsTo('game', 'System\Model\Game', 'id', ['alias' => 'Game']);
         $this->belongsTo('user', 'System\Model\User', 'id', ['alias' => 'User']);
