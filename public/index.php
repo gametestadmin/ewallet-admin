@@ -35,5 +35,6 @@ try {
     //redirect to 500 error
 //    header("Location: /500");
     echo "<pre>";
-    var_dump($e->getMessage());die;
+    var_dump($e->getMessage());
+    die;
 }

@@ -1,7 +1,6 @@
 <?php
 
 $messages = array(
-
     //module none
     "user" => "Username",
     "add" => "Add Add",

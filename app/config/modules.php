@@ -10,4 +10,8 @@ $application->registerModules(array(
         'className' => 'Backoffice\User\Module',
         'path' => __DIR__ . '/../modules/user/Module.php'
     ),
+    'currency' => array(
+        'className' => 'Backoffice\Currency\Module',
+        'path' => __DIR__ . '/../modules/currency/Module.php'
+    ),
 ));

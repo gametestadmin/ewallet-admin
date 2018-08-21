@@ -1,2 +1,6 @@
 /cache/
 /config/development/
+app/config/config.php
+app/config/config_app.php
+app/config/config_app.json
+var/
