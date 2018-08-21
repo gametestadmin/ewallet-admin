@@ -2,12 +2,14 @@
 
 $loader = new \Phalcon\Loader();
 
+echo "<pre>";
+var_dump($config);
 $namespaces = array(
     'Backoffice\Controllers' => __DIR__ . '/../controllers/',
     'System\Language' => __DIR__ . '/../system/language/',
     'System\Library' => __DIR__ . '/../system/libraries/',
     'System\Model' => __DIR__ . '/../system/models/',
-    'System\Datalayer' => __DIR__ . '/../system/datalayer/',
+    'System\Datalayer' => __DIR__ . '/../system/datalayer/'.$config->environment->dbenvironment,
 
 //    'Log\Libraries' => __DIR__ . '/../libraries/Log',
 //    'Security\Libraries' => __DIR__ . '/../libraries/Security',

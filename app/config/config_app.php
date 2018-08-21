@@ -19,6 +19,7 @@ $config_apps = array(
 //        'author'        => 'Admin 2.0'
 //    ),    'environment' => 'development',
     'environment' => "development",               //TODO :: development | production
+    'dbenvironment' => "mysql",               //TODO :: development | production
     'version' => '1.0.0',
     'url' => array(
         'base' => 'http://develop.admin/',
