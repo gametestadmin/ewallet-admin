@@ -14,4 +14,8 @@ $application->registerModules(array(
         'className' => 'Backoffice\Currency\Module',
         'path' => __DIR__ . '/../modules/currency/Module.php'
     ),
+    'game' => array(
+        'className' => 'Backoffice\Game\Module',
+        'path' => __DIR__ . '/../modules/game/Module.php'
+    ),
 ));

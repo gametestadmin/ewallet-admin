@@ -9,16 +9,7 @@
 defined('APP_PATH') || define('APP_PATH', realpath('.'));
 
 $config_apps = array(
-//    'application_name' => 'frontend.2.0',
     'environment' => "development",               //TODO :: development | production
-//    'frontend' => 'backoffice',
-//    'site' => array(
-//        'id'            => 1,
-//        'title'         => 'Admin 2.0',
-//        'description'   => 'Admin 2.0',
-//        'keywords'      => 'Admin 2.0',
-//        'author'        => 'Admin 2.0'
-//    ),    'environment' => 'development',
     'version' => '1.0.0',
     'url' => array(
         'base' => 'http://develop.admin/',

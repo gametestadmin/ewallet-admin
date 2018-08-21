@@ -24,10 +24,13 @@ class BaseController extends Controller
     public function initialize()
     {
         $this->_setApplication();
-        $this->_setLanguage();
         $this->_setViewTemplate();
         $this->_setBaseUri();
-//
+        $this->_setLanguage();
+
+
+
+
 //        $this->_setWebsite();
 //        $this->_setUser();
 
@@ -36,28 +39,6 @@ class BaseController extends Controller
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     protected function _setApplication()
     {
         if($this->_website == false){
@@ -65,11 +46,12 @@ class BaseController extends Controller
             $this->_website->title = "New Backoffice";
         }
 
+        $this->_environment = $this->config->environment;
+        $this->_template = $this->config->template;
+        $this->view->environment = $this->_environment;
+        $this->view->template = $this->_template;
 
 //        $this->_application_name = $this->config->application_name;
-//
-//        $this->_environment = $this->config->environment;
-//        $this->_template = $this->config->template;
 //        $this->_frontend = $this->config->frontend;
 //
 //        $this->view->application_name = $this->_application_name;
@@ -77,9 +59,7 @@ class BaseController extends Controller
 //        $this->view->site_description = $this->config->site->description;
 //        $this->view->site_keywords = $this->config->site->keywords;
 //        $this->view->site_author = $this->config->site->author;
-//
-//        $this->view->environment = $this->_environment;
-//        $this->view->template = $this->_template;
+
 //        $this->view->frontend = $this->_frontend;
 //
 //        $this->view->module = $this->router->getModuleName();
@@ -101,62 +81,6 @@ class BaseController extends Controller
         $this->view->assets_url = $this->config->url->assets;
         $this->view->media_url = $this->config->url->media;
     }
-
-    protected function _setWebsite()
-    {
-        $this->_allowedWebsite = ($this->session->has("allowed_websites"))?$this->session->get("allowed_websites"):null;
-        $this->_website = ($this->session->has("website"))?$this->session->get("website"):null;
-
-//        if($this->session->has("allowed_websites")){
-//            $this->_allowedWebsite = $this->session->get("allowed_websites");
-//        }
-//
-//        if($this->session->has('website')){
-//            $this->_website = $this->session->get('website');
-//        }
-        $this->view->allowed_website = $this->_allowedWebsite;
-        $this->view->website = $this->_website;
-    }
-
-    protected function _setUser()
-    {
-        //Set user here
-        if($this->session->has('user')){
-            $this->_user = $this->session->get('user');
-        }
-        $this->view->user = $this->_user;
-    }
-
-    protected function _getBrowserID()
-    {
-        //check if cookie for browserID existed
-        if (!$this->cookies->has('browser_id')) {
-            $browserID  = \time();
-            $this->cookies->set('browser_id', $browserID);
-        }else{
-            $browserID = $this->cookies->get('browser_id')->getValue();
-        }
-
-        return $browserID;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     protected function _setLanguage()
     {
@@ -208,4 +132,51 @@ class BaseController extends Controller
 
         $this->flash->success($message);
     }
+
+
+
+    protected function _setWebsite()
+    {
+        $this->_allowedWebsite = ($this->session->has("allowed_websites"))?$this->session->get("allowed_websites"):null;
+        $this->_website = ($this->session->has("website"))?$this->session->get("website"):null;
+
+//        if($this->session->has("allowed_websites")){
+//            $this->_allowedWebsite = $this->session->get("allowed_websites");
+//        }
+//
+//        if($this->session->has('website')){
+//            $this->_website = $this->session->get('website');
+//        }
+        $this->view->allowed_website = $this->_allowedWebsite;
+        $this->view->website = $this->_website;
+    }
+
+    protected function _setUser()
+    {
+        //Set user here
+        if($this->session->has('user')){
+            $this->_user = $this->session->get('user');
+        }
+        $this->view->user = $this->_user;
+    }
+
+    protected function _getBrowserID()
+    {
+        //check if cookie for browserID existed
+        if (!$this->cookies->has('browser_id')) {
+            $browserID  = \time();
+            $this->cookies->set('browser_id', $browserID);
+        }else{
+            $browserID = $this->cookies->get('browser_id')->getValue();
+        }
+
+        return $browserID;
+    }
+
+
+
 }
+
+
+
+

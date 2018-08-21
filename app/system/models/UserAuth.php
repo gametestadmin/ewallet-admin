@@ -1,7 +1,8 @@
 <?php
+
 namespace System\Model;
 
-class Currency extends \Phalcon\Mvc\Model
+class UserAuth extends \Phalcon\Mvc\Model
 {
 
     /**
@@ -12,21 +13,27 @@ class Currency extends \Phalcon\Mvc\Model
 
     /**
      *
-     * @var string
+     * @var integer
      */
-    protected $code;
+    protected $user;
 
     /**
      *
      * @var string
      */
-    protected $name;
+    protected $app_id;
 
     /**
      *
      * @var string
      */
-    protected $symbol;
+    protected $app_secret;
+
+    /**
+     *
+     * @var string
+     */
+    protected $valid_until;
 
     /**
      *
@@ -48,40 +55,53 @@ class Currency extends \Phalcon\Mvc\Model
     }
 
     /**
-     * Method to set the value of field code
+     * Method to set the value of field user
      *
-     * @param string $code
+     * @param integer $user
      * @return $this
      */
-    public function setCode($code)
+    public function setUser($user)
     {
-        $this->code = $code;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Method to set the value of field name
+     * Method to set the value of field app_id
      *
-     * @param string $name
+     * @param string $app_id
      * @return $this
      */
-    public function setName($name)
+    public function setAppId($app_id)
     {
-        $this->name = $name;
+        $this->app_id = $app_id;
 
         return $this;
     }
 
     /**
-     * Method to set the value of field symbol
+     * Method to set the value of field app_secret
      *
-     * @param string $symbol
+     * @param string $app_secret
      * @return $this
      */
-    public function setSymbol($symbol)
+    public function setAppSecret($app_secret)
     {
-        $this->symbol = $symbol;
+        $this->app_secret = $app_secret;
+
+        return $this;
+    }
+
+    /**
+     * Method to set the value of field valid_until
+     *
+     * @param string $valid_until
+     * @return $this
+     */
+    public function setValidUntil($valid_until)
+    {
+        $this->valid_until = $valid_until;
 
         return $this;
     }
@@ -110,33 +130,43 @@ class Currency extends \Phalcon\Mvc\Model
     }
 
     /**
-     * Returns the value of field code
+     * Returns the value of field user
      *
-     * @return string
+     * @return integer
      */
-    public function getCode()
+    public function getUser()
     {
-        return $this->code;
+        return $this->user;
     }
 
     /**
-     * Returns the value of field name
+     * Returns the value of field app_id
      *
      * @return string
      */
-    public function getName()
+    public function getAppId()
     {
-        return $this->name;
+        return $this->app_id;
     }
 
     /**
-     * Returns the value of field symbol
+     * Returns the value of field app_secret
      *
      * @return string
      */
-    public function getSymbol()
+    public function getAppSecret()
     {
-        return $this->symbol;
+        return $this->app_secret;
+    }
+
+    /**
+     * Returns the value of field valid_until
+     *
+     * @return string
+     */
+    public function getValidUntil()
+    {
+        return $this->valid_until;
     }
 
     /**
@@ -154,9 +184,11 @@ class Currency extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->setSource("currency");
-        $this->hasMany('id', 'System\Model\GameCurrency', 'currency', ['alias' => 'GameCurrency']);
-        $this->hasMany('id', 'System\Model\UserCurrency', 'currency', ['alias' => 'UserCurrency']);
+        $this->setSchema("backoffice");
+        $this->setSource("user_auth");
+        $this->hasMany('id', 'System\Model\UserAuthWebserviceRequest', 'user_auth', ['alias' => 'UserAuthWebserviceRequest']);
+        $this->hasMany('id', 'System\Model\UserAuthWebserviceResponse', 'user_auth', ['alias' => 'UserAuthWebserviceResponse']);
+        $this->belongsTo('user', 'System\Model\User', 'id', ['alias' => 'User']);
     }
 
     /**
@@ -166,15 +198,14 @@ class Currency extends \Phalcon\Mvc\Model
      */
     public function getSource()
     {
-        return 'currency';
+        return 'user_auth';
     }
 
     /**
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters
-
-     * @return Currency[]|Currency|\Phalcon\Mvc\Model\ResultSetInterface
+     * @return UserAuth[]|UserAuth|\Phalcon\Mvc\Model\ResultSetInterface
      */
     public static function find($parameters = null)
     {
@@ -185,8 +216,7 @@ class Currency extends \Phalcon\Mvc\Model
      * Allows to query the first record that match the specified conditions
      *
      * @param mixed $parameters
-
-     * @return Currency|\Phalcon\Mvc\Model\ResultInterface
+     * @return UserAuth|\Phalcon\Mvc\Model\ResultInterface
      */
     public static function findFirst($parameters = null)
     {

@@ -1,7 +1,8 @@
 <?php
+
 namespace System\Model;
 
-class Currency extends \Phalcon\Mvc\Model
+class GameCurrency extends \Phalcon\Mvc\Model
 {
 
     /**
@@ -12,21 +13,21 @@ class Currency extends \Phalcon\Mvc\Model
 
     /**
      *
-     * @var string
+     * @var integer
      */
-    protected $code;
+    protected $game;
 
     /**
      *
-     * @var string
+     * @var integer
      */
-    protected $name;
+    protected $currency;
 
     /**
      *
-     * @var string
+     * @var integer
      */
-    protected $symbol;
+    protected $default;
 
     /**
      *
@@ -48,40 +49,40 @@ class Currency extends \Phalcon\Mvc\Model
     }
 
     /**
-     * Method to set the value of field code
+     * Method to set the value of field game
      *
-     * @param string $code
+     * @param integer $game
      * @return $this
      */
-    public function setCode($code)
+    public function setGame($game)
     {
-        $this->code = $code;
+        $this->game = $game;
 
         return $this;
     }
 
     /**
-     * Method to set the value of field name
+     * Method to set the value of field currency
      *
-     * @param string $name
+     * @param integer $currency
      * @return $this
      */
-    public function setName($name)
+    public function setCurrency($currency)
     {
-        $this->name = $name;
+        $this->currency = $currency;
 
         return $this;
     }
 
     /**
-     * Method to set the value of field symbol
+     * Method to set the value of field default
      *
-     * @param string $symbol
+     * @param integer $default
      * @return $this
      */
-    public function setSymbol($symbol)
+    public function setDefault($default)
     {
-        $this->symbol = $symbol;
+        $this->default = $default;
 
         return $this;
     }
@@ -110,33 +111,33 @@ class Currency extends \Phalcon\Mvc\Model
     }
 
     /**
-     * Returns the value of field code
+     * Returns the value of field game
      *
-     * @return string
+     * @return integer
      */
-    public function getCode()
+    public function getGame()
     {
-        return $this->code;
+        return $this->game;
     }
 
     /**
-     * Returns the value of field name
+     * Returns the value of field currency
      *
-     * @return string
+     * @return integer
      */
-    public function getName()
+    public function getCurrency()
     {
-        return $this->name;
+        return $this->currency;
     }
 
     /**
-     * Returns the value of field symbol
+     * Returns the value of field default
      *
-     * @return string
+     * @return integer
      */
-    public function getSymbol()
+    public function getDefault()
     {
-        return $this->symbol;
+        return $this->default;
     }
 
     /**
@@ -154,9 +155,10 @@ class Currency extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->setSource("currency");
-        $this->hasMany('id', 'System\Model\GameCurrency', 'currency', ['alias' => 'GameCurrency']);
-        $this->hasMany('id', 'System\Model\UserCurrency', 'currency', ['alias' => 'UserCurrency']);
+        $this->setSchema("backoffice");
+        $this->setSource("game_currency");
+        $this->belongsTo('currency', 'System\Model\Currency', 'id', ['alias' => 'Currency']);
+        $this->belongsTo('game', 'System\Model\Game', 'id', ['alias' => 'Game']);
     }
 
     /**
@@ -166,15 +168,14 @@ class Currency extends \Phalcon\Mvc\Model
      */
     public function getSource()
     {
-        return 'currency';
+        return 'game_currency';
     }
 
     /**
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters
-
-     * @return Currency[]|Currency|\Phalcon\Mvc\Model\ResultSetInterface
+     * @return GameCurrency[]|GameCurrency|\Phalcon\Mvc\Model\ResultSetInterface
      */
     public static function find($parameters = null)
     {
@@ -185,8 +186,7 @@ class Currency extends \Phalcon\Mvc\Model
      * Allows to query the first record that match the specified conditions
      *
      * @param mixed $parameters
-
-     * @return Currency|\Phalcon\Mvc\Model\ResultInterface
+     * @return GameCurrency|\Phalcon\Mvc\Model\ResultInterface
      */
     public static function findFirst($parameters = null)
     {

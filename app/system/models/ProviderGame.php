@@ -1,7 +1,8 @@
 <?php
+
 namespace System\Model;
 
-class Currency extends \Phalcon\Mvc\Model
+class ProviderGame extends \Phalcon\Mvc\Model
 {
 
     /**
@@ -12,9 +13,9 @@ class Currency extends \Phalcon\Mvc\Model
 
     /**
      *
-     * @var string
+     * @var integer
      */
-    protected $code;
+    protected $timezone;
 
     /**
      *
@@ -26,7 +27,13 @@ class Currency extends \Phalcon\Mvc\Model
      *
      * @var string
      */
-    protected $symbol;
+    protected $app_id;
+
+    /**
+     *
+     * @var string
+     */
+    protected $app_secret;
 
     /**
      *
@@ -48,14 +55,14 @@ class Currency extends \Phalcon\Mvc\Model
     }
 
     /**
-     * Method to set the value of field code
+     * Method to set the value of field timezone
      *
-     * @param string $code
+     * @param integer $timezone
      * @return $this
      */
-    public function setCode($code)
+    public function setTimezone($timezone)
     {
-        $this->code = $code;
+        $this->timezone = $timezone;
 
         return $this;
     }
@@ -74,14 +81,27 @@ class Currency extends \Phalcon\Mvc\Model
     }
 
     /**
-     * Method to set the value of field symbol
+     * Method to set the value of field app_id
      *
-     * @param string $symbol
+     * @param string $app_id
      * @return $this
      */
-    public function setSymbol($symbol)
+    public function setAppId($app_id)
     {
-        $this->symbol = $symbol;
+        $this->app_id = $app_id;
+
+        return $this;
+    }
+
+    /**
+     * Method to set the value of field app_secret
+     *
+     * @param string $app_secret
+     * @return $this
+     */
+    public function setAppSecret($app_secret)
+    {
+        $this->app_secret = $app_secret;
 
         return $this;
     }
@@ -110,13 +130,13 @@ class Currency extends \Phalcon\Mvc\Model
     }
 
     /**
-     * Returns the value of field code
+     * Returns the value of field timezone
      *
-     * @return string
+     * @return integer
      */
-    public function getCode()
+    public function getTimezone()
     {
-        return $this->code;
+        return $this->timezone;
     }
 
     /**
@@ -130,13 +150,23 @@ class Currency extends \Phalcon\Mvc\Model
     }
 
     /**
-     * Returns the value of field symbol
+     * Returns the value of field app_id
      *
      * @return string
      */
-    public function getSymbol()
+    public function getAppId()
     {
-        return $this->symbol;
+        return $this->app_id;
+    }
+
+    /**
+     * Returns the value of field app_secret
+     *
+     * @return string
+     */
+    public function getAppSecret()
+    {
+        return $this->app_secret;
     }
 
     /**
@@ -154,9 +184,11 @@ class Currency extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->setSource("currency");
-        $this->hasMany('id', 'System\Model\GameCurrency', 'currency', ['alias' => 'GameCurrency']);
-        $this->hasMany('id', 'System\Model\UserCurrency', 'currency', ['alias' => 'UserCurrency']);
+        $this->setSchema("backoffice");
+        $this->setSource("provider_game");
+        $this->hasMany('id', 'System\Model\Game', 'provider', ['alias' => 'Game']);
+        $this->hasMany('id', 'System\Model\ProviderGameWebserviceRequest', 'provider_game', ['alias' => 'ProviderGameWebserviceRequest']);
+        $this->hasMany('id', 'System\Model\ProviderGameWebserviceResponse', 'provider_game', ['alias' => 'ProviderGameWebserviceResponse']);
     }
 
     /**
@@ -166,15 +198,14 @@ class Currency extends \Phalcon\Mvc\Model
      */
     public function getSource()
     {
-        return 'currency';
+        return 'provider_game';
     }
 
     /**
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters
-
-     * @return Currency[]|Currency|\Phalcon\Mvc\Model\ResultSetInterface
+     * @return ProviderGame[]|ProviderGame|\Phalcon\Mvc\Model\ResultSetInterface
      */
     public static function find($parameters = null)
     {
@@ -185,8 +216,7 @@ class Currency extends \Phalcon\Mvc\Model
      * Allows to query the first record that match the specified conditions
      *
      * @param mixed $parameters
-
-     * @return Currency|\Phalcon\Mvc\Model\ResultInterface
+     * @return ProviderGame|\Phalcon\Mvc\Model\ResultInterface
      */
     public static function findFirst($parameters = null)
     {
