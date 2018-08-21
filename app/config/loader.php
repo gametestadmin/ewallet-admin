@@ -6,7 +6,7 @@ $namespaces = array(
     'Backoffice\Controllers' => __DIR__ . '/../controllers/',
     'System\Language' => __DIR__ . '/../system/language/',
     'System\Library' => __DIR__ . '/../system/libraries/',
-    'System\Models' => __DIR__ . '/../system/models/',
+    'System\Model' => __DIR__ . '/../system/models/',
     'System\Datalayer' => __DIR__ . '/../system/datalayer/',
 
 //    'Log\Libraries' => __DIR__ . '/../libraries/Log',

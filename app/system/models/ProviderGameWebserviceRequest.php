@@ -155,7 +155,6 @@ class ProviderGameWebserviceRequest extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->setSchema("backoffice");
         $this->setSource("provider_game_webservice_request");
         $this->hasMany('id', 'System\Model\ProviderGameWebserviceResponse', 'provider_game_webservice_request', ['alias' => 'ProviderGameWebserviceResponse']);
         $this->belongsTo('provider_game', 'System\Model\ProviderGame', 'id', ['alias' => 'ProviderGame']);

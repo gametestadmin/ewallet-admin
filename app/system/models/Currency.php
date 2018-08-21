@@ -155,7 +155,6 @@ class Currency extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->setSchema("backoffice");
         $this->setSource("currency");
         $this->hasMany('id', 'System\Model\GameCurrency', 'currency', ['alias' => 'GameCurrency']);
         $this->hasMany('id', 'System\Model\UserCurrency', 'currency', ['alias' => 'UserCurrency']);

@@ -184,7 +184,6 @@ class UserAuth extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->setSchema("backoffice");
         $this->setSource("user_auth");
         $this->hasMany('id', 'System\Model\UserAuthWebserviceRequest', 'user_auth', ['alias' => 'UserAuthWebserviceRequest']);
         $this->hasMany('id', 'System\Model\UserAuthWebserviceResponse', 'user_auth', ['alias' => 'UserAuthWebserviceResponse']);

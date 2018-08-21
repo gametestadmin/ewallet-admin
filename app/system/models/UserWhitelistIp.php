@@ -126,7 +126,6 @@ class UserWhitelistIp extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->setSchema("backoffice");
         $this->setSource("user_whitelist_ip");
         $this->belongsTo('user', 'System\Model\User', 'id', ['alias' => 'User']);
     }

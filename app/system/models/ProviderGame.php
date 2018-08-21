@@ -184,7 +184,6 @@ class ProviderGame extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->setSchema("backoffice");
         $this->setSource("provider_game");
         $this->hasMany('id', 'System\Model\Game', 'provider', ['alias' => 'Game']);
         $this->hasMany('id', 'System\Model\ProviderGameWebserviceRequest', 'provider_game', ['alias' => 'ProviderGameWebserviceRequest']);

@@ -155,7 +155,6 @@ class GameCurrency extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->setSchema("backoffice");
         $this->setSource("game_currency");
         $this->belongsTo('currency', 'System\Model\Currency', 'id', ['alias' => 'Currency']);
         $this->belongsTo('game', 'System\Model\Game', 'id', ['alias' => 'Game']);

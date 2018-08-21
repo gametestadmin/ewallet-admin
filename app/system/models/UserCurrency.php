@@ -155,7 +155,6 @@ class UserCurrency extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->setSchema("backoffice");
         $this->setSource("user_currency");
         $this->belongsTo('currency', 'System\Model\Currency', 'id', ['alias' => 'Currency']);
         $this->belongsTo('user', 'System\Model\User', 'id', ['alias' => 'User']);

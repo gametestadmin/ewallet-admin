@@ -271,7 +271,6 @@ class Game extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->setSchema("backoffice");
         $this->setSource("game");
         $this->hasMany('id', 'System\Model\GameCurrency', 'game', ['alias' => 'GameCurrency']);
         $this->hasMany('id', 'System\Model\StatementGame', 'game', ['alias' => 'StatementGame']);
