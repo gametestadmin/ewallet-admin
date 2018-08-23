@@ -40,6 +40,24 @@ $routes = array(
             'action' => 3
         )
     ),
+    array(
+        'url' => '/(currency|moduletwo)/:controller/([\w]{3})',
+        'params' => array(
+            'module' => 1,
+            'controller' => 2,
+            'action' => 'index',
+            'code' => 3
+        )
+    ),
+    array(
+        'url' => '/:module/:controller/:action/([0-9])',
+        'params' => array(
+            'module' => 1,
+            'controller' => 2,
+            'action' => 3,
+            'id' => 4
+        )
+    ),
 
     array(
         'url' => '/language',

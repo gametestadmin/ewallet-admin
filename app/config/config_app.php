@@ -9,15 +9,6 @@
 defined('APP_PATH') || define('APP_PATH', realpath('.'));
 
 $config_apps = array(
-//    'application_name' => 'frontend.2.0',
-//    'frontend' => 'backoffice',
-//    'site' => array(
-//        'id'            => 1,
-//        'title'         => 'Admin 2.0',
-//        'description'   => 'Admin 2.0',
-//        'keywords'      => 'Admin 2.0',
-//        'author'        => 'Admin 2.0'
-//    ),    'environment' => 'development',
     'environment' => "development",               //TODO :: development | production
     'dbenvironment' => "mysql",               //TODO :: development | production
     'version' => '1.0.0',
@@ -52,7 +43,7 @@ $config_apps = array(
         'host'        => 'localhost',
         'username'    => 'root',
         'password'    => '',
-        'dbname'      => 'backoffice',
+        'dbname'      => 'bo',
         'charset'     => 'utf8',
     )
 );

@@ -1,5 +1,4 @@
 <?php
-
 namespace System\Model;
 
 class Currency extends \Phalcon\Mvc\Model
@@ -174,6 +173,7 @@ class Currency extends \Phalcon\Mvc\Model
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters
+
      * @return Currency[]|Currency|\Phalcon\Mvc\Model\ResultSetInterface
      */
     public static function find($parameters = null)
@@ -185,6 +185,7 @@ class Currency extends \Phalcon\Mvc\Model
      * Allows to query the first record that match the specified conditions
      *
      * @param mixed $parameters
+
      * @return Currency|\Phalcon\Mvc\Model\ResultInterface
      */
     public static function findFirst($parameters = null)

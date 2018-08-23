@@ -8,7 +8,6 @@ $namespaces = array(
     'System\Library' => __DIR__ . '/../system/libraries/',
     'System\Model' => __DIR__ . '/../system/models/',
     'System\Datalayer' => __DIR__ . '/../system/datalayer/'.$config->dbenvironment,
-
 //    'Log\Libraries' => __DIR__ . '/../libraries/Log',
 //    'Security\Libraries' => __DIR__ . '/../libraries/Security',
 
