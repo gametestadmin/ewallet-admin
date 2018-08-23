@@ -1,7 +1,7 @@
 <?php
 namespace Backoffice\Game\Controllers;
 
-use System\Model\Currency;
+use System\Datalayer\DLProviderGame;
 
 class ProviderController extends \Backoffice\Controllers\BaseController
 {
@@ -10,20 +10,7 @@ class ProviderController extends \Backoffice\Controllers\BaseController
     {
         $view = $this->view;
 
-        if ($this->request->getPost()) {
-            $data = $this->request->getPost();
-            $data['code'] = \filter_var(\strip_tags(\addslashes($data['code'])), FILTER_SANITIZE_STRING);
-            $data['name'] = \filter_var(\strip_tags(\addslashes($data['name'])), FILTER_SANITIZE_STRING);
-            $data['symbol'] = \filter_var(\strip_tags(\addslashes($data['symbol'])), FILTER_SANITIZE_STRING);
-
-            $newCurrency = new Currency();
-            $newCurrency->setCode($data['code']);
-            $newCurrency->setName($data['name']);
-            $newCurrency->setSymbol($data['symbol']);
-            if(!$newCurrency->save()){
-                echo 3;die;
-            }
-        }
+        $providerGame = new DLProviderGame();
 
         \Phalcon\Tag::setTitle("Game Provider - ".$this->_website->title);
     }
@@ -32,28 +19,59 @@ class ProviderController extends \Backoffice\Controllers\BaseController
     {
         $view = $this->view;
 
-        $view = $this->view;
-
         if ($this->request->getPost()) {
-
             $data = $this->request->getPost();
-            $data['timezone'] = \filter_var(\strip_tags(\addslashes($data['timezone'])), FILTER_SANITIZE_STRING);
-            $data['name'] = \filter_var(\strip_tags(\addslashes($data['name'])), FILTER_SANITIZE_STRING);
-            $data['app_id'] = "asdasd";
-            $data['app_secret'] = "asdasd";
 
-            $newCurrency = new Currency();
+            try {
+                $this->db->begin();
 
-            $newCurrency->setCode($data['code']);
-            $newCurrency->setCode($data['code']);
+                $DLProviderGame = new DLProviderGame();
+                $DLProviderGame->create($data);
 
-            $newCurrency->setName($data['name']);
-            $newCurrency->setSymbol($data['symbol']);
-            if(!$newCurrency->save()){
-                echo 3;die;
+                $this->db->commit();
+
+                $this->flash->success('provider_game_create_success');
+                return $this->response->redirect($this->router->getRewriteUri())->send();
+            } catch (\Exception $e) {
+                $this->db->rollback();
+                $this->flash->error($e->getMessage());
             }
         }
 
         \Phalcon\Tag::setTitle("Add New Game Provider - ".$this->_website->title);
+    }
+
+    public function editAction()
+    {
+        $view = $this->view;
+
+        $currentId = $this->dispatcher->getParam("id");
+
+        $DLProviderGame = new DLProviderGame();
+        $providerGame = $DLProviderGame->getById($currentId);
+
+        if ($this->request->getPost()) {
+
+            $data = $this->request->getPost();
+
+            $data['id'] = $providerGame->getId();
+
+            try {
+                $this->db->begin();
+
+                $DLProviderGame->set($data);
+
+                $this->db->commit();
+
+                $this->flash->success('provider_game_update_success');
+                return $this->response->redirect($this->router->getRewriteUri())->send();
+            } catch (\Exception $e) {
+                $this->db->rollback();
+                $this->flash->error($e->getMessage());
+            }
+        }
+        $view->provider = $providerGame;
+
+        \Phalcon\Tag::setTitle("Update Game Provider - ".$this->_website->title);
     }
 }

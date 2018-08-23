@@ -5,25 +5,25 @@
     <form class="form-horizontal" action="#" method="post">
         <div class="form-group">
             <label>
-                {{code}}
+                {{currency.code}}
             </label>
         </div>
         <div class="form-group">
             <label>
-                <input type="text" name="name" value="{{name}}">
+                <input type="text" name="name" value="{{currency.name}}">
             </label>
         </div>
         <div class="form-group">
             <label>
-                <input type="text" name="symbol" value="{{symbol}}">
+                <input type="text" name="symbol" value="{{currency.symbol}}">
             </label>
         </div>
         <div class="form-group">
             <label>
-                <input type="radio" name="status" value="0" {% if status == 0 %}checked{% endif %}>OFF
+                <input type="radio" name="status" value="0" {% if currency.status == 0 %}checked{% endif %}>OFF
             </label>
             <label>
-                <input type="radio" name="status" value="1" {% if status == 1 %}checked{% endif %}>ON
+                <input type="radio" name="status" value="1" {% if currency.status == 1 %}checked{% endif %}>ON
             </label>
         </div>
         <div class="form-group">

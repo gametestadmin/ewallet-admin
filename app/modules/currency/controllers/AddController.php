@@ -1,27 +1,32 @@
 <?php
 namespace Backoffice\Currency\Controllers;
 
-use System\Model\Currency;
+use System\Datalayer\DLCurrency;
 
 class AddController extends \Backoffice\Controllers\BaseController
 {
-
     public function indexAction()
     {
         $view = $this->view;
 
         if ($this->request->getPost()) {
             $data = $this->request->getPost();
-            $data['code'] = \filter_var(\strip_tags(\addslashes($data['code'])), FILTER_SANITIZE_STRING);
-            $data['name'] = \filter_var(\strip_tags(\addslashes($data['name'])), FILTER_SANITIZE_STRING);
-            $data['symbol'] = \filter_var(\strip_tags(\addslashes($data['symbol'])), FILTER_SANITIZE_STRING);
 
-            $newCurrency = new Currency();
-            $newCurrency->setCode($data['code']);
-            $newCurrency->setName($data['name']);
-            $newCurrency->setSymbol($data['symbol']);
-            if(!$newCurrency->save()){
-                echo 3;die;
+            try {
+                $this->db->begin();
+
+                $DLCurrency = new DLCurrency();
+                // TODO :: need in here or in create function?
+//                $DLCurrency->validateAdd($data);
+                $DLCurrency->create($data);
+
+                $db_commit = $this->db->commit();
+                if($db_commit) {
+                    return $this->response->redirect($this->router->getRewriteUri())->send();
+                }
+            } catch (\Exception $e) {
+                $this->db->rollback();
+                $this->flash->error($e->getMessage());
             }
         }
 

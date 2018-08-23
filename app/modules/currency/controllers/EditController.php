@@ -1,36 +1,44 @@
 <?php
 namespace Backoffice\Currency\Controllers;
 
-use System\Model\Currency;
+use System\Datalayer\DLCurrency;
 
 class EditController extends \Backoffice\Controllers\BaseController
 {
-
     public function indexAction()
     {
         $view = $this->view;
 
-        $currentCurrency = $this->dispatcher->getParam("code");
-        $currency = Currency::findFirstByCode($currentCurrency);
+        $currentCode = $this->dispatcher->getParam("code");
+        if(!isset($currentCode)){
+            $this->flash->error("undefined_currency_code");
+            $this->response->redirect("/currency")->send();
+        }
 
+        $DLCurrency = new DLCurrency();
+        $getCurrency = $DLCurrency->getByCode($currentCode);
 
         if ($this->request->getPost()) {
             $data = $this->request->getPost();
-            $data['name'] = \filter_var(\strip_tags(\addslashes($data['name'])), FILTER_SANITIZE_STRING);
-            $data['symbol'] = \filter_var(\strip_tags(\addslashes($data['symbol'])), FILTER_SANITIZE_STRING);
-            $data['status'] = \intval($data['status']);
 
-            if($currency) {
-                $currency->setName($data['name']);
-                $currency->setSymbol($data['symbol']);
-                $currency->setStatus($data['status']);
-                $currency->save();
+            $data['code'] = $getCurrency->getCode();
+            // TODO :: need filterInput here?
+//            $data = $DLCurrency->filterInput($data);
+
+            try {
+                $this->db->begin();
+
+                $DLCurrency->validateEdit($data);
+                $getCurrency = $DLCurrency->set($data);
+
+                $this->db->commit();
+            } catch (\Exception $e) {
+                $this->db->rollback();
+                $this->flash->error($e->getMessage());
             }
         }
-        $view->code = $currency->getCode();
-        $view->name = $currency->getName();
-        $view->symbol = $currency->getSymbol();
-        $view->status = $currency->getStatus();
+
+        $view->currency = $getCurrency;
 
         \Phalcon\Tag::setTitle("Edit Currency - ".$this->_website->title);
     }
