@@ -86,4 +86,5 @@ class DLCurrency {
         }
         return $currency;
     }
+
 }

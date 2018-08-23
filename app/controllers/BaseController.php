@@ -27,12 +27,11 @@ class BaseController extends Controller
         $this->_setViewTemplate();
         $this->_setBaseUri();
         $this->_setLanguage();
-
+        $this->_setUser();
 
 
 
 //        $this->_setWebsite();
-//        $this->_setUser();
 
 //        $this->_language = $this->cookies->get('language')->getValue();
 //        $this->view->translate = language::getTranslation($this->_language);
@@ -112,6 +111,15 @@ class BaseController extends Controller
         $this->view->translate = $this->_translate;
     }
 
+    protected function _setUser()
+    {
+        //Set user here
+        if($this->session->has('user')){
+            $this->_user = $this->session->get('user');
+        }
+        $this->view->user = $this->_user;
+    }
+
     protected function noticeFlash($message)
     {
         $message = $this->_translate[$message];
@@ -126,14 +134,14 @@ class BaseController extends Controller
         $this->flash->error($message);
     }
 
+
+
     protected function successFlash($message)
     {
         $message = $this->_translate[$message];
 
         $this->flash->success($message);
     }
-
-
 
     protected function _setWebsite()
     {
@@ -149,15 +157,6 @@ class BaseController extends Controller
 //        }
         $this->view->allowed_website = $this->_allowedWebsite;
         $this->view->website = $this->_website;
-    }
-
-    protected function _setUser()
-    {
-        //Set user here
-        if($this->session->has('user')){
-            $this->_user = $this->session->get('user');
-        }
-        $this->view->user = $this->_user;
     }
 
     protected function _getBrowserID()

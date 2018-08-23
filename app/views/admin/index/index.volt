@@ -1,5 +1,3 @@
-{% extends "layouts/one-column.volt" %}
-
 {% block content %}
 <div id="wrapper">
 </div>
