@@ -43,8 +43,13 @@ $config_apps = array(
         'host'        => 'localhost',
         'username'    => 'root',
         'password'    => '',
-        'dbname'      => 'bo',
+        'dbname'      => 'backoffice',
         'charset'     => 'utf8',
+    ),
+    'security' => array(
+//        'site_iv'     => 'öL2f×¸nf€{-ün)U³J N‘;æéÕd~3³',
+        'site_iv'     => 'öL2f×¸nf€{',
+        'site_key'    => '1234567812345678',
     )
 );
 

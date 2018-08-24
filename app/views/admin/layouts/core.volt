@@ -9,7 +9,7 @@
     <body>
         <div class="container-fluid height-100P">
             <div class="row height-100P">
-                {% if user is null %}
+                {% if user is not null %}
                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                     {% include dirRoot~'layouts/elements/leftnav' %}
                 </div>

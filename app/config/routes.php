@@ -41,6 +41,20 @@ $routes = array(
         )
     ),
     array(
+        'url' => '/(login|LOGIN)',
+        'params' => array(
+            'controller' => 'index',
+            'action' => 'login'
+        )
+    ),
+    array(
+        'url' => '/(captcha|CAPTCHA)',
+        'params' => array(
+            'controller' => 'captcha',
+            'action' => 'index'
+        )
+    ),
+    array(
         'url' => '/(currency|moduletwo)/:controller/([\w]{3})',
         'params' => array(
             'module' => 1,
