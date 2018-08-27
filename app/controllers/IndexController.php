@@ -17,12 +17,14 @@ class IndexController extends \Backoffice\Controllers\BaseController
         $view = $this->view;
 
 //        if($this->request->has("flash")) {
-            $this->noticeFlash("user");
-            $this->errorFlash("add");
+//            $this->noticeFlash("user");
+//            $this->errorFlash("add");
             $this->successFlash("success");
 //        }
-        $this->_translate["test_new"];
-
+//        $this->_translate["test_new"];
+        echo "<pre>";
+        var_dump($this->session->get("acl"));
+//        die;
 
 
 
@@ -32,50 +34,56 @@ class IndexController extends \Backoffice\Controllers\BaseController
     public function loginAction(){
         $view = $this->view;
 
-        if ($this->request->getPost())
-        {
+        if ($this->request->getPost()){
             $data = $this->request->getPost();
             $username = $data['username'];
             $password = $data['password'];
 
-            echo "<pre>";
-            var_dump($data);
-            $user = new DLUser();
-            $user = $user->getByUsername($username);
+            $DLuser = new DLUser();
+            $user = $DLuser->getByUsername($username);
 
-            $aclAccess = new DLUserAclAccess();
-            $acl = $aclAccess->getById($user->getId());
+            if($user){
+                $securityLibrary = new SecurityUser();
+                $password = $securityLibrary->enc_str($password);
 
-            $securityLibrary = new SecurityUser();
+                // TODO :: change password manual
+//            $test = $DLuser->setUserPassword($user , $password);
+//            var_dump($test);
 
-            $password = $securityLibrary->enc_str($password);
-            var_dump($password); die;
+                if( $password === $user->getPassword() ){
+                    $this->session->set('user', $user);
 
+                    //set session add acl for the current user
+                    $aclAccess = new DLUserAclAccess();
+                    $acl = $aclAccess->getById($user->getId());
+                    $this->session->set('acl', json_encode(array("asdasdasdqweqweqwe"=>true)));
 
-
-
-            //set session add acl for the current user
-//            $this->session->set('acl', json_encode(array("asd"=>true)));
-
-
+                    $this->successFlash($view->translate['login_success']);
+                    return $this->response->redirect("/");
+                } else {
+                    $this->errorFlash($view->translate['login_error']);
+                    return $this->response->redirect("/login");
+                }
+            } else {
+                $this->errorFlash($view->translate['login_error']);
+                return $this->response->redirect("/login");
+            }
 
         }
-
-
-
-
-
-
 
         \Phalcon\Tag::setTitle($this->_website->title);
     }
 
 
     public function logoutAction(){
-        //unset session removing acl
-        $this->session->remove('acl');
+        $view = $this->view;
 
-
+        \Phalcon\Tag::setTitle($this->config->site->title);
+        if($view->user != null){
+            $this->session->destroy();
+        }
+        $this->successFlash($view->translate['logout_success']);
+        return $this->response->redirect("/login")->send();
 
     }
 
