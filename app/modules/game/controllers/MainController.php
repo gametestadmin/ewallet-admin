@@ -1,9 +1,10 @@
 <?php
 namespace Backoffice\Game\Controllers;
 
+use System\Datalayer\DLCategoryGame;
 use System\Datalayer\DLProviderGame;
 
-class ProviderController extends \Backoffice\Controllers\BaseController
+class CategoryController extends \Backoffice\Controllers\BaseController
 {
 
     public function indexAction()
@@ -19,13 +20,16 @@ class ProviderController extends \Backoffice\Controllers\BaseController
     {
         $view = $this->view;
 
+        $DLProviderGame = new DLProviderGame();
+        $providerGame = $DLProviderGame->getAll();
+
         if ($this->request->getPost()) {
+            $data = $this->request->getPost();
+
             try {
                 $this->db->begin();
 
-                $data = $this->request->getPost();
-
-                $DLProviderGame = new DLProviderGame();
+                $DLProviderGame = new DLCategoryGame();
                 $DLProviderGame->create($data);
 
                 $this->db->commit();
@@ -38,6 +42,7 @@ class ProviderController extends \Backoffice\Controllers\BaseController
             }
         }
 
+        $view->providerGame = $providerGame;
         \Phalcon\Tag::setTitle("Add New Game Provider - ".$this->_website->title);
     }
 
@@ -51,12 +56,14 @@ class ProviderController extends \Backoffice\Controllers\BaseController
         $providerGame = $DLProviderGame->getById($currentId);
 
         if ($this->request->getPost()) {
+
+            $data = $this->request->getPost();
+
+            $data['id'] = $providerGame->getId();
+
             try {
                 $this->db->begin();
 
-                $data = $this->request->getPost();
-
-                $data['id'] = $providerGame->getId();
                 $DLProviderGame->set($data);
 
                 $this->db->commit();

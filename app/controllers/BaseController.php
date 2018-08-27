@@ -61,7 +61,7 @@ class BaseController extends Controller
 //        $this->view->site_author = $this->config->site->author;
 
 //        $this->view->frontend = $this->_frontend;
-//
+
 //        $this->view->module = $this->router->getModuleName();
 //        $this->view->controller = $this->router->getControllerName();
 //        $this->view->action = $this->router->getActionName();

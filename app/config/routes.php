@@ -50,6 +50,15 @@ $routes = array(
         )
     ),
     array(
+        'url' => '/:module/:controller/:action/([a-zA-Z0-9-]+)',
+        'params' => array(
+            'module' => 1,
+            'controller' => 2,
+            'action' => 3,
+            'code' => 4
+        )
+    ),
+    array(
         'url' => '/:module/:controller/:action/([0-9])',
         'params' => array(
             'module' => 1,

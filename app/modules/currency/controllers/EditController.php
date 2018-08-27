@@ -19,19 +19,16 @@ class EditController extends \Backoffice\Controllers\BaseController
         $getCurrency = $DLCurrency->getByCode($currentCode);
 
         if ($this->request->getPost()) {
-            $data = $this->request->getPost();
-
-            $data['code'] = $getCurrency->getCode();
-            // TODO :: need filterInput here?
-//            $data = $DLCurrency->filterInput($data);
-
             try {
                 $this->db->begin();
 
-                $DLCurrency->validateEdit($data);
+                $data = $this->request->getPost();
+                $data['code'] = $getCurrency->getCode();
+
                 $getCurrency = $DLCurrency->set($data);
 
                 $this->db->commit();
+                return $this->response->redirect($this->router->getRewriteUri())->send();
             } catch (\Exception $e) {
                 $this->db->rollback();
                 $this->flash->error($e->getMessage());

@@ -10,20 +10,17 @@ class AddController extends \Backoffice\Controllers\BaseController
         $view = $this->view;
 
         if ($this->request->getPost()) {
-            $data = $this->request->getPost();
-
             try {
                 $this->db->begin();
 
+                $data = $this->request->getPost();
+
                 $DLCurrency = new DLCurrency();
-                // TODO :: need in here or in create function?
-//                $DLCurrency->validateAdd($data);
                 $DLCurrency->create($data);
 
-                $db_commit = $this->db->commit();
-                if($db_commit) {
-                    return $this->response->redirect($this->router->getRewriteUri())->send();
-                }
+                $this->db->commit();
+
+                return $this->response->redirect($this->router->getRewriteUri())->send();
             } catch (\Exception $e) {
                 $this->db->rollback();
                 $this->flash->error($e->getMessage());

@@ -1,9 +1,10 @@
 <?php
 namespace Backoffice\Game\Controllers;
 
+use System\Datalayer\DLCategoryGame;
 use System\Datalayer\DLProviderGame;
 
-class ProviderController extends \Backoffice\Controllers\BaseController
+class CategoryController extends \Backoffice\Controllers\BaseController
 {
 
     public function indexAction()
@@ -20,17 +21,17 @@ class ProviderController extends \Backoffice\Controllers\BaseController
         $view = $this->view;
 
         if ($this->request->getPost()) {
+            $data = $this->request->getPost();
+
             try {
                 $this->db->begin();
 
-                $data = $this->request->getPost();
-
-                $DLProviderGame = new DLProviderGame();
+                $DLProviderGame = new DLCategoryGame();
                 $DLProviderGame->create($data);
 
                 $this->db->commit();
 
-                $this->flash->success('provider_game_create_success');
+                $this->flash->success('game_category_create_success');
                 return $this->response->redirect($this->router->getRewriteUri())->send();
             } catch (\Exception $e) {
                 $this->db->rollback();
@@ -45,30 +46,35 @@ class ProviderController extends \Backoffice\Controllers\BaseController
     {
         $view = $this->view;
 
-        $currentId = $this->dispatcher->getParam("id");
+        $module = $this->router->getModuleName();
+        $controller = $this->router->getControllerName();
+        $action = $this->router->getActionName();
 
-        $DLProviderGame = new DLProviderGame();
-        $providerGame = $DLProviderGame->getById($currentId);
+        $currentCode = $this->dispatcher->getParam("code");
+
+        $DLGameCategory = new DLCategoryGame();
+        $gameCategory = $DLGameCategory->getByCode($currentCode);
 
         if ($this->request->getPost()) {
             try {
                 $this->db->begin();
 
                 $data = $this->request->getPost();
+                $data['code'] = $currentCode;
+                $data['id'] = $gameCategory->getId();
 
-                $data['id'] = $providerGame->getId();
-                $DLProviderGame->set($data);
+                $setGameCategory = $DLGameCategory->set($data);
 
                 $this->db->commit();
 
-                $this->flash->success('provider_game_update_success');
-                return $this->response->redirect($this->router->getRewriteUri())->send();
+                $this->flash->success('game_category_update_success');
+                return $this->response->redirect("/".$module."/".$controller."/".$action."/".$setGameCategory->getCode())->send();
             } catch (\Exception $e) {
                 $this->db->rollback();
                 $this->flash->error($e->getMessage());
             }
         }
-        $view->provider = $providerGame;
+        $view->category = $gameCategory;
 
         \Phalcon\Tag::setTitle("Update Game Provider - ".$this->_website->title);
     }
