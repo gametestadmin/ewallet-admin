@@ -2,28 +2,44 @@
 namespace System\Datalayer;
 
 use System\Model\Game;
-use System\Model\ProviderGame;
 
-class DLCategoryGame{
-    public function getAll(){
-        $providerGame = ProviderGame::find(
+class DLMainGame{
+    public function getById($id){
+        $mainGame = Game::findFirstById($id);
+
+        return $mainGame;
+    }
+
+    public function getByGameParent($id){
+        $mainGame = Game::findFirstByGameParent($id);
+
+        return $mainGame;
+    }
+
+    public function getByCode($code){
+        $mainGame = Game::findFirst(
             array(
-                "conditions" => "status = 1"
+                "conditions" => "code = :code: AND type = 2",
+                "bind" => array(
+                    "code" => $code
+                )
             )
         );
 
-        return $providerGame;
+        return $mainGame;
     }
 
-    public function getById($id){
-        $providerGame = ProviderGame::findFirstById($id);
-
-        return $providerGame;
-    }
-
-    public function checkByName($name){
-        $providerGame = Game::findFirstByName($name);
-        if(!$providerGame){
+    public function checkByProviderAndName($provider,$name){
+        $mainGame = Game::findFirst(
+            array(
+                "conditions" => "provider = :provider: AND name = :name:",
+                "bind" => array(
+                    "name" => $name,
+                    "provider" => $provider,
+                )
+            )
+        );
+        if(!$mainGame){
             return false;
         }
 
@@ -31,7 +47,7 @@ class DLCategoryGame{
     }
 
     public function checkByIdName($id,$name){
-        $providerGame = Game::findFirst(
+        $mainGame = Game::findFirst(
             array(
                 "conditions" => "id != :id: AND name = :name:",
                 "bind" => array(
@@ -40,7 +56,7 @@ class DLCategoryGame{
                 )
             )
         );
-        if(!$providerGame){
+        if(!$mainGame){
             return false;
         }
 
@@ -48,16 +64,21 @@ class DLCategoryGame{
     }
 
     public function filterInput($data){
-        $data['name'] = \filter_var(\strip_tags(\addslashes($data['category_name'])), FILTER_SANITIZE_STRING);
-        $data['code'] = str_replace("-"," ",$data['name']);
+        $data['provider'] = \filter_var(\strip_tags(\addslashes($data['provider'])), FILTER_SANITIZE_STRING);
+        $data['category'] = \filter_var(\strip_tags(\addslashes($data['category'])), FILTER_SANITIZE_STRING);
+        $data['name'] = \filter_var(\strip_tags(\addslashes($data['main_name'])), FILTER_SANITIZE_STRING);
         $data['status'] = \intval($data['status']);
 
         return $data;
     }
 
     public function validateAdd($data){
-        if($this->checkByName($data['name'])){
-            throw new \Exception('category_name_exist');
+        if(empty($data['provider'])){
+            throw new \Exception('choose_provider_field');
+        }elseif(empty($data['category'])){
+            throw new \Exception('choose_category_field');
+        }elseif($this->checkByProviderAndName($data['provider'],$data['name'])){
+            throw new \Exception('main_name_exist');
         }elseif(empty($data['name'])){
             throw new \Exception('category_name_empty');
         }elseif($data['status']<0 || $data['status']>1){
@@ -82,16 +103,20 @@ class DLCategoryGame{
     public function create($data){
         $data = $this->filterInput($data);
         $this->validateAdd($data);
-        $providerGame = new Game();
+        $parentCategory = $this->getById($data['category']);
+        $mainGame = new Game();
 
-        $providerGame->setType(1);
-        if(isset($data["code"]))$providerGame->setCode($data['code']);
-        if(isset($data["name"]))$providerGame->setName($data['name']);
-        $providerGame->setParentStatus(1);
-        if(isset($data["status"]))$providerGame->setStatus($data['status']);
+        $name = str_replace(" ","",$data['name']);
+        if(isset($data["provider"]))$mainGame->setProvider($data['provider']);
+        if(isset($data["category"]))$mainGame->setGameParent($data['category']);
+        if(isset($data["name"]))$mainGame->setName(ucfirst($data['name']));
+        $mainGame->setType(2);
+        $mainGame->setCode(strtolower($parentCategory->getCode()."-".$name));
+        $mainGame->setParentStatus($parentCategory->getStatus());
+        $mainGame->setStatus($data['status']);
 
-        if(!$providerGame->save()){
-            throw new \Exception($providerGame->getMessages());
+        if(!$mainGame->save()){
+            throw new \Exception($mainGame->getMessages());
         }
         return true;
     }
@@ -99,15 +124,19 @@ class DLCategoryGame{
     public function set($data){
         $data = $this->filterInput($data);
         $this->validateEdit($data);
-        $providerGame = $this->getById($data['id']);
+        $gameCategory = $this->getById($data['id']);
+        $gameParent = $this->getByGameParent($gameCategory->getGameParent());
 
-        if(isset($data["timezone"]))$providerGame->setTimezone($data['timezone']);
-        if(isset($data["name"]))$providerGame->setName($data['name']);
-        if(isset($data["status"]))$providerGame->setStatus($data['status']);
+        var_dump($gameParent);
+        die;
 
-        if(!$providerGame->save()){
-            throw new \Exception($providerGame->getMessages());
+        if(isset($data["name"]))$gameCategory->setName($data['name']);
+        if(isset($data["status"]))$gameCategory->setStatus($data['status']);
+
+
+        if(!$gameCategory->save()){
+            throw new \Exception($gameCategory->getMessages());
         }
-        return true;
+        return $gameCategory;
     }
 }

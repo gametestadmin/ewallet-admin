@@ -29,6 +29,8 @@ class DLCurrency {
     }
 
     public function validateEdit($data){
+        $data = $this->filterInput($data);
+
         if(empty($data['name'])){
             throw new \Exception('currency_name_empty');
         }elseif(empty($data['symbol'])){
@@ -41,6 +43,8 @@ class DLCurrency {
     }
 
     public function validateAdd($data){
+        $data = $this->filterInput($data);
+
         if($this->checkByCode(strtoupper($data['code']))){
             throw new \Exception('currency_code_exist');
         }elseif(empty($data['name'])){
@@ -55,7 +59,6 @@ class DLCurrency {
     }
 
     public function create($data){
-        $data = $this->filterInput($data);
         $this->validateAdd($data);
 
         $newCurrency = new Currency();
@@ -72,8 +75,6 @@ class DLCurrency {
     }
 
     public function set($data){
-        $data = $this->filterInput($data);
-        $this->validateEdit($data);
         $currency = $this->getByCode($data['code']);
 
         if(isset($data["name"]))$currency->setName($data['name']);

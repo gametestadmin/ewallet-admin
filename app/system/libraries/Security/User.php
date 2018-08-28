@@ -1,33 +1,41 @@
 <?php
 
-namespace System\Libraries\Security;
+namespace System\Library\Security;
 
-use System\Libraries\GlobalVariable;
+//use System\Libraries\GlobalVariable;
 use System\Models\PokerLogs;
 use System\Models\PokerUsers;
 
 class User
 {
+    public $_config;
     public $_siteIVSettings;
-
     public $_siteKeySettings;
 
     public function __construct()
     {
-        $this->_siteIVSettings = GlobalVariable::getWebsiteSetting('site_iv');
-        $this->_siteKeySettings = GlobalVariable::getWebsiteSetting('site_key');
+        $this->_config = include __DIR__.'/../../../config/config.php';
+
+//        $this->_siteIVSettings = GlobalVariable::getWebsiteSetting('site_iv');
+//        $this->_siteKeySettings = GlobalVariable::getWebsiteSetting('site_key');
+        $this->_siteIVSettings = $this->_config->security->site_iv;
+        $this->_siteKeySettings = $this->_config->security->site_key;
+
     }
+
 
     public function enc_str($string)
     {
-        $crypText = \mcrypt_encrypt(MCRYPT_SAFERPLUS, $this->_siteKeySettings, $string, MCRYPT_MODE_ECB, $this->_siteIVSettings);
+//        $crypText = \mcrypt_encrypt(MCRYPT_SAFERPLUS, $this->_siteKeySettings, $string, MCRYPT_MODE_ECB, $this->_siteIVSettings);
+        $crypText = \openssl_encrypt($string, 'AES-128-CBC', $this->_siteKeySettings, OPENSSL_RAW_DATA, $this->_siteIVSettings);
 
         return $crypText;
     }
 
-    public function dec_str($string)
+    public function dec_str($key,$string)
     {
-        $decrypText = \mcrypt_decrypt(MCRYPT_SAFERPLUS, $this->_siteKeySettings, $string, MCRYPT_MODE_ECB, $this->_siteIVSettings);
+//        $decrypText = \mcrypt_decrypt(MCRYPT_SAFERPLUS, $this->_siteKeySettings, $string, MCRYPT_MODE_ECB, $this->_siteIVSettings);
+        $decrypText = \openssl_decrypt($string, 'AES-128-CBC', $this->_siteKeySettings, OPENSSL_RAW_DATA, $this->_siteIVSettings);
 
         return $decrypText;
     }

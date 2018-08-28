@@ -4,6 +4,7 @@
         <div class="form-group">
             <label>
                 <select name="provider">
+                <option value="">-Choose One-</option>
                 {% for provider in providerGame %}
                     <option value="{{provider.id}}">{{provider.name}}</option>
                 {% endfor %}
@@ -12,7 +13,17 @@
         </div>
         <div class="form-group">
             <label>
-                <input type="text" name="category_name" placeholder="Name">
+                <select name="category">
+                <option value="">-Choose One-</option>
+                {% for category in categoryGame %}
+                    <option value="{{category.id}}">{{category.name}}</option>
+                {% endfor %}
+                </select>
+            </label>
+        </div>
+        <div class="form-group">
+            <label>
+                <input type="text" name="main_name" placeholder="Name">
             </label>
         </div>
         <div class="form-group">

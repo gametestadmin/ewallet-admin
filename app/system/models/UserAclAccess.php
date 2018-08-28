@@ -2,73 +2,52 @@
 
 namespace System\Model;
 
-class UserAcl extends \Phalcon\Mvc\Model
+class UserAclAccess extends \Phalcon\Mvc\Model
 {
 
     /**
      *
      * @var integer
      */
-    protected $id;
+    public $id;
 
     /**
      *
      * @var integer
      */
-    protected $user;
+    public $user;
 
     /**
-     * Method to set the value of field id
      *
-     * @param integer $id
-     * @return $this
+     * @var string
      */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
+    public $module;
 
     /**
-     * Method to set the value of field user
      *
-     * @param integer $user
-     * @return $this
+     * @var string
      */
-    public function setUser($user)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
+    public $controller;
 
     /**
-     * Returns the value of field id
      *
-     * @return integer
+     * @var string
      */
-    public function getId()
-    {
-        return $this->id;
-    }
+    public $action;
 
     /**
-     * Returns the value of field user
      *
-     * @return integer
+     * @var string
      */
-    public function getUser()
-    {
-        return $this->user;
-    }
+    public $status;
 
     /**
      * Initialize method for model.
      */
     public function initialize()
     {
-        $this->setSource("user_acl");
+        $this->setSchema("backoffice");
+        $this->setSource("user_acl_access");
         $this->belongsTo('user', 'System\Model\User', 'id', ['alias' => 'User']);
     }
 
@@ -79,14 +58,14 @@ class UserAcl extends \Phalcon\Mvc\Model
      */
     public function getSource()
     {
-        return 'user_acl';
+        return 'user_acl_access';
     }
 
     /**
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters
-     * @return UserAcl[]|UserAcl|\Phalcon\Mvc\Model\ResultSetInterface
+     * @return UserAclAccess[]|UserAclAccess|\Phalcon\Mvc\Model\ResultSetInterface
      */
     public static function find($parameters = null)
     {
@@ -97,7 +76,7 @@ class UserAcl extends \Phalcon\Mvc\Model
      * Allows to query the first record that match the specified conditions
      *
      * @param mixed $parameters
-     * @return UserAcl|\Phalcon\Mvc\Model\ResultInterface
+     * @return UserAclAccess|\Phalcon\Mvc\Model\ResultInterface
      */
     public static function findFirst($parameters = null)
     {

@@ -1,96 +1,12 @@
 @import url(config.less);
 
-@font-face {
-  font-family: "Microsoft New Tai Lue Bold";
-  src: url("/assets/thirdparty/fonts/new-tai-lue-bold/ntailu.ttf");
-}
-@font-face {
-  font-family: "Microsoft New Tai Lue Bold";
-  src: url("/assets/thirdparty/fonts/new-tai-lue-bold/ntailub.ttf");
-  font-weight: bold;
-}
 html{
   height : 100% ;
 }
-@media (min-width: 992px ){
-  body{
-    height : 100%;
-    background-color: black;
-    -webkit-background-size: 100%;
-    background-size: 100%;
-    font-size: 14px ;
-    font-family: 'Microsoft New Tai Lue Bold';
-  }
-  .wrapper{
-    //min-height : 300px ;
-  }
-  .content-bg{
-    //min-height: 300px ;
-    position: relative;
-    overflow: hidden;
-    border-bottom: solid 3px rgba(164, 178, 187, .70);
-  }
-  .min-height{
-    min-height : 300px ;
-  }
+body{
+  height : 100%;
+  background : #33414E;
 }
-@media (min-width: 768px ) and (max-width: 991px ){
-  body{
-    height : 100%;
-    background-color: black;
-    -webkit-background-size: 100%;
-    background-size: 100%;
-    font-size: 12px ;
-    font-family: 'Microsoft New Tai Lue Bold';
-  }
-  .wrapper{
-    //min-height : 250px ;
-  }
-  .content-bg{
-    //min-height: 250px ;
-    position: relative;
-    overflow: hidden;
-    border-bottom: solid 3px rgba(164, 178, 187, .70);
-  }
-  .min-height{
-    min-height : 250px ;
-  }
-}
-@media (max-width: 767px ){
-  body{
-    height : 100%;
-    background-color: black;
-    -webkit-background-size: 100%;
-    background-size: 100%;
-    font-size: 10px;
-    font-family: 'Microsoft New Tai Lue Bold';
-  }
-  .wrapper{
-    //min-height : 200px ;
-  }
-  .content-bg{
-    //min-height: 200px ;
-    position: relative;
-    overflow: hidden;
-  }
-  .min-height{
-    min-height : 200px ;
-  }
-}
-
-.main-content{
-  width : 100% ;
-  height : 100% ;
-  position : relative ;
-}
-.container2{
-  position : relative ;
-  height : 100% ;
-  width : 100% ;
-  left : 0;
-}
-
-
 
 /*** background style ***/
 .none-bg{  background-color: transparent !important;}
@@ -205,7 +121,7 @@ html{
 /*** aligning style ***/
 .float-left {  float: left          ;}
 .float-right{  float: right         ;}
-.text-center{  text-align : center  ;}
+//.text-center{  text-align : center  ;}
 .text-right {  text-align: right    ;}
 .text-left  {  text-align : left    ;}
 /*** end_of_aligning ***/

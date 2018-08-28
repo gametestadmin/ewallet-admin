@@ -46,18 +46,22 @@ class CategoryController extends \Backoffice\Controllers\BaseController
     {
         $view = $this->view;
 
-        $module = $this->router->getModuleName();
-        $controller = $this->router->getControllerName();
-        $action = $this->router->getActionName();
-
         $currentCode = $this->dispatcher->getParam("code");
 
         $DLGameCategory = new DLCategoryGame();
         $gameCategory = $DLGameCategory->getByCode($currentCode);
+        if(!$gameCategory){
+            $this->flash->error("undefined_game_category_code");
+            $this->response->redirect("/game/category")->send();
+        }
 
         if ($this->request->getPost()) {
             try {
                 $this->db->begin();
+
+                $module = $this->router->getModuleName();
+                $controller = $this->router->getControllerName();
+                $action = $this->router->getActionName();
 
                 $data = $this->request->getPost();
                 $data['code'] = $currentCode;

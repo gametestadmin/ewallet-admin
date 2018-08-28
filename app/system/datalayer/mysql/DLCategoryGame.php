@@ -4,26 +4,15 @@ namespace System\Datalayer;
 use System\Model\Game;
 
 class DLCategoryGame{
-//    public function getGameByCode($code){
-//        $gameCategory = Game::find(
-//            array(
-//                "conditions" => "code LIKE '%$code%' AND type != 1",
-//            )
-//        );
-//
-//        $array = array(
-//            "slot-monkeymadness",
-//            "slot-oceanking3"
-//        );
-//        echo "<pre>";
-//        foreach ($array as $key => $value){
-//            $query = $this->modelsManager->createQuery("UPDATE System\Model\Game SET code = REPLACE('".$value."','slot','slot2') WHERE code = '".$value."' AND type != 1");
-//            $query->execute();
-//        }
-//        die;
-//
-//        return $gameCategory;
-//    }
+    public function getAll(){
+        $categoryGame = Game::find(
+            array(
+                "conditions" => "type = 1 AND status = 1"
+            )
+        );
+
+        return $categoryGame;
+    }
 
     public function getById($id){
         $gameCategory = Game::findFirstById($id);
@@ -32,7 +21,14 @@ class DLCategoryGame{
     }
 
     public function getByCode($code){
-        $gameCategory = Game::findFirstByCode($code);
+        $gameCategory = Game::findFirst(
+            array(
+                "conditions" => "code = :code: AND type = 1",
+                "bind" => array(
+                    "code" => $code
+                )
+            )
+        );
 
         return $gameCategory;
     }
@@ -46,22 +42,22 @@ class DLCategoryGame{
         return true;
     }
 
-//    public function checkByCodeName($code,$name){
-//        $gameCategory = Game::findFirst(
-//            array(
-//                "conditions" => "code != :code: AND name = :name:",
-//                "bind" => array(
-//                    "code" => $code,
-//                    "name" => $name,
-//                )
-//            )
-//        );
-//        if(!$gameCategory){
-//            return false;
-//        }
-//
-//        return true;
-//    }
+    public function checkByIdName($id,$name){
+        $gameCategory = Game::findFirst(
+            array(
+                "conditions" => "id != :id: AND name = :name:",
+                "bind" => array(
+                    "id" => $id,
+                    "name" => $name,
+                )
+            )
+        );
+        if(!$gameCategory){
+            return false;
+        }
+
+        return true;
+    }
 
     public function filterInput($data){
         $data['name'] = \filter_var(\strip_tags(\addslashes($data['category_name'])), FILTER_SANITIZE_STRING);
@@ -84,7 +80,7 @@ class DLCategoryGame{
     }
 
     public function validateEdit($data){
-        if($this->checkByName($data['name'])){
+        if($this->checkByIdName($data['id'],$data['name'])){
             throw new \Exception('category_name_exist');
         }elseif(empty($data['name'])){
             throw new \Exception('category_name_empty');
@@ -98,16 +94,16 @@ class DLCategoryGame{
     public function create($data){
         $data = $this->filterInput($data);
         $this->validateAdd($data);
-        $providerGame = new Game();
+        $gameCategory = new Game();
 
-        $providerGame->setType(1);
-        if(isset($data["code"]))$providerGame->setCode($data['code']);
-        if(isset($data["name"]))$providerGame->setName(ucfirst($data['name']));
-        $providerGame->setParentStatus(1);
-        if(isset($data["status"]))$providerGame->setStatus($data['status']);
+        $gameCategory->setType(1);
+        if(isset($data["code"]))$gameCategory->setCode($data['code']);
+        if(isset($data["name"]))$gameCategory->setName(ucfirst($data['name']));
+        $gameCategory->setParentStatus(1);
+        if(isset($data["status"]))$gameCategory->setStatus($data['status']);
 
-        if(!$providerGame->save()){
-            throw new \Exception($providerGame->getMessages());
+        if(!$gameCategory->save()){
+            throw new \Exception($gameCategory->getMessages());
         }
         return true;
     }
@@ -117,7 +113,6 @@ class DLCategoryGame{
         $this->validateEdit($data);
         $gameCategory = $this->getById($data['id']);
 
-//        if(isset($data["code"]))$gameCategory->setCode(strtolower($data['code']));
         if(isset($data["name"]))$gameCategory->setName($data['name']);
         if(isset($data["status"]))$gameCategory->setStatus($data['status']);
 

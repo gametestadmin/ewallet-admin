@@ -1,5 +1,4 @@
 <?php
-
 namespace Backoffice\Controllers;
 
 defined('APP_PATH') || define('APP_PATH', realpath('.'));
@@ -8,16 +7,20 @@ use System\Language\Language;
 use Phalcon\Mvc\Controller;
 use Phalcon\Translate\Adapter\NativeArray;
 
+//model used in the code
+use System\Datalayer\DLCurrency;
+
+
 class BaseController extends Controller
 {
     protected $_website = false;
+    protected $_user = null;
 //    protected $_application_name = null;
 //    protected $_environment = null;
 //    protected $_template = null;
 //    protected $_frontend = null;
 //    protected $_language = "en";
 //    protected $_languageList = null;
-//    protected $_user = null;
 //    protected $_website = null;
 //    protected $_allowedWebsite = null;
 
@@ -27,12 +30,11 @@ class BaseController extends Controller
         $this->_setViewTemplate();
         $this->_setBaseUri();
         $this->_setLanguage();
-
+        $this->_setUser();
 
 
 
 //        $this->_setWebsite();
-//        $this->_setUser();
 
 //        $this->_language = $this->cookies->get('language')->getValue();
 //        $this->view->translate = language::getTranslation($this->_language);
@@ -62,9 +64,10 @@ class BaseController extends Controller
 
 //        $this->view->frontend = $this->_frontend;
 
-//        $this->view->module = $this->router->getModuleName();
-//        $this->view->controller = $this->router->getControllerName();
-//        $this->view->action = $this->router->getActionName();
+
+        $this->view->module = $this->router->getModuleName();
+        $this->view->controller = $this->router->getControllerName();
+        $this->view->action = $this->router->getActionName();
     }
 
     protected function _setViewTemplate()
@@ -112,26 +115,42 @@ class BaseController extends Controller
         $this->view->translate = $this->_translate;
     }
 
+    protected function _setUser()
+    {
+        //Set user here
+        if($this->session->has('user')){
+            $this->_user = $this->session->get('user');
+        }
+        $this->view->user = $this->_user;
+    }
+
     protected function noticeFlash($message)
     {
         $message = $this->_translate[$message];
 
         $this->flash->notice($message);
     }
-
     protected function errorFlash($message)
     {
         $message = $this->_translate[$message];
 
         $this->flash->error($message);
     }
-
     protected function successFlash($message)
     {
         $message = $this->_translate[$message];
 
         $this->flash->success($message);
     }
+
+//    //PROTECTED
+//    protected function _setAcl(){
+//
+//        $this->session->set('acl', json_encode(array("asd"=>true)));
+//    }
+
+
+
 
 
 
@@ -149,15 +168,6 @@ class BaseController extends Controller
 //        }
         $this->view->allowed_website = $this->_allowedWebsite;
         $this->view->website = $this->_website;
-    }
-
-    protected function _setUser()
-    {
-        //Set user here
-        if($this->session->has('user')){
-            $this->_user = $this->session->get('user');
-        }
-        $this->view->user = $this->_user;
     }
 
     protected function _getBrowserID()
