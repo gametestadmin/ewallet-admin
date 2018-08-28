@@ -48,6 +48,13 @@ $routes = array(
         )
     ),
     array(
+        'url' => '/(logout|LOGOUT)',
+        'params' => array(
+            'controller' => 'index',
+            'action' => 'logout'
+        )
+    ),
+    array(
         'url' => '/(captcha|CAPTCHA)',
         'params' => array(
             'controller' => 'captcha',

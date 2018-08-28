@@ -49,6 +49,12 @@ class User extends \Phalcon\Mvc\Model
 
     /**
      *
+     * @var string
+     */
+    protected $password;
+
+    /**
+     *
      * @var integer
      */
     protected $reset_nickname;
@@ -152,6 +158,19 @@ class User extends \Phalcon\Mvc\Model
     public function setNickname($nickname)
     {
         $this->nickname = $nickname;
+
+        return $this;
+    }
+
+    /**
+     * Method to set the value of field password
+     *
+     * @param string $password
+     * @return $this
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
 
         return $this;
     }
@@ -266,6 +285,16 @@ class User extends \Phalcon\Mvc\Model
     }
 
     /**
+     * Returns the value of field password
+     *
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
      * Returns the value of field reset_nickname
      *
      * @return integer
@@ -300,6 +329,7 @@ class User extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
+        $this->setSchema("backoffice");
         $this->setSource("user");
         $this->hasMany('id', 'System\Model\StatementGame', 'agent', ['alias' => 'StatementGame']);
         $this->hasMany('id', 'System\Model\StatementGame014', 'agent', ['alias' => 'StatementGame014']);
@@ -318,16 +348,6 @@ class User extends \Phalcon\Mvc\Model
         $this->hasMany('code', 'System\Model\UserPlayer', 'company_code', ['alias' => 'UserPlayer']);
         $this->hasMany('id', 'System\Model\UserWhitelistIp', 'user', ['alias' => 'UserWhitelistIp']);
         $this->belongsTo('parent', 'System\Model\User', 'id', ['alias' => 'User']);
-    }
-
-    /**
-     * Returns table name mapped in the model.
-     *
-     * @return string
-     */
-    public function getSource()
-    {
-        return 'user';
     }
 
     /**
@@ -350,6 +370,16 @@ class User extends \Phalcon\Mvc\Model
     public static function findFirst($parameters = null)
     {
         return parent::findFirst($parameters);
+    }
+
+    /**
+     * Returns table name mapped in the model.
+     *
+     * @return string
+     */
+    public function getSource()
+    {
+        return 'user';
     }
 
 }
