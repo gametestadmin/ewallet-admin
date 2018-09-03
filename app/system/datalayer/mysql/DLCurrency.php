@@ -5,6 +5,12 @@ use System\Model\Currency;
 
 class DLCurrency {
 
+    public function getAll(){
+        $currency = Currency::find();
+
+        return $currency;
+    }
+
     public function getByCode($code){
         $currency = Currency::findFirstByCode($code);
 
@@ -20,10 +26,10 @@ class DLCurrency {
     }
 
     public function filterInput($data){
-
-        $data['name'] = \filter_var(\strip_tags(\addslashes($data['name'])), FILTER_SANITIZE_STRING);
-        $data['symbol'] = \filter_var(\strip_tags(\addslashes($data['symbol'])), FILTER_SANITIZE_STRING);
-        $data['status'] = \intval($data['status']);
+        if(isset($data["code"])) $data['code'] = \filter_var(\strip_tags(\addslashes($data['code'])), FILTER_SANITIZE_STRING);
+        if(isset($data["name"])) $data['name'] = \filter_var(\strip_tags(\addslashes($data['name'])), FILTER_SANITIZE_STRING);
+        if(isset($data["symbol"])) $data['symbol'] = \filter_var(\strip_tags(\addslashes($data['symbol'])), FILTER_SANITIZE_STRING);
+        if(isset($data["status"])) $data['status'] = \intval($data['status']);
 
         return $data;
     }
@@ -72,8 +78,6 @@ class DLCurrency {
     }
 
     public function set($data){
-        $data = $this->filterInput($data);
-        $this->validateEdit($data);
         $currency = $this->getByCode($data['code']);
 
         if(isset($data["name"]))$currency->setName($data['name']);

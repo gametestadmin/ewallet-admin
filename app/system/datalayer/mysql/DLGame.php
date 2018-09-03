@@ -3,15 +3,14 @@ namespace System\Datalayer;
 
 use System\Model\Game;
 
-class DLCategoryGame{
-    public function getAll(){
-        $categoryGame = Game::find(
+class DLGame{
+    public function getAll($type){
+        $game = Game::find(
             array(
-                "conditions" => "type = 1 AND status = 1"
+                "conditions" => "type = ".$type.""
             )
         );
-
-        return $categoryGame;
+        return $game;
     }
 
     public function getById($id){
@@ -39,9 +38,18 @@ class DLCategoryGame{
         return $gameCategory;
     }
 
-    public function checkByName($name){
-        $gameCategory = Game::findFirstByName($name);
-        if(!$gameCategory){
+    public function checkByName($name,$type){
+        $game = Game::findFirst(
+            array(
+                "conditions" => "name = :name: AND type = :type:",
+                "bind" => array(
+                    "name" => $name,
+                    "type" => $type
+                )
+            )
+        );
+
+        if(!$game){
             return false;
         }
 
@@ -65,21 +73,19 @@ class DLCategoryGame{
         return true;
     }
 
-    public function filterInput($data){
+    public function filterCategoryInput($data){
+        $data['type'] = \intval($data['type']);
         $data['name'] = \filter_var(\strip_tags(\addslashes($data['category_name'])), FILTER_SANITIZE_STRING);
-        $data['code'] = str_replace("-"," ",$data['name']);
-        $data['status'] = \intval($data['status']);
+        $data['code'] = \filter_var(\strip_tags(\addslashes($data['category_code'])), FILTER_SANITIZE_STRING);
 
         return $data;
     }
 
-    public function validateAdd($data){
-        if($this->checkByName($data['name'])){
+    public function validateCategoryAdd($data){
+        if($this->checkByName($data['name'],$data['type'])){
             throw new \Exception('category_name_exist');
         }elseif(empty($data['name'])){
             throw new \Exception('category_name_empty');
-        }elseif($data['status']<0 || $data['status']>2){
-            throw new \Exception('undefined_category_status');
         }
 
         return true;
@@ -97,16 +103,15 @@ class DLCategoryGame{
         return true;
     }
 
-    public function create($data){
-        $data = $this->filterInput($data);
-        $this->validateAdd($data);
+    public function createCategory($data){
+        $data = $this->filterCategoryInput($data);
+        $this->validateCategoryAdd($data);
         $gameCategory = new Game();
 
         $gameCategory->setType(1);
-        if(isset($data["code"]))$gameCategory->setCode($data['code']);
+        if(isset($data["code"]))$gameCategory->setCode(strtolower($data['code']));
         if(isset($data["name"]))$gameCategory->setName(ucfirst($data['name']));
         $gameCategory->setParentStatus(1);
-        if(isset($data["status"]))$gameCategory->setStatus($data['status']);
 
         if(!$gameCategory->save()){
             throw new \Exception($gameCategory->getMessages());

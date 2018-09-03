@@ -4,21 +4,23 @@
         <div class="form-group">
             <label>Category Name</label>
             <label>
-                <input type="text" name="category_name" placeholder="Name" value="{{category.name}}">
+                <input type="text" placeholder="Name" value="{{category.name}}" readonly>
             </label>
         </div>
         <div class="form-group">
-            <label>Category Code</label>
-            <label>
-                <input type="text" placeholder="Name" value="{{category.code}}" readonly>
-            </label>
+            <label>Status</label>
+            <select class="status">
+                {% for key, value in status %}
+                    <option value="{{category.id~"|"~value}}" {% if category.status == value %}selected{% endif %}>{{key}}</option>
+                {% endfor %}
+            </select>
         </div>
         <div class="form-group">
             <label>
                 <a href="javascript:history.go(-1)">Back</>
             </label>
             <label>
-                <input type="submit" name="submit" value="Edit">
+                <a href="{{'/'~module~'/'~controller~'/edit/'~category.code|lowercase}}">Edit</>
             </label>
         </div>
     </form>

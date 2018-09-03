@@ -9,6 +9,7 @@ use \Phalcon\Flash\Session as Flash;
 use \Phalcon\Mvc\Model\Manager as ModelManager;
 use \Phalcon\Mvc\Dispatcher as Dispatcher;
 
+
 /**
  * The FactoryDefault Dependency Injector automatically register the right services providing a full stack framework
  */
@@ -17,7 +18,39 @@ $di = new FactoryDefault();
 /**
  * set config
  */
-$di->setShared('config', function () use ($config) {
+//$di->setShared('config', function () use ($config) {
+//    return $config;
+//});
+$di->setShared('view', function () use ($config) {
+
+    $config = new View();
+
+    $config->setViewsDir($config->application->viewsDir.$config->template."/");
+
+    $config->registerEngines(array(
+        '.volt' => function ($view, $di) use ($config) {
+
+            $volt = new VoltEngine($view, $di);
+
+            $volt->setOptions(array(
+                'compiledPath' => $config->application->cacheDir,
+                'compiledSeparator' => '_',
+                'compileAlways' => ($config->environment == 'development') ? true : false
+            ));
+
+            $compiler = $volt->getCompiler();
+
+            $compiler->addFilter('date', function ($resolvedArgs) {
+                return 'Volt\Libraries\Format::date(' . $resolvedArgs . ')';
+            });
+
+            return $volt;
+        }
+    ));
+
+    $config->setLayout('core');
+    $config->setLayoutsDir('layouts/');
+
     return $config;
 });
 

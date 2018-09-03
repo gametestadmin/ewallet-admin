@@ -7,6 +7,7 @@ $namespaces = array(
     'System\Library' => __DIR__ . '/../system/libraries/',
     'System\Model' => __DIR__ . '/../system/models/',
     'System\Datalayer' => __DIR__ . '/../system/datalayer/'.$config->dbenvironment."/" ,
+    'Volt\Libraries' => __DIR__ . '/../system/libraries/Volt',
 //    'Log\Libraries' => __DIR__ . '/../libraries/Log',
 //    'Security\Libraries' => __DIR__ . '/../libraries/Security',
 
@@ -16,7 +17,7 @@ $namespaces = array(
 //    'Tangkas\Libraries' => __DIR__ . '/../libraries/Tangkas',
 //    'Language\Libraries' => __DIR__ . '/../libraries/Language',
 //    'Plugins\Libraries' => __DIR__ . '/../libraries/Plugins',
-//    'Volt\Libraries' => __DIR__ . '/../libraries/Volt',
+
 //    'Frontend\Libraries' => __DIR__ . '/../libraries/Frontend',
 //    'System\Libraries\Language' => __DIR__ . '/../libraries/Language',
 //    'System\Libraries' => __DIR__ . '/../system/libraries/',

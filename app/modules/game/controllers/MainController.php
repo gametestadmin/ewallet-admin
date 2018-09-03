@@ -29,6 +29,10 @@ class MainController extends \Backoffice\Controllers\BaseController
         if ($this->request->getPost()) {
             $data = $this->request->getPost();
 
+            $module = $this->router->getModuleName();
+            $controller = $this->router->getControllerName();
+            $action = $this->router->getActionName();
+
             try {
                 $this->db->begin();
 
@@ -38,7 +42,7 @@ class MainController extends \Backoffice\Controllers\BaseController
                 $this->db->commit();
 
                 $this->flash->success('main_game_create_success');
-                return $this->response->redirect($this->router->getRewriteUri())->send();
+                return $this->response->redirect("/".$module."/".$controller."/".$action."/".$setGameCategory->getCode())->send();
             } catch (\Exception $e) {
                 $this->db->rollback();
                 $this->flash->error($e->getMessage());

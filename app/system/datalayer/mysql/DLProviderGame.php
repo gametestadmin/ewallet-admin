@@ -1,15 +1,12 @@
 <?php
 namespace System\Datalayer;
 
+use System\Model\Game;
 use System\Model\ProviderGame;
 
 class DLProviderGame{
     public function getAll(){
-        $providerGame = ProviderGame::find(
-            array(
-                "conditions" => "status = 1"
-            )
-        );
+        $providerGame = ProviderGame::find();
 
         return $providerGame;
     }
@@ -48,9 +45,9 @@ class DLProviderGame{
 
     public function filterInput($data){
 
-        $data['timezone'] = \filter_var(\strip_tags(\addslashes($data['provider_timezone'])), FILTER_SANITIZE_STRING);
-        $data['name'] = \filter_var(\strip_tags(\addslashes($data['provider_name'])), FILTER_SANITIZE_STRING);
-        $data['status'] = \intval($data['status']);
+        if(isset($data["provider_timezone"])) $data['timezone'] = \filter_var(\strip_tags(\addslashes($data['provider_timezone'])), FILTER_SANITIZE_STRING);
+        if(isset($data["provider_name"])) $data['name'] = \filter_var(\strip_tags(\addslashes($data['provider_name'])), FILTER_SANITIZE_STRING);
+        if(isset($data["status"])) $data['status'] = \intval($data['status']);
         if(!isset($data['id'])) {
             $app_id = strtotime("now") . $data['name'];
             $app_secret = $data['name'] . strtotime("now");
@@ -67,12 +64,10 @@ class DLProviderGame{
     public function validateAdd($data){
         if($this->checkByName($data['name'])){
             throw new \Exception('provider_name_exist');
-        }elseif(empty($data['timezone'])){
+        }elseif($data['timezone']==""){
             throw new \Exception('provider_timezone_empty');
         }elseif(empty($data['name'])){
             throw new \Exception('provider_name_empty');
-        }elseif($data['status']<0 || $data['status']>1){
-            throw new \Exception('undefined_provider_status');
         }
 
         return true;
@@ -101,17 +96,14 @@ class DLProviderGame{
         if(isset($data["name"]))$providerGame->setName($data['name']);
         if(isset($data["app_id"]))$providerGame->setAppId($data['app_id']);
         if(isset($data["app_secret"]))$providerGame->setAppSecret($data['app_secret']);
-        if(isset($data["status"]))$providerGame->setStatus($data['status']);
 
         if(!$providerGame->save()){
             throw new \Exception($providerGame->getMessages());
         }
-        return true;
+        return $providerGame->getId();
     }
 
     public function set($data){
-        $data = $this->filterInput($data);
-        $this->validateEdit($data);
         $providerGame = $this->getById($data['id']);
 
         if(isset($data["timezone"]))$providerGame->setTimezone($data['timezone']);

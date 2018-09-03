@@ -1,32 +1,28 @@
-{% extends "../../layouts/one-column.volt" %}
-
 {% block content %}
-<div id="wrapper">
+<div id="wrapper" style="color:white;">
     <form class="form-horizontal" action="#" method="post">
         <div class="form-group">
+            <label>Currency Code</label>
             <label>
-                <input type="text" name="code" placeholder="Code">
+                <input type="text" name="code" id="code" placeholder="Code">
             </label>
         </div>
         <div class="form-group">
+            <label>Currency Name</label>
             <label>
                 <input type="text" name="name" placeholder="Name">
             </label>
         </div>
         <div class="form-group">
+            <label>Currency Symbol</label>
             <label>
                 <input type="text" name="symbol" placeholder="Symbol">
             </label>
         </div>
         <div class="form-group">
             <label>
-                <input type="radio" name="status" value="0" checked>OFF
+                <a href="javascript:history.go(-1)" class="button">Back</>
             </label>
-            <label>
-                <input type="radio" name="status" value="1">ON
-            </label>
-        </div>
-        <div class="form-group">
             <label>
                 <input type="submit" name="submit" value="Add">
             </label>
@@ -36,5 +32,13 @@
 {% endblock %}
 
 {% block action_js %}
-
+    <script>
+        var max_chars = 3;
+        $('#code').keyup( function(e){
+            if ($(this).val().length >= max_chars) {
+                $(this).val($(this).val().substr(0, max_chars));
+            }
+            this.value = this.value.toUpperCase();
+        });
+    </script>
 {% endblock %}

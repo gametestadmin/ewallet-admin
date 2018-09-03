@@ -13,9 +13,9 @@ $config_apps = array(
     'dbenvironment' => "mysql",               //TODO :: development | production
     'version' => '1.0.0',
     'url' => array(
-        'base' => 'http://develop.admin/',
-        'assets' => 'http://develop.admin/assets/',
-        'media' => 'http://develop.admin/media/'
+        'base' => 'http://api.softco.dev/',
+        'assets' => 'http://api.softco.dev/assets/',
+        'media' => 'http://api.softco.dev/media/'
     ),
     'template' => 'admin',
     'language' => array(

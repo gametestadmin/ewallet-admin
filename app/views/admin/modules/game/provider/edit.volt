@@ -2,24 +2,32 @@
 <div id="wrapper">
     <form class="form-horizontal" action="#" method="post">
         <div class="form-group">
+            <label>Timezone</label>
             <label>
-                <input type="text" name="provider_timezone" placeholder="Timezone" value="{{provider.timezone}}">
+                <select name="provider_timezone">
+                    <option value="">-Choose One-</option>
+                    {% for gmtTime in gmt %}
+                        {% set gmtDisplay = gmtTime %}
+                        {% if gmtTime == 0%}
+                        {% set gmtDisplay = '' %}
+                        {% elseif gmtTime > 0%}
+                        {% set gmtDisplay = '+'~gmtTime %}
+                        {% endif %}
+                        <option value="{{gmtTime}}"{%if provider.timezone == gmtTime%}selected{%endif%}>GMT {{gmtDisplay}}</option>
+                    {% endfor %}
+                </select>
             </label>
         </div>
         <div class="form-group">
+            <label>Name</label>
             <label>
                 <input type="text" name="provider_name" placeholder="Name" value="{{provider.name}}">
             </label>
         </div>
         <div class="form-group">
             <label>
-                <input type="radio" name="status" value="0" {%if provider.status == 0%}checked{%endif%}>OFF
+                <a href="javascript:history.go(-1)">Back</>
             </label>
-            <label>
-                <input type="radio" name="status" value="1" {%if provider.status == 1%}checked{%endif%}>ON
-            </label>
-        </div>
-        <div class="form-group">
             <label>
                 <input type="submit" name="submit" value="Edit">
             </label>
