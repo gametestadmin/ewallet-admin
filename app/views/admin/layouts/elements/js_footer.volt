@@ -13,7 +13,7 @@
     });
 
     window.setTimeout(function() {
-        $(".alert").slideUp(500, function() {
+        $(".alert").slideUp(500000, function() {
             $(this).remove();
         });
     }, 3000);

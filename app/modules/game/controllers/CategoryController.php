@@ -3,6 +3,7 @@ namespace Backoffice\Game\Controllers;
 
 use System\Datalayer\DLCategoryGame;
 use System\Datalayer\DLGame;
+use System\Datalayer\DLMainGame;
 use System\Datalayer\DLProviderGame;
 use System\Library\General\GlobalVariable;
 
@@ -11,13 +12,17 @@ class CategoryController extends \Backoffice\Controllers\BaseController
     protected $_type = 1;
     public function indexAction()
     {
-        $view = $this->view;
+        $DLGame = new DLMainGame();
 
-        $categoryGame = new DLGame();
-        $status = GlobalVariable::$threeLayerStatus;
-
-        $view->category = $categoryGame->getAll($this->_type);
-        $view->status = $status;
+        var_dump($DLGame->myRecursiveFunction());
+        die;
+//        $view = $this->view;
+//
+//        $categoryGame = new DLGame();
+//        $status = GlobalVariable::$threeLayerStatus;
+//
+//        $view->category = $categoryGame->getAll($this->_type);
+//        $view->status = $status;
 
         \Phalcon\Tag::setTitle("Game Provider - ".$this->_website->title);
     }
@@ -134,5 +139,45 @@ class CategoryController extends \Backoffice\Controllers\BaseController
         $view->status = $status;
 
         \Phalcon\Tag::setTitle("Update Game Provider - ".$this->_website->title);
+    }
+
+    public function statusAction()
+    {
+        $view = $this->view;
+
+        $previousPage = new GlobalVariable();
+        $currentId = $this->dispatcher->getParam("id");
+
+        $module = $this->router->getModuleName();
+        $controller = $this->router->getControllerName();
+
+        $currentId = explode("|",$currentId);
+        $id = $currentId[0];
+        $status = $currentId[1];
+
+        $DLMain = new DLMainGame();
+        $mainGame = $DLMain->getById($id);
+        if(!isset($currentId) || !$mainGame){
+            $this->flash->error("undefined_provider_id");
+            $this->response->redirect($module."/".$controller."/")->send();
+        }
+
+        try {
+            $this->db->begin();
+
+            $data['id'] = $id;
+            $data['status'] = $status;
+
+            $mainGame->set($data);
+
+            $this->db->commit();
+            $this->flash->success("status_changed");
+            $this->response->redirect($previousPage->previousPage())->send();
+        } catch (\Exception $e) {
+            $this->db->rollback();
+            $this->flash->error($e->getMessage());
+        }
+
+        \Phalcon\Tag::setTitle("Edit Currency - ".$this->_website->title);
     }
 }

@@ -125,6 +125,7 @@ class ProviderController extends \Backoffice\Controllers\BaseController
     {
         $view = $this->view;
 
+        $previousPage = new GlobalVariable();
         $currentId = $this->dispatcher->getParam("id");
 
         $module = $this->router->getModuleName();
@@ -150,7 +151,8 @@ class ProviderController extends \Backoffice\Controllers\BaseController
             $DLProviderGame->set($data);
 
             $this->db->commit();
-            $this->response->redirect($module."/".$controller."/")->send();
+            $this->flash->success("status_changed");
+            $this->response->redirect($previousPage->previousPage())->send();
         } catch (\Exception $e) {
             $this->db->rollback();
             $this->flash->error($e->getMessage());

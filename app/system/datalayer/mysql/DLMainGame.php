@@ -127,9 +127,6 @@ class DLMainGame{
         $gameCategory = $this->getById($data['id']);
         $gameParent = $this->getByGameParent($gameCategory->getGameParent());
 
-        var_dump($gameParent);
-        die;
-
         if(isset($data["name"]))$gameCategory->setName($data['name']);
         if(isset($data["status"]))$gameCategory->setStatus($data['status']);
 
@@ -138,5 +135,20 @@ class DLMainGame{
             throw new \Exception($gameCategory->getMessages());
         }
         return $gameCategory;
+    }
+
+    public function myRecursiveFunction()
+    {
+        // (do the required processing...)
+        $i = 0;
+        if ($i == 0) {
+            // end the recursion
+            return $i;
+
+        } else {
+            $i++;
+            // continue the recursion
+            self::myRecursiveFunction();
+        }
     }
 }

@@ -1,6 +1,9 @@
 <?php
 namespace System\Library\User;
 
+use \System\Datalayer\DLUserAclResource ;
+use \System\Datalayer\DLUserAclAccess ;
+
 
 
 class General
@@ -17,4 +20,38 @@ class General
 
         return null ;
     }
+
+    public function getACL($user)
+    {
+        $acl = new DLUserAclAccess();
+        $aclList = $acl->getById($user);
+
+        return $aclList;
+    }
+
+    public function getCompanyACL()
+    {
+        $acl = new DLUserAclResource();
+        $aclList = $acl->get();
+
+        return $aclList;
+    }
+
+    public function filterACLlist($aclObject){
+        $aclList = array();
+        foreach ($aclObject as $key){
+            $aclList[$key->module][$key->controller][$key->action] = $key->status ;
+//            $acl['module'] = $key->module ;
+//            $acl['acl'] = $key->module."/".$key->controller."/".$key->action ;
+//            $acl['status'] = $key->status;
+//            $aclList[] = $acl;
+        }
+
+//        echo "something here<pre>";
+//        var_dump($aclList);
+//        die;
+
+        return $aclList;
+    }
+
 }

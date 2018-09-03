@@ -54,6 +54,22 @@ $routes = array(
             'action' => 'logout'
         )
     ),
+//    array(
+//        'url' => '/(login|LOGIN)',
+//        'params' => array(
+//            'module' => 'user',
+//            'controller' => 'login',
+//            'action' => 'login'
+//        )
+//    ),
+//    array(
+//        'url' => '/(logout|LOGOUT)',
+//        'params' => array(
+//            'module' => 'user',
+//            'controller' => 'login',
+//            'action' => 'logout'
+//        )
+//    ),
     array(
         'url' => '/(captcha|CAPTCHA)',
         'params' => array(
