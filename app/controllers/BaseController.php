@@ -7,14 +7,12 @@ use System\Language\Language;
 use Phalcon\Mvc\Controller;
 use Phalcon\Translate\Adapter\NativeArray;
 
-//model used in the code
-use System\Datalayer\DLCurrency;
-
 
 class BaseController extends Controller
 {
     protected $_website = false;
     protected $_user = null;
+    protected $_module = null;
 //    protected $_application_name = null;
 //    protected $_environment = null;
 //    protected $_template = null;
@@ -29,15 +27,18 @@ class BaseController extends Controller
         $this->_setApplication();
         $this->_setViewTemplate();
         $this->_setBaseUri();
-        $this->_setLanguage();
         $this->_setUser();
+        $this->_setLanguage();
+        $this->_setNavigation();
+        $this->_checkACL();
 
 
+//        $this->_language = $this->cookies->get('language')->getValue();
+//        $languageLibrary = new Language();
+//        $this->view->translate = $languageLibrary->getTranslation($this->_language);
 
 //        $this->_setWebsite();
 
-//        $this->_language = $this->cookies->get('language')->getValue();
-//        $this->view->translate = language::getTranslation($this->_language);
 
     }
 
@@ -99,7 +100,6 @@ class BaseController extends Controller
                 if($record["default"]) $default = $record["code"];
             }
         }
-
         if ($this->cookies->has('language')) {
             $default = $this->cookies->get('language')->getValue();
         }else{
@@ -107,12 +107,11 @@ class BaseController extends Controller
         }
 
         $this->view->language_list = $language_list;
-        $this->_language = $default;
 
-        $this->view->language = $this->_language;
+        $this->view->language = $default ;
         $languageLibrary = new Language();
-        $this->_translate = $languageLibrary->getTranslation($this->_language);
-        $this->view->translate = $this->_translate;
+//        $this->_translate = $languageLibrary->getTranslation($default);
+        $this->view->translate = $this->_translate = $languageLibrary->getTranslation($default);
     }
 
     protected function _setUser()
@@ -123,6 +122,48 @@ class BaseController extends Controller
         }
         $this->view->user = $this->_user;
     }
+
+    protected function _setNavigation()
+    {
+        //Get ACL for navigation
+        if($this->session->has('acl')){
+            $this->view->navigationlist = json_decode($this->session->get('acl')) ;
+        }
+    }
+
+    protected function _checkACL()
+    {
+        //check ACL when there is user
+        $module = $this->router->getModuleName();
+        $controller = $this->router->getControllerName();
+        $action = $this->router->getActionName();
+
+
+        if($this->session->has('user')){
+            if($this->session->has('acl') && $module != null  ){
+                $acl = json_decode($this->session->get('acl')) ;
+                if( $acl->{$module}->{$controller}->{$action} != 1){
+
+                    $this->errorFlash('cannot_access');
+                    return $this->response->redirect("/");
+                }
+
+            }
+        }
+
+//        echo "<pre>";
+//        var_dump($this->router->getModuleName());
+//        var_dump($this->router->getControllerName());
+//        var_dump($this->router->getActionName());
+//        var_dump($this->session->has('user'));
+//        var_dump($this->session->has('acl'));
+//        var_dump($this->router->getModuleName()!= null);
+//        die;
+
+
+    }
+
+
 
     protected function noticeFlash($message)
     {

@@ -9,9 +9,14 @@ class DLUserAclResource{
     public function getByModule($module){
         $module = UserAclResource::findByCode($module);
 
-        return $module;
+        return $module ;
     }
 
+    public function get(){
+        $module = UserAclResource::find();
+
+        return $module ;
+    }
 
 
 

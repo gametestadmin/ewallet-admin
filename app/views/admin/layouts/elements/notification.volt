@@ -7,14 +7,14 @@
         {% for message in messages %}
             {% if type == 'error' %}
             <div class="notification">
-                <div class="alert alert-danger alert-dismissible fade">
+                <div class="alert alert-danger alert-dismissible">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                     <i>{{message}}</i>
                 </div>
             </div>
             {% elseif type == 'success' %}
             <div class="notification">
-                <div class="alert alert-success alert-dismissible fade">
+                <div class="alert alert-success alert-dismissible">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                     <i>{{message}}</i>
                 </div>
