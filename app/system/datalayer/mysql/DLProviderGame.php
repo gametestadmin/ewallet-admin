@@ -5,8 +5,11 @@ use System\Model\Game;
 use System\Model\ProviderGame;
 
 class DLProviderGame{
-    public function getAll(){
+    public function getAll($status = null){
         $providerGame = ProviderGame::find();
+        if(isset($status)) {
+            $providerGame = ProviderGame::findByStatus($status);
+        }
 
         return $providerGame;
     }

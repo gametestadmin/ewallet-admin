@@ -83,8 +83,6 @@ class BaseController extends Controller
         $this->view->base_url = $this->config->url->base;
         $this->view->assets_url = $this->config->url->assets;
         $this->view->media_url = $this->config->url->media;
-//        echo "<pre>";
-//        var_dump($this->config);die;
     }
 
     protected function _setLanguage()

@@ -4,13 +4,7 @@
         <div class="form-group">
             <label>Category Name</label>
             <label>
-                <input type="text" name="category_name" placeholder="Name" value="{{category.name}}">
-            </label>
-        </div>
-        <div class="form-group">
-            <label>Category Code</label>
-            <label>
-                <input type="text" placeholder="Name" value="{{category.code}}" readonly>
+                <input type="text" name="category_name" id="name" placeholder="Name" value="{{category.name}}">
             </label>
         </div>
         <div class="form-group">
@@ -26,5 +20,4 @@
 {% endblock %}
 
 {% block action_js %}
-
 {% endblock %}

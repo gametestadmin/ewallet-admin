@@ -87,7 +87,7 @@ $routes = array(
 //        )
 //    ),
     array(
-        'url' => '/:module/:controller/:action/([\w]{3})',
+        'url' => '/:module/:controller/:action/([\w|]{5})',
         'params' => array(
             'module' => 1,
             'controller' => 2,

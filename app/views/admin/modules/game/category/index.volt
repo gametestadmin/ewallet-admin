@@ -16,7 +16,7 @@
         {% for categoryData in category %}
         <tr>
             <td>{{i}}</td>
-            <td>{{categoryData.type}}</td>
+            <td>{{categoryData.type|gameType}}</td>
             <td>{{categoryData.code}}</td>
             <td>{{categoryData.name}}</td>
             <td>
@@ -37,11 +37,19 @@
 
 {% block action_js %}
     <script>
-        jQuery(function () {
-            //location.href='game/provider/status/'+jQuery("#status").val();
-            jQuery(".status").change(function () {
+        jQuery(document).ready(function($){
+            var select = $('.status');
+            var previouslySelected;
+            select.focus(function(){
+                previouslySelected = this.value;
+            }).change(function(){
+                var conf = confirm('Are You Sure?');
+                if(!conf){
+                    this.value = previouslySelected;
+                    return;
+                }
                 location.href = document.URL+'/status/'+jQuery(this).val();
-            })
-        })
+            });
+        });
     </script>
 {% endblock %}

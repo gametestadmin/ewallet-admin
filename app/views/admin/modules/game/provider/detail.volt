@@ -31,10 +31,10 @@
         </div>
         <div class="form-group">
             <label>
-                <a href="javascript:history.go(-1)">Back</>
+                <a href="{{'/'~module~'/'~controller}}">Back</a>
             </label>
             <label>
-                <a href="{{'/'~module~'/'~controller~'/edit/'~provider.id}}">Edit</>
+                <a href="{{'/'~module~'/'~controller~'/edit/'~provider.id}}">Edit</a>
             </label>
         </div>
     </form>

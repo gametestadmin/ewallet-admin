@@ -20,11 +20,12 @@
             <td>{{currencyData.name}}</td>
             <td>{{currencyData.symbol}}</td>
             <td>
-                {% if currencyData.status == 1 %}
-                    <a href="{{router.getRewriteUri()~'/status/'~currencyData.code|lowercase}}">Active</a>
-                {%else%}
-                    <a href="{{router.getRewriteUri()~'/status/'~currencyData.code|lowercase}}">Inactive</a>
-                {% endif %}
+
+                <select class="status">
+                    {% for key, value in status %}
+                        <option value="{{currencyData.code~"|"~value}}" {% if currencyData.status == value %}selected{% endif %}>{{key}}</option>
+                    {% endfor %}
+                </select>
             </td>
             <td><a href="{{router.getRewriteUri()~'/detail/'~currencyData.code|lowercase}}">Detail</a></td>
         </tr>
@@ -36,5 +37,21 @@
 {% endblock %}
 
 {% block action_js %}
+    <script>
+        jQuery(document).ready(function($){
+            var select = $('.status');
+            var previouslySelected;
+            select.focus(function(){
+                previouslySelected = this.value;
+            }).change(function(){
+                var conf = confirm('Are You Sure?');
+                if(!conf){
+                    this.value = previouslySelected;
+                    return;
+                }
+                location.href = document.URL+'/status/'+jQuery(this).val();
+            });
+        });
+    </script>
 
 {% endblock %}

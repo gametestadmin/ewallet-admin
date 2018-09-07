@@ -18,40 +18,7 @@ $di = new FactoryDefault();
 /**
  * set config
  */
-//$di->setShared('config', function () use ($config) {
-//    return $config;
-//});
-$di->setShared('view', function () use ($config) {
-
-    $config = new View();
-
-    $config->setViewsDir($config->application->viewsDir.$config->template."/");
-
-    $config->registerEngines(array(
-        '.volt' => function ($view, $di) use ($config) {
-
-            $volt = new VoltEngine($view, $di);
-
-            $volt->setOptions(array(
-                'compiledPath' => $config->application->cacheDir,
-                'compiledSeparator' => '_',
-                'compileAlways' => true,
-//                'compileAlways' => ($config->environment == 'development') ? true : false
-            ));
-
-            $compiler = $volt->getCompiler();
-
-            $compiler->addFilter('date', function ($resolvedArgs) {
-                return 'Volt\Libraries\Format::date(' . $resolvedArgs . ')';
-            });
-
-            return $volt;
-        }
-    ));
-
-    $config->setLayout('core');
-    $config->setLayoutsDir('layouts/');
-
+$di->setShared('config', function () use ($config) {
     return $config;
 });
 
@@ -116,13 +83,21 @@ $di->setShared('view', function () use ($config) {
 
             $compiler = $volt->getCompiler();
 
-//            $compiler->addFunction('widget', function ($resolvedArgs) {
-//                return 'Frontend\Widgets\Manager::get(' . $resolvedArgs . ')->getContent()';
-//            });
-//
-//            $compiler->addFilter('acl_allowed', function ($resolvedArgs) {
-//                return 'Volt\Libraries\Security::acl(' . $resolvedArgs . ')';
-//            });
+            $compiler->addFilter('date', function ($resolvedArgs) {
+                return 'Volt\Libraries\Format::date(' . $resolvedArgs . ')';
+            });
+
+            $compiler->addFilter('gameName', function ($resolvedArgs) {
+                return 'Volt\Libraries\Game::gameName(' . $resolvedArgs . ')';
+            });
+
+            $compiler->addFilter('gameType', function ($resolvedArgs) {
+                return 'Volt\Libraries\Game::gameType(' . $resolvedArgs . ')';
+            });
+
+            $compiler->addFilter('providerName', function ($resolvedArgs) {
+                return 'Volt\Libraries\Game::gameProvider(' . $resolvedArgs . ')';
+            });
 
             return $volt;
         }

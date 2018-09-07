@@ -74,7 +74,7 @@ class DLCurrency {
             throw new \Exception('error_create_currency');
         }
 
-        return true;
+        return $newCurrency->getCode();
     }
 
     public function set($data){

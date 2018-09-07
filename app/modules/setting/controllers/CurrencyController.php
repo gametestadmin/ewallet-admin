@@ -2,6 +2,7 @@
 namespace Backoffice\Setting\Controllers;
 
 use System\Datalayer\DLCurrency;
+use System\Library\General\GlobalVariable;
 
 class CurrencyController extends \Backoffice\Controllers\BaseController
 {
@@ -11,8 +12,10 @@ class CurrencyController extends \Backoffice\Controllers\BaseController
         $view = $this->view;
 
         $DLCurrency = new DLCurrency();
+        $status = GlobalVariable::$twoLayerStatus;
 
         $view->currency = $DLCurrency->getAll();
+        $view->status = $status;
 
         \Phalcon\Tag::setTitle("Currency - ".$this->_website->title);
     }
@@ -25,14 +28,16 @@ class CurrencyController extends \Backoffice\Controllers\BaseController
             try {
                 $this->db->begin();
 
+                $module = $this->router->getModuleName();
+                $controller = $this->router->getControllerName();
+
                 $data = $this->request->getPost();
 
                 $DLCurrency = new DLCurrency();
-                $DLCurrency->create($data);
+                $currency = $DLCurrency->create($data);
 
                 $this->db->commit();
-
-                return $this->response->redirect($this->router->getRewriteUri())->send();
+                return $this->response->redirect($module.'/'.$controller.'/detail/'.strtolower($currency))->send();
             } catch (\Exception $e) {
                 $this->db->rollback();
                 $this->flash->error($e->getMessage());
@@ -132,8 +137,11 @@ class CurrencyController extends \Backoffice\Controllers\BaseController
         $view = $this->view;
 
         $i = 1;
-        $currentCode = $this->dispatcher->getParam("code");
+        $getParam = $this->dispatcher->getParam("code");
 
+        $param = explode("|",$getParam);
+        $currentCode = $param[0];
+        $status = $param[1];
         if(!isset($currentCode)){
             $this->flash->error("undefined_currency_code");
             $this->response->redirect("/setting/currency")->send();
@@ -145,12 +153,13 @@ class CurrencyController extends \Backoffice\Controllers\BaseController
         try {
             $this->db->begin();
 
-            $data['status'] = ($getCurrency->getStatus()==1?0:1);
+            $data['status'] = $status;
             $data['code'] = $getCurrency->getCode();
 
             $getCurrency = $DLCurrency->set($data);
 
             $this->db->commit();
+            $this->flash->success("status_changed");
             return $this->response->redirect("/setting/currency")->send();
         } catch (\Exception $e) {
             $this->db->rollback();

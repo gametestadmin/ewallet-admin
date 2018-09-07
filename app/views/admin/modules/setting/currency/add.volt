@@ -21,7 +21,7 @@
         </div>
         <div class="form-group">
             <label>
-                <a href="javascript:history.go(-1)" class="button">Back</>
+                <a href="javascript:history.go(-1)" class="button">Back</a>
             </label>
             <label>
                 <input type="submit" name="submit" value="Add">

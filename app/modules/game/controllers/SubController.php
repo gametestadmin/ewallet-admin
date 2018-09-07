@@ -2,11 +2,14 @@
 namespace Backoffice\Game\Controllers;
 
 use System\Datalayer\DLGame;
+use System\Datalayer\DLProviderGame;
 use System\Library\General\GlobalVariable;
 
-class CategoryController extends \Backoffice\Controllers\BaseController
+class SubController extends \Backoffice\Controllers\BaseController
 {
-    protected $_type = 1;
+    protected $_categoryType = 1;
+    protected $_mainType = 2;
+    protected $_type = 3;
     public function indexAction()
     {
         $view = $this->view;
@@ -24,35 +27,39 @@ class CategoryController extends \Backoffice\Controllers\BaseController
     {
         $view = $this->view;
 
-        $module = $this->router->getModuleName();
-        $controller = $this->router->getControllerName();
+        $DLProviderGame = new DLProviderGame();
+        $providerGame = $DLProviderGame->getAll(1);
+        $DLGame = new DLGame();
+        $categoryGame = $DLGame->getAll($this->_categoryType);
+        $mainGame = $DLGame->getAll($this->_mainType);
 
         if ($this->request->getPost()) {
-            $data = $this->request->getPost();
-            $data['type'] = $this->_type;
-
             try {
                 $this->db->begin();
+                $data = $this->request->getPost();
+                $data['type'] = $this->_type;
 
-                $DLGame = new DLGame();
-                $filterData = $DLGame->filterCategoryInput($data);
-                $DLGame->validateCategoryAdd($filterData);
-                $create = $DLGame->createCategory($filterData);
+                $module = $this->router->getModuleName();
+                $controller = $this->router->getControllerName();
+
+                $filterData = $DLGame->filterSubInput($data);
+                $DLGame->validateSubAdd($filterData);
+                $game = $DLGame->createSub($filterData);
 
                 $this->db->commit();
 
-                $this->flash->success('game_category_create_success');
-                return $this->response->redirect($module."/".$controller."/detail/".$create->getCode())->send();
+                $this->flash->success('sub_game_create_success');
+                return $this->response->redirect("/".$module."/".$controller."/detail/".$game)->send();
             } catch (\Exception $e) {
                 $this->db->rollback();
                 $this->flash->error($e->getMessage());
-                if(isset($data['url'])){
-                    return $this->response->redirect($module."/main/add")->send();
-                }
             }
         }
 
-        \Phalcon\Tag::setTitle("Add New Game Provider - ".$this->_website->title);
+        $view->providerGame = $providerGame;
+        $view->categoryGame = $categoryGame;
+        $view->mainGame = $mainGame;
+        \Phalcon\Tag::setTitle("Add New Main Game - ".$this->_website->title);
     }
 
     public function editAction()
@@ -66,35 +73,29 @@ class CategoryController extends \Backoffice\Controllers\BaseController
         $DLGame = new DLGame();
         $game = $DLGame->getByCode($currentCode, $this->_type);
 
-        if(!$game){
-            $this->flash->error("undefined_game_category_code");
-            return $this->response->redirect("/".$module."/".$controller)->send();
-        }
-
         if ($this->request->getPost()) {
             try {
                 $this->db->begin();
 
                 $data = $this->request->getPost();
-                $data['code'] = $currentCode;
+                $data['main_code'] = $currentCode;
                 $data['type'] = $this->_type;
                 $data['id'] = $game->getId();
 
-                $filterData = $DLGame->filterCategoryInput($data);
-                $DLGame->validateCategoryEdit($filterData);
-                $DLGame->setCategory($filterData);
+                $filterData = $DLGame->filterMainInput($data);
+                $DLGame->validateMainEdit($filterData);
+                $DLGame->setMain($filterData);
 
                 $this->db->commit();
 
-                $this->flash->success('game_category_update_success');
+                $this->flash->success('main_game_update_success');
                 return $this->response->redirect("/".$module."/".$controller."/detail/".$game->getCode())->send();
             } catch (\Exception $e) {
                 $this->db->rollback();
                 $this->flash->error($e->getMessage());
-                return $this->response->redirect("/".$module."/".$controller."/detail/".$game->getCode())->send();
             }
         }
-        $view->category = $game;
+        $view->game = $game;
 
         \Phalcon\Tag::setTitle("Update Game Provider - ".$this->_website->title);
     }
@@ -106,18 +107,18 @@ class CategoryController extends \Backoffice\Controllers\BaseController
         $currentCode = $this->dispatcher->getParam("code");
         $module = $this->router->getModuleName();
         $controller = $this->router->getControllerName();
-        $action = $this->router->getActionName();
 
         $status = GlobalVariable::$threeLayerStatus;
 
         $DLGame = new DLGame();
-        $gameCategory = $DLGame->getByCode($currentCode, $this->_type);
-        if(!$gameCategory){
-            $this->flash->error("undefined_game_category_code");
+        $game = $DLGame->getByCode($currentCode, $this->_type);
+
+        if(!$game){
+            $this->flash->error("undefined_game_code");
             return $this->response->redirect("/".$module."/".$controller)->send();
         }
 
-        $view->category = $gameCategory;
+        $view->game = $game;
         $view->status = $status;
 
         \Phalcon\Tag::setTitle("Update Game Provider - ".$this->_website->title);

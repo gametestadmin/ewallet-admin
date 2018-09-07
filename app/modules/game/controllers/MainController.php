@@ -1,20 +1,25 @@
 <?php
 namespace Backoffice\Game\Controllers;
 
-use System\Datalayer\DLCategoryGame;
-use System\Datalayer\DLMainGame;
+use System\Datalayer\DLGame;
 use System\Datalayer\DLProviderGame;
+use System\Library\General\GlobalVariable;
 
 class MainController extends \Backoffice\Controllers\BaseController
 {
-
+    protected $_categoryType = 1;
+    protected $_type = 2;
     public function indexAction()
     {
         $view = $this->view;
 
-        $providerGame = new DLProviderGame();
+        $categoryGame = new DLGame();
+        $status = GlobalVariable::$threeLayerStatus;
 
-        \Phalcon\Tag::setTitle("Game Provider - ".$this->_website->title);
+        $view->category = $categoryGame->getAll($this->_type);
+        $view->status = $status;
+
+        \Phalcon\Tag::setTitle("Game Category - ".$this->_website->title);
     }
 
     public function addAction()
@@ -22,27 +27,27 @@ class MainController extends \Backoffice\Controllers\BaseController
         $view = $this->view;
 
         $DLProviderGame = new DLProviderGame();
-        $providerGame = $DLProviderGame->getAll();
-        $DLCategoryGame = new DLCategoryGame();
-        $categoryGame = $DLCategoryGame->getAll();
+        $providerGame = $DLProviderGame->getAll(1);
+        $DLGame = new DLGame();
+        $categoryGame = $DLGame->getAll($this->_categoryType);
 
         if ($this->request->getPost()) {
-            $data = $this->request->getPost();
-
-            $module = $this->router->getModuleName();
-            $controller = $this->router->getControllerName();
-            $action = $this->router->getActionName();
-
             try {
                 $this->db->begin();
+                $data = $this->request->getPost();
+                $data['type'] = $this->_type;
 
-                $DlMainGame = new DLMainGame();
-                $DlMainGame->create($data);
+                $module = $this->router->getModuleName();
+                $controller = $this->router->getControllerName();
+
+                $filterData = $DLGame->filterMainInput($data);
+                $DLGame->validateMainAdd($filterData);
+                $game = $DLGame->createMain($filterData);
 
                 $this->db->commit();
 
                 $this->flash->success('main_game_create_success');
-                return $this->response->redirect("/".$module."/".$controller."/".$action."/".$setGameCategory->getCode())->send();
+                return $this->response->redirect("/".$module."/".$controller."/detail/".$game->getCode())->send();
             } catch (\Exception $e) {
                 $this->db->rollback();
                 $this->flash->error($e->getMessage());
@@ -58,33 +63,98 @@ class MainController extends \Backoffice\Controllers\BaseController
     {
         $view = $this->view;
 
-        $currentId = $this->dispatcher->getParam("id");
+        $currentCode = $this->dispatcher->getParam("code");
+        $module = $this->router->getModuleName();
+        $controller = $this->router->getControllerName();
 
-        $DLProviderGame = new DLProviderGame();
-        $providerGame = $DLProviderGame->getById($currentId);
+        $DLGame = new DLGame();
+        $game = $DLGame->getByCode($currentCode, $this->_type);
 
         if ($this->request->getPost()) {
-
-            $data = $this->request->getPost();
-
-            $data['id'] = $providerGame->getId();
-
             try {
                 $this->db->begin();
 
-                $DLProviderGame->set($data);
+                $data = $this->request->getPost();
+                $data['main_code'] = $currentCode;
+                $data['type'] = $this->_type;
+                $data['id'] = $game->getId();
+
+                $filterData = $DLGame->filterMainInput($data);
+                $DLGame->validateMainEdit($filterData);
+                $DLGame->setMain($filterData);
 
                 $this->db->commit();
 
-                $this->flash->success('provider_game_update_success');
-                return $this->response->redirect($this->router->getRewriteUri())->send();
+                $this->flash->success('main_game_update_success');
+                return $this->response->redirect("/".$module."/".$controller."/detail/".$game->getCode())->send();
             } catch (\Exception $e) {
                 $this->db->rollback();
                 $this->flash->error($e->getMessage());
             }
         }
-        $view->provider = $providerGame;
+        $view->game = $game;
 
         \Phalcon\Tag::setTitle("Update Game Provider - ".$this->_website->title);
+    }
+
+    public function detailAction()
+    {
+        $view = $this->view;
+
+        $currentCode = $this->dispatcher->getParam("code");
+        $module = $this->router->getModuleName();
+        $controller = $this->router->getControllerName();
+
+        $status = GlobalVariable::$threeLayerStatus;
+
+        $DLGame = new DLGame();
+        $game = $DLGame->getByCode($currentCode, $this->_type);
+
+        if(!$game){
+            $this->flash->error("undefined_game_code");
+            return $this->response->redirect("/".$module."/".$controller)->send();
+        }
+
+        $view->game = $game;
+        $view->status = $status;
+
+        \Phalcon\Tag::setTitle("Update Game Provider - ".$this->_website->title);
+    }
+
+    public function statusAction()
+    {
+        $view = $this->view;
+
+        $previousPage = new GlobalVariable();
+        $currentId = $this->dispatcher->getParam("id");
+
+        $module = $this->router->getModuleName();
+        $controller = $this->router->getControllerName();
+
+        $currentId = explode("|",$currentId);
+        $id = $currentId[0];
+        $status = $currentId[1];
+
+        $DLGame = new DLGame();
+        $game = $DLGame->getById($id);
+        if(!isset($currentId) || !$game){
+            $this->flash->error("undefined_game");
+            $this->response->redirect($module."/".$controller."/")->send();
+        }
+
+        try {
+            $this->db->begin();
+
+            $DLGame->setStatus($id,$status);
+
+            $this->db->commit();
+            $this->flash->success("status_changed");
+            $this->response->redirect($previousPage->previousPage())->send();
+        } catch (\Exception $e) {
+            $this->db->rollback();
+            $this->flash->error($e->getMessage());
+        }
+
+        \Phalcon\Tag::setTitle("Edit Currency - ".$this->_website->title);
     }
 }

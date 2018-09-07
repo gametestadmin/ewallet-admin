@@ -14,6 +14,19 @@ class GlobalVariable
         'Active' => 1,
     );
 
+    public function gameType($data){
+        $gameType = "";
+        if($data == 1){
+            $gameType = "Game Category";
+        }elseif($data == 2){
+            $gameType = "Main Game";
+        }elseif($data == 3){
+            $gameType = "Sub Game";
+        }
+
+        return $gameType;
+    }
+
     public function previousPage()
     {
         $previous = "javascript:history.go(-1)";

@@ -20,13 +20,6 @@ class Format
         return $amount.' %';
     }
 
-    public static function lowercase($data)
-    {
-        $data = strtolower($data);
-
-        return $data;
-    }
-
     public static function date($data)
     {
         if(!isset($data["date"])){
