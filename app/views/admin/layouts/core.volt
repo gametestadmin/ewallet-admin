@@ -10,10 +10,10 @@
         <div class="container-fluid height-100P">
             <div class="row height-100P">
                 {% if user is not null %}
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                         {% include dirRoot~'layouts/elements/leftnav' %}
                     </div>
-                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 white-bg">
+                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 white-bg">
                         <div class="margin-bottom-20">
                             {% include dirRoot~'layouts/elements/header' %}
                         </div>

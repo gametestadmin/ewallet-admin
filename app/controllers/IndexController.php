@@ -18,17 +18,35 @@ class IndexController extends \Backoffice\Controllers\BaseController
 
             return $this->response->redirect("/login");
         } else {
-            $view = $this->view;
+//            $view = $this->view;
 
 //        if($this->request->has("flash")) {
-            $this->noticeFlash("user");
-            $this->errorFlash("add");
-            $this->successFlash("success");
+//            $this->noticeFlash("user");
+//            $this->errorFlash("add");
+//            $this->successFlash("success");
 //        }
+
+//            $list = $this->session->get("acl");
+//            echo "<pre>";
+//            var_dump($list);
+//
+//            foreach ($list as $key => $value){
+//                var_dump($key);
+//                var_dump($value);
+//                foreach ($value as $x => $y){
+//                    var_dump($x);
+//                    var_dump($y);
+//                }
+//            }
+//            die;
+
+
+
 //        $this->_translate["test_new"];
-            echo "<pre>";
-            var_dump($this->session->get("acl"));
-//        die;
+//            echo "<pre>";
+//            var_dump($this->session->get("acl"));
+//            var_dump($this->session->get("sidebar"));
+//            die;
 
 
 
@@ -70,23 +88,24 @@ class IndexController extends \Backoffice\Controllers\BaseController
                     $this->session->set('user', $user);
 
 
+                    //TODO :: save and check to redis
                     //TODO :: incomplete
-                    //set session add acl for the current user
 
+                    //set session add acl for the current user
                     $generalLibrary = new General();
-                    if($user->getParent() == 1){
+                    if($user->getParent() != 0){
                         $aclObject = $generalLibrary->getCompanyACL();
                     } else {
                         $aclObject = $generalLibrary->getACL($user->getId());
                     }
                     $acl = $generalLibrary->filterACLlist($aclObject);
+                    $sideBar = $generalLibrary->getSidebar($aclObject);
 
                     $this->session->remove('acl');
-                    $this->session->set('acl', json_encode($acl));
-//                    echo "something here<pre>";
-//                    var_dump($acl);
-//                    die;
-
+                    $this->session->set('acl', $acl);
+                    $this->session->remove('sidebar');
+                    $this->session->set('sidebar', $sideBar);
+                    //TODO :: save and check to redis
 
                     $this->successFlash($view->translate['login_success']);
                     return $this->response->redirect("/");
@@ -111,9 +130,9 @@ class IndexController extends \Backoffice\Controllers\BaseController
         if($view->user != null){
             $this->session->destroy();
         }
+
         $this->successFlash($view->translate['logout_success']);
         return $this->response->redirect("/login")->send();
-
     }
 
 
