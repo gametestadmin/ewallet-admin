@@ -1,23 +1,41 @@
-<nav class="navbar-default navbar-static-side" role="navigation">
-    <div class="sidebar-collapse">
-        <ul class="nav metismenu" id="side-menu">
-            <li class="nav-header">
-                <div class="dropdown profile-element">
-                    <span><img alt="image" class="img-circle" src="{{assets_url}}thirdparty/img/profile.jpg" width="30%" /></span>
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">Admin</strong></span>
-                        <span class="text-muted text-xs block">Game admin <b class="caret"></b></span></span>
-                    </a>
-                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                        <li><a href="profile.html">Profile</a></li>
-                        <li><a href="contacts.html">Contacts</a></li>
-                        <li><a href="mailbox.html">Mailbox</a></li>
-                        <li class="divider"></li>
-                        <li><a href="{{url('/logout')}}">Logout</a></li>
-                    </ul>
+<nav>
+    <div class="navigation-header margin-top-20 text-center">
+        <div class="dropdown">
+            <div>
+                <img alt="image" class="border-radius-10" src="{{assets_url}}thirdparty/img/profile.jpg" width="50%" />
+            </div>
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                <span class="clear"><strong class="font-bold">Admin</strong></span>s
+            </a>
+            <ul class="dropdown-menu">
+                <a href="#"><li class="dropdown-list" > Profile </li></a>
+                <a href="#"><li class="dropdown-list" > Contacts </li></a>
+                <a href="#"><li class="dropdown-list" > Mailbox </li></a>
+                <a href="{{url('/logout')}}"><li class="dropdown-list" > Logout </li></a>
+            </ul>
+        </div>
+    </div>
+    <div>
+    {% for module, modulelist in navigationlist %}
+        <div>
+            <a href="#{{module}}" data-toggle="collapse">{{module}}</a>
+            {% for  controller , controllerlist in modulelist %}
+                <div id="{{module}}"  class="collapse margin-left-20">
+                {% if controllerlist|length > 1 %}
+                    <a href="#{{controller}}" data-toggle="collapse"> {{controller}}</a>
+                {% endif %}
+                {% for action , value in controllerlist %}
+                    {% if loop.length == 1 %}
+                        <a href="{{url~module~'/'~controller~'/'~action}}"> {{module}}/{{controller}}/{{action}} </a>
+                    {% else %}
+                        <div id="{{controller}}"  class="collapse margin-left-20">
+                            <a href="{{url~module~'/'~controller~'/'~action}}"> {{module}}/{{controller}}/{{action}} </a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
                 </div>
-                <div class="logo-element"><img alt="image" class="img-circle " src="{{assets_url}}thirdparty/img/profile.jpg" width="50%" /></div>
-            </li>
-        </ul>
+            {% endfor %}
+        </div>
+    {% endfor %}
     </div>
 </nav>

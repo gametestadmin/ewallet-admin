@@ -54,4 +54,15 @@ class General
         return $aclList;
     }
 
+    public function getSidebar($aclObject){
+        $aclList = array();
+        foreach ($aclObject as $key){
+            if($key->sidebar == 1){
+                $aclList[$key->module][$key->controller][$key->action] = $key->sidebar ;
+            }
+        }
+
+        return $aclList;
+    }
+
 }

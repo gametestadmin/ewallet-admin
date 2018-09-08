@@ -1,12 +1,10 @@
 <?php
+namespace System\Library\Security;
 
-namespace System\Libraries\Security;
+use \Phalcon\Translate\Adapter\NativeArray;
+use \Phalcon\DI\FactoryDefault;
 
-use System\Libraries\Language\language;
-use Phalcon\Translate\Adapter\NativeArray;
-use Phalcon\DI\FactoryDefault;
-
-class Validation extends \System\Libraries\Main
+class Validation extends \System\Library\Main
 {
     public $_valid;
     public $_messages;
@@ -14,6 +12,7 @@ class Validation extends \System\Libraries\Main
 
     public function __construct()
     {
+        parent::__construct();
         $this->_valid = true;
         $this->_messages = array();
         $this->_conditions = array();
@@ -59,13 +58,12 @@ class Validation extends \System\Libraries\Main
 
     public function execute(){
         $conditions = $this->_conditions;
-
         foreach ($conditions as $condition){
             switch (strtolower($condition["type"])) {
                 case "required":
                     if(!$this->isRequired($condition["fieldValue"])){
                         $this->_valid = false;
-                        $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"])." ".$this->_lang['must_filled'];
+                        $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"])." ".$this->_language['must_filled'];
                     }
                     break;
                 case "length":
@@ -73,18 +71,18 @@ class Validation extends \System\Libraries\Main
                         case "min":
                             if(!$this->minLength($condition["fieldValue"], $condition["conditionValue"])){
                                 $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"])." ".$this->_lang['min_character']." ".$condition["conditionValue"];
+                                $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"])." ".$this->_language['minimum_character']." ".$condition["conditionValue"];
                             }
                             break;
                         case "max":
                             if(!$this->maxLength($condition["fieldValue"], $condition["conditionValue"])){
                                 $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"])." ".$this->_lang['max_character']." ".$condition["conditionValue"];
+                                $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"])." ".$this->_language['maximum_character']." ".$condition["conditionValue"];
                             }
                             break;
                         default:
                             $this->_valid = false;
-                            $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["subType"])." ".$this->_lang['not_defined'];
+                            $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["subType"])." ".$this->_language['not_defined'];
                     }
                     break;
                 case "format":
@@ -92,13 +90,13 @@ class Validation extends \System\Libraries\Main
                         case "int":
                             if(!is_numeric($condition["fieldValue"])){
                                 $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = $this->_lang['format']." ".\ucfirst($condition["fieldName"])." ".$this->_lang['integer_field_only'];
+                                $this->_messages[$condition["fieldName"]][] = $this->_language['format']." ".\ucfirst($condition["fieldName"])." ".$this->_language['integer_field_only'];
                             }
                             break;
                         case "regex":
                             if(!$this->checkRegex($condition["fieldValue"], $condition["conditionValue"])){
                                 $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = $this->_lang['format']." ".\ucfirst($condition["fieldName"])." ".$this->_lang['not_match'];
+                                $this->_messages[$condition["fieldName"]][] = $this->_language['format']." ".\ucfirst($condition["fieldName"])." ".$this->_language['not_match'];
                             }
                             break;
                         case "date":
@@ -106,67 +104,67 @@ class Validation extends \System\Libraries\Main
                             if (!checkdate($date[1] , $date[0] , $date[2]))
                             {
                                 $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = $this->_lang['format']." ".\ucfirst($condition["fieldName"])." ".$this->_lang['invalid'];
+                                $this->_messages[$condition["fieldName"]][] = $this->_language['format']." ".\ucfirst($condition["fieldName"])." ".$this->_language['invalid'];
                             }
                             break;
                         case "username":
                             if(!$this->isRequired($condition["fieldValue"])){
                                 $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"])." ".$this->_lang['must_filled'];
+                                $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"])." ".$this->_language['must_filled'];
                             }
                             if(!$this->minLength($condition["fieldValue"], 5)){
                                 $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"])." ".$this->_lang['min_character']." ".$condition["conditionValue"];
+                                $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"])." ".$this->_language['minimum_character']." ".$condition["conditionValue"];
                             }
                             if(!$this->maxLength($condition["fieldValue"], 15)){
                                 $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"])." ".$this->_lang['max_character']." ".$condition["conditionValue"];
+                                $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"])." ".$this->_language['maximum_character']." ".$condition["conditionValue"];
                             }
                             if(!$this->checkRegex($condition["fieldValue"], "/^[\w]+$/")){
                                 $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = $this->_lang['format']." ".\ucfirst($condition["fieldName"])." ".$this->_lang['not_match'];
+                                $this->_messages[$condition["fieldName"]][] = $this->_language['format']." ".\ucfirst($condition["fieldName"])." ".$this->_language['not_match'];
                             }
                             if(preg_match('/[^a-zA-Z0-9_\-]/i', $condition["fieldValue"]))
                             {
                                 $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = $this->_lang['format']." ".\ucfirst($condition["fieldName"])." ".$this->_lang['only_alphanumeric_is_allowed'];
+                                $this->_messages[$condition["fieldName"]][] = $this->_language['format']." ".\ucfirst($condition["fieldName"])." ".$this->_language['only_alphanumeric_is_allowed'];
                             }
                             if(substr(strtolower($condition["fieldValue"]),0,4) == 'bot_' || substr(strtolower($condition["fieldValue"]),0,4) == 'test' || substr(strtolower($condition["fieldValue"]),0,5) == 'admin' || substr(strtolower($condition["fieldValue"]),0,6) == 'manual' || substr(strtolower($condition["fieldValue"]),0,8) == 'operator'){
                                 $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = $this->_lang['format']." ".\ucfirst($condition["fieldName"])." ".$this->_lang['not_match']." ".$this->_lang['blocked_element'];
+                                $this->_messages[$condition["fieldName"]][] = $this->_language['format']." ".\ucfirst($condition["fieldName"])." ".$this->_language['not_match']." ".$this->_language['blocked_element'];
                             }
                             break;
                         case "password":
                             if(!$this->isRequired($condition["fieldValue"])){
                                 $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = \ucfirst($this->_lang["password"])." ".$this->_lang['must_filled'];
+                                $this->_messages[$condition["fieldName"]][] = \ucfirst($this->_language["password"])." ".$this->_language['must_filled'];
                             }
-                            if(!$this->minLength($condition["fieldValue"], 5)){
+                            if(!$this->minLength($condition["fieldValue"], $condition["conditionValue"])){
                                 $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = \ucfirst($this->_lang["password"])." ".$this->_lang['min_character']." ".$condition["conditionValue"];
+                                $this->_messages[$condition["fieldName"]][] = \ucfirst($this->_language["password"])." ".$this->_language['minimum_character']." ".$condition["conditionValue"];
                             }
-                            if(!$this->maxLength($condition["fieldValue"], 10)){
+                            if(!$this->maxLength($condition["fieldValue"], $condition['conditionMaxValue']) && ($condition['conditionMaxValue'] != null )){
                                 $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = \ucfirst($this->_lang["password"])." ".$this->_lang['max_character']." ".$condition["conditionValue"];
+                                $this->_messages[$condition["fieldName"]][] = \ucfirst($this->_language["password"])." ".$this->_language['maximum_character']." ".$condition["conditionValue"];
                             }
                             if(!$this->checkRegex($condition["fieldValue"], "/^[\w]+$/")){
                                 $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = $this->_lang['format']." ".\ucfirst($this->_lang["password"])." ".$this->_lang['not_match'];
+                                $this->_messages[$condition["fieldName"]][] = $this->_language['format']." ".\ucfirst($this->_language["password"])." ".$this->_language['not_match'];
                             }
                             if(!preg_match('/[a-z]+/', $condition["fieldValue"]) || !preg_match('/[0-9]+/', $condition["fieldValue"])){
                                 $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = $this->_lang['format']." ".\ucfirst($this->_lang["password"])." ".$this->_lang['must_element'];
+                                $this->_messages[$condition["fieldName"]][] = $this->_language['format']." ".\ucfirst($this->_language["password"])." ".$this->_language['must_element'];
                             }
                             break;
                         case "email":
                             if(!filter_var($condition["fieldValue"],FILTER_VALIDATE_EMAIL)){
                                 $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = $this->_lang['format']." ".\ucfirst($condition["fieldName"])." ".$this->_lang['not_match']." ".$this->_lang['ex_email'];
+                                $this->_messages[$condition["fieldName"]][] = $this->_language['format']." ".\ucfirst($condition["fieldName"])." ".$this->_language['not_match']." ".$this->_language['ex_email'];
                             }
                             break;
                         default:
                             $this->_valid = false;
-                            $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["subType"])." ".$this->_lang['not_defined'];
+                            $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["subType"])." ".$this->_language['not_defined'];
                     }
                     break;
                 case "value":
@@ -174,13 +172,13 @@ class Validation extends \System\Libraries\Main
                         case "equal":
                             if (strtoupper($condition["fieldValue"]) !== strtoupper($condition["conditionValue"])) {
                                 $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"]) . " ".$this->_lang['must_same'];
+                                $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"]) . " ".$this->_language['must_same'];
                             }
                             break;
                         case "equallengthdigitbank":
                             if (strlen($condition["fieldValue"]) <= $condition["conditionValue"]) {
                                 $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = \ucfirst($this->_lang['bank_account_no'])." ". $this->_lang["contain"]." ".$condition["conditionValue"]." ". $this->_lang["digit"];
+                                $this->_messages[$condition["fieldName"]][] = \ucfirst($this->_language['bank_account_no'])." ". $this->_language["contain"]." ".$condition["conditionValue"]." ". $this->_language["digit"];
                             }
                             break;
                         case "betweenbank":
@@ -188,13 +186,13 @@ class Validation extends \System\Libraries\Main
                                 strlen($condition["fieldValue"]) >= $condition['conditionMaxValue'] ) {
 //                                echo "length = ".strlen($condition["fieldValue"])." min value = ".$condition["conditionValue"]." max value = ".$condition['conditionMaxValue'];
                                 $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = \ucfirst($this->_lang['bank_account_no'])." ". $this->_lang["contain"]." ".$condition["conditionValue"]." ". $this->_lang["digit"];
+                                $this->_messages[$condition["fieldName"]][] = \ucfirst($this->_language['bank_account_no'])." ". $this->_language["contain"]." ".$condition["conditionValue"]." ". $this->_language["digit"];
                             }
                             break;
                         case "notequal":
                             if (strtoupper($condition["fieldValue"]) == strtoupper($condition["conditionValue"])) {
                                 $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"]) . " ".$this->_lang['must_not_same'];
+                                $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"]) . " ".$this->_language['must_not_same'];
                             }
                             break;
                         case "lte":
@@ -206,7 +204,7 @@ class Validation extends \System\Libraries\Main
                         case "lt":
                             if($condition["fieldValue"] < $condition["conditionValue"]){
                                 $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"])." ".$this->_lang['less_than']." ".$condition["conditionValue"];
+                                $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"])." ".$this->_language['less_than']." ".$condition["conditionValue"];
                             }
                             break;
                         case "gte":
@@ -221,89 +219,15 @@ class Validation extends \System\Libraries\Main
                                 $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"])." ".$condition["conditionValue"];
                             }
                             break;
-                        case "bca":
-                            if(strlen($condition["fieldValue"]) > 10 || strlen($condition["fieldValue"]) < 9){
-                                $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"])." bank ".$condition["subType"]." ".$this->_lang['first_bank_digits'];
-                            }
-                            break;
-                        case "bni":
-                            if(strlen($condition["fieldValue"]) > 10 || strlen($condition["fieldValue"]) < 9){
-                                $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"])." bank ".$condition["subType"]." ".$this->_lang['second_bank_digits'];
-                            }
-                            break;
-                        case "mandiri":
-                            if(strlen($condition["fieldValue"]) != 13){
-                                $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"])." bank ".$condition["subType"]." ".$this->_lang['third_bank_digits'];
-                            }
-                            break;
-                        case "bri":
-                            if(strlen($condition["fieldValue"]) != 15){
-                                $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"])." bank ".$condition["subType"]." ".$this->_lang['fourth_bank_digits'];
-                            }
-                            break;
-                        case "danamon":
-                            if(strlen($condition["fieldValue"]) != 12){
-                                $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"])." bank ".$condition["subType"]." ".$this->_lang['fifth_bank_digits'];
-                            }
-                            break;
-                        case "cimb niaga":
-                            if(strlen($condition["fieldValue"]) != 12){
-                                $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"])." bank ".$condition["subType"]." ".$this->_lang['fifth_bank_digits'];
-                            }
-                            break;
-                        // TODO :: validation untuk bank china, kalo gak kepake bisa di hapus. tapi jangan jika kepake
-                        case "中国银行":
-                            if(strlen($condition["fieldValue"]) != 19){
-                                $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"])." bank ".$condition["subType"]." ".$this->_lang['fifth_bank_digits'];
-                            }
-                            break;
-                        case "工商银行":
-                            if(strlen($condition["fieldValue"]) != 19){
-                                $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"])." bank ".$condition["subType"]." ".$this->_lang['fifth_bank_digits'];
-                            }
-                            break;
-                        case "建设银行":
-                            if(strlen($condition["fieldValue"]) != 19){
-                                $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"])." bank ".$condition["subType"]." ".$this->_lang['fifth_bank_digits'];
-                            }
-                            break;
-                        case "农业银行":
-                            if(strlen($condition["fieldValue"]) != 19){
-                                $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"])." bank ".$condition["subType"]." ".$this->_lang['fifth_bank_digits'];
-                            }
-                            break;
-                        case "交通银行":
-                            if(strlen($condition["fieldValue"]) != 19){
-                                $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"])." bank ".$condition["subType"]." ".$this->_lang['fifth_bank_digits'];
-                            }
-                            break;
-                        case "兴业银行":
-                            if(strlen($condition["fieldValue"]) != 19){
-                                $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"])." bank ".$condition["subType"]." ".$this->_lang['fifth_bank_digits'];
-                            }
-                            break;
-                        // TODO :: validation china bank until here
                         default:
                             $this->_valid = false;
-                            $this->_messages[$condition["fieldName"]][] = $condition["subType"]." ".$this->_lang['not_defined'];
+                            $this->_messages[$condition["fieldName"]][] = $condition["subType"]." ".$this->_language['not_defined'];
                     }
                     break;
 
                 default:
                     $this->_valid = false;
-                    $this->_messages[$condition["fieldName"]][] = $condition["type"]." ".$this->_lang['not_defined'];
+                    $this->_messages[$condition["fieldName"]][] = $condition["type"]." ".$this->_language['not_defined'];
             }
         }
 

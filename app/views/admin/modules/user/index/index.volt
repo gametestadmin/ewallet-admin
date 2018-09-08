@@ -1,7 +1,9 @@
 {% block content %}
-<div id="wrapper">
-</div>
-<a href="/" >homepage</a> {{user}}
+
+
+USER / INDEX
+
+
 {% endblock %}
 
 {% block action_js %}
