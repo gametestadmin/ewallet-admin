@@ -13,8 +13,8 @@ class BaseController extends Controller
     protected $_website = false;
     protected $_user = null;
     protected $_module = null;
+    protected $_environment = null;
 //    protected $_application_name = null;
-//    protected $_environment = null;
 //    protected $_template = null;
 //    protected $_frontend = null;
 //    protected $_language = "en";
