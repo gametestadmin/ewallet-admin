@@ -11,6 +11,12 @@ class DLCurrency {
         return $currency;
     }
 
+    public function getAllByStatus($status){
+        $currency = Currency::findByStatus($status);
+
+        return $currency;
+    }
+
     public function getByCode($code){
         $currency = Currency::findFirstByCode($code);
 

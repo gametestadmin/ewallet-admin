@@ -1,7 +1,9 @@
 <?php
 namespace Backoffice\Game\Controllers;
 
+use System\Datalayer\DLCurrency;
 use System\Datalayer\DLGame;
+use System\Datalayer\DLGameCurrency;
 use System\Datalayer\DLProviderGame;
 use System\Library\General\GlobalVariable;
 
@@ -37,6 +39,7 @@ class SubController extends \Backoffice\Controllers\BaseController
             try {
                 $this->db->begin();
                 $data = $this->request->getPost();
+
                 $data['type'] = $this->_type;
 
                 $module = $this->router->getModuleName();
@@ -46,10 +49,15 @@ class SubController extends \Backoffice\Controllers\BaseController
                 $DLGame->validateSubAdd($filterData);
                 $game = $DLGame->createSub($filterData);
 
+                if($game && $filterData['parent_currency'] == 1){
+                    $gameCurrency = new DLGameCurrency();
+                    $gameCurrency->setFromParent($game->getGameParent(),$game->getId());
+                }
+
                 $this->db->commit();
 
                 $this->flash->success('sub_game_create_success');
-                return $this->response->redirect("/".$module."/".$controller."/detail/".$game)->send();
+                return $this->response->redirect("/".$module."/".$controller."/detail/".$game->getCode())->send();
             } catch (\Exception $e) {
                 $this->db->rollback();
                 $this->flash->error($e->getMessage());
@@ -110,8 +118,14 @@ class SubController extends \Backoffice\Controllers\BaseController
 
         $status = GlobalVariable::$threeLayerStatus;
 
+        $DLCurrency = new DLCurrency();
+        $currency = $DLCurrency->getAllByStatus(1);
+
         $DLGame = new DLGame();
         $game = $DLGame->getByCode($currentCode, $this->_type);
+
+        $DLGameCurrency = new DLGameCurrency();
+        $gameCurrency = $DLGameCurrency->getAll($game->getId());
 
         if(!$game){
             $this->flash->error("undefined_game_code");
@@ -120,6 +134,8 @@ class SubController extends \Backoffice\Controllers\BaseController
 
         $view->game = $game;
         $view->status = $status;
+        $view->currency = $currency;
+        $view->gameCurrency = $gameCurrency;
 
         \Phalcon\Tag::setTitle("Update Game Provider - ".$this->_website->title);
     }

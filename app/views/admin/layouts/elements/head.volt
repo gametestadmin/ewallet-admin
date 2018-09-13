@@ -17,7 +17,7 @@
 
     <!-- CSS scripts -->
     {% if environment == 'development' %}
-        <link rel="stylesheet/less" type="text/css" href="{{assets_url}}{{template}}/less/style.less" />
+        <link rel="stylesheet/less" type="text/css" href="{{assets_url}}{{template}}/{{environment}}/less/stylesheet.less" />
         <script>less = { env: '{{environment}}'};</script>
         <script src="{{assets_url}}thirdparty/js/less.min.js"></script>
         <script>less.watch();</script>

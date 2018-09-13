@@ -47,6 +47,9 @@
             </label>
         </div>
         <div class="form-group">
+            <label><input type="checkbox" name="parent_currency"> Copy Currency From Parent*</label>
+        </div>
+        <div class="form-group">
             <label>
                 <a href="{{url('javascript:history.go(-1)')}}">Back</a>
             </label>

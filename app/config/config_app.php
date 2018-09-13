@@ -9,7 +9,8 @@
 defined('APP_PATH') || define('APP_PATH', realpath('.'));
 
 $config_apps = array(
-    'environment' => "development",               //TODO :: development | production
+    'apps' => 'admin',
+    'environment' => "production",               //TODO :: development | production
     'dbenvironment' => "mysql",               //TODO :: development | production
     'version' => '1.0.0',
     'url' => array(
@@ -50,6 +51,13 @@ $config_apps = array(
 //        'site_iv'     => 'öL2f×¸nf€{-ün)U³J N‘;æéÕd~3³',
         'site_iv'     => 'öL2f×¸nf€{',
         'site_key'    => '1234567812345678',
+    ),
+    'production' => array(
+        'admin' => array(
+            'xxx'     => 'öL2f×¸nf€{-ün)U³J N‘;æéÕd~3³',
+            'xxx'     => 'öL2f×¸nf€{',
+            'xxx'    => '1234567812345678',
+        )
     )
 );
 

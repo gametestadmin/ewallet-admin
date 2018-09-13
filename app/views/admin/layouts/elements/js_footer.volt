@@ -16,7 +16,7 @@
         $(".alert").slideUp(500, function() {
             $(this).remove();
         });
-    }, 2000);
+    }, 112000);
 </script>
 {% endblock %}
 

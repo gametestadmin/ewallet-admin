@@ -1,7 +1,9 @@
 <?php
 namespace Backoffice\Game\Controllers;
 
+use System\Datalayer\DLCurrency;
 use System\Datalayer\DLGame;
+use System\Datalayer\DLGameCurrency;
 use System\Datalayer\DLProviderGame;
 use System\Library\General\GlobalVariable;
 
@@ -107,8 +109,15 @@ class MainController extends \Backoffice\Controllers\BaseController
 
         $status = GlobalVariable::$threeLayerStatus;
 
+        $DLCurrency = new DLCurrency();
+        $currency = $DLCurrency->getAllByStatus(1);
+
         $DLGame = new DLGame();
         $game = $DLGame->getByCode($currentCode, $this->_type);
+
+
+        $DLGameCurrency = new DLGameCurrency();
+        $gameCurrency = $DLGameCurrency->getAll($game->getId());
 
         if(!$game){
             $this->flash->error("undefined_game_code");
@@ -117,6 +126,8 @@ class MainController extends \Backoffice\Controllers\BaseController
 
         $view->game = $game;
         $view->status = $status;
+        $view->currency = $currency;
+        $view->gameCurrency = $gameCurrency;
 
         \Phalcon\Tag::setTitle("Update Game Provider - ".$this->_website->title);
     }

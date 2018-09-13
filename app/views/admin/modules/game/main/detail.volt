@@ -36,6 +36,46 @@
             </label>
         </div>
     </form>
+
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label>Currency</label>
+            <label>
+                <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#exampleModal">
+                    Add New
+                </button>
+            </label>
+        </div>
+        <table>
+            <tr bgcolor="#000">
+                <td>Code</td>
+                <td>Name</td>
+                <td>Symbol</td>
+                <td></td>
+            </tr>
+            {% if gameCurrency is null %}
+                no currency
+            {% else %}
+                {% for gameCurrencyData in gameCurrency %}
+                <tr>
+                    <td>{{gameCurrencyData.currency.code}}</td>
+                    <td>{{gameCurrencyData.currency.name}}</td>
+                    <td>{{gameCurrencyData.currency.symbol}}</td>
+                    <td>
+                        {% if gameCurrencyData.default == 1 %}
+                            Default
+                        {% else %}
+                            <a href="{{'/game/currency/edit/'~game.id~'|'~gameCurrencyData.id}}">Make Default</a>
+                        {%endif%}
+                    </td>
+                </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+    </form>
+
+    {{ widget('GameCurrencyWidget', []) }}
+
 </div>
 {% endblock %}
 
