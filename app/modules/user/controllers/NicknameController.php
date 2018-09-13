@@ -3,7 +3,7 @@ namespace Backoffice\User\Controllers;
 
 use System\Library\User\General as GeneralUser;
 
-class IndexController extends \Backoffice\Controllers\ProtectedController
+class NicknameController extends \Backoffice\Controllers\ProtectedController
 {
 
     public function indexAction()

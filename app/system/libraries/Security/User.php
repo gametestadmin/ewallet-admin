@@ -2,9 +2,6 @@
 
 namespace System\Library\Security;
 
-//use System\Libraries\GlobalVariable;
-use System\Models\PokerLogs;
-use System\Models\PokerUsers;
 
 class User
 {

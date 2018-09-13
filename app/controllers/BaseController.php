@@ -38,7 +38,6 @@ class BaseController extends Controller
 
 //        $this->_setWebsite();
 
-
     }
 
     protected function _setApplication()
@@ -72,14 +71,14 @@ class BaseController extends Controller
 
     protected function _setViewTemplate()
     {
-        if ($this->dispatcher->getModuleName())
-        {
+        if ($this->dispatcher->getModuleName()) {
             $this->view->viewInModule = true;
         }
     }
 
     protected function _setBaseUri()
     {
+        $this->view->url = $this->config->url->base;
         $this->view->base_url = $this->config->url->base;
         $this->view->assets_url = $this->config->url->assets;
         $this->view->media_url = $this->config->url->media;
@@ -104,7 +103,6 @@ class BaseController extends Controller
         }else{
             $this->cookies->set('language', $default);
         }
-
         $this->view->language_list = $language_list;
 
         $this->view->language = $default ;
@@ -125,8 +123,8 @@ class BaseController extends Controller
     protected function _setNavigation()
     {
         //Get ACL for navigation
-        if($this->session->has('acl')){
-            $this->view->navigationlist = json_decode($this->session->get('acl')) ;
+        if($this->session->has('sidebar')){
+            $this->view->navigationlist = $this->session->get('sidebar') ;
         }
     }
 
@@ -137,12 +135,11 @@ class BaseController extends Controller
         $controller = $this->router->getControllerName();
         $action = $this->router->getActionName();
 
-
         if($this->session->has('user')){
             if($this->session->has('acl') && $module != null  ){
-                $acl = json_decode($this->session->get('acl')) ;
-                if( $acl->{$module}->{$controller}->{$action} != 1){
-
+                $acl = $this->session->get('acl') ;
+//                if( $acl->{$module}->{$controller}->{$action} == 0){
+                if( $acl[$module][$controller][$action] == 0){
                     $this->errorFlash('cannot_access');
                     return $this->response->redirect("/");
                 }

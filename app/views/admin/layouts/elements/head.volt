@@ -13,6 +13,7 @@
     <!-- Main scripts -->
     <link href="{{assets_url}}thirdparty/css/bootstrap.min.css" rel="stylesheet">
     <script src="{{assets_url}}thirdparty/js/jquery-3.3.1.min.js"></script>
+    <script src="{{assets_url}}thirdparty/js/popper.min.js"></script>
     <script src="{{assets_url}}thirdparty/js/bootstrap.min.js"></script>
 
     <!-- CSS scripts -->
