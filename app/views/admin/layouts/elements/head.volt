@@ -23,7 +23,7 @@
         <script src="{{assets_url}}thirdparty/js/less.min.js"></script>
         <script>less.watch();</script>
     {% else %}
-        <link href="{{assets_url}}{{template}}/css/{{environment}}/style.min.css" rel="stylesheet">
+        <link href="{{assets_url}}{{template}}/css/style.min.css" rel="stylesheet">
     {% endif %}
 
     <!-- NOTE : Temporary Style -->

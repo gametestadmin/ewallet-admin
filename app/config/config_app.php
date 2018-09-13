@@ -10,7 +10,7 @@ defined('APP_PATH') || define('APP_PATH', realpath('.'));
 
 $config_apps = array(
     'apps' => 'admin',
-    'environment' => "production",               //TODO :: development | production
+    'environment' => "development",               //TODO :: development | production
     'dbenvironment' => "mysql",               //TODO :: development | production
     'version' => '1.0.0',
     'url' => array(
