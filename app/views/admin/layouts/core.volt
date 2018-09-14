@@ -7,26 +7,25 @@
 <html lang="en">
     {% include dirRoot~'layouts/elements/head' %}
     <body>
-        <div class="container-fluid height-100P">
-            <div class="row height-100P">
+        <div class="container-fluid">
+            <div class="row">
                 {% if user is not null %}
-                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 navigation-colour">
-                        {% include dirRoot~'layouts/elements/leftnav' %}
-                    </div>
-                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                        <div class="row header-menu">
+                    {% include dirRoot~'layouts/elements/leftnav' %}
+                    <div id="wrapper">
+                        <div id="page-wrapper" class="gray-bg">
                             {% include dirRoot~'layouts/elements/header' %}
+                            {% include dirRoot~'layouts/elements/notification' %}
+                            {{ content() }}
+                            {% include dirRoot~'layouts/elements/footer' %}
                         </div>
-                        {% include dirRoot~'layouts/elements/notification' %}
-                        {{ content() }}
-                        {% include dirRoot~'layouts/elements/footer' %}
                     </div>
                 {% else %}
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     {% include dirRoot~'layouts/elements/notification' %}
-                        {{ content() }}
-                    </div>
+                    {{ content() }}
                 {% endif %}
+
+
+
             </div>
         </div>
         {% include dirRoot~'layouts/elements/js_footer' %}

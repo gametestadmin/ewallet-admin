@@ -118,6 +118,9 @@ class BaseController extends Controller
         if($this->session->has('user')){
             $this->_user = $this->session->get('user');
         }
+//        echo "<pre>";
+//        var_dump($this->_user);
+//        die;
         $this->view->user = $this->_user;
     }
 

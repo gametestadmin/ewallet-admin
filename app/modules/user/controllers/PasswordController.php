@@ -7,8 +7,59 @@ use \System\Datalayer\DLUser;
 
 class PasswordController extends \Backoffice\Controllers\ProtectedController
 {
-
     public function indexAction()
+    {
+        $view = $this->view;
+        if($this->_user->getResetPassword() == 0) {
+
+        } else {
+            if ($this->request->isPost())
+            {
+                $data = $this->request->getPost();
+
+                $securityLibrary = new SecurityUser();
+                $password = $securityLibrary->enc_str($data['password']);
+
+                $validation = new Validation();
+                $validation->addCondition("password_new", $data['password1'], "format", "password");
+                $validation->addCondition("confirm_password_new", $data['password2'], "format", "password");
+                $validation->addCondition("confirm_password_new", $data['password2'], "value", "equal", $data['password1']);
+                $validation->execute();
+                if ($validation->_valid == false) {
+                    foreach ($validation->_messages as $fieldName => $messages) {
+                        foreach ($messages as $message) {
+                            $this->errorFlash($message);
+                        }
+                    }
+                } else {
+                    if($this->_user->getStatus() >= 0) {
+
+                        $DLuser = new DLUser();
+                        // TODO :: change password manual
+                        $savePassword = $DLuser->setUserPassword($this->_user , $password);
+                        if($savePassword){
+                            $this->_user->setPassword($password);
+
+                            $this->successFlash($this->_translate['password_changed']);
+                            return $this->response->redirect("/user");
+                        } else {
+                            //TODO :: remember_to add error log for this function below
+//                        \error_log('USER_UPDATE_PASSWD', 'username', $this->_user->getUsername(), 'oldpass', '' . $data['password'] . '', '', '');
+                            $this->errorFlash($this->_translate['system_error']);
+                        }
+
+                    }
+
+                }
+
+            }
+        }
+
+
+        \Phalcon\Tag::setTitle("Change Password - ".$this->_website->title);
+    }
+
+    public function changeAction()
     {
         $view = $this->view;
         if ($this->request->isPost())
@@ -41,12 +92,12 @@ class PasswordController extends \Backoffice\Controllers\ProtectedController
                     if($savePassword){
                         $this->_user->setPassword($password);
 
-                        $this->successFlash($this->view->t['password_changed']);
+                        $this->successFlash($this->_translate['password_changed']);
                         return $this->response->redirect("/user");
                     } else {
                         //TODO :: remember_to add error log for this function below
 //                        \error_log('USER_UPDATE_PASSWD', 'username', $this->_user->getUsername(), 'oldpass', '' . $data['password'] . '', '', '');
-                        $this->errorFlash($this->view->t['system_error']);
+                        $this->errorFlash($this->_translate['system_error']);
                     }
 
                 }
@@ -57,4 +108,51 @@ class PasswordController extends \Backoffice\Controllers\ProtectedController
 
         \Phalcon\Tag::setTitle("Change Password - ".$this->_website->title);
     }
+
+    public function resetAction()
+    {
+        $view = $this->view;
+        if ($this->request->isPost())
+        {
+            $data = $this->request->getPost();
+
+            $validation = new Validation();
+            $validation->addCondition("Username", $data['username'], "format", "username");
+            $validation->addCondition("password", $data['password'], "format", "password");
+            $validation->execute();
+            if ($validation->_valid == false) {
+                foreach ($validation->_messages as $fieldName => $messages) {
+                    foreach ($messages as $message) {
+                        $this->errorFlash($message);
+                    }
+                }
+            } else {
+                $DLuser = new DLUser();
+                $user = $DLuser->getByUsername($data['username']);
+                if($this->_user->getStatus() > 0 && $user->getParent() == $this->_user->getId() && $user->getStatus() > 0) {
+
+                    $securityLibrary = new SecurityUser();
+                    $password = $securityLibrary->enc_str($data['password']);
+
+                    // TODO :: change password manual
+                    $savePassword = $DLuser->setResetPassword($user , $password);
+                    if($savePassword){
+
+                        $this->successFlash($this->_translate['password_changed']);
+                        return $this->response->redirect("/user");
+                    } else {
+                        //TODO :: remember_to add error log for this function below
+//                        \error_log('USER_UPDATE_PASSWD', 'username', $this->_user->getUsername(), 'oldpass', '' . $data['password'] . '', '', '');
+                        $this->errorFlash($this->_translate['system_error']);
+                    }
+
+                }
+
+            }
+
+        }
+
+        \Phalcon\Tag::setTitle("Change Password - ".$this->_website->title);
+    }
+
 }

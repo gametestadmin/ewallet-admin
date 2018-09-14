@@ -93,7 +93,7 @@ class IndexController extends \Backoffice\Controllers\BaseController
 
                     //set session add acl for the current user
                     $generalLibrary = new General();
-                    if($user->getParent() != 0){
+                    if($user->getParent() == 0){
                         $aclObject = $generalLibrary->getCompanyACL();
                     } else {
                         $aclObject = $generalLibrary->getACL($user->getId());

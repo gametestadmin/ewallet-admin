@@ -57,6 +57,12 @@ class User extends \Phalcon\Mvc\Model
      *
      * @var integer
      */
+    protected $reset_password;
+
+    /**
+     *
+     * @var integer
+     */
     protected $reset_nickname;
 
     /**
@@ -171,6 +177,19 @@ class User extends \Phalcon\Mvc\Model
     public function setPassword($password)
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Method to set the value of field reset_password
+     *
+     * @param integer $reset_password
+     * @return $this
+     */
+    public function setResetPassword($reset_password)
+    {
+        $this->reset_password = $reset_password;
 
         return $this;
     }
@@ -295,6 +314,16 @@ class User extends \Phalcon\Mvc\Model
     }
 
     /**
+     * Returns the value of field reset_password
+     *
+     * @return integer
+     */
+    public function getResetPassword()
+    {
+        return $this->reset_password;
+    }
+
+    /**
      * Returns the value of field reset_nickname
      *
      * @return integer
@@ -329,7 +358,6 @@ class User extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->setSchema("backoffice");
         $this->setSource("user");
         $this->hasMany('id', 'System\Model\StatementGame', 'agent', ['alias' => 'StatementGame']);
         $this->hasMany('id', 'System\Model\StatementGame014', 'agent', ['alias' => 'StatementGame014']);

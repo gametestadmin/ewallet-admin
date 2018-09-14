@@ -34,7 +34,6 @@ class UserAclResource extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->setSchema("backoffice");
         $this->setSource("user_acl_resource");
     }
 

@@ -1,6 +1,5 @@
 {% block content %}
-<div id="wrapper">
-</div>
+
 
 {{translate['user']}}
 
