@@ -1,5 +1,5 @@
 <?php
-namespace Backoffice\Currency;
+namespace Backoffice\Setting;
 
 use \Phalcon\Loader;
 use \Phalcon\Mvc\View;
@@ -24,7 +24,7 @@ class Module implements ModuleDefinitionInterface
         $loader = new Loader();
 
         $loader->registerNamespaces([
-            'Backoffice\Currency\Controllers' => __DIR__ . '/controllers/'
+            'Backoffice\Setting\Controllers' => __DIR__ . '/controllers/'
         ]);
 
         $loader->register();
@@ -53,7 +53,7 @@ class Module implements ModuleDefinitionInterface
         // Registering a dispatcher
         $di->set('dispatcher', function () use ($dispatcher) {
 
-            $dispatcher->setDefaultNamespace('Backoffice\Currency\Controllers');
+            $dispatcher->setDefaultNamespace('Backoffice\Setting\Controllers');
 
             return $dispatcher;
         });
@@ -63,7 +63,7 @@ class Module implements ModuleDefinitionInterface
          * Setting up the view component
          */
         $di['view'] = function () use ($view, $config) {
-            $view->setViewsDir($config->application->viewsDir.$config->template."/modules/currency/");
+            $view->setViewsDir($config->application->viewsDir.$config->template."/modules/setting/");
             $view->setLayoutsDir('../../layouts/');
 
             return $view;

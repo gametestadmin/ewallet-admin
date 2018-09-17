@@ -33,8 +33,10 @@
         <link href="{{assets_url}}{{template}}/css/{{environment}}/style.min.css" rel="stylesheet">
     {% endif %}
 
-
-
-
-
+    <!-- NOTE : Temporary Style -->
+    <style>
+        #wrapper{
+            color:white !important;
+        }
+    </style>
 </head>

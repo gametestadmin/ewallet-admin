@@ -1,42 +1,33 @@
 {% block content %}
-<div id="wrapper">
+<div id="wrapper" style="color:white;">
     <div>
         <a href="{{router.getRewriteUri()~'/add'}}">Add</a>
     </div>
     <table>
         <tr bgcolor="#000">
             <td>ID</td>
-            <td>Timezone</td>
+            <td>Code</td>
             <td>Name</td>
-            <td>App Id</td>
-            <td>App Secret</td>
+            <td>Symbol</td>
             <td></td>
             <td></td>
         </tr>
         {% set i = 1 %}
-        {% for providerData in provider %}
+        {% for currencyData in currency %}
         <tr>
             <td>{{i}}</td>
+            <td>{{currencyData.code}}</td>
+            <td>{{currencyData.name}}</td>
+            <td>{{currencyData.symbol}}</td>
             <td>
-                {% set gmtDisplay = providerData.timezone %}
-                {% if providerData.timezone == 0%}
-                {% set gmtDisplay = '' %}
-                {% elseif providerData.timezone > 0%}
-                {% set gmtDisplay = '+'~providerData.timezone %}
-                {% endif %}
-                GMT {{gmtDisplay}}
-            </td>
-            <td>{{providerData.name}}</td>
-            <td>{{providerData.app_id}}</td>
-            <td>{{providerData.app_secret}}</td>
-            <td>
+
                 <select class="status">
                     {% for key, value in status %}
-                        <option value="{{providerData.id~"|"~value}}" {% if providerData.status == value %}selected{% endif %}>{{key}}</option>
+                        <option value="{{currencyData.code~"|"~value}}" {% if currencyData.status == value %}selected{% endif %}>{{key}}</option>
                     {% endfor %}
                 </select>
             </td>
-            <td><a href="{{router.getRewriteUri()~'/detail/'~providerData.id|lowercase}}">Detail</a></td>
+            <td><a href="{{router.getRewriteUri()~'/detail/'~currencyData.code|lowercase}}">Detail</a></td>
         </tr>
         {% set i = i +1 %}
         {% endfor %}
@@ -62,4 +53,5 @@
             });
         });
     </script>
+
 {% endblock %}

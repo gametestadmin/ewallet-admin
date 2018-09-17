@@ -1,24 +1,23 @@
 <?php
 namespace Backoffice\Game\Controllers;
 
-use System\Datalayer\DLProviderGame;
+use System\Datalayer\DLGame;
 use System\Library\General\GlobalVariable;
 
-class ProviderController extends \Backoffice\Controllers\BaseController
+class CategoryController extends \Backoffice\Controllers\BaseController
 {
-
+    protected $_type = 1;
     public function indexAction()
     {
         $view = $this->view;
 
-        $providerGame = new DLProviderGame();
-
+        $categoryGame = new DLGame();
         $status = GlobalVariable::$threeLayerStatus;
 
-        $view->provider = $providerGame->getAll();
+        $view->category = $categoryGame->getAll($this->_type);
         $view->status = $status;
 
-        \Phalcon\Tag::setTitle("Game Provider - ".$this->_website->title);
+        \Phalcon\Tag::setTitle("Game Category - ".$this->_website->title);
     }
 
     public function addAction()
@@ -27,26 +26,31 @@ class ProviderController extends \Backoffice\Controllers\BaseController
 
         $module = $this->router->getModuleName();
         $controller = $this->router->getControllerName();
-        $gmt = $this->getGmt();
+
         if ($this->request->getPost()) {
+            $data = $this->request->getPost();
+            $data['type'] = $this->_type;
+
             try {
                 $this->db->begin();
 
-                $data = $this->request->getPost();
-
-                $DLProviderGame = new DLProviderGame();
-                $providerGameId = $DLProviderGame->create($data);
+                $DLGame = new DLGame();
+                $filterData = $DLGame->filterCategoryInput($data);
+                $DLGame->validateCategoryAdd($filterData);
+                $create = $DLGame->createCategory($filterData);
 
                 $this->db->commit();
 
-                $this->flash->success('provider_game_create_success');
-                return $this->response->redirect($module.'/'.$controller.'/detail/'.$providerGameId)->send();
+                $this->flash->success('game_category_create_success');
+                return $this->response->redirect($module."/".$controller."/detail/".$create->getCode())->send();
             } catch (\Exception $e) {
                 $this->db->rollback();
                 $this->flash->error($e->getMessage());
+                if(isset($data['url'])){
+                    return $this->response->redirect($module."/main/add")->send();
+                }
             }
         }
-        $view->gmt = $gmt;
 
         \Phalcon\Tag::setTitle("Add New Game Provider - ".$this->_website->title);
     }
@@ -54,18 +58,17 @@ class ProviderController extends \Backoffice\Controllers\BaseController
     public function editAction()
     {
         $view = $this->view;
-        $gmt = $this->getGmt();
 
-        $currentId = $this->dispatcher->getParam("id");
-
+        $currentCode = $this->dispatcher->getParam("code");
         $module = $this->router->getModuleName();
         $controller = $this->router->getControllerName();
 
-        $DLProviderGame = new DLProviderGame();
-        $providerGame = $DLProviderGame->getById($currentId);
-        if(!isset($currentId) || !$providerGame){
-            $this->flash->error("undefined_provider_id");
-            $this->response->redirect($module."/".$controller."/")->send();
+        $DLGame = new DLGame();
+        $game = $DLGame->getByCode($currentCode, $this->_type);
+
+        if(!$game){
+            $this->flash->error("undefined_game_category_code");
+            return $this->response->redirect("/".$module."/".$controller)->send();
         }
 
         if ($this->request->getPost()) {
@@ -73,24 +76,25 @@ class ProviderController extends \Backoffice\Controllers\BaseController
                 $this->db->begin();
 
                 $data = $this->request->getPost();
+                $data['code'] = $currentCode;
+                $data['type'] = $this->_type;
+                $data['id'] = $game->getId();
 
-                $data['id'] = $providerGame->getId();
-
-                $data = $DLProviderGame->filterInput($data);
-                $DLProviderGame->validateEdit($data);
-                $DLProviderGame->set($data);
+                $filterData = $DLGame->filterCategoryInput($data);
+                $DLGame->validateCategoryEdit($filterData);
+                $DLGame->setCategory($filterData);
 
                 $this->db->commit();
 
-                $this->flash->success('provider_game_update_success');
-                return $this->response->redirect($module.'/'.$controller.'/detail/'.$providerGame->getId())->send();
+                $this->flash->success('game_category_update_success');
+                return $this->response->redirect("/".$module."/".$controller."/detail/".$game->getCode())->send();
             } catch (\Exception $e) {
                 $this->db->rollback();
                 $this->flash->error($e->getMessage());
+                return $this->response->redirect("/".$module."/".$controller."/detail/".$game->getCode())->send();
             }
         }
-        $view->provider = $providerGame;
-        $view->gmt = $gmt;
+        $view->category = $game;
 
         \Phalcon\Tag::setTitle("Update Game Provider - ".$this->_website->title);
     }
@@ -99,23 +103,21 @@ class ProviderController extends \Backoffice\Controllers\BaseController
     {
         $view = $this->view;
 
-        $status = GlobalVariable::$threeLayerStatus;
-        $gmt = $this->getGmt();
-
-        $currentId = $this->dispatcher->getParam("id");
-
+        $currentCode = $this->dispatcher->getParam("code");
         $module = $this->router->getModuleName();
         $controller = $this->router->getControllerName();
+        $action = $this->router->getActionName();
 
-        $DLProviderGame = new DLProviderGame();
-        $providerGame = $DLProviderGame->getById($currentId);
-        if(!isset($currentId) || !$providerGame){
-            $this->flash->error("undefined_provider_id");
-            $this->response->redirect($module."/".$controller."/")->send();
+        $status = GlobalVariable::$threeLayerStatus;
+
+        $DLGame = new DLGame();
+        $gameCategory = $DLGame->getByCode($currentCode, $this->_type);
+        if(!$gameCategory){
+            $this->flash->error("undefined_game_category_code");
+            return $this->response->redirect("/".$module."/".$controller)->send();
         }
 
-        $view->provider = $providerGame;
-        $view->gmt = $gmt;
+        $view->category = $gameCategory;
         $view->status = $status;
 
         \Phalcon\Tag::setTitle("Update Game Provider - ".$this->_website->title);
@@ -135,20 +137,17 @@ class ProviderController extends \Backoffice\Controllers\BaseController
         $id = $currentId[0];
         $status = $currentId[1];
 
-        $DLProviderGame = new DLProviderGame();
-        $providerGame = $DLProviderGame->getById($id);
-        if(!isset($currentId) || !$providerGame){
-            $this->flash->error("undefined_provider_id");
+        $DLGame = new DLGame();
+        $game = $DLGame->getById($id);
+        if(!isset($currentId) || !$game){
+            $this->flash->error("undefined_game");
             $this->response->redirect($module."/".$controller."/")->send();
         }
 
         try {
             $this->db->begin();
 
-            $data['id'] = $id;
-            $data['status'] = $status;
-
-            $DLProviderGame->set($data);
+            $DLGame->setStatus($id,$status);
 
             $this->db->commit();
             $this->flash->success("status_changed");
@@ -159,17 +158,5 @@ class ProviderController extends \Backoffice\Controllers\BaseController
         }
 
         \Phalcon\Tag::setTitle("Edit Currency - ".$this->_website->title);
-    }
-
-    public function getGmt()
-    {
-        $i = -12;
-        $gmt = array();
-        while ($i <= 14){
-            $gmt[$i] = $i;
-            $i++;
-        }
-
-        return $gmt;
     }
 }

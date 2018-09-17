@@ -6,37 +6,27 @@
     <table>
         <tr bgcolor="#000">
             <td>ID</td>
-            <td>Timezone</td>
+            <td>Type</td>
+            <td>Code</td>
             <td>Name</td>
-            <td>App Id</td>
-            <td>App Secret</td>
-            <td></td>
+            <td>Status</td>
             <td></td>
         </tr>
         {% set i = 1 %}
-        {% for providerData in provider %}
+        {% for categoryData in category %}
         <tr>
             <td>{{i}}</td>
-            <td>
-                {% set gmtDisplay = providerData.timezone %}
-                {% if providerData.timezone == 0%}
-                {% set gmtDisplay = '' %}
-                {% elseif providerData.timezone > 0%}
-                {% set gmtDisplay = '+'~providerData.timezone %}
-                {% endif %}
-                GMT {{gmtDisplay}}
-            </td>
-            <td>{{providerData.name}}</td>
-            <td>{{providerData.app_id}}</td>
-            <td>{{providerData.app_secret}}</td>
+            <td>{{categoryData.type|gameType}}</td>
+            <td>{{categoryData.code}}</td>
+            <td>{{categoryData.name}}</td>
             <td>
                 <select class="status">
                     {% for key, value in status %}
-                        <option value="{{providerData.id~"|"~value}}" {% if providerData.status == value %}selected{% endif %}>{{key}}</option>
+                        <option value="{{categoryData.id~"|"~value}}" {% if categoryData.status == value %}selected{% endif %}>{{key}}</option>
                     {% endfor %}
                 </select>
             </td>
-            <td><a href="{{router.getRewriteUri()~'/detail/'~providerData.id|lowercase}}">Detail</a></td>
+            <td><a href="{{router.getRewriteUri()~'/detail/'~categoryData.code|lowercase}}">Detail</a></td>
         </tr>
         {% set i = i +1 %}
         {% endfor %}
