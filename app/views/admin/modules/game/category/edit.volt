@@ -1,22 +1,43 @@
 {% block content %}
-<div id="wrapper" class="col-xs-12">
-    <form class="form-horizontal" action="#" method="post">
-        <div class="form-group col-xs-12">
-            <label>Category Name</label>
-            <label>
-                <input type="text" name="category_name" id="name" placeholder="Name" value="{{category.name}}">
-            </label>
+        {{ widget('MenuWidget', []) }}
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title row">
+                            <h5>General</h5>
+                        </div>
+                        <div class="ibox-content row">
+                            <form class="form-horizontal col-xs-12" action="#" method="post">
+                                <div class="form-group">
+                                    <label class="col-xs-3 control-label">Category Code</label>
+                                    <label class="col-xs-9">
+                                        <input type="text" placeholder="Name" class="form-control" value="{{category.code}}" readonly>
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-3 control-label">Category Name</label>
+                                    <label class="col-xs-9">
+                                        <input type="text" name="category_name" id="name" placeholder="Name" class="form-control" value="{{category.name}}">
+                                    </label>
+                                </div>
+                                <div class="form-group"><div class="hr-line-dashed"></div></div>
+                                <div class="form-group pull-right">
+                                    <div class="col-xs-12">
+                                        <label>
+                                            <a href="javascript:history.go(-1)" class="btn btn-sm btn-danger">Back</a>
+                                        </label>
+                                        <label>
+                                            <input type="submit" name="submit" class="btn btn-sm btn-info" value="Update">
+                                        </label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="form-group col-xs-12">
-            <label>
-                <a href="javascript:history.go(-1)">Back</>
-            </label>
-            <label>
-                <input type="submit" name="submit" value="Edit">
-            </label>
-        </div>
-    </form>
-</div>
 {% endblock %}
 
 {% block action_js %}

@@ -12,7 +12,7 @@
 
 
     <!-- Main scripts -->
-    <!-- <script src="{{assets_url}}thirdparty/js/jquery-3.3.1.min.js"></script> -->
+    <!--<script src="{{assets_url}}thirdparty/js/jquery-3.3.1.min.js"></script>-->
     <script src="{{assets_url}}thirdparty/js/jquery-2.2.1.js"></script>
     <link href="{{assets_url}}thirdparty/css/bootstrap.min.css" rel="stylesheet">
 

@@ -10,11 +10,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="form-group col-xs-12">
-                    <label>Currency</label>
-                    <lable>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Currency</label>
+                    <lable class="col-xs-9">
                         <input type="hidden" name="game" value="{{game.id}}">
-                        <select name="currency">
+                        <select name="currency" class="form-control">
                             <option value="">-Choose One-</option>
                             {% for currencyData in currency %}
                                 <option value="{{currencyData.id}}">{{currencyData.name}}</option>

@@ -11,14 +11,44 @@ class MainController extends \Backoffice\Controllers\ProtectedController
 {
     protected $_categoryType = 1;
     protected $_type = 2;
+    protected $_limit = 10;
+    protected $_pages = 1;
+
     public function indexAction()
     {
         $view = $this->view;
 
-        $categoryGame = new DLGame();
-        $status = GlobalVariable::$threeLayerStatus;
+        $limit = $this->_limit;
+        $pages = $this->_pages;
 
-        $view->category = $categoryGame->getAll($this->_type);
+        if ($this->request->has("pages")){
+            $pages = $this->request->get("pages");
+
+        }elseif($this->session->has("pages")){
+            $pages = $this->session->get("pages");
+
+        }
+
+        $mainGame = new DLGame();
+        $status = GlobalVariable::$threeLayerStatus;
+        $main = $mainGame->getAll($this->_type);
+
+        $paginator = new \Phalcon\Paginator\Adapter\Model(
+            array(
+                "data" => $main,
+                "limit"=> $limit,
+                "page" => $pages
+            )
+        );
+        $page = $paginator->getPaginate();
+
+        $pagination = ceil($main->count()/$limit);
+        $view->page = $page->items;
+        $view->pagination = $pagination;
+        $view->pages = $pages;
+        $view->limit = $limit;
+
+        $view->main = $main;
         $view->status = $status;
 
         \Phalcon\Tag::setTitle("Game Category - ".$this->_website->title);
