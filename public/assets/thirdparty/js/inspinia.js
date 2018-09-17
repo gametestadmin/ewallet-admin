@@ -4,11 +4,15 @@
  *   version 2.4
  *
  */
+<<<<<<< HEAD
 
 
 $(document).ready(function () {
 
 
+=======
+$(document).ready(function () {
+>>>>>>> cd1f06195af0bd9ff1180da92af37e979728cef6
     // Add body-small class if window less than 768px
     if ($(this).width() < 769) {
         $('body').addClass('body-small')

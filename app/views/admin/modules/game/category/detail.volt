@@ -1,19 +1,19 @@
 {% block content %}
-<div id="wrapper">
+<div id="wrapper" class="col-xs-12">
     <form class="form-horizontal" action="#" method="post">
-        <div class="form-group">
+        <div class="form-group col-xs-12">
             <label>Category Name</label>
             <label>
                 <input type="text" placeholder="Name" value="{{category.name}}" readonly>
             </label>
         </div>
-        <div class="form-group">
+        <div class="form-group col-xs-12">
             <label>Category Code</label>
             <label>
                 <input type="text" placeholder="Name" value="{{category.code}}" readonly>
             </label>
         </div>
-        <div class="form-group">
+        <div class="form-group col-xs-12">
             <label>Status</label>
             <select class="status">
                 {% for key, value in status %}
@@ -21,7 +21,7 @@
                 {% endfor %}
             </select>
         </div>
-        <div class="form-group">
+        <div class="form-group col-xs-12">
             <label>
                 <a href="{{'/'~module~'/'~controller}}">Back</a>
             </label>

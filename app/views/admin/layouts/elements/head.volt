@@ -10,13 +10,19 @@
     <meta name="keywords" content="xxx" />
     <meta name="author" content="xxx" />
 
+
     <!-- Main scripts -->
-    <script src="{{assets_url}}thirdparty/js/popper.min.js"></script>
-    <script src="{{assets_url}}thirdparty/js/inspinia.js"></script>
-    <script src="{{assets_url}}thirdparty/js/jquery-3.3.1.min.js"></script>
+    <!-- <script src="{{assets_url}}thirdparty/js/jquery-3.3.1.min.js"></script> -->
+    <script src="{{assets_url}}thirdparty/js/jquery-2.2.1.js"></script>
     <link href="{{assets_url}}thirdparty/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{{assets_url}}thirdparty/css/style.css" rel="stylesheet">
+
     <script src="{{assets_url}}thirdparty/js/bootstrap.min.js"></script>
+    <script src="{{assets_url}}thirdparty/js/popper.min.js"></script>
+
+    <!-- Inspinia Template -->
+    <link href="{{assets_url}}thirdparty/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{{assets_url}}thirdparty/css/animate.css" rel="stylesheet">
+    <link href="{{assets_url}}thirdparty/css/style.css" rel="stylesheet">
 
     <!-- CSS scripts -->
     {% if environment == 'development' %}
@@ -27,11 +33,4 @@
     {% else %}
         <link href="{{assets_url}}{{template}}/css/style.min.css" rel="stylesheet">
     {% endif %}
-
-    <!-- NOTE : Temporary Style -->
-    <style>
-        #wrapper{
-            color:white !important;
-        }
-    </style>
 </head>

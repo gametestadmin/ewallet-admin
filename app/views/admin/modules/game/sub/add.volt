@@ -1,14 +1,14 @@
 {% block content %}
-<div id="wrapper" style="color:white;">
+<div id="wrapper" class="col-xs-12" style="color:white;">
     <form class="form-horizontal" action="#" method="post">
-        <div class="form-group">
+        <div class="form-group col-xs-12">
             <label>Provider Game</label>
             <label>
                 <input type="text" id="provider" readonly>
                 <input type="hidden" name="provider" id="providerId">
             </label>
         </div>
-        <div class="form-group">
+        <div class="form-group col-xs-12">
             <label>Category Game</label>
             <label>
                 <select name="category" id="category">
@@ -19,7 +19,7 @@
                 </select>
             </label>
         </div>
-        <div class="form-group">
+        <div class="form-group col-xs-12">
             <label>Main Game</label>
             <label>
                 <select name="main" id="main">
@@ -32,13 +32,13 @@
                 </button>
             </label>
         </div>
-        <div class="form-group">
+        <div class="form-group col-xs-12">
             <label>Name</label>
             <label>
                 <input type="text" name="sub_name" id="sub_name" placeholder="Name">
             </label>
         </div>
-        <div class="form-group">
+        <div class="form-group col-xs-12">
             <label>Code</label>
             <label>
                 <input type="text" name="" id="result" placeholder="Code" readonly size="10">
@@ -46,10 +46,10 @@
                 <input type="text" name="sub_code" id="sub_code" placeholder="Code">
             </label>
         </div>
-        <div class="form-group">
+        <div class="form-group col-xs-12">
             <label><input type="checkbox" name="parent_currency"> Copy Currency From Parent*</label>
         </div>
-        <div class="form-group">
+        <div class="form-group col-xs-12">
             <label>
                 <a href="{{url('javascript:history.go(-1)')}}">Back</a>
             </label>
@@ -71,7 +71,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
+                    <div class="form-group col-xs-12">
                         <label>Provider Game</label>
                         <lable>
                             <select name="provider" id="provider_modal">
@@ -82,7 +82,7 @@
                             </select>
                         </label>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-xs-12">
                         <label>Category Name</label>
                         <lable>
                             <select name="category" id="category_modal">
@@ -93,13 +93,13 @@
                             </select>
                         </label>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-xs-12">
                         <label>Main Name</label>
                         <lable>
                             <input type="text" name="main_name" id="main_modal" placeholder="Name">
                         </label>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-xs-12">
                         <label>Main Code</label>
                         <label>
                             <input type="text" id="result_modal" placeholder="Code" readonly size="10">

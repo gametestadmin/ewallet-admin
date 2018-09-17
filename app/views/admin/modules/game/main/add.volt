@@ -1,7 +1,7 @@
 {% block content %}
-<div id="wrapper" style="color:white;">
+<div id="wrapper" class="col-xs-12" style="color:white;">
     <form class="form-horizontal" action="#" method="post">
-        <div class="form-group">
+        <div class="form-group col-xs-12">
             <label>Provider Game</label>
             <label>
                 <select name="provider">
@@ -12,7 +12,7 @@
                 </select>
             </label>
         </div>
-        <div class="form-group">
+        <div class="form-group col-xs-12">
             <label>Category Game</label>
             <label>
                 <select name="category" id="category">
@@ -28,13 +28,13 @@
                 </button>
             </label>
         </div>
-        <div class="form-group">
+        <div class="form-group col-xs-12">
             <label>Name</label>
             <label>
                 <input type="text" name="main_name" id="main_name" placeholder="Name">
             </label>
         </div>
-        <div class="form-group">
+        <div class="form-group col-xs-12">
             <label>Code</label>
             <label>
                 <input type="text" name="" id="result" placeholder="Code" readonly size="10">
@@ -42,7 +42,7 @@
                 <input type="text" name="main_code" id="main_code" placeholder="Code">
             </label>
         </div>
-        <div class="form-group">
+        <div class="form-group col-xs-12">
             <label>
                 <a href="{{url('javascript:history.go(-1)')}}">Back</a>
             </label>
@@ -64,14 +64,14 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
+                    <div class="form-group col-xs-12">
                         <label>Category Name</label>
                         <lable>
                             <input type="text" name="category_name" id="name" placeholder="Name">
                             <input type="hidden" name="url" placeholder="Name" value="{{router.getRewriteUri()}}">
                         </label>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-xs-12">
                         <label>Category Code</label>
                         <lable>
                             <input type="text" name="category_code" id="code" placeholder="Code">

@@ -1,25 +1,25 @@
 {% block content %}
-<!--<div id="wrapper" style="color:white;">
+<!--<div id="wrapper" class="col-xs-12" style="color:white;">
     <form class="form-horizontal" action="#" method="post">
-        <div class="form-group">
+        <div class="form-group col-xs-12">
             <label>Currency Code</label>
             <label>
                 <input type="text" name="code" id="code" placeholder="Code">
             </label>
         </div>
-        <div class="form-group">
+        <div class="form-group col-xs-12">
             <label>Currency Name</label>
             <label>
                 <input type="text" name="name" placeholder="Name">
             </label>
         </div>
-        <div class="form-group">
+        <div class="form-group col-xs-12">
             <label>Currency Symbol</label>
             <label>
                 <input type="text" name="symbol" placeholder="Symbol">
             </label>
         </div>
-        <div class="form-group">
+        <div class="form-group col-xs-12">
             <label>
                 <a href="javascript:history.go(-1)" class="button">Back</a>
             </label>
@@ -30,7 +30,7 @@
     </form>
 </div>-->
 
-<div id="wrapper">
+<div id="wrapper" class="col-xs-12">
     <div id="page-wrappers" class="gray-bg">
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
@@ -51,20 +51,20 @@
                                         <input type="text" name="code" id="code" placeholder="Code">
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-xs-12">
                                     <label class="col-md-3 control-label">Currency Name</label>
                                     <div class="col-md-9">
                                         <input type="text" name="name" placeholder="Name">
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group col-xs-12">
                                     <label class="col-md-3 control-label">Currency Symbol</label>
                                     <div class="col-md-9">
                                         <input type="text" name="symbol" placeholder="Symbol">
                                     </div>
                                 </div>
                                 <div class="hr-line-dashed"></div>
-                                <div class="form-group">
+                                <div class="form-group col-xs-12">
                                     <label class="col-md-3 control-label">&nbsp;</label>
                                     <label class="col-md-9">
                                         <label>

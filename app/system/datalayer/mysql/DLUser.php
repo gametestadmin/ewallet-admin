@@ -23,6 +23,14 @@ class DLUser{
         return $user->save();
     }
 
+    public function setResetPassword($user , $password){
+        $user->setPassword($password);
+        $user->setResetPassword(1);
+
+        return $user->save();
+
+    }
+
 
 
 

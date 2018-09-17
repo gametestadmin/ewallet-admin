@@ -1,5 +1,5 @@
 {% block content %}
-<div id="wrapper">
+<div id="wrapper" class="col-xs-12">
     <div class="list black-text">
 
     <div>

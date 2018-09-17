@@ -1,7 +1,7 @@
 {% block content %}
-<div id="wrapper">
+<div id="wrapper" class="col-xs-12">
     <form class="form-horizontal" action="#" method="post">
-        <div class="form-group">
+        <div class="form-group col-xs-12">
             <label>Timezone</label>
             <label>
                 <select name="provider_timezone">
@@ -18,13 +18,13 @@
                 </select>
             </label>
         </div>
-        <div class="form-group">
+        <div class="form-group col-xs-12">
             <label>Name</label>
             <label>
                 <input type="text" name="provider_name" placeholder="Name" value="{{provider.name}}">
             </label>
         </div>
-        <div class="form-group">
+        <div class="form-group col-xs-12">
             <label>
                 <a href="javascript:history.go(-1)">Back</a>
             </label>

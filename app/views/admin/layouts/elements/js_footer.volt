@@ -1,4 +1,10 @@
 {% block action_js %}
+
+<script src="{{assets_url}}thirdparty/js/inspinia.js"></script>
+<script src="{{assets_url}}thirdparty/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="{{assets_url}}thirdparty/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="{{assets_url}}thirdparty/js/plugins/pace/pace.min.js"></script>
+
 <script>
     // For Notification
     $(document).ready(function() {

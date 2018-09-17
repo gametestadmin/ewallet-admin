@@ -10,7 +10,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="form-group">
+                <div class="form-group col-xs-12">
                     <label>Currency</label>
                     <lable>
                         <input type="hidden" name="game" value="{{game.id}}">
