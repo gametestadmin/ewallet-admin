@@ -20,48 +20,42 @@
             </li>
 
 
+            <li {%if module == ""%}class="active"{%endif%}>
+                <a href="{{url('/')}}"><i class="fa fa-th-large"></i><span class="nav-label">Home</span>
+                </a>
+            </li>
 
 
-
-            <li {%if module == ""%}class="active"{%endif%}><a href="{{url('/')}}"><i class="fa fa-th-large"></i><span class="nav-label">Dashboards</span></a></li>
-
-                <li {%if module == "setting" and controller == "seo" %}class="active"{%endif%}>
-                    <a href=""><i class="fa fa-users"></i><span class="nav-label">SEO</span><span class="fa arrow"></span></a>
+            {% for modulename, modulelist in navigationlist %}
+                <li {%if module == modulename %}class="active"{%endif%}>
+                    <a href=""> <span class="nav-label">{{modulename}}</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <li {%if module == "setting" and controller == "seo" %}class="active"{%endif%}>
-                            <a href="{{url('/setting/seo')}}">List</a>
-                        </li>
+                        {% for  controllername , controllerlist in modulelist %}
+                            {% if controllerlist|length > 1 %}
+                                <li {% if controller == controllername %}class="active" {%endif%}>
+                                <a href=""> <span class="nav-label">{{controllername}} </span><span class="fa arrow"></span> </a>
+                                    <ul class="nav nav-third-level collapse">
+                            {% endif %}
+                            {% for actionname , value in controllerlist %}
+                                    {% if loop.length == 1 %}
+                                        <li {% if action == actionname %}}class="active"{%endif%} >
+                                            <a href="{{url~modulename~'/'~controllername~'/'~actionname}}"> <span class="nav-label">{{modulename}}/{{controllername}}/{{actionname}}</span> </a>
+                                        </li>
+                                    {% else %}
+                                        <li {% if action == actionname %}}class="active"{%endif%} >
+                                            <a href="{{url~modulename~'/'~controllername~'/'~actionname}}"> <span class="nav-label">{{modulename}}/{{controllername}}/{{actionname}}</span>  </a>
+                                        </li>
+                                    {% endif %}
+                            {% endfor %}
+                            {% if controllerlist|length > 1 %}
+                                    </ul>
+                                </li>
+                            {% endif %}
+
+                        {% endfor %}
                     </ul>
                 </li>
-
-                <li {%if module == "setting" and controller == "game" or controller == "subgame" %}class="active"{%endif%}>
-                    <a href=""><i class="fa fa-gamepad"></i><span class="nav-label">Game</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li {%if module == "setting" and controller == "game" or controller == "subgame" %}class="active"{%endif%}>
-                            <a href="{{url('/setting/game')}}">List</a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li {%if module == "setting" and controller == "referral" or module == "referral"%}class="active"{%endif%}>
-                    <a href=""><i class="fa fa-link"></i><span class="nav-label">Referral</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li {%if module == "referral" and (controller is null or controller == "index" or controller == "detail") %}class="active"{%endif%}>
-                            <a href="{{url('/referral')}}">List</a>
-                        </li>
-                        <li {%if module == "setting" and controller == "referral" %}class="active"{%endif%}>
-                            <a href="{{url('/setting/referral')}}">Setting</a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li {%if module == "setting" and controller == "language" %}class="active"{%endif%}>
-                    <a href=""><i class="fa fa-language"></i><span class="nav-label">Language</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                    </ul>
-                </li>
-
-
+            {% endfor %}
 
             </li>
         </ul>
