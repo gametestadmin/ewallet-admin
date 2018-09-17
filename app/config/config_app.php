@@ -52,13 +52,6 @@ $config_apps = array(
         'site_iv'     => 'öL2f×¸nf€{',
         'site_key'    => '1234567812345678',
     ),
-    'production' => array(
-        'admin' => array(
-            'xxx'     => 'öL2f×¸nf€{-ün)U³J N‘;æéÕd~3³',
-            'xxx'     => 'öL2f×¸nf€{',
-            'xxx'    => '1234567812345678',
-        )
-    )
 );
 
 

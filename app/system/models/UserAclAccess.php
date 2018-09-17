@@ -46,7 +46,6 @@ class UserAclAccess extends \Phalcon\Mvc\Model
      */
     public function initialize()
     {
-        $this->setSchema("backoffice");
         $this->setSource("user_acl_access");
         $this->belongsTo('user', 'System\Model\User', 'id', ['alias' => 'User']);
     }

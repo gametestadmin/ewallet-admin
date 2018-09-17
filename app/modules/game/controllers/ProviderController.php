@@ -4,7 +4,7 @@ namespace Backoffice\Game\Controllers;
 use System\Datalayer\DLProviderGame;
 use System\Library\General\GlobalVariable;
 
-class ProviderController extends \Backoffice\Controllers\BaseController
+class ProviderController extends \Backoffice\Controllers\ProtectedController
 {
 
     public function indexAction()

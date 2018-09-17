@@ -1,39 +1,40 @@
 {% block content %}
-<div id="wrapper" style="color:white;">
+<div id="wrapper">
+    <div class="list black-text">
+
     <div>
         <a href="{{router.getRewriteUri()~'/add'}}">Add</a>
     </div>
-    <table>
-        <tr bgcolor="#000">
-            <td>ID</td>
-            <td>Code</td>
-            <td>Name</td>
-            <td>Symbol</td>
-            <td></td>
-            <td></td>
-        </tr>
+        <div class="row header">
+            <div class="col-sm-1">ID</div>
+            <div class="col-sm-2">Code</div>
+            <div class="col-sm">Name</div>
+            <div class="col-sm">Status</div>
+            <div class="col-sm"></div>
+        </div>
+        <div class="content">
         {% set i = 1 %}
         {% for currencyData in currency %}
-        <tr>
-            <td>{{i}}</td>
-            <td>{{currencyData.code}}</td>
-            <td>{{currencyData.name}}</td>
-            <td>{{currencyData.symbol}}</td>
-            <td>
-
-                <select class="status">
-                    {% for key, value in status %}
-                        <option value="{{currencyData.code~"|"~value}}" {% if currencyData.status == value %}selected{% endif %}>{{key}}</option>
-                    {% endfor %}
-                </select>
-            </td>
-            <td><a href="{{router.getRewriteUri()~'/detail/'~currencyData.code|lowercase}}">Detail</a></td>
-        </tr>
+            <div class="row content-list">
+                <div class="col-sm-1">{{i}}</div>
+                <div class="col-sm-2">{{currencyData.code}}</div>
+                <div class="col-sm">{{currencyData.name}}</div>
+                <div class="col-sm">
+                    <select class="status">
+                        {% for key, value in status %}
+                            <option value="{{currencyData.code~"|"~value}}" {% if currencyData.status == value %}selected{% endif %}>{{key}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-sm">
+                    <a href="{{router.getRewriteUri()~'/detail/'~currencyData.code|lowercase}}">Detail</a>
+                </div>
+            </div>
         {% set i = i +1 %}
         {% endfor %}
-    </table>
+        </div>
+    </div>
 </div>
-<a href="/" >homepage</a>
 {% endblock %}
 
 {% block action_js %}

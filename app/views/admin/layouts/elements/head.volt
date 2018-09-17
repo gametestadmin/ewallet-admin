@@ -11,14 +11,16 @@
     <meta name="author" content="xxx" />
 
     <!-- Main scripts -->
-    <link href="{{assets_url}}thirdparty/css/bootstrap.min.css" rel="stylesheet">
-    <script src="{{assets_url}}thirdparty/js/jquery-3.3.1.min.js"></script>
     <script src="{{assets_url}}thirdparty/js/popper.min.js"></script>
+    <script src="{{assets_url}}thirdparty/js/inspinia.js"></script>
+    <script src="{{assets_url}}thirdparty/js/jquery-3.3.1.min.js"></script>
+    <link href="{{assets_url}}thirdparty/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{assets_url}}thirdparty/css/style.css" rel="stylesheet">
     <script src="{{assets_url}}thirdparty/js/bootstrap.min.js"></script>
 
     <!-- CSS scripts -->
     {% if environment == 'development' %}
-        <link rel="stylesheet/less" type="text/css" href="{{assets_url}}{{template}}/{{environment}}/less/stylesheet.less" />
+        <link rel="stylesheet/less" type="text/css" href="{{assets_url}}{{template}}/less/style.less" />
         <script>less = { env: '{{environment}}'};</script>
         <script src="{{assets_url}}thirdparty/js/less.min.js"></script>
         <script>less.watch();</script>

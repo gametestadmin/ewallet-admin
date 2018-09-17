@@ -4,7 +4,7 @@ namespace Backoffice\Game\Controllers;
 use System\Datalayer\DLGame;
 use System\Library\General\GlobalVariable;
 
-class CategoryController extends \Backoffice\Controllers\BaseController
+class CategoryController extends \Backoffice\Controllers\ProtectedController
 {
     protected $_type = 1;
     public function indexAction()

@@ -6,7 +6,7 @@ use System\Datalayer\DLGameCurrency;
 use System\Datalayer\DLProviderGame;
 use System\Library\General\GlobalVariable;
 
-class CurrencyController extends \Backoffice\Controllers\BaseController
+class CurrencyController extends \Backoffice\Controllers\ProtectedController
 {
     public function indexAction()
     {

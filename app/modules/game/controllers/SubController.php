@@ -7,7 +7,7 @@ use System\Datalayer\DLGameCurrency;
 use System\Datalayer\DLProviderGame;
 use System\Library\General\GlobalVariable;
 
-class SubController extends \Backoffice\Controllers\BaseController
+class SubController extends \Backoffice\Controllers\ProtectedController
 {
     protected $_categoryType = 1;
     protected $_mainType = 2;
