@@ -25,7 +25,7 @@
                             <div class="col-md-6 col-sm-12 col-xs-7"><input type="password" class="form-control user-content-input" id="password2" name="password2"></div>
                             <div class="col-md-6 hidden-sm hidden-xs user-help-text">{{translate['minimum_password']}}</div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group col-xs-12">
                             <button type="submit" class="col-md-4 col-md-offset-4 col-xs-4 col-xs-offset-4 submit-button font-size-15">{{translate['update']}}</button>
                         </div>
                     </div>

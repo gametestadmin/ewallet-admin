@@ -19,10 +19,10 @@
     });
 
     window.setTimeout(function() {
-        $(".alert").slideUp(500000, function() {
+        $(".alert").slideUp(500, function() {
             $(this).remove();
         });
-    }, 3000);
+    }, 2000);
 </script>
 {% endblock %}
 

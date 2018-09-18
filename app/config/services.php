@@ -9,6 +9,7 @@ use \Phalcon\Flash\Session as Flash;
 use \Phalcon\Mvc\Model\Manager as ModelManager;
 use \Phalcon\Mvc\Dispatcher as Dispatcher;
 
+
 /**
  * The FactoryDefault Dependency Injector automatically register the right services providing a full stack framework
  */
@@ -82,13 +83,37 @@ $di->setShared('view', function () use ($config) {
 
             $compiler = $volt->getCompiler();
 
-//            $compiler->addFunction('widget', function ($resolvedArgs) {
-//                return 'Frontend\Widgets\Manager::get(' . $resolvedArgs . ')->getContent()';
-//            });
-//
-//            $compiler->addFilter('acl_allowed', function ($resolvedArgs) {
-//                return 'Volt\Libraries\Security::acl(' . $resolvedArgs . ')';
-//            });
+            $compiler->addFunction('widget', function ($resolvedArgs) {
+                return 'System\Widgets\Manager::get(' . $resolvedArgs . ')->getContent()';
+            });
+
+            $compiler->addFilter('date', function ($resolvedArgs) {
+                return 'Volt\Libraries\Format::date(' . $resolvedArgs . ')';
+            });
+
+            $compiler->addFilter('gameName', function ($resolvedArgs) {
+                return 'Volt\Libraries\Game::gameName(' . $resolvedArgs . ')';
+            });
+
+            $compiler->addFilter('gameType', function ($resolvedArgs) {
+                return 'Volt\Libraries\Game::gameType(' . $resolvedArgs . ')';
+            });
+
+            $compiler->addFilter('providerName', function ($resolvedArgs) {
+                return 'Volt\Libraries\Game::gameProvider(' . $resolvedArgs . ')';
+            });
+
+            $compiler->addFilter('currencyCode', function ($resolvedArgs) {
+                return 'Volt\Libraries\Currency::CurrencyCode(' . $resolvedArgs . ')';
+            });
+
+            $compiler->addFilter('currencyName', function ($resolvedArgs) {
+                return 'Volt\Libraries\Currency::CurrencyName(' . $resolvedArgs . ')';
+            });
+
+            $compiler->addFilter('currencySymbol', function ($resolvedArgs) {
+                return 'Volt\Libraries\Currency::CurrencySymbol(' . $resolvedArgs . ')';
+            });
 
             return $volt;
         }

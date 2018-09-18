@@ -9,13 +9,14 @@
 defined('APP_PATH') || define('APP_PATH', realpath('.'));
 
 $config_apps = array(
+    'apps' => 'admin',
     'environment' => "development",               //TODO :: development | production
     'dbenvironment' => "mysql",               //TODO :: development | production
     'version' => '1.0.0',
     'url' => array(
-        'base' => 'http://develop.admin/',
-        'assets' => 'http://develop.admin/assets/',
-        'media' => 'http://develop.admin/media/'
+        'base' => 'http://api.softco.dev/',
+        'assets' => 'http://api.softco.dev/assets/',
+        'media' => 'http://api.softco.dev/media/'
     ),
     'template' => 'admin',
     'language' => array(
@@ -43,14 +44,14 @@ $config_apps = array(
         'host'        => 'localhost',
         'username'    => 'root',
         'password'    => '',
-        'dbname'      => 'backoffice',
+        'dbname'      => 'bo',
         'charset'     => 'utf8',
     ),
     'security' => array(
 //        'site_iv'     => 'öL2f×¸nf€{-ün)U³J N‘;æéÕd~3³',
         'site_iv'     => 'öL2f×¸nf€{',
         'site_key'    => '1234567812345678',
-    )
+    ),
 );
 
 

@@ -32,7 +32,6 @@ class BaseController extends Controller
         $this->_setNavigation();
         $this->_checkACL();
 
-
 //        $this->_language = $this->cookies->get('language')->getValue();
 //        $languageLibrary = new Language();
 //        $this->view->translate = $languageLibrary->getTranslation($this->_language);

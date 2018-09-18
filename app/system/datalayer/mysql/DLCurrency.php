@@ -5,6 +5,18 @@ use System\Model\Currency;
 
 class DLCurrency {
 
+    public function getAll(){
+        $currency = Currency::find();
+
+        return $currency;
+    }
+
+    public function getAllByStatus($status){
+        $currency = Currency::findByStatus($status);
+
+        return $currency;
+    }
+
     public function getByCode($code){
         $currency = Currency::findFirstByCode($code);
 
@@ -20,17 +32,15 @@ class DLCurrency {
     }
 
     public function filterInput($data){
-
-        $data['name'] = \filter_var(\strip_tags(\addslashes($data['name'])), FILTER_SANITIZE_STRING);
-        $data['symbol'] = \filter_var(\strip_tags(\addslashes($data['symbol'])), FILTER_SANITIZE_STRING);
-        $data['status'] = \intval($data['status']);
+        if(isset($data["code"])) $data['code'] = \filter_var(\strip_tags(\addslashes($data['code'])), FILTER_SANITIZE_STRING);
+        if(isset($data["name"])) $data['name'] = \filter_var(\strip_tags(\addslashes($data['name'])), FILTER_SANITIZE_STRING);
+        if(isset($data["symbol"])) $data['symbol'] = \filter_var(\strip_tags(\addslashes($data['symbol'])), FILTER_SANITIZE_STRING);
+        if(isset($data["status"])) $data['status'] = \intval($data['status']);
 
         return $data;
     }
 
     public function validateEdit($data){
-        $data = $this->filterInput($data);
-
         if(empty($data['name'])){
             throw new \Exception('currency_name_empty');
         }elseif(empty($data['symbol'])){
@@ -43,8 +53,6 @@ class DLCurrency {
     }
 
     public function validateAdd($data){
-        $data = $this->filterInput($data);
-
         if($this->checkByCode(strtoupper($data['code']))){
             throw new \Exception('currency_code_exist');
         }elseif(empty($data['name'])){
@@ -59,6 +67,7 @@ class DLCurrency {
     }
 
     public function create($data){
+        $data = $this->filterInput($data);
         $this->validateAdd($data);
 
         $newCurrency = new Currency();
@@ -71,7 +80,7 @@ class DLCurrency {
             throw new \Exception('error_create_currency');
         }
 
-        return true;
+        return $newCurrency->getCode();
     }
 
     public function set($data){

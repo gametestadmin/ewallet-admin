@@ -1,7 +1,6 @@
 {% set messages = flash.getMessages() %}
 {% if messages %}
     {% for type, messages in messages %}
-    {{type}}
         {% if type == 'debug' %}
         {% endif %}
         {% for message in messages %}
