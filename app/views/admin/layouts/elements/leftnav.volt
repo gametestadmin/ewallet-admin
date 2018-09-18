@@ -28,25 +28,32 @@
 
             {% for modulename, modulelist in navigationlist %}
                 <li {%if module == modulename %}class="active"{%endif%}>
-                    <a href=""> <span class="nav-label">{{modulename}}</span><span class="fa arrow"></span></a>
+                    <a href="">
+                        <i class="fa fa-language"></i>
+                        <span class="nav-label">{{modulename}}</span>
+                        <span class="fa arrow"></span>
+                    </a>
                     <ul class="nav nav-second-level collapse">
                         {% for  controllername , controllerlist in modulelist %}
                             {% if controllerlist|length > 1 %}
                                 <li {% if controller == controllername %}class="active" {%endif%}>
-                                <a href=""> <span class="nav-label">{{controllername}} </span><span class="fa arrow"></span> </a>
+                                    <a href="">
+                                        <b>{{controllername}} </b>
+                                        <i class="fa arrow"></i>
+                                    </a>
                                     <ul class="nav nav-third-level collapse">
                             {% endif %}
-                            {% for actionname , value in controllerlist %}
-                                    {% if loop.length == 1 %}
-                                        <li {% if action == actionname %}}class="active"{%endif%} >
-                                            <a href="{{url~modulename~'/'~controllername~'/'~actionname}}"> <span class="nav-label">{{modulename}}/{{controllername}}/{{actionname}}</span> </a>
-                                        </li>
-                                    {% else %}
-                                        <li {% if action == actionname %}}class="active"{%endif%} >
-                                            <a href="{{url~modulename~'/'~controllername~'/'~actionname}}"> <span class="nav-label">{{modulename}}/{{controllername}}/{{actionname}}</span>  </a>
-                                        </li>
-                                    {% endif %}
-                            {% endfor %}
+                                        {% for actionname , value in controllerlist %}
+                                                {% if loop.length == 1 %}
+                                                    <li {% if action == actionname %}class="active"{%endif%} >
+                                                        <a href="{{url~modulename~'/'~controllername~'/'~actionname}}"> <b>{{modulename}}/{{controllername}}/{{actionname}}</b> </a>
+                                                    </li>
+                                                {% else %}
+                                                    <li {% if action == actionname %}class="active"{%endif%} >
+                                                        <a href="{{url~modulename~'/'~controllername~'/'~actionname}}"> <b>{{modulename}}/{{controllername}}/{{actionname}}</b>  </a>
+                                                    </li>
+                                                {% endif %}
+                                        {% endfor %}
                             {% if controllerlist|length > 1 %}
                                     </ul>
                                 </li>
