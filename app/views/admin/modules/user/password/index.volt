@@ -1,68 +1,49 @@
 {% block content %}
-    <div id="page-wrappers" class="gray-bg">
-        <div class="wrapper wrapper-content animated fadeInRight">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="ibox float-e-margins">
-                        <form method="post" action="#" enctype="multipart/form-data" class="form-horizontal">
-                            <div class="ibox-title">
-                                <h5>Change Password {{user.username}}</h5>
-                                <div class="ibox-tools">
-                                    <a href="{{url('/user/detail?username='~user.username)}}" class="btn btn-sm btn-default margin-right-10">Back</a>
-                                    <input type="submit" class="btn btn-sm btn-primary" value="Change Password">
-                                </div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title row">
+                    <h5> <label class="col-xs-12">
+                        {{module|capitalize}}
+                        {% if controller != "index" %}
+                            >
+                            {{controller|capitalize}}
+                        {% endif %}
+                        {% if action != "index" %}
+                            >
+                            {{action|capitalize}}
+                        {% endif %}
+                    </label> </h5>
+                </div>
+                <div class="ibox-content row">
+                    <form class="form-horizontal col-xs-12" action="{{router.getRewriteUri()}}" method="post">
+                        <div class="form-group">
+                            <div class="col-xs-3 control-label"><b>{{translate['new_password']|capitalize}}</b></div>
+                            <div class="col-xs-9">
+                                <input type="password" class="form-control" id="password1" name="password1" placeholder="{{translate['minimum_password']|capitalize}}" required>
                             </div>
-                            <div class="ibox-content">
-                                <div class="form-group col-xs-12">
-                                    <label class="col-md-2 control-label">Username</label>
-                                    <div class="col-md-10">
-                                        <input type="text" id="username" name="username" class="form-control" readonly="readonly" value="{{user.username}}">
-                                    </div>
-                                </div>
-                                <div class="form-group col-xs-12">
-                                    <label class="col-md-2 control-label">Nickname</label>
-                                    <div class="col-md-10">
-                                        <input type="text" id="nickname" name="nickname" class="form-control" readonly="readonly" value="{{user.nickname}}">
-                                    </div>
-                                </div>
-                                <div class="form-group col-xs-12">
-                                    <label class="col-md-2 control-label">Avatar</label>
-                                    <div class="col-md-10">
-                                        <img class="small-thumbnail" src="/assets/system/images/avatar/user/{{user.avatar}}" />
-                                    </div>
-                                </div>
-                                <div class="form-group col-xs-12">
-                                    <label class="col-md-2 control-label">Password</label>
-                                    <div class="col-md-10">
-                                        <input type="password" id="password" name="password" class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="form-group col-xs-12">
-                                    <label class="col-md-2 control-label">Confirm Password</label>
-                                    <div class="col-md-10">
-                                        <input type="password" id="confirm-password" name="confirm_password" class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="form-group col-xs-12">
-                                    <label class="col-md-2 control-label">Reason</label>
-                                    <div class="col-md-10">
-                                        <input type="text" id="reason" name="reason" class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="hr-line-dashed"></div>
-                                <div class="form-group col-xs-12">
-                                    <div class="col-md-12">
-                                        <input type="submit" class="btn btn-sm btn-primary pull-right" value="Change Password">
-                                        <a href="{{url('/user/detail?username='~user.username)}}" class="btn btn-sm btn-default pull-right margin-right-10">Back</a>
-                                    </div>
-                                </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-3 control-label"><b>{{translate['confirm_new_password']|capitalize}}</b></div>
+                            <div class="col-xs-9">
+                                <input type="password" class="form-control" id="password2" name="password2" placeholder="{{translate['minimum_password']|capitalize}}" required>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                        <div class="form-group"><div class="hr-line-dashed"></div></div>
+                        <div class="form-group pull-right">
+                            <div class="col-xs-12">
+                                <b> <a href="javascript:history.go(-1)" class="btn btn-sm btn-danger">Back</a> </b>
+                                <b> <input type="submit" name="submit" class="btn btn-sm btn-primary" value="{{translate['change']|capitalize}}"> </b>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 
 

@@ -12,8 +12,12 @@ class BaseController extends Controller
 {
     protected $_website = false;
     protected $_user = null;
-    protected $_module = null;
     protected $_environment = null;
+    protected $_module = null;
+    protected $_controller = null;
+    protected $_action = null;
+    protected $_allowed = 1 ;
+
 //    protected $_application_name = null;
 //    protected $_template = null;
 //    protected $_frontend = null;
@@ -30,6 +34,7 @@ class BaseController extends Controller
         $this->_setUser();
         $this->_setLanguage();
         $this->_setNavigation();
+        $this->_checkResetPassword();
         $this->_checkACL();
 
 //        $this->_language = $this->cookies->get('language')->getValue();
@@ -47,10 +52,8 @@ class BaseController extends Controller
             $this->_website->title = "New Backoffice";
         }
 
-        $this->_environment = $this->config->environment;
-        $this->_template = $this->config->template;
-        $this->view->environment = $this->_environment;
-        $this->view->template = $this->_template;
+        $this->view->environment = $this->_environment = $this->config->environment;
+        $this->view->template = $this->_template = $this->config->template;
 
 //        $this->_application_name = $this->config->application_name;
 //        $this->_frontend = $this->config->frontend;
@@ -64,9 +67,9 @@ class BaseController extends Controller
 //        $this->view->frontend = $this->_frontend;
 
 
-        $this->view->module = $this->router->getModuleName();
-        $this->view->controller = $this->router->getControllerName();
-        $this->view->action = $this->router->getActionName();
+        $this->view->module = $this->_module = $this->router->getModuleName();
+        $this->view->controller = $this->_controller  = $this->router->getControllerName();
+        $this->view->action = $this->_action = $this->router->getActionName();
     }
 
     protected function _setViewTemplate()
@@ -117,9 +120,6 @@ class BaseController extends Controller
         if($this->session->has('user')){
             $this->_user = $this->session->get('user');
         }
-//        echo "<pre>";
-//        var_dump($this->_user);
-//        die;
         $this->view->user = $this->_user;
     }
 
@@ -128,38 +128,40 @@ class BaseController extends Controller
         //Get ACL for navigation
         if($this->session->has('sidebar')){
             $this->view->navigationlist = $this->session->get('sidebar') ;
+
         }
+
     }
 
     protected function _checkACL()
     {
         //check ACL when there is user
-        $module = $this->router->getModuleName();
-        $controller = $this->router->getControllerName();
-        $action = $this->router->getActionName();
-
         if($this->session->has('user')){
-            if($this->session->has('acl') && $module != null  ){
+            if($this->session->has('acl') && $this->_module != null && $this->_module != 'ajax' ){
                 $acl = $this->session->get('acl') ;
-//                if( $acl->{$module}->{$controller}->{$action} == 0){
-                if( $acl[$module][$controller][$action] == 0){
+                if( $acl[$this->_module][$this->_controller][$this->_action] == 0){
                     $this->errorFlash('cannot_access');
+                    $this->_allowed = 0 ;
+
                     return $this->response->redirect("/");
                 }
 
             }
         }
 
-//        echo "<pre>";
-//        var_dump($this->router->getModuleName());
-//        var_dump($this->router->getControllerName());
-//        var_dump($this->router->getActionName());
-//        var_dump($this->session->has('user'));
-//        var_dump($this->session->has('acl'));
-//        var_dump($this->router->getModuleName()!= null);
-//        die;
+    }
 
+    protected function _checkResetPassword(){
 
+        if($this->session->has('user') ){
+            if ($this->_user->getResetPassword() == 1){
+                if (!($this->_module == 'user' && $this->_controller == 'password' && $this->_action == 'index')){
+                    $this->errorFlash('please_change_password');
+
+                    return $this->response->redirect("/user/password");
+                }
+            }
+        }
     }
 
 
@@ -194,21 +196,21 @@ class BaseController extends Controller
 
 
 
-    protected function _setWebsite()
-    {
-        $this->_allowedWebsite = ($this->session->has("allowed_websites"))?$this->session->get("allowed_websites"):null;
-        $this->_website = ($this->session->has("website"))?$this->session->get("website"):null;
-
-//        if($this->session->has("allowed_websites")){
-//            $this->_allowedWebsite = $this->session->get("allowed_websites");
-//        }
+//    protected function _setWebsite()
+//    {
+//        $this->_allowedWebsite = ($this->session->has("allowed_websites"))?$this->session->get("allowed_websites"):null;
+//        $this->_website = ($this->session->has("website"))?$this->session->get("website"):null;
 //
-//        if($this->session->has('website')){
-//            $this->_website = $this->session->get('website');
-//        }
-        $this->view->allowed_website = $this->_allowedWebsite;
-        $this->view->website = $this->_website;
-    }
+////        if($this->session->has("allowed_websites")){
+////            $this->_allowedWebsite = $this->session->get("allowed_websites");
+////        }
+////
+////        if($this->session->has('website')){
+////            $this->_website = $this->session->get('website');
+////        }
+//        $this->view->allowed_website = $this->_allowedWebsite;
+//        $this->view->website = $this->_website;
+//    }
 
     protected function _getBrowserID()
     {

@@ -4,7 +4,7 @@ namespace Backoffice\Game\Controllers;
 use System\Datalayer\DLGame;
 use System\Datalayer\DLProviderGame;
 
-class AjaxController extends \Backoffice\Controllers\BaseController
+class AjaxController extends \Backoffice\Controllers\ProtectedController
 {
     protected $_categoryType = 1;
     protected $_mainType = 2;
@@ -74,7 +74,6 @@ class AjaxController extends \Backoffice\Controllers\BaseController
         }
 
         \Phalcon\Tag::setTitle("Game Category - ".$this->_website->title);
-
-        exit();
+return true;
     }
 }

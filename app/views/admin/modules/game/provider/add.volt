@@ -1,5 +1,4 @@
 {% block content %}
-        {{ widget('MenuWidget', []) }}
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
                 <div class="col-xs-12">

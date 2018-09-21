@@ -18,6 +18,18 @@ class IndexController extends \Backoffice\Controllers\BaseController
 
             return $this->response->redirect("/login");
         } else {
+//            $generalLibrary = new General();
+//            if($this->_user->getParent() == 0){
+//                $aclObject = $generalLibrary->getCompanyACL();
+//            } else {
+//                $aclObject = $generalLibrary->getACL($this->_user->getId());
+//            }
+//            $sideBar = $generalLibrary->getSidebar($aclObject);
+//            echo "<pre>";
+//            var_dump($this->session->get('sidebar'));
+//            die;
+
+
 //            $view = $this->view;
 
 //        if($this->request->has("flash")) {
@@ -87,10 +99,8 @@ class IndexController extends \Backoffice\Controllers\BaseController
                 if( $password === $user->getPassword() && $captchaTime && $captcha ){
                     $this->session->set('user', $user);
 
-
                     //TODO :: save and check to redis
                     //TODO :: incomplete
-
                     //set session add acl for the current user
                     $generalLibrary = new General();
                     if($user->getParent() == 0){

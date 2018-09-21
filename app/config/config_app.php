@@ -14,9 +14,9 @@ $config_apps = array(
     'dbenvironment' => "mysql",               //TODO :: development | production
     'version' => '1.0.0',
     'url' => array(
-        'base' => 'http://api.softco.dev/',
-        'assets' => 'http://api.softco.dev/assets/',
-        'media' => 'http://api.softco.dev/media/'
+        'base' => 'http://develop.admin/',
+        'assets' => 'http://develop.admin/assets/',
+        'media' => 'http://develop.admin/media/'
     ),
     'template' => 'admin',
     'language' => array(
@@ -44,7 +44,7 @@ $config_apps = array(
         'host'        => 'localhost',
         'username'    => 'root',
         'password'    => '',
-        'dbname'      => 'bo',
+        'dbname'      => 'backoffice',
         'charset'     => 'utf8',
     ),
     'security' => array(
