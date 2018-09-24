@@ -28,33 +28,34 @@
             {% for modulename, modulelist in navigationlist %}
                 <li {%if module == modulename %}class="active"{%endif%}>
                     <a href="">
-                        <i class="fa fa-language"></i>
-                        <span class="nav-label">{{modulename}}</span>
+                        <i class="fa {{modulelist['icon']}}"></i>
+                        <span class="nav-label">{{modulelist['name']}}</span>
                         <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level collapse">
-                        {% for  controllername , controllerlist in modulelist %}
+                        {% for  controllername , controllerlist in modulelist['child'] %}
                             {% if controllerlist|length > 1 %}
                                 <li {% if controller == controllername %}class="active" {%endif%}>
                                     <a href="">
-                                        <b>{{controllername}} </b>
+                                        <i class="fa {{controllerlist['icon']}}"></i>
+                                        <b>{{controllerlist['name']}} </b>
                                         <i class="fa arrow"></i>
                                     </a>
                                     <ul class="nav nav-third-level collapse">
                             {% endif %}
-                            {% for key , value in controllerlist %}
-                              {% if value.sidebar_name == "index" %}
+                            {% for actionkey , actionname in controllerlist['child'] %}
+                              {% if actionkey == "index" %}
                                   {% set actionLink = "" %}
                               {% else %}
-                                  {% set actionLink = "/"~value.sidebar_name %}
+                                  {% set actionLink = "/"~actionkey %}
                               {% endif %}
                               {% if loop.length == 1 %}
-                                  <li {% if action == actionname %}}class="active"{%endif%} >
-                                      <a href="{{url~modulename~'/'~controllername~actionLink}}"> <b>{{modulename}}/{{controllername}}{{value.sidebar_icon}}</b> </a>
+                                  <li {% if action == actionkey %}}class="active"{%endif%} >
+                                      <a href="{{url~modulename~'/'~controllername~actionLink}}"> <b>{{actionname}}</b> </a>
                                   </li>
                               {% else %}
-                                  <li {% if action == actionname %}}class="active"{%endif%} >
-                                      <a href="{{url~modulename~'/'~controllername~actionLink}}"> <b>{{modulename}}/{{controllername}}{{value.sidebar_icon}}</b>  </a>
+                                  <li {% if action == actionkey %}}class="active"{%endif%} >
+                                      <a href="{{url~modulename~'/'~controllername~actionLink}}"> <b>{{actionname}}</b>  </a>
                                   </li>
                               {% endif %}
                             {% endfor %}

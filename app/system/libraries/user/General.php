@@ -52,16 +52,7 @@ class General
 
     public function getSidebar($aclObject){
         $aclList = array();
-        $i = 1 ;
         foreach ($aclObject as $key){
-            //module
-            //controller
-            //action
-            //sidebar
-            //sidebar_name
-            //sidebar_icon
-//            var_dump($key->getModule());die;
-//            $object = array();
             if($key->sidebar == 1 && $key->status == 1){
                 if(!isset($aclList[$key->getModule()])) {
                     $aclList[$key->getModule()] = array();
@@ -97,10 +88,12 @@ class General
                         $controllerAcl = $aclList[$key->getModule()]["child"][$key->getController()];
                     }
 
-                    $actionAcl = array();
-                    $actionAcl["name"] = $key->getSidebarName();
+                    //TODO :: use if action need to have icon
+//                    $actionAcl = array();
+//                    $actionAcl["name"] = $key->getSidebarName();
+//                    $controllerAcl["child"][$key->getAction()] = $actionAcl;
 
-                    $controllerAcl["child"][$key->getAction()] = $actionAcl;
+                    $controllerAcl["child"][$key->getAction()] = $key->getSidebarName();;
                     $aclList[$key->getModule()]["child"][$key->getController()] = $controllerAcl;
                 }
             }
