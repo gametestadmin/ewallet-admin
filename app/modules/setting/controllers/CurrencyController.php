@@ -4,17 +4,47 @@ namespace Backoffice\Setting\Controllers;
 use System\Datalayer\DLCurrency;
 use System\Library\General\GlobalVariable;
 
-class CurrencyController extends \Backoffice\Controllers\BaseController
+class CurrencyController extends \Backoffice\Controllers\ProtectedController
 {
+    protected $_limit = 10;
+    protected $_pages = 1;
 
     public function indexAction()
     {
         $view = $this->view;
 
+        $limit = $this->_limit;
+        $pages = $this->_pages;
+
+        if ($this->request->has("pages")){
+            $pages = $this->request->get("pages");
+
+        }elseif($this->session->has("pages")){
+            $pages = $this->session->get("pages");
+
+        }
+
         $DLCurrency = new DLCurrency();
         $status = GlobalVariable::$twoLayerStatus;
+        $currency = $DLCurrency->getAll();
 
-        $view->currency = $DLCurrency->getAll();
+        $paginator = new \Phalcon\Paginator\Adapter\Model(
+            array(
+                "data" => $currency,
+                "limit"=> $limit,
+                "page" => $pages
+            )
+        );
+        $page = $paginator->getPaginate();
+
+        $pagination = ceil($currency->count()/$limit);
+
+        $view->page = $page->items;
+        $view->pagination = $pagination;
+        $view->pages = $pages;
+        $view->limit = $limit;
+
+        $view->currency = $currency;
         $view->status = $status;
 
         \Phalcon\Tag::setTitle("Currency - ".$this->_website->title);
@@ -136,12 +166,14 @@ class CurrencyController extends \Backoffice\Controllers\BaseController
     {
         $view = $this->view;
 
-        $i = 1;
         $getParam = $this->dispatcher->getParam("code");
+
+        $previousPage = new GlobalVariable();
 
         $param = explode("|",$getParam);
         $currentCode = $param[0];
         $status = $param[1];
+
         if(!isset($currentCode)){
             $this->flash->error("undefined_currency_code");
             $this->response->redirect("/setting/currency")->send();
@@ -160,7 +192,7 @@ class CurrencyController extends \Backoffice\Controllers\BaseController
 
             $this->db->commit();
             $this->flash->success("status_changed");
-            return $this->response->redirect("/setting/currency")->send();
+            $this->response->redirect($previousPage->previousPage())->send();
         } catch (\Exception $e) {
             $this->db->rollback();
             $this->flash->error($e->getMessage());

@@ -4,17 +4,47 @@ namespace Backoffice\Game\Controllers;
 use System\Datalayer\DLGame;
 use System\Library\General\GlobalVariable;
 
-class CategoryController extends \Backoffice\Controllers\BaseController
+class CategoryController extends \Backoffice\Controllers\ProtectedController
 {
     protected $_type = 1;
+    protected $_limit = 10;
+    protected $_pages = 1;
+
     public function indexAction()
     {
         $view = $this->view;
 
+        $limit = $this->_limit;
+        $pages = $this->_pages;
+
+        if ($this->request->has("pages")){
+            $pages = $this->request->get("pages");
+
+        }elseif($this->session->has("pages")){
+            $pages = $this->session->get("pages");
+
+        }
+
         $categoryGame = new DLGame();
         $status = GlobalVariable::$threeLayerStatus;
+        $category = $categoryGame->getAll($this->_type);
 
-        $view->category = $categoryGame->getAll($this->_type);
+        $paginator = new \Phalcon\Paginator\Adapter\Model(
+            array(
+                "data" => $category,
+                "limit"=> $limit,
+                "page" => $pages
+            )
+        );
+        $page = $paginator->getPaginate();
+
+        $pagination = ceil($category->count()/$limit);
+        $view->page = $page->items;
+        $view->pagination = $pagination;
+        $view->pages = $pages;
+        $view->limit = $limit;
+
+        $view->category = $category;
         $view->status = $status;
 
         \Phalcon\Tag::setTitle("Game Category - ".$this->_website->title);

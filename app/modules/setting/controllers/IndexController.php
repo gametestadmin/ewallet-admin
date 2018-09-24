@@ -2,7 +2,7 @@
 namespace Backoffice\Currency\Controllers;
 
 
-class IndexController extends \Backoffice\Controllers\BaseController
+class IndexController extends \Backoffice\Controllers\ProtectedController
 {
 
     public function indexAction()

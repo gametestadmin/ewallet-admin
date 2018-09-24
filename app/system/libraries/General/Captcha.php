@@ -17,8 +17,10 @@ class Captcha extends \System\Library\Main
     {
         $minutes = "+1 minutes";
         $securitytime = $this->session->get("securitycode");
-        $time = date("Y-m-d H:i:s",strtotime($minutes, $securitytime["securitytime"]));
-        if($time >= date("Y-m-d H:i:s")){
+
+        $time = strtotime($minutes, $securitytime["securitytime"]);
+
+        if($time >= strtotime("now")){
             $check = true ;
         } else {
             $check = false ;

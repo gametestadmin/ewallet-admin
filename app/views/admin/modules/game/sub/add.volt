@@ -1,66 +1,86 @@
 {% block content %}
-<div id="wrapper" style="color:white;">
-    <form class="form-horizontal" action="#" method="post">
-        <div class="form-group">
-            <label>Provider Game</label>
-            <label>
-                <input type="text" id="provider" readonly>
-                <input type="hidden" name="provider" id="providerId">
-            </label>
+        {{ widget('MenuWidget', []) }}
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title row">
+                            <h5>General</h5>
+                        </div>
+                        <div class="ibox-content row">
+                            <form class="form-horizontal" action="#" method="post">
+                                <div class="form-group">
+                                    <label class="col-xs-3 control-label">Provider Game</label>
+                                    <label class="col-xs-9">
+                                        <input type="text" id="provider" class="form-control" readonly>
+                                        <input type="hidden" name="provider" id="providerId">
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-3 control-label">Category Game</label>
+                                    <label class="col-xs-9">
+                                        <select name="category" id="category" class="form-control">
+                                            <option value="">-Choose One-</option>
+                                            {% for category in categoryGame %}
+                                            <option value="{{category.code}}">{{category.name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-3 control-label">Main Game</label>
+                                    <label class="col-sm-7 col-xs-6">
+                                        <select name="main" id="main" class="form-control">
+                                            <option value="">-Choose One-</option>
+                                        </select>
+                                    </label>
+                                    <label class="col-sm-2 col-xs-3 text-right">
+                                        <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#exampleModal" disabled>
+                                            Add New
+                                        </button>
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-3 control-label">Name</label>
+                                    <label class="col-xs-9">
+                                        <input type="text" name="sub_name" class="form-control" id="sub_name" placeholder="Name">
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-3 control-label">Code</label>
+                                    <label class="col-xs-3">
+                                        <input type="text" name="" class="form-control" id="result" placeholder="Code" readonly size="10">
+                                    </label>
+                                    <label class="col-xs-6">
+                                        <input type="text" name="sub_code" class="form-control" id="sub_code" placeholder="Code">
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-3"></label>
+                                    <label class="col-xs-9"><input type="checkbox" name="parent_currency"> Copy Currency From Parent*</label>
+                                </div>
+                                <div class="form-group"><div class="hr-line-dashed"></div></div>
+                                <div class="form-group pull-right">
+                                    <div class="col-xs-12">
+                                        <label>
+                                            <a href="{{url('javascript:history.go(-1)')}}" class="btn btn-sm btn-danger">Back</a>
+                                        </label>
+                                        <label>
+                                            <input type="submit" name="submit" class="btn btn-sm btn-primary" value="Add">
+                                        </label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label>Category Game</label>
-            <label>
-                <select name="category" id="category">
-                    <option value="">-Choose One-</option>
-                    {% for category in categoryGame %}
-                    <option value="{{category.code}}">{{category.name}}</option>
-                    {% endfor %}
-                </select>
-            </label>
-        </div>
-        <div class="form-group">
-            <label>Main Game</label>
-            <label>
-                <select name="main" id="main">
-                    <option value="">-Choose One-</option>
-                </select>
-            </label>
-            <label>
-                <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#exampleModal" disabled>
-                    Add New
-                </button>
-            </label>
-        </div>
-        <div class="form-group">
-            <label>Name</label>
-            <label>
-                <input type="text" name="sub_name" id="sub_name" placeholder="Name">
-            </label>
-        </div>
-        <div class="form-group">
-            <label>Code</label>
-            <label>
-                <input type="text" name="" id="result" placeholder="Code" readonly size="10">
-                -
-                <input type="text" name="sub_code" id="sub_code" placeholder="Code">
-            </label>
-        </div>
-        <div class="form-group">
-            <label>
-                <a href="{{url('javascript:history.go(-1)')}}">Back</a>
-            </label>
-            <label>
-                <input type="submit" name="submit" value="Add">
-            </label>
-        </div>
-    </form>
-
     <!-- Modal -->
     <div style="color:black;" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form class="form-horizontal" action="{{url('#')}}" method="post" id="form">
+                <form class="form-horizontal col-xs-12" action="{{url('#')}}" method="post" id="form">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -68,7 +88,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
+                    <div class="form-group col-xs-12">
                         <label>Provider Game</label>
                         <lable>
                             <select name="provider" id="provider_modal">
@@ -79,7 +99,7 @@
                             </select>
                         </label>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-xs-12">
                         <label>Category Name</label>
                         <lable>
                             <select name="category" id="category_modal">
@@ -90,13 +110,13 @@
                             </select>
                         </label>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-xs-12">
                         <label>Main Name</label>
                         <lable>
                             <input type="text" name="main_name" id="main_modal" placeholder="Name">
                         </label>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-xs-12">
                         <label>Main Code</label>
                         <label>
                             <input type="text" id="result_modal" placeholder="Code" readonly size="10">
@@ -115,7 +135,6 @@
             </div>
         </div>
     </div>
-
 </div>
 {% endblock %}
 
@@ -180,6 +199,8 @@
                 }).done(function(data){
                     $(".btn").removeAttr('disabled');
                     $("#result").val("");
+                    $("#provider").val("");
+                    $("#providerId").val(providerId);
                     $("#main").html("<option value=''>-Choose One-</option>"+data);
                 });
             });
