@@ -26,7 +26,8 @@ class IndexController extends \Backoffice\Controllers\BaseController
 //            }
 //            $sideBar = $generalLibrary->getSidebar($aclObject);
 //            echo "<pre>";
-//            var_dump($this->session->get('sidebar'));
+//            var_dump($sideBar);
+//            var_dump($aclObject);
 //            die;
 
 

@@ -155,10 +155,10 @@ class BaseController extends Controller
 
         if($this->session->has('user') ){
             if ($this->_user->getResetPassword() == 1){
-                if (!($this->_module == 'user' && $this->_controller == 'password' && $this->_action == 'index')){
+                if (!($this->_module == 'user' && $this->_controller == 'password' && $this->_action == 'change')){
                     $this->errorFlash('please_change_password');
 
-                    return $this->response->redirect("/user/password");
+                    return $this->response->redirect("/user/password/change");
                 }
             }
         }

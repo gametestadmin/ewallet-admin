@@ -130,7 +130,7 @@ class PasswordController extends \Backoffice\Controllers\ProtectedController
             } else {
                 $DLuser = new DLUser();
                 $user = $DLuser->getByUsername($data['username']);
-                if($this->_user->getStatus() > 0 && $user->getParent() == $this->_user->getId() && $user->getStatus() > 0) {
+                if($this->_user->getStatus() > 0 && $user->getStatus() > 0 && $user->getParent() == $this->_user->getId() ) {
 
                     $securityLibrary = new SecurityUser();
                     $password = $securityLibrary->enc_str($data['password']);
@@ -147,6 +147,8 @@ class PasswordController extends \Backoffice\Controllers\ProtectedController
                         $this->errorFlash($this->_translate['system_error']);
                     }
 
+                } else {
+                    $this->errorFlash($this->_translate['you_cannot_reset_password_for_this_username']);
                 }
 
             }
