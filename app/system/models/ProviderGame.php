@@ -186,6 +186,7 @@ class ProviderGame extends \Phalcon\Mvc\Model
     {
         $this->setSource("provider_game");
         $this->hasMany('id', 'System\Model\Game', 'provider', ['alias' => 'Game']);
+        $this->hasMany('id', 'System\Model\ProviderGameEndpoint', 'provider_game', ['alias' => 'ProviderGameEndpoint']);
         $this->hasMany('id', 'System\Model\ProviderGameWebserviceRequest', 'provider_game', ['alias' => 'ProviderGameWebserviceRequest']);
         $this->hasMany('id', 'System\Model\ProviderGameWebserviceResponse', 'provider_game', ['alias' => 'ProviderGameWebserviceResponse']);
     }

@@ -18,4 +18,8 @@ $application->registerModules(array(
         'className' => 'Backoffice\Game\Module',
         'path' => __DIR__ . '/../modules/game/Module.php'
     ),
+    'agent' => array(
+        'className' => 'Backoffice\Agent\Module',
+        'path' => __DIR__ . '/../modules/agent/Module.php'
+    ),
 ));

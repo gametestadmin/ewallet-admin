@@ -1,5 +1,4 @@
 {% block content %}
-        {{ widget('MenuWidget', []) }}
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
                 <div class="col-xs-12">
@@ -28,7 +27,7 @@
                                             <a href="javascript:history.go(-1)" class="btn btn-sm btn-danger">Back</a>
                                         </label>
                                         <label>
-                                            <input type="submit" name="submit" class="btn btn-sm btn-primary" value="Create">
+                                            <input type="submit" name="submit" class="btn btn-sm btn-primary" value="Add">
                                         </label>
                                     </div>
                                 </div>

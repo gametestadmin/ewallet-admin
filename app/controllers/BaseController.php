@@ -14,6 +14,7 @@ class BaseController extends Controller
     protected $_user = null;
     protected $_module = null;
     protected $_environment = null;
+    protected $_allowed = 1;
 //    protected $_application_name = null;
 //    protected $_template = null;
 //    protected $_frontend = null;
@@ -142,8 +143,9 @@ class BaseController extends Controller
             if($this->session->has('acl') && $module != null  ){
                 $acl = $this->session->get('acl') ;
 //                if( $acl->{$module}->{$controller}->{$action} == 0){
-                if( $acl[$module][$controller][$action] == 0){
+                if( empty($acl[$module][$controller][$action]) || $acl[$module][$controller][$action] == 0){
                     $this->errorFlash('cannot_access');
+                    $this->_allowed = 0;
                     return $this->response->redirect("/");
                 }
 

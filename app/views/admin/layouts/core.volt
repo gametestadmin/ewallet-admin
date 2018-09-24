@@ -15,6 +15,7 @@
                         <div id="page-wrapper" class="gray-bg">
                             {% include dirRoot~'layouts/elements/header' %}
                             {% include dirRoot~'layouts/elements/notification' %}
+                            {{ widget('MenuWidget', []) }}
                             {{ content() }}
                             {% include dirRoot~'layouts/elements/footer' %}
                         </div>
