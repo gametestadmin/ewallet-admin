@@ -1,40 +1,55 @@
 {% block content %}
 
-<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 user-background">
-    <div class="row col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 height-480">
-        <div class="col-md-6 col-md-push-1 col-sm-12 col-xs-12">
-            <div class="row user-header-title">
-                <b>{{translate['change_password']|uppercase}}</b>
-            </div>
-            <form id="password-form" class="form-horizontal" method="post" action="{{url('/user/password/change')}}">
-                <div class="row">
-                    <div class="pos-absolute user-option-bg height-100P width-100P" ></div>
-                    <div class="col-sm-12 col-xs-12 padding-top-5">
-                        <div class="form-group pos-relative">
-                            <div for="password" class="col-md-12 col-sm-12 col-xs-5"><b>{{translate['old_password']}}</b></div>
-                            <div class="col-md-6 col-sm-12 col-xs-7"><input type="password" class="form-control user-content-input" id="password" name="password"></div>
-                            <div class="col-md-6 hidden-sm hidden-xs user-help-text">{{translate['minimum_password']}}</div>
-                        </div>
-                        <div class="form-group pos-relative">
-                            <div for="password1" class="col-md-12 col-sm-12 col-xs-5"><b>{{translate['new_password']}}</b></div>
-                            <div class="col-md-6 col-sm-12 col-xs-7"><input type="password" class="form-control user-content-input" id="password1" name="password1" ></div>
-                            <div class="col-md-6 hidden-sm hidden-xs user-help-text">{{translate['minimum_password']}}</div>
-                        </div>
-                        <div class="form-group pos-relative">
-                            <div for="password2" class="col-md-12 col-sm-12 col-xs-5"><b>{{translate['confirm_new_password']}}</b></div>
-                            <div class="col-md-6 col-sm-12 col-xs-7"><input type="password" class="form-control user-content-input" id="password2" name="password2"></div>
-                            <div class="col-md-6 hidden-sm hidden-xs user-help-text">{{translate['minimum_password']}}</div>
-                        </div>
-                        <div class="form-group col-xs-12">
-                            <button type="submit" class="col-md-4 col-md-offset-4 col-xs-4 col-xs-offset-4 submit-button font-size-15">{{translate['update']}}</button>
-                        </div>
-                    </div>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title row">
+                    <h5> <label class="col-xs-12">
+                        {{module|capitalize}}
+                        {% if controller != "index" %}
+                            >
+                            {{controller|capitalize}}
+                        {% endif %}
+                        {% if action != "index" %}
+                            >
+                            {{action|capitalize}}
+                        {% endif %}
+                    </label> </h5>
                 </div>
-            </form>
+                <div class="ibox-content row">
+                    <form class="form-horizontal col-xs-12" action="{{router.getRewriteUri()}}" method="post">
+                        <div class="form-group">
+                            <div class="col-xs-3 control-label"><b>{{translate['old_password']|capitalize}}</b></div>
+                            <div class="col-xs-9">
+                                <input type="password" class="form-control" id="password" name="password" placeholder="{{translate['minimum_password']|capitalize}}" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-3 control-label"><b>{{translate['new_password']|capitalize}}</b></div>
+                            <div class="col-xs-9">
+                                <input type="password" class="form-control" id="password1" name="password1" placeholder="{{translate['minimum_password']|capitalize}}" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-3 control-label"><b>{{translate['confirm_new_password']|capitalize}}</b></div>
+                            <div class="col-xs-9">
+                                <input type="password" class="form-control" id="password2" name="password2" placeholder="{{translate['minimum_password']|capitalize}}" required>
+                            </div>
+                        </div>
+                        <div class="form-group"><div class="hr-line-dashed"></div></div>
+                        <div class="form-group pull-right">
+                            <div class="col-xs-12">
+                                <b> <a href="javascript:history.go(-1)" class="btn btn-sm btn-danger">Back</a> </b>
+                                <b> <input type="submit" name="submit" class="btn btn-sm btn-primary" value="{{translate['change']|capitalize}}"> </b>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
 
 
 {% endblock %}

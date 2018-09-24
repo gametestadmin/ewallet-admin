@@ -1,4 +1,5 @@
 {% block content %}
+    {{ widget('MenuWidget', []) }}
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
             <div class="col-xs-12">
@@ -11,45 +12,37 @@
                         </div>
                     </div>
                     <div class="ibox-content row">
-                        <ul class="list-inline header-list text-center">
-                          <li class="col-sm-1 col-xs-1 list-group-item">No</li>
-                          <li class="col-sm-3 col-xs-2 list-group-item">Timezone</li>
+                        <ul class="list-inline header-list">
+                          <li class="col-sm-1 col-xs-1 list-group-item text-center">ID</li>
+                          <li class="col-sm-3 col-xs-3 list-group-item">Code</li>
                           <li class="col-sm-4 col-xs-4 list-group-item">Name</li>
-                          <li class="col-sm-2 col-xs-3 list-group-item">Status</li>
+                          <li class="col-sm-2 col-xs-3 list-group-item text-center">Status</li>
                           <li class="col-sm-2 col-xs-2 list-group-item">&nbsp;</li>
                         </ul>
                         {% set i = 1 %}
-                        {% for providerData in page %}
+                        {% for categoryData in page %}
                         {% if i%2 == 0 %}
                         {% set class = "content-even" %}
                         {% else %}
                         {% set class = "content-odd" %}
                         {% endif %}
-                        <ul class="list-inline {{class}} text-center">
-                            <li class="col-sm-1 col-xs-1 list-group-item">{{i}}</li>
-                            <li class="col-sm-3 col-xs-2 list-group-item">
-                                {% set gmtDisplay = providerData.timezone %}
-                                {% if providerData.timezone == 0%}
-                                {% set gmtDisplay = '' %}
-                                {% elseif providerData.timezone > 0%}
-                                {% set gmtDisplay = '+'~providerData.timezone %}
-                                {% endif %}
-                                GMT {{gmtDisplay}}
-                            </li>
-                            <li class="col-sm-4 col-xs-4 list-group-item">{{providerData.name}}</li>
-                            <li class="col-sm-2 col-xs-3 list-group-item">
+                        <ul class="list-inline {{class}}">
+                            <li class="col-sm-1 col-xs-1 list-group-item text-center">{{i}}</li>
+                            <li class="col-sm-3 col-xs-3 list-group-item">{{categoryData.code}}</li>
+                            <li class="col-sm-4 col-xs-4 list-group-item">{{categoryData.name}}</li>
+                            <li class="col-sm-2 col-xs-3 list-group-item text-center">
                                 <select class="status">
                                     {% for key, value in status %}
-                                        <option value="{{providerData.id~"|"~value}}" {% if providerData.status == value %}selected{% endif %}>{{key}}</option>
+                                        <option value="{{categoryData.id~"|"~value}}" {% if categoryData.status == value %}selected{% endif %}>{{key}}</option>
                                     {% endfor %}
                                 </select>
                             </li>
                             <li class="col-sm-2 col-xs-2 list-group-item text-center">
-                                <a href="{{router.getRewriteUri()~'/detail/'~providerData.id}}">
+                                <a href="{{router.getRewriteUri()~'/detail/'~categoryData.code|lowercase}}">
                                     <span class="fa fa-search text-danger"></span>
                                 </a>
                                 |
-                                <a href="{{router.getRewriteUri()~'/edit/'~providerData.id}}">
+                                <a href="{{router.getRewriteUri()~'/edit/'~categoryData.code|lowercase}}">
                                     <span class="fa fa-edit text-primary"></span>
                                 </a>
                             </li>

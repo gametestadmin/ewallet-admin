@@ -8,7 +8,8 @@ class Image
         $im = \imagecreatetruecolor(60, 25);
 
         // Make the background white
-        $backgroundColor = \hexdec("262626");
+//        $backgroundColor = \hexdec("262626");
+        $backgroundColor = \hexdec("555555");
         \imagefilledrectangle($im, 0, 0, 105, 25, $backgroundColor);
 
         // Replace path by your own font path

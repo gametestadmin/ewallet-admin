@@ -10,8 +10,9 @@ class PasswordController extends \Backoffice\Controllers\ProtectedController
     public function indexAction()
     {
         $view = $this->view;
-        if($this->_user->getResetPassword() == 0) {
-
+        if($this->_user->getResetPassword() == 0 ) {
+            $this->errorFlash($this->_translate['cannot_access']);
+            return $this->response->redirect("/");
         } else {
             if ($this->request->isPost())
             {
@@ -41,7 +42,7 @@ class PasswordController extends \Backoffice\Controllers\ProtectedController
                             $this->_user->setPassword($password);
 
                             $this->successFlash($this->_translate['password_changed']);
-                            return $this->response->redirect("/user");
+                            return $this->response->redirect("/");
                         } else {
                             //TODO :: remember_to add error log for this function below
 //                        \error_log('USER_UPDATE_PASSWD', 'username', $this->_user->getUsername(), 'oldpass', '' . $data['password'] . '', '', '');
@@ -93,7 +94,7 @@ class PasswordController extends \Backoffice\Controllers\ProtectedController
                         $this->_user->setPassword($password);
 
                         $this->successFlash($this->_translate['password_changed']);
-                        return $this->response->redirect("/user");
+                        return $this->response->redirect("/");
                     } else {
                         //TODO :: remember_to add error log for this function below
 //                        \error_log('USER_UPDATE_PASSWD', 'username', $this->_user->getUsername(), 'oldpass', '' . $data['password'] . '', '', '');
@@ -139,7 +140,7 @@ class PasswordController extends \Backoffice\Controllers\ProtectedController
                     if($savePassword){
 
                         $this->successFlash($this->_translate['password_changed']);
-                        return $this->response->redirect("/user");
+                        return $this->response->redirect("/");
                     } else {
                         //TODO :: remember_to add error log for this function below
 //                        \error_log('USER_UPDATE_PASSWD', 'username', $this->_user->getUsername(), 'oldpass', '' . $data['password'] . '', '', '');

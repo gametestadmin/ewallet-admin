@@ -19,6 +19,7 @@ class DLUser{
 
     public function setUserPassword($user , $password){
         $user->setPassword($password);
+        $user->setResetPassword(0);
 
         return $user->save();
     }

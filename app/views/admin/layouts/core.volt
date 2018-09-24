@@ -11,7 +11,7 @@
             <div class="container-fluid">
                 <div class="row">
                     {% include dirRoot~'layouts/elements/leftnav' %}
-                    <div id="wrapper" class="col-xs-12">
+                    <div id="wrapper">
                         <div id="page-wrapper" class="gray-bg">
                             {% include dirRoot~'layouts/elements/header' %}
                             {% include dirRoot~'layouts/elements/notification' %}
