@@ -37,7 +37,7 @@
                                             <a href="javascript:history.go(-1)" class="btn btn-sm btn-danger">Back</a>
                                         </label>
                                         <label>
-                                            <input type="submit" name="submit" class="btn btn-sm btn-primary" value="Create">
+                                            <input type="submit" name="submit" class="btn btn-sm btn-primary" value="Add">
                                         </label>
                                     </div>
                                 </div>

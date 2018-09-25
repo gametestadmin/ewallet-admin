@@ -35,6 +35,7 @@ class BaseController extends Controller
         $this->_setLanguage();
         $this->_setNavigation();
         $this->_checkResetPassword();
+        $this->_checkResetNickname();
         $this->_checkACL();
 
 //        $this->_language = $this->cookies->get('language')->getValue();
@@ -153,7 +154,7 @@ class BaseController extends Controller
 
     protected function _checkResetPassword(){
 
-        if($this->session->has('user') ){
+        if( $this->_user ){
             if ($this->_user->getResetPassword() == 1){
                 if (!($this->_module == 'user' && $this->_controller == 'password' && $this->_action == 'change')){
                     $this->errorFlash('please_change_password');
@@ -162,6 +163,20 @@ class BaseController extends Controller
                 }
             }
         }
+    }
+
+    protected function _checkResetNickname(){
+
+        if( $this->_user ) {
+            if ($this->_user->getResetNickname() == 1) {
+                if (!($this->_module == 'user' && $this->_controller == 'nickname' && $this->_action == 'change')){
+                    $this->errorFlash('please_change_nickname');
+
+//                    return $this->response->redirect("/user/nickname/change");
+                }
+            }
+        }
+
     }
 
 

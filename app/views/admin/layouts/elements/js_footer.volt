@@ -22,7 +22,7 @@
         $(".alert").slideUp(500, function() {
             $(this).remove();
         });
-    }, 2000);
+    }, 1232000);
 </script>
 {% endblock %}
 

@@ -1,109 +1,106 @@
 {% block content %}
-        {{ widget('MenuWidget', []) }}
-        <div class="wrapper wrapper-content animated fadeInRight">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title row">
-                            <h5>General</h5>
-                        </div>
-                        <div class="ibox-content row">
-                            <form class="form-horizontal col-xs-12" action="#" method="post">
-                                <div class="form-group">
-                                    <label class="col-xs-3 control-label">Provider Game</label>
-                                    <label class="col-xs-9">
-                                        <select name="provider" class="form-control">
-                                            <option value="">-Choose One-</option>
-                                        {% for provider in providerGame %}
-                                            <option value="{{provider.id}}">{{provider.name}}</option>
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title row">
+                        <h5>General</h5>
+                    </div>
+                    <div class="ibox-content row">
+                        <form class="form-horizontal col-xs-12" action="#" method="post">
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">Provider Game</label>
+                                <label class="col-xs-9">
+                                    <select name="provider" class="form-control">
+                                        <option value="">-Choose One-</option>
+                                    {% for provider in providerGame %}
+                                        <option value="{{provider.id}}">{{provider.name}}</option>
+                                    {% endfor %}
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">Category Game</label>
+                                <label class="col-xs-7">
+                                    <select name="category" id="category" class="form-control">
+                                        <option value="">-Choose One-</option>
+                                        {% for category in categoryGame %}
+                                        <option value="{{category.code}}">{{category.name}}</option>
                                         {% endfor %}
-                                        </select>
+                                    </select>
+                                </label>
+                                <label class="col-xs-2 text-right">
+                                    <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#exampleModal">
+                                        Add New
+                                    </button>
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">Name</label>
+                                <label class="col-xs-9">
+                                    <input type="text" name="main_name" class="form-control" id="main_name" placeholder="Name">
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">Code</label>
+                                <label class="col-xs-3">
+                                    <input type="text" name="" id="result" class="form-control" placeholder="Code" readonly size="10">
+                                </label>
+                                <label class="col-xs-6">
+                                    <input type="text" name="main_code" class="form-control" id="main_code" placeholder="Code">
+                                </label>
+                            </div>
+                            <div class="form-group"><div class="hr-line-dashed"></div></div>
+                            <div class="form-group pull-right">
+                                <div class="col-xs-12">
+                                    <label>
+                                        <a href="javascript:history.go(-1)" class="btn btn-sm btn-danger">Back</a>
+                                    </label>
+                                    <label>
+                                        <input type="submit" name="submit" class="btn btn-sm btn-primary" value="Add">
                                     </label>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-xs-3 control-label">Category Game</label>
-                                    <label class="col-xs-7">
-                                        <select name="category" id="category" class="form-control">
-                                            <option value="">-Choose One-</option>
-                                            {% for category in categoryGame %}
-                                            <option value="{{category.code}}">{{category.name}}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </label>
-                                    <label class="col-xs-2 text-right">
-                                        <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#exampleModal">
-                                            Add New
-                                        </button>
-                                    </label>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-xs-3 control-label">Name</label>
-                                    <label class="col-xs-9">
-                                        <input type="text" name="main_name" class="form-control" id="main_name" placeholder="Name">
-                                    </label>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-xs-3 control-label">Code</label>
-                                    <label class="col-xs-3">
-                                        <input type="text" name="" id="result" class="form-control" placeholder="Code" readonly size="10">
-                                    </label>
-                                    <label class="col-xs-6">
-                                        <input type="text" name="main_code" class="form-control" id="main_code" placeholder="Code">
-                                    </label>
-                                </div>
-                                <div class="form-group"><div class="hr-line-dashed"></div></div>
-                                <div class="form-group pull-right">
-                                    <div class="col-xs-12">
-                                        <label>
-                                            <a href="javascript:history.go(-1)" class="btn btn-sm btn-danger">Back</a>
-                                        </label>
-                                        <label>
-                                            <input type="submit" name="submit" class="btn btn-sm btn-primary" value="Create">
-                                        </label>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-
-<!-- Modal -->
-<div style="color:black;" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form class="form-horizontal" action="{{url('#')}}" method="post" id="form">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add New Categroy</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form class="form-horizontal" action="{{url('#')}}" method="post" id="form">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add New Categroy</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">Category Name</label>
+                        <lable class="col-xs-9">
+                            <input type="text" class="form-control" name="category_name" id="name" placeholder="Name">
+                            <input type="hidden" name="url" placeholder="Name" value="{{router.getRewriteUri()}}">
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">Category Code</label>
+                        <lable class="col-xs-9">
+                            <input type="text" class="form-control" name="category_code" id="code" placeholder="Code">
+                        </label>
+                    </div>
+                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="submit">Add</button>
+                    </div>
+                </form>
             </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label class="col-xs-3 control-label">Category Name</label>
-                    <lable class="col-xs-9">
-                        <input type="text" name="category_name" id="name" placeholder="Name">
-                        <input type="hidden" name="url" placeholder="Name" value="{{router.getRewriteUri()}}">
-                    </label>
-                </div>
-                <div class="form-group col-xs-12">
-                    <label class="col-xs-3 control-label">Category Code</label>
-                    <lable class="col-xs-9">
-                        <input type="text" name="category_code" id="code" placeholder="Code">
-                    </label>
-                </div>
-            </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="submit">Add</button>
-                </div>
-            </form>
         </div>
+    </div>
 {% endblock %}
 
 {% block action_js %}

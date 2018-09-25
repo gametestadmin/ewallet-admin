@@ -4,6 +4,7 @@
   border-width: thin;
 
   color:#3C3C3C;
+  padding: 0;
 
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -18,16 +19,26 @@
   border-bottom-left-radius: 0;
 }
 
+ul.header-list,
+ul.content-odd,
+ul.content-even{
+  margin: 0;
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+}
 .header-list{
   background:#A09E9E;
-  line-height:25px;
+  line-height:45px;
   font-weight:bolder;
+}
+.content-odd,
+.content-even{
+  line-height: 33px;
 }
 .content-odd{
   background:#CDCDCD;
-  line-height:30px;
 }
 .content-even{
   background:#E6E6E6;
-  line-height:30px;
 }

@@ -22,7 +22,7 @@
                         <div class="form-group">
                             <div class="col-xs-3 control-label"><b>{{translate['nickname']|capitalize}}</b></div>
                             <div class="col-xs-9">
-                                <input type="password" class="form-control" id="nickname" name="nickname" placeholder="{{translate['nickname']|capitalize}}" required>
+                                <input type="text" class="form-control" id="nickname" name="nickname" placeholder="{{translate['nickname']|capitalize}}" required>
                             </div>
                         </div>
                         <div class="form-group"><div class="hr-line-dashed"></div></div>

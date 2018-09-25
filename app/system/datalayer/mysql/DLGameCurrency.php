@@ -93,9 +93,9 @@ class DLGameCurrency {
         return true;
     }
 
-    public function set($id){
-        $gameId = $id[0];
-        $gameCurrencyId = $id[1];
+    public function set($data){
+        $gameId = $data["game_id"];
+        $gameCurrencyId = $data["currency_id"];
 
         $currentGameCurrency = $this->getByIdAndDefault($gameId);
 

@@ -11,6 +11,11 @@ class DLUser{
         return $user;
     }
 
+    public function getByNickname($user){
+        $user = User::findFirstByNickname($user);
+        return $user;
+    }
+
     public function getById($user){
         $user = User::findFirstById($user);
 
@@ -32,6 +37,24 @@ class DLUser{
 
     }
 
+    public function checkNickname($newNickname){
+        $nickname = User::findFirstByNickname($newNickname);
+        $username = User::findFirstByUsername($newNickname);
+
+        $check = false ;
+        if($nickname || $username) {
+            $check = true ;
+        }
+
+        return $check ;
+    }
+
+    public function setNickname($user , $newNickname){
+        $user->setNickname($newNickname);
+        $user->setResetNickname(0);
+
+        return $user->save();
+    }
 
 
 

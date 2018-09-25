@@ -38,7 +38,7 @@ class PasswordController extends \Backoffice\Controllers\ProtectedController
                         $DLuser = new DLUser();
                         // TODO :: change password manual
                         $savePassword = $DLuser->setUserPassword($this->_user , $password);
-                        if($savePassword){
+                        if($savePassword && $this->_user->username != $data['nickname']){
                             $this->_user->setPassword($password);
 
                             $this->successFlash($this->_translate['password_changed']);
