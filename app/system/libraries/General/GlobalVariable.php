@@ -14,6 +14,24 @@ class GlobalVariable
         'Active' => 1,
     );
 
+    public static $httpList = array(
+        'http://' => 0,
+        'https://' => 1,
+    );
+
+    public static $providerGameEndpointType = array(
+        'Login' => 1,
+        'Register' => 2,
+        'Transfer In' => 3,
+        'Transfer Out' => 4,
+        'Transfer History' => 5,
+        'User Balance' => 6,
+        'Game Record Transfer' => 7,
+        'Game Record Seamless' => 8,
+        'Game Record Daily Transfer' => 9,
+        'Game Record Daily Seamless' => 10,
+    );
+
     public function gameType($data){
         $gameType = "";
         if($data == 1){
