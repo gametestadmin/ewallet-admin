@@ -1,5 +1,5 @@
 <?php
-namespace Backoffice\Game;
+namespace Backoffice\Ajax;
 
 use \Phalcon\Loader;
 use \Phalcon\Mvc\View;
@@ -24,7 +24,7 @@ class Module implements ModuleDefinitionInterface
         $loader = new Loader();
 
         $loader->registerNamespaces([
-            'Backoffice\Game\Controllers' => __DIR__ . '/controllers/'
+            'Backoffice\Ajax\Controllers' => __DIR__ . '/controllers/'
         ]);
 
         $loader->register();
@@ -53,7 +53,7 @@ class Module implements ModuleDefinitionInterface
         // Registering a dispatcher
         $di->set('dispatcher', function () use ($dispatcher) {
 
-            $dispatcher->setDefaultNamespace('Backoffice\Game\Controllers');
+            $dispatcher->setDefaultNamespace('Backoffice\Ajax\Controllers');
 
             return $dispatcher;
         });
@@ -63,7 +63,7 @@ class Module implements ModuleDefinitionInterface
          * Setting up the view component
          */
         $di['view'] = function () use ($view, $config) {
-            $view->setViewsDir($config->application->viewsDir.$config->template."/modules/game/");
+            $view->setViewsDir($config->application->viewsDir.$config->template."/modules/ajax/");
             $view->setLayoutsDir('../../layouts/');
 
             return $view;

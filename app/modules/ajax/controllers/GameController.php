@@ -1,5 +1,5 @@
 <?php
-namespace Backoffice\Game\Controllers;
+namespace Backoffice\Ajax\Controllers;
 
 use System\Datalayer\DLGame;
 use System\Datalayer\DLProviderGame;

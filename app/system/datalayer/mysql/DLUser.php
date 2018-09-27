@@ -22,6 +22,19 @@ class DLUser{
         return $user;
     }
 
+    public function getChildById($user){
+        $user = User::find(
+            array(
+                "conditions" => "parent = :user:",
+                "bind" => array(
+                    "user" => $user,
+                )
+            )
+        );
+
+        return $user;
+    }
+
     public function setUserPassword($user , $password){
         $user->setPassword($password);
         $user->setResetPassword(0);
