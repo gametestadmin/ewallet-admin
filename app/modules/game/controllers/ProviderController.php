@@ -55,7 +55,11 @@ class ProviderController extends \Backoffice\Controllers\ProtectedController
 
         $module = $this->router->getModuleName();
         $controller = $this->router->getControllerName();
-        $gmt = $this->getGmt();
+
+        $globalVariable = new GlobalVariable();
+        $gmt = $globalVariable->getGmt();
+//        $gmt = $this->getGmt();
+
         if ($this->request->getPost()) {
             try {
                 $this->db->begin();
@@ -82,7 +86,10 @@ class ProviderController extends \Backoffice\Controllers\ProtectedController
     public function editAction()
     {
         $view = $this->view;
-        $gmt = $this->getGmt();
+
+        $globalVariable = new GlobalVariable();
+        $gmt = $globalVariable->getGmt();
+//        $gmt = $this->getGmt();
 
         $currentId = $this->dispatcher->getParam("id");
 
@@ -189,15 +196,15 @@ class ProviderController extends \Backoffice\Controllers\ProtectedController
         \Phalcon\Tag::setTitle("Edit Currency - ".$this->_website->title);
     }
 
-    public function getGmt()
-    {
-        $i = -12;
-        $gmt = array();
-        while ($i <= 14){
-            $gmt[$i] = $i;
-            $i++;
-        }
-
-        return $gmt;
-    }
+//    public function getGmt()
+//    {
+//        $i = -12;
+//        $gmt = array();
+//        while ($i <= 14){
+//            $gmt[$i] = $i;
+//            $i++;
+//        }
+//
+//        return $gmt;
+//    }
 }

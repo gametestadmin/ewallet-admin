@@ -1,6 +1,7 @@
 <?php
 namespace System\Datalayer;
 
+use System\Library\Security\User as SecurityUser ;
 use System\Model\User;
 
 class DLUser{
@@ -13,6 +14,12 @@ class DLUser{
 
     public function getById($user){
         $user = User::findFirstById($user);
+
+        return $user;
+    }
+
+    public function getByParent($parent){
+        $user = User::findByParent($parent);
 
         return $user;
     }
@@ -32,7 +39,73 @@ class DLUser{
 
     }
 
+    public function filterAddAgent($data){
 
+        if(isset($data["timezone"])) $data['timezone'] = \filter_var(\strip_tags(\addslashes($data['timezone'])), FILTER_SANITIZE_STRING);
+        if(isset($data["code"])) $data['code'] = \implode($data['code']);
+        if(isset($data["code"])) $data['code'] = \filter_var(\strip_tags(\addslashes($data['code'])), FILTER_SANITIZE_STRING);
+        if(isset($data["agent_code"])) $data['agent_code'] = \filter_var(\strip_tags(\addslashes($data['agent_code'])), FILTER_SANITIZE_STRING);
+        if(isset($data["password"])) $data['password'] = \filter_var(\strip_tags(\addslashes($data['password'])), FILTER_SANITIZE_STRING);
+
+        return $data;
+    }
+
+    public function validateAddAgent($data){
+        $code = (isset($data['agent_code']))? $data['agent_code'].$data['code'] : $data['code'];
+        $agent = User::findFirst(
+            array(
+                "conditions" => "username = :code: OR nickname = :code:",
+                "bind" => array(
+                    "code" => $code,
+                )
+            )
+        );
+
+        if($agent){
+            throw new \Exception('username_exist');
+        } elseif($data['code'] == ""){
+            throw new \Exception('username_empty');
+        } elseif($data['timezone'] == ""){
+            throw new \Exception('timezone_empty');
+        } elseif($data['password'] == ""){
+            throw new \Exception('password_empty');
+        }
+
+        return true;
+    }
+
+    public function setAddAgent($data){
+        $code = $data['code'];
+        if(isset($data['agent_code'])){
+            $code = $data['agent_code'].$data['code'];
+        }
+        $type = ($data['agent']->getType() > 0)?$type = $data['agent']->getType() - 1:0 ;
+
+        $newAgent = new User();
+        $securityLibrary = new SecurityUser();
+        $password = $securityLibrary->enc_str($data['password']);
+
+        if(isset($data["timezone"]))$newAgent->setTimezone($data['timezone']);
+        if(isset($data["code"])) {
+            $newAgent->setUsername($code);
+            $newAgent->setNickname($code);
+        }
+        if(isset($data["password"]))$newAgent->setPassword($password);
+        $newAgent->setType($type);
+        $newAgent->setParent($data['agent']->getId());
+        $newAgent->setCode($code);
+        $newAgent->setResetNickname(1);
+        // TODO :: temporary 0
+//        $newAgent->setResetPassword(0);
+        $newAgent->setResetPassword(1);
+        $newAgent->setParentStatus($data['agent']->getStatus());
+
+        if(!$newAgent->save()){
+            throw new \Exception('agent_create_error');
+        }
+
+        return $newAgent;
+    }
 
 
 

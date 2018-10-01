@@ -7,10 +7,10 @@
                             <h5>General</h5>
                         </div>
                         <div class="ibox-content row">
-                            <form class="form-horizontal col-xs-12" action="#" method="post">
+                            <form class="form-horizontal col-sm-12" action="#" method="post">
                                 <div class="form-group">
-                                    <label class="col-xs-3 control-label">Timezone</label>
-                                    <label class="col-xs-9">
+                                    <label class="col-sm-3 control-label">Timezone</label>
+                                    <label class="col-sm-9">
                                         {% set gmtDisplay = provider.timezone %}
                                         {% if provider.timezone == 0%}
                                         {% set gmtDisplay = '' %}
@@ -21,14 +21,14 @@
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-xs-3 control-label">Name</label>
-                                    <label class="col-xs-9">
+                                    <label class="col-sm-3 control-label">Name</label>
+                                    <label class="col-sm-9">
                                         <input type="text" placeholder="Name" class="form-control" value="{{provider.name}}" readonly>
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-xs-3 control-label">Status</label>
-                                    <label class="col-xs-9">
+                                    <label class="col-sm-3 control-label">Status</label>
+                                    <label class="col-sm-9">
                                         <select class="status form-control">
                                             {% for key, value in status %}
                                                 <option value="{{provider.id~"|"~value}}" {% if provider.status == value %}selected{% endif %}>{{key}}</option>

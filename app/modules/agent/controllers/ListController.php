@@ -1,203 +1,94 @@
 <?php
-namespace Backoffice\Setting\Controllers;
+namespace Backoffice\Agent\Controllers;
 
-use System\Datalayer\DLCurrency;
-use System\Library\General\GlobalVariable;
+use System\Datalayer\DLUser;
 
-class CurrencyController extends \Backoffice\Controllers\ProtectedController
+class ListController extends \Backoffice\Controllers\ProtectedController
 {
     protected $_limit = 10;
-    protected $_pages = 1;
+    protected $_page = 1;
 
     public function indexAction()
     {
         $view = $this->view;
 
         $limit = $this->_limit;
-        $pages = $this->_pages;
+        $page = $this->_page;
 
         if ($this->request->has("pages")){
-            $pages = $this->request->get("pages");
+            $page = $this->request->get("pages");
 
         }elseif($this->session->has("pages")){
-            $pages = $this->session->get("pages");
-
+            $page = $this->session->get("pages");
         }
 
-        $DLCurrency = new DLCurrency();
-        $status = GlobalVariable::$twoLayerStatus;
-        $currency = $DLCurrency->getAll();
+        $DLUser = new DLUser();
+        $agent = $DLUser->getByParent($this->_user->getId());
 
         $paginator = new \Phalcon\Paginator\Adapter\Model(
             array(
-                "data" => $currency,
+                "data" => $agent,
                 "limit"=> $limit,
-                "page" => $pages
+                "page" => $page
             )
         );
-        $page = $paginator->getPaginate();
+        $records = $paginator->getPaginate();
 
-        $pagination = ceil($currency->count()/$limit);
+        $totalPage = ceil($agent->count()/$limit);
 
-        $view->page = $page->items;
-        $view->pagination = $pagination;
-        $view->pages = $pages;
+        $view->agent_list = $records->items;
+        $view->total_page = $totalPage;
+        $view->page = $page;
         $view->limit = $limit;
 
-        $view->currency = $currency;
-        $view->status = $status;
-
-        \Phalcon\Tag::setTitle("Currency - ".$this->_website->title);
+        \Phalcon\Tag::setTitle("Agent System - ".$this->_website->title);
     }
 
-    public function addAction()
+    public function childAction()
     {
         $view = $this->view;
 
-        if ($this->request->getPost()) {
-            try {
-                $this->db->begin();
+        $id = $this->dispatcher->getParam("id");
 
-                $module = $this->router->getModuleName();
-                $controller = $this->router->getControllerName();
+        $limit = $this->_limit;
+        $page = $this->_page;
 
-                $data = $this->request->getPost();
+        if ($this->request->has("pages")){
+            $page = $this->request->get("pages");
 
-                $DLCurrency = new DLCurrency();
-                $currency = $DLCurrency->create($data);
-
-                $this->db->commit();
-                return $this->response->redirect($module.'/'.$controller.'/detail/'.strtolower($currency))->send();
-            } catch (\Exception $e) {
-                $this->db->rollback();
-                $this->flash->error($e->getMessage());
-            }
+        }elseif($this->session->has("pages")){
+            $page = $this->session->get("pages");
         }
 
-        \Phalcon\Tag::setTitle("Add New Currency - ".$this->_website->title);
-    }
+        $DLUser = new DLUser();
+        $agent = $DLUser->getByParent($id);
 
-    public function editAction()
-    {
-        $view = $this->view;
+//        foreach ($agent as $agentKey => $agentValue){
 
-        $module = $this->router->getModuleName();
-        $controller = $this->router->getControllerName();
+//            var_dump($this->_user->getId()."|".$agentValue->getParent());
+//            echo "<br>";
+//            if($this->_user->getId() != $agentValue->getParent()){
+//                return $this->response->redirect("/".$this->_module."/".$this->_controller)->send();
+//            }
+//        }
+//        die;
 
-        $currentCode = $this->dispatcher->getParam("code");
+        $paginator = new \Phalcon\Paginator\Adapter\Model(
+            array(
+                "data" => $agent,
+                "limit"=> $limit,
+                "page" => $page
+            )
+        );
+        $records = $paginator->getPaginate();
 
-        $DLCurrency = new DLCurrency();
-        $getCurrency = $DLCurrency->getByCode($currentCode);
-        if(!isset($currentCode) || !$getCurrency){
-            $this->flash->error("undefined_currency_code");
-            $this->response->redirect($module."/".$controller."/")->send();
-        }
+        $totalPage = ceil($agent->count()/$limit);
 
-        if ($this->request->getPost()) {
-            try {
-                $this->db->begin();
+        $view->agent_list = $records->items;
+        $view->total_page = $totalPage;
+        $view->page = $page;
+        $view->limit = $limit;
 
-                $data = $this->request->getPost();
-                $data['code'] = $getCurrency->getCode();
-
-                $data = $DLCurrency->filterInput($data);
-                $DLCurrency->validateEdit($data);
-                $getCurrency = $DLCurrency->set($data);
-
-                $this->db->commit();
-                return $this->response->redirect($module.'/'.$controller.'/detail/'.$currentCode)->send();
-            } catch (\Exception $e) {
-                $this->db->rollback();
-                $this->flash->error($e->getMessage());
-            }
-        }
-
-        $view->currency = $getCurrency;
-
-        \Phalcon\Tag::setTitle("Edit Currency - ".$this->_website->title);
-    }
-
-    public function detailAction()
-    {
-        $view = $this->view;
-
-        $module = $this->router->getModuleName();
-        $controller = $this->router->getControllerName();
-
-        $currentCode = $this->dispatcher->getParam("code");
-
-        $DLCurrency = new DLCurrency();
-        $getCurrency = $DLCurrency->getByCode($currentCode);
-        if(!isset($currentCode) || !$getCurrency){
-            $this->flash->error("undefined_currency_code");
-            $this->response->redirect($module."/".$controller."/")->send();
-        }
-
-        $module = $this->router->getModuleName();
-        $controller = $this->router->getControllerName();
-
-        if ($this->request->getPost()) {
-            try {
-                $this->db->begin();
-
-                $data = $this->request->getPost();
-                $data['code'] = $getCurrency->getCode();
-
-                $data = $DLCurrency->filterInput($data);
-                $DLCurrency->validateEdit($data);
-                $getCurrency = $DLCurrency->set($data);
-
-                $this->db->commit();
-                return $this->response->redirect($this->router->getRewriteUri())->send();
-            } catch (\Exception $e) {
-                $this->db->rollback();
-                $this->flash->error($e->getMessage());
-            }
-        }
-
-        $view->currency = $getCurrency;
-        $view->module = $module;
-        $view->controller = $controller;
-
-        \Phalcon\Tag::setTitle("Edit Currency - ".$this->_website->title);
-    }
-
-    public function statusAction()
-    {
-        $view = $this->view;
-
-        $getParam = $this->dispatcher->getParam("code");
-
-        $previousPage = new GlobalVariable();
-
-        $param = explode("|",$getParam);
-        $currentCode = $param[0];
-        $status = $param[1];
-
-        if(!isset($currentCode)){
-            $this->flash->error("undefined_currency_code");
-            $this->response->redirect("/setting/currency")->send();
-        }
-
-        $DLCurrency = new DLCurrency();
-        $getCurrency = $DLCurrency->getByCode($currentCode);
-
-        try {
-            $this->db->begin();
-
-            $data['status'] = $status;
-            $data['code'] = $getCurrency->getCode();
-
-            $getCurrency = $DLCurrency->set($data);
-
-            $this->db->commit();
-            $this->flash->success("status_changed");
-            $this->response->redirect($previousPage->previousPage())->send();
-        } catch (\Exception $e) {
-            $this->db->rollback();
-            $this->flash->error($e->getMessage());
-        }
-
-        \Phalcon\Tag::setTitle("Edit Currency - ".$this->_website->title);
+        \Phalcon\Tag::setTitle("Agent System - ".$this->_website->title);
     }
 }

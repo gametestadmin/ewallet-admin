@@ -18,6 +18,12 @@ class DLUserAclResource{
         return $module ;
     }
 
+    public function getById($data){
+        $userAclResource = UserAclResource::findFirstById($data);
+
+        return $userAclResource;
+    }
+
 
 
 

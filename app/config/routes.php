@@ -114,6 +114,33 @@ $routes = array(
         )
     ),
 
+//    array(
+//        'url' => '/agent',
+//        'params' => array(
+//            'module' => 'agent',
+//            'controller' => 'index',
+//            'action' => 'index'
+//        )
+//    ),
+
+    array(
+        'url' => '/agent/detail/([0-9|]+)',
+        'params' => array(
+            'module' => 'agent',
+            'controller' => 'detail',
+            'action' => 'index',
+            'id' => 1
+        )
+    ),
+
+    array(
+        'url' => '/agent',
+        'params' => array(
+            'module' => 'agent',
+            'controller' => 'index',
+        )
+    ),
+
     array(
         'url' => '/language',
         'params' => array(

@@ -7,10 +7,10 @@
                             <h5>General</h5>
                         </div>
                         <div class="ibox-content row">
-                            <form class="form-horizontal col-xs-12" action="#" method="post">
+                            <form class="form-horizontal col-sm-12" action="{{router.getRewriteUri()}}" method="post">
                                 <div class="form-group">
-                                    <label class="col-xs-3 control-label">Timezone</label>
-                                    <label class="col-xs-9">
+                                    <label class="col-sm-3 control-label">Timezone</label>
+                                    <label class="col-sm-9">
                                         <select name="provider_timezone" class="form-control">
                                             <option value="">-Choose One-</option>
                                             {% for gmtTime in gmt %}
@@ -26,8 +26,8 @@
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-xs-3 control-label">Name</label>
-                                    <label class="col-xs-9">
+                                    <label class="col-sm-3 control-label">Name</label>
+                                    <label class="col-sm-9">
                                         <input type="text" name="provider_name" class="form-control" placeholder="Name" value="{{provider.name}}">
                                     </label>
                                 </div>
@@ -35,7 +35,7 @@
                                 <div class="form-group pull-right">
                                     <div class="col-xs-12">
                                         <label>
-                                            <a href="javascript:history.go(-1)" class="btn btn-sm btn-danger">Back</a>
+                                            <a href="{{url('javascript:history.go(-1)')}}" class="btn btn-sm btn-danger">Back</a>
                                         </label>
                                         <label>
                                             <input type="submit" name="submit" class="btn btn-sm btn-primary" value="Edit">

@@ -6,6 +6,7 @@ use \System\Datalayer\DLUser;
 use System\Library\Security\User as SecurityUser ;
 use System\Library\General\Captcha;
 use System\Library\User\General;
+use System\Model\User;
 
 class IndexController extends \Backoffice\Controllers\BaseController
 {
@@ -88,6 +89,10 @@ class IndexController extends \Backoffice\Controllers\BaseController
                 $password = $securityLibrary->enc_str($password);
 
                 // TODO :: change password manual
+//                $setpass = User::findFirstByUsername($username);
+//
+//                $setpass->setPassword($password);
+//                $setpass->save();
 //            $test = $DLuser->setUserPassword($user , $password);
 //            var_dump($test);
 

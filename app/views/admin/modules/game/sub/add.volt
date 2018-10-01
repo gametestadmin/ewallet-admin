@@ -7,10 +7,10 @@
                         <h5>General</h5>
                     </div>
                     <div class="ibox-content row">
-                        <form class="form-horizontal" action="#" method="post">
+                        <form class="form-horizontal" action="{{router.getRewriteUri()}}" method="post">
                             <div class="form-group">
-                                <label class="col-xs-3 control-label">Category Game</label>
-                                <label class="col-xs-9">
+                                <label class="col-sm-3 control-label">Category Game</label>
+                                <label class="col-sm-9">
                                     <select name="category" id="category" class="form-control">
                                         <option value="">-Choose One-</option>
                                         {% for category in categoryGame %}
@@ -20,49 +20,49 @@
                                 </label>
                             </div>
                             <div class="form-group">
-                                <label class="col-xs-3 control-label">Main Game</label>
-                                <label class="col-sm-7 col-xs-6">
+                                <label class="col-sm-3 control-label">Main Game</label>
+                                <label class="col-sm-7 col-sm-6">
                                     <select name="main" id="main" class="form-control">
                                         <option value="">-Choose One-</option>
                                     </select>
                                 </label>
-                                <label class="col-sm-2 col-xs-3 text-right">
+                                <label class="col-sm-2 col-sm-3 text-right">
                                     <button type="button" class="btn btn-sm btn-info" id="btn-add" data-toggle="modal" data-target="#form-main-game">
                                         Add New
                                     </button>
                                 </label>
                             </div>
                             <div class="form-group">
-                                <label class="col-xs-3 control-label">Provider Game</label>
-                                <label class="col-xs-9">
+                                <label class="col-sm-3 control-label">Provider Game</label>
+                                <label class="col-sm-9">
                                     <input type="text" id="provider" class="form-control" readonly>
                                     <input type="hidden" name="provider" id="providerId">
                                 </label>
                             </div>
                             <div class="form-group">
-                                <label class="col-xs-3 control-label">Name</label>
-                                <label class="col-xs-9">
+                                <label class="col-sm-3 control-label">Name</label>
+                                <label class="col-sm-9">
                                     <input type="text" name="sub_name" class="form-control" id="sub_name" placeholder="Name">
                                 </label>
                             </div>
                             <div class="form-group">
-                                <label class="col-xs-3 control-label">Code</label>
-                                <label class="col-xs-3">
+                                <label class="col-sm-3 control-label">Code</label>
+                                <label class="col-sm-3">
                                     <input type="text" name="" class="form-control" id="result" placeholder="Code" readonly size="10">
                                 </label>
-                                <label class="col-xs-6">
+                                <label class="col-sm-6">
                                     <input type="text" name="sub_code" class="form-control" id="sub_code" placeholder="Code">
                                 </label>
                             </div>
                             <div class="form-group">
-                                <label class="col-xs-3"></label>
-                                <label class="col-xs-9"><input type="checkbox" name="parent_currency"> Copy Currency From Parent*</label>
+                                <label class="col-sm-3"></label>
+                                <label class="col-sm-9"><input type="checkbox" name="parent_currency"> Copy Currency From Parent*</label>
                             </div>
                             <div class="form-group"><div class="hr-line-dashed"></div></div>
                             <div class="form-group pull-right">
                                 <div class="col-xs-12">
                                     <label>
-                                        <a href="{{url('javascript:history.go(-1)')}}" class="btn btn-sm btn-danger">Back</a>
+                                        <a href="{{url(module~"/"~controller)}}" class="btn btn-sm btn-danger">Back</a>
                                     </label>
                                     <label>
                                         <input type="submit" name="submit" class="btn btn-sm btn-primary" value="Add">
@@ -88,8 +88,8 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label class="col-xs-3">Provider Game</label>
-                            <label class="col-xs-9">
+                            <label class="col-sm-3">Provider Game</label>
+                            <label class="col-sm-9">
                                 <select name="provider" id="provider_modal" class="form-control">
                                     <option value="">-Choose One-</option>
                                     {% for provider in providerGame %}
@@ -99,8 +99,8 @@
                             </label>
                         </div>
                         <div class="form-group">
-                            <label class="col-xs-3">Category Name</label>
-                            <label class="col-xs-9">
+                            <label class="col-sm-3">Category Name</label>
+                            <label class="col-sm-9">
                                 <select name="category" id="category_modal" class="form-control" readonly>
                                     {% for category in categoryGame %}
                                     <option value="{{category.code}}">{{category.name}}</option>
@@ -109,17 +109,17 @@
                             </label>
                         </div>
                         <div class="form-group">
-                            <label class="col-xs-3">Main Name</label>
-                            <label class="col-xs-9">
+                            <label class="col-sm-3">Main Name</label>
+                            <label class="col-sm-9">
                                 <input type="text" class="form-control" name="main_name" id="main_modal" placeholder="Name">
                             </label>
                         </div>
                         <div class="form-group">
-                            <label class="col-xs-3">Main Code</label>
-                            <label class="col-xs-3">
+                            <label class="col-sm-3">Main Code</label>
+                            <label class="col-sm-3">
                                 <input type="text" class="form-control" id="result_modal" placeholder="Code" readonly size="10">
                             </label>
-                            <label class="col-xs-6">
+                            <label class="col-sm-6">
                                 <input type="text" class="form-control" name="main_code" id="code_modal" placeholder="Code">
                             </label>
                         </div>

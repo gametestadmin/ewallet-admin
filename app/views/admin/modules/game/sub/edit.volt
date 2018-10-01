@@ -7,28 +7,28 @@
                             <h5>General</h5>
                         </div>
                         <div class="ibox-content row">
-                            <form class="form-horizontal col-xs-12" action="#" method="post">
+                            <form class="form-horizontal col-sm-12" action="{{router.getRewriteUri()}}" method="post">
                                 <div class="form-group">
-                                    <label class="col-xs-3 control-label">Type</label>
-                                    <label class="col-xs-9">
+                                    <label class="col-sm-3 control-label">Type</label>
+                                    <label class="col-sm-9">
                                         <input type="text" placeholder="Game Type" class="form-control" value="{{game.type|gameType}}" readonly>
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-xs-3 control-label">Game Category</label>
-                                    <label class="col-xs-9">
+                                    <label class="col-sm-3 control-label">Game Category</label>
+                                    <label class="col-sm-9">
                                         <input type="text" placeholder="Game Category" class="form-control" value="{{game.game_parent|gameName}}" readonly>
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-xs-3 control-label">Game Code</label>
-                                    <label class="col-xs-9">
+                                    <label class="col-sm-3 control-label">Game Code</label>
+                                    <label class="col-sm-9">
                                         <input type="text" placeholder="Name" class="form-control" value="{{game.code}}" readonly>
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-xs-3 control-label">Game Name</label>
-                                    <label class="col-xs-9">
+                                    <label class="col-sm-3 control-label">Game Name</label>
+                                    <label class="col-sm-9">
                                         <input type="text" name="main_name" class="form-control" placeholder="Name" value="{{game.name}}">
                                     </label>
                                 </div>
