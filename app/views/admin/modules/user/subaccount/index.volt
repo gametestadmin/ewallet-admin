@@ -35,8 +35,8 @@
                                     {% endif %}
                                     <ul class="list-inline {{class}} text-center">
                                         <li class="col-sm-1 col-xs-1 list-group-item">{{i}}</li>
-                                        <li class="col-sm-3 col-xs-3 list-group-item">{{mainData.code}}</li>
-                                        <li class="col-sm-4 col-xs-4 list-group-item">{{mainData.name}}</li>
+                                        <li class="col-sm-3 col-xs-3 list-group-item">{{mainData.username}}</li>
+                                        <li class="col-sm-4 col-xs-4 list-group-item">{{mainData.nickname}}</li>
                                         <li class="col-sm-3 col-xs-3 list-group-item">
                                             <select class="status">
                                                 {% for key, value in status %}
@@ -45,11 +45,11 @@
                                             </select>
                                         </li>
                                         <li class="col-sm-1 col-xs-1 list-group-item">
-                                            <a href="{{router.getRewriteUri()~'/detail/'~mainData.code|lowercase}}">
+                                            <a href="{{router.getRewriteUri()~'/detail/'~mainData.id}}">
                                                 <span class="fa fa-search text-danger"></span>
                                             </a>
                                             |
-                                            <a href="{{router.getRewriteUri()~'/edit/'~mainData.code|lowercase}}">
+                                            <a href="{{router.getRewriteUri()~'/edit/'~mainData.id}}">
                                                 <span class="fa fa-edit text-primary"></span>
                                             </a>
                                         </li>
@@ -81,5 +81,20 @@
 {% endblock %}
 
 {% block action_js %}
-
+    <script>
+        jQuery(document).ready(function($){
+            var select = $('.status');
+            var previouslySelected;
+            select.focus(function(){
+                previouslySelected = this.value;
+            }).change(function(){
+                var conf = confirm('{{translate['notification_change_status']}}');
+                if(!conf){
+                    this.value = previouslySelected;
+                    return;
+                }
+                location.href = '/{{module}}/{{controller}}/status/'+jQuery(this).val();
+            });
+        });
+    </script>
 {% endblock %}

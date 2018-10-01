@@ -5,6 +5,23 @@ use System\Model\User;
 
 class DLUser{
 
+    public function createSubaccount($data){
+        $user = new User();
+        $user->setUsername($data['username']);
+        $user->setPassword($data['password']);
+        $user->setNickname($data['username']);
+        $user->setParent($data['parent']);
+        $user->setTimezone($data['timezone']);
+        $user->setType(10);
+        $user->setCode($data['username']);
+        $user->setResetPassword(1);
+        $user->setResetNickname(1);
+
+        if(!$user->save()){
+            throw new \Exception($user->getMessages());
+        }
+        return $user ;
+    }
 
     public function getByUsername($user){
         $user = User::findFirstByUsername($user);
@@ -18,7 +35,6 @@ class DLUser{
 
     public function getById($user){
         $user = User::findFirstById($user);
-
         return $user;
     }
 
@@ -31,21 +47,24 @@ class DLUser{
                 )
             )
         );
-
         return $user;
     }
 
     public function setUserPassword($user , $password){
         $user->setPassword($password);
         $user->setResetPassword(0);
-
+        if(!$user->save()){
+            throw new \Exception($user->getMessages());
+        }
         return $user->save();
     }
 
     public function setResetPassword($user , $password){
         $user->setPassword($password);
         $user->setResetPassword(1);
-
+        if(!$user->save()){
+            throw new \Exception($user->getMessages());
+        }
         return $user->save();
 
     }
@@ -53,19 +72,19 @@ class DLUser{
     public function checkNickname($newNickname){
         $nickname = User::findFirstByNickname($newNickname);
         $username = User::findFirstByUsername($newNickname);
-
         $check = false ;
         if($nickname || $username) {
             $check = true ;
         }
-
         return $check ;
     }
 
     public function setNickname($user , $newNickname){
         $user->setNickname($newNickname);
         $user->setResetNickname(0);
-
+        if(!$user->save()){
+            throw new \Exception($user->getMessages());
+        }
         return $user->save();
     }
 
