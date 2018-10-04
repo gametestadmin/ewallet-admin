@@ -69,15 +69,6 @@ class DLUser{
 
     }
 
-    public function setStatus($user , $status){
-        $user->setStatus($status);
-        if(!$user->save()){
-            throw new \Exception($user->getMessages());
-        }
-        return $user->save();
-    }
-
-
     public function checkNickname($newNickname){
         $nickname = User::findFirstByNickname($newNickname);
         $username = User::findFirstByUsername($newNickname);
@@ -96,8 +87,5 @@ class DLUser{
         }
         return $user->save();
     }
-
-
-
 
 }

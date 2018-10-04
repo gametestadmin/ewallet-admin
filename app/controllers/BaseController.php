@@ -144,7 +144,7 @@ class BaseController extends Controller
                     $this->errorFlash('cannot_access');
                     $this->_allowed = 0 ;
 
-                    return $this->response->redirect("/")->send();
+                    return $this->response->redirect("/");
                 }
 
             }
@@ -199,15 +199,6 @@ class BaseController extends Controller
         $this->flash->success($message);
     }
 
-//    //PROTECTED
-//    protected function _setAcl(){
-//
-//        $this->session->set('acl', json_encode(array("asd"=>true)));
-//    }
-
-
-
-
 
 
 //    protected function _setWebsite()
@@ -242,7 +233,4 @@ class BaseController extends Controller
 
 
 }
-
-
-
 
