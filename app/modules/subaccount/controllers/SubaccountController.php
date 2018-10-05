@@ -135,6 +135,13 @@ class SubaccountController extends \Backoffice\Controllers\ProtectedController
         $previousPage = new GlobalVariable();
         $childId = $this->dispatcher->getParam("id");
 
+        if ($this->request->isPost()) {
+            $data = $this->request->getPost();
+            echo "something <pre>";
+            var_dump($data);
+            die;
+        }
+
         $DLUser = new DLUser();
         $user = $DLUser->getById($childId);
         if($user->getParent() == $this->_user->getId()){

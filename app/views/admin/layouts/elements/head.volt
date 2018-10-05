@@ -21,6 +21,7 @@
 
     <!-- Inspinia Template -->
     <link href="{{assets_url}}thirdparty/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{{assets_url}}thirdparty/fonts/font-awesome-new/css/all.css" rel="stylesheet">
     <link href="{{assets_url}}thirdparty/css/animate.css" rel="stylesheet">
     <link href="{{assets_url}}thirdparty/css/style.css" rel="stylesheet">
 

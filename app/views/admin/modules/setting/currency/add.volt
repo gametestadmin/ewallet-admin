@@ -55,5 +55,5 @@
             }
             this.value = this.value.toUpperCase();
         });
-    </script>
+    </script>s
 {% endblock %}

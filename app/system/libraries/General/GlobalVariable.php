@@ -32,6 +32,15 @@ class GlobalVariable
         'Game Record Daily Seamless' => 10,
     );
 
+    public static $agentType = array(
+        'God' => 0,
+        'Company' => 9,
+        'SSMA' => 8,
+        'SMA' => 7,
+        'MA' => 6,
+        'A' => 5,
+    );
+
     public function gameType($data){
         $gameType = "";
         if($data == 1){
@@ -53,5 +62,17 @@ class GlobalVariable
         }
 
         return $previous;
+    }
+
+    public function getGmt()
+    {
+        $i = -12;
+        $gmt = array();
+        while ($i <= 14){
+            $gmt[$i] = $i;
+            $i++;
+        }
+
+        return $gmt;
     }
 }

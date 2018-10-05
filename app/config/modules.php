@@ -26,3 +26,4 @@ $application->registerModules(array(
         'path' => __DIR__ . '/../modules/ajax/Module.php'
     ),
 ));
+

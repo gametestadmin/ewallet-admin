@@ -14,8 +14,7 @@ class PasswordController extends \Backoffice\Controllers\ProtectedController
             $this->errorFlash($this->_translate['cannot_access']);
             return $this->response->redirect("/");
         } else {
-            if ($this->request->isPost())
-            {
+            if ($this->request->isPost()) {
                 $data = $this->request->getPost();
 
                 $securityLibrary = new SecurityUser();

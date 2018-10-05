@@ -13,7 +13,6 @@ class DLUserAclResource{
     }
 
     public function get(){
-//        $module = UserAclResource::find();
         $module = UserAclResource::query()
             ->orderBy("sidebar_order")
             ->execute();
@@ -21,10 +20,10 @@ class DLUserAclResource{
         return $module ;
     }
 
+    public function getById($data){
+        $userAclResource = UserAclResource::findFirstById($data);
 
-
-
-
-
+        return $userAclResource;
+    }
 
 }
