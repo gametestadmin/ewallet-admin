@@ -23,6 +23,8 @@ class General
         return $aclList;
     }
 
+
+
     public function filterACLlist($aclObject){
         $aclList = array();
         foreach ($aclObject as $key){
@@ -83,5 +85,7 @@ class General
 
         return $aclList;
     }
+
+
 
 }

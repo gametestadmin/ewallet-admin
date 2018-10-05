@@ -13,7 +13,10 @@ class DLUserAclResource{
     }
 
     public function get(){
-        $module = UserAclResource::find();
+//        $module = UserAclResource::find();
+        $module = UserAclResource::query()
+            ->orderBy("sidebar_order")
+            ->execute();
 
         return $module ;
     }

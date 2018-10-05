@@ -2,9 +2,13 @@
 namespace Backoffice\Subaccount\Controllers;
 
 use System\Datalayer\DLUser;
+use System\Datalayer\DLUserAclAccess;
+use System\Datalayer\DLUserAclResource;
+use System\Library\User\General ;
 use System\Library\Security\Validation ;
 use System\Library\General\GlobalVariable;
 use System\Library\Security\User as SecurityUser ;
+
 
 
 class SubaccountController extends \Backoffice\Controllers\ProtectedController
@@ -78,39 +82,46 @@ class SubaccountController extends \Backoffice\Controllers\ProtectedController
                     $data['password'] = $securityLibrary->enc_str($data['password']);
                     $data['parent'] = $this->_user->getId();
                     $data['timezone'] = $this->_user->getTimezone();
-                    // TODO :: change password manual
-                    $user = $DLuser->createSubaccount($data);
-
-                    echo "<pre>";
-                    var_dump($user);
-                    die;
 
 
-                    if($user){
+                    $previousPage = new GlobalVariable();
+                    try {
+                        $this->db->begin();
 
-                        $this->successFlash($this->_translate['new_subaccount_success']);
-                        return $this->response->redirect("/");
-                    } else {
-                        //TODO :: remember_to add error log for this function below
-//                        \error_log('USER_UPDATE_PASSWD', 'username', $this->_user->getUsername(), 'oldpass', '' . $data['password'] . '', '', '');
-                        $this->errorFlash($this->_translate['new_subaccount_failed']);
+                        $user = $DLuser->createSubaccount($data);
+                        $generalLibrary = new General();
+                        if($this->_user->getParent() == 0){
+                            $aclObject = $generalLibrary->getCompanyACL();
+                        } else {
+                            $aclObject = $generalLibrary->getACL($this->_user->getId());
+                        }
+                        $DLAccess = new DLUserAclAccess();
+                        $access = $DLAccess->setDefaultAclByParent($aclObject , $user->getId());
+
+
+                        $this->db->commit();
+                        $this->flash->success("subaccount_add_successful");
+                        $this->response->redirect($previousPage->previousPage())->send();
+                    } catch (\Exception $e) {
+                        $this->db->rollback();
+                        $this->flash->error($e->getMessage());
                     }
 
-
+//                    if($user){
+//
+//                        $this->successFlash($this->_translate['new_subaccount_success']);
+//                        return $this->response->redirect("/");
+//                    } else {
+//                        //TODO :: remember_to add error log for this function below
+////                        \error_log('USER_UPDATE_PASSWD', 'username', $this->_user->getUsername(), 'oldpass', '' . $data['password'] . '', '', '');
+//                        $this->errorFlash($this->_translate['new_subaccount_failed']);
+//                    }
 
 
                 }
 
 
-
             }
-
-
-
-
-
-
-
 
 
         }
@@ -121,17 +132,52 @@ class SubaccountController extends \Backoffice\Controllers\ProtectedController
     public function editAction()
     {
         $view = $this->view;
+        $currentID = $this->dispatcher->getParam("id");
+
+        $DLuser = new DLUser();
+        $user = $DLuser->getById($currentID);
+
+        $acl = $this->session->get('acl') ;
 
 
+        $view->aclList = $acl ;
+        $view->status = GlobalVariable::$threeLayerStatus;
         \Phalcon\Tag::setTitle("Edit SubAccount - ".$this->_website->title);
     }
 
     public function detailAction(){
+        $view = $this->view;
+        $previousPage = new GlobalVariable();
+        $childId = $this->dispatcher->getParam("id");
 
+        $DLUser = new DLUser();
+        $user = $DLUser->getById($childId);
+        if($user->getParent() == $this->_user->getId()){
+            $generalLibrary = new General();
+            if($this->_user->getParent() == 0){
+                $aclParent = $generalLibrary->getCompanyACL();
+            } else {
+                $aclParent = $generalLibrary->getACL($this->_user->getId());
+            }
+            $aclChild = $generalLibrary->getACL($user->getId());
+            $aclChild = $generalLibrary->filterACLlist($aclChild) ;
+
+            $view->childuser = $user ;
+            $view->aclParent = $aclParent ;
+            $view->aclChild = $aclChild ;
+
+        } else {
+            $this->errorFlash($this->_translate['cannot_access']);
+            $this->response->redirect($previousPage->previousPage());
+        }
+
+
+        $view->status = GlobalVariable::$threeLayerStatus;
+        \Phalcon\Tag::setTitle("Detail SubAccount - ".$this->_website->title);
     }
 
     public function statusAction(){
-        //TODO: FIX THIS
+        //TODO: FIX THIS , redirect from basecontroller still run the code below this
         if($this->_allowed == 0 ) return $this->response->redirect($this->_module . "/" . $this->_controller . "/")->send();
         $previousPage = new GlobalVariable();
         $currentId = $this->dispatcher->getParam("id");

@@ -6,25 +6,33 @@ use System\Model\UserAclAccess;
 class DLUserAclAccess{
 
     public function getById($user){
-        $acl = UserAclAccess::findByUser($user);
+//        $acl = UserAclAccess::findByUser($user);
+        $acl = UserAclAccess::query()
+            ->where("user = :user:")
+            ->bind(array("user" => $user ))
+            ->orderBy("sidebar_order")
+            ->execute();
+
         return $acl;
     }
 
-    public function setDefaultAclByParent($acl , $parent){
-        foreach ($acl as $aclrow ){
-            $acl = new UserAclAccess();
-            $acl->setUser($parent);
-            $acl->setModule($aclrow->getModule());
-            $acl->setController($aclrow->getController());
-            $acl->setAction($aclrow->getAction());
-            $acl->setSidebar($aclrow->getSidebar());
-            $acl->setSidebarName($aclrow->getSidebarName());
-            $acl->setSidebarIcon($aclrow->getSidebarIcon());
-            $acl->setStatus(0);
-            if(!$acl->save()){
-                throw new \Exception($acl->getMessages());
+    public function setDefaultAclByParent($acl , $user ){
+        foreach ($acl as $aclrow){
+            $newacl = new UserAclAccess();
+            $newacl->setUser($user);
+            $newacl->setModule($aclrow->getModule());
+            $newacl->setController($aclrow->getController());
+            $newacl->setAction($aclrow->getAction());
+            $newacl->setSidebar($aclrow->getSidebar());
+            $newacl->setSidebarName($aclrow->getSidebarName());
+            $newacl->setSidebarOrder($aclrow->getSidebarOrder());
+            $newacl->setSidebarIcon($aclrow->getSidebarIcon());
+            $newacl->setStatus(0);
+            if(!$newacl->save()){
+                throw new \Exception($newacl->getMessages());
             }
         }
+
         return true ;
     }
 

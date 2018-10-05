@@ -1,4 +1,5 @@
 {% block content %}
+
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
             <div class="col-xs-12">
@@ -19,13 +20,13 @@
                                             <div class="form-group">
                                                 <label class="col-xs-3 control-label"> {{translate['username']}} </label>
                                                 <label class="col-xs-9">
-                                                    <input type="text" placeholder="Type" class="form-control" class="form-control" value="" readonly>
+                                                    <input type="text" placeholder="Type" class="form-control" class="form-control" value="{{childuser.username}}" readonly>
                                                 </label>
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-xs-3 control-label"> {{translate['nickname']}} </label>
                                                 <label class="col-xs-9">
-                                                    <input type="text" placeholder="Name" class="form-control" value="" readonly>
+                                                    <input type="text" placeholder="Name" class="form-control" value="{{childuser.nickname}}" readonly>
                                                 </label>
                                             </div>
                                             <div class="form-group">
@@ -33,7 +34,7 @@
                                                 <label class="col-xs-9">
                                                 <select class="status form-control">
                                                     {% for key, value in status %}
-                                                        <option value="{{game.id~"|"~value}}" {% if game.status == value %}selected{% endif %}>{{key}}</option>
+                                                        <option value="{{childuser.id~"|"~value}}" {% if childuser.status == value %}selected{% endif %}>{{key}}</option>
                                                     {% endfor %}
                                                 </select>
                                                 </label>
@@ -49,7 +50,24 @@
                                     </div>
                                 </div>
                                 <div id="tab-acl" class="tab-pane">
-                                    testestestes
+                                    <div class="panel-body">
+                                        <form class="form-horizontal col-xs-12">
+
+
+
+                                                    {% for key , value in aclParent %}
+                                                        <div class="row">
+                                                            <div class="col-xs-4{% if value.action != null %} col-xs-push-4 {% elseif value.controller != null and value.action == null  %} col-xs-push-2 {% endif %}">
+                                                                <input type="checkbox"  {% if aclChild[value.module][value.controller][value.action] == 1 %}checked="checked" {% endif %} disabled >
+                                                                {{value.sidebar_name}}
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+
+
+                                        </form>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -66,18 +84,6 @@
 {% block action_js %}
     <script>
         jQuery(document).ready(function($){
-            var select = $('.status');
-            var previouslySelected;
-            select.focus(function(){
-                previouslySelected = this.value;
-            }).change(function(){
-                var conf = confirm('Are You Sure?');
-                if(!conf){
-                    this.value = previouslySelected;
-                    return;
-                }
-                location.href = '/game/category/status/'+jQuery(this).val();
-            });
 
             var url = window.location.href;
             var activeTab = url.substring(url.indexOf("#") + 1);
@@ -91,19 +97,8 @@
             }else{
                 $("#head-tab-general").addClass("active");
                 $("#tab-general").addClass("active");
-                {% if gameCurrencyData != 0 %}
-                    $("#head-tab-currency").removeClass("active");
-                    $("#tab-currency").removeClass("active");
 
-                    $("#head-tab-endpoint").removeClass("active");
-                {% else %}
-                    $("#head-tab-general").removeClass("active");
-                    $("#tab-general").removeClass("active");
-                    {% if gameCurrencyData == 0 %}
-                        $("#head-tab-currency").addClass("active");
-                        $("#tab-currency").addClass("active");
-                    {% endif %}
-                {% endif %}
+                
             }
         });
     </script>
