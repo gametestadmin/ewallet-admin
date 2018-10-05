@@ -6,6 +6,9 @@
                     <div class="ibox-title row">
                         <h5>{{controller|capitalize}} {{module|capitalize}}</h5>
                     </div>
+
+
+
                     <div class="ibox-content row">
                         <div class="tabs-container">
                             <ul class="nav nav-tabs">
@@ -19,13 +22,13 @@
                                             <div class="form-group">
                                                 <label class="col-xs-3 control-label"> {{translate['username']}} </label>
                                                 <label class="col-xs-9">
-                                                    <input type="text" placeholder="Type" class="form-control" class="form-control" value="" readonly>
+                                                    <input type="text" placeholder="Type" class="form-control" class="form-control" value="{{childuser.username}}" readonly>
                                                 </label>
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-xs-3 control-label"> {{translate['nickname']}} </label>
                                                 <label class="col-xs-9">
-                                                    <input type="text" placeholder="Name" class="form-control" value="" readonly>
+                                                    <input type="text" placeholder="Name" class="form-control" value="{{childuser.nickname}}" readonly>
                                                 </label>
                                             </div>
                                             <div class="form-group">
@@ -33,24 +36,50 @@
                                                 <label class="col-xs-9">
                                                 <select class="status form-control">
                                                     {% for key, value in status %}
-                                                        <option value="{{game.id~"|"~value}}" {% if game.status == value %}selected{% endif %}>{{key}}</option>
+                                                        <option value="{{childuser.id~"|"~value}}" {% if childuser.status == value %}selected{% endif %}>{{key}}</option>
                                                     {% endfor %}
                                                 </select>
                                                 </label>
                                             </div>
                                             <div class="form-group"><div class="hr-line-dashed"></div></div>
-                                            <div class="form-group pull-right">
-                                                <div class="col-xs-12">
 
-
-                                                </div>
-                                            </div>
                                         </form>
                                     </div>
                                 </div>
                                 <div id="tab-acl" class="tab-pane">
-                                    testestestes
+                                    <div class="panel-body">
+                                        <form class="form-horizontal col-xs-12">
+
+
+
+                                                    {% for key , value in aclParent %}
+                                                        <div class="row">
+                                                            <div class="col-xs-4 {% if value.action != null %} col-xs-push-4 {% elseif value.controller != null and value.action == null  %} col-xs-push-2 {% endif %}">
+                                                                <input type="checkbox"
+                                                                {% if aclChild[value.module][value.controller][value.action] == 1 %} checked="checked" {% endif %}
+                                                                {% if value.action != null %} level="subchild" {% elseif value.controller != null and value.action == null  %} level="child" {% else %} level="parent" {% endif %} >
+                                                                {{value.sidebar_name}}
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+
+                                                    <div class="form-group"><div class="hr-line-dashed"></div></div>
+                                                    <div class="form-group pull-right">
+                                                        <div class="col-xs-12">
+                                                            <label>
+                                                                <a href="{{url('javascript:history.go(-1)')}}" class="btn btn-sm btn-danger">Back</a>
+                                                            </label>
+                                                            <label>
+                                                                <input type="submit" class="btn btn-sm btn-info" value="Edit">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                        </form>
+
+                                    </div>
                                 </div>
+
+
                             </div>
                         </div>
                     </div>
@@ -76,7 +105,7 @@
                     this.value = previouslySelected;
                     return;
                 }
-                location.href = '/game/category/status/'+jQuery(this).val();
+                location.href = '/{{module}}/{{controller}}/status/'+jQuery(this).val();
             });
 
             var url = window.location.href;
@@ -91,20 +120,20 @@
             }else{
                 $("#head-tab-general").addClass("active");
                 $("#tab-general").addClass("active");
-                {% if gameCurrencyData != 0 %}
-                    $("#head-tab-currency").removeClass("active");
-                    $("#tab-currency").removeClass("active");
-
-                    $("#head-tab-endpoint").removeClass("active");
-                {% else %}
-                    $("#head-tab-general").removeClass("active");
-                    $("#tab-general").removeClass("active");
-                    {% if gameCurrencyData == 0 %}
-                        $("#head-tab-currency").addClass("active");
-                        $("#tab-currency").addClass("active");
-                    {% endif %}
-                {% endif %}
             }
         });
     </script>
+
+
+    <script>
+        $('input[@type=checkbox][level="child"]').click(function (event) {
+            var checked = $(this).is(':checked');
+            if (checked) {
+                $(this).closest('td').parent().children('td').first('td').children('input[@type=checkbox][level="parent"]').attr('checked', true);
+            }
+        });
+    </script>
+
+
+
 {% endblock %}

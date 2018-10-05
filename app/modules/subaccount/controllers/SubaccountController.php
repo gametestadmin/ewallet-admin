@@ -132,13 +132,29 @@ class SubaccountController extends \Backoffice\Controllers\ProtectedController
     public function editAction()
     {
         $view = $this->view;
-        $currentID = $this->dispatcher->getParam("id");
+        $previousPage = new GlobalVariable();
+        $childId = $this->dispatcher->getParam("id");
 
-        $DLuser = new DLUser();
-        $user = $DLuser->getById($currentID);
+        $DLUser = new DLUser();
+        $user = $DLUser->getById($childId);
+        if($user->getParent() == $this->_user->getId()){
+            $generalLibrary = new General();
+            if($this->_user->getParent() == 0){
+                $aclParent = $generalLibrary->getCompanyACL();
+            } else {
+                $aclParent = $generalLibrary->getACL($this->_user->getId());
+            }
+            $aclChild = $generalLibrary->getACL($user->getId());
+            $aclChild = $generalLibrary->filterACLlist($aclChild) ;
 
-        $acl = $this->session->get('acl') ;
+            $view->childuser = $user ;
+            $view->aclParent = $aclParent ;
+            $view->aclChild = $aclChild ;
 
+        } else {
+            $this->errorFlash($this->_translate['cannot_access']);
+            $this->response->redirect($previousPage->previousPage());
+        }
 
         $view->aclList = $acl ;
         $view->status = GlobalVariable::$threeLayerStatus;

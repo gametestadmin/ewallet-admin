@@ -98,7 +98,7 @@
                 $("#head-tab-general").addClass("active");
                 $("#tab-general").addClass("active");
 
-                
+
             }
         });
     </script>

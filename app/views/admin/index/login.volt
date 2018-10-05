@@ -46,7 +46,12 @@
 <script>
     $('.captcha-box').on({
         'click': function(){
-            $('#captcha').attr('src','http://develop.admin/captcha');
+            $('#captcha').attr('src','http://localhost.dev.admin/captcha');
+
+
+            //setTimeout( function(){
+            //    alert("captcha expired");
+            //  }  , 2000 );
         }
     });
 </script>
