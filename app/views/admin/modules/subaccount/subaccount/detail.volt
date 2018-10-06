@@ -52,29 +52,36 @@
                                 <div id="tab-acl" class="tab-pane">
                                     <div class="panel-body">
                                         <form class="form-horizontal col-xs-12">
-
-
-
-                                                    {% for key , value in aclParent %}
-                                                        <div class="row">
-                                                            <div class="col-xs-4{% if value.action != null %} col-xs-push-4 {% elseif value.controller != null and value.action == null  %} col-xs-push-2 {% endif %}">
-                                                                <input type="checkbox"  {% if aclChild[value.module][value.controller][value.action] == 1 %}checked="checked" {% endif %} disabled >
-                                                                {{value.sidebar_name}}
-                                                            </div>
-                                                        </div>
-                                                    {% endfor %}
-
-
+                                            {% for key , value in aclParent %}
+                                                {% if aclChild[value.module][value.controller][value.action]['id'] is not defined %}
+                                                    {% set aclstatus = 0 %}
+                                                {% else %}
+                                                    {% set aclstatus = aclChild[value.module][value.controller][value.action]['status'] %}
+                                                {% endif %}
+                                                <div class="row">
+                                                    <div class="col-xs-4{% if value.action != null %} col-xs-push-4 {% elseif value.controller != null and value.action == null  %} col-xs-push-2 {% endif %}">
+                                                        <input type="checkbox"  {% if aclstatus == 1 %}checked="checked" {% endif %} disabled >
+                                                        {{value.sidebar_name}}
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                            <div class="form-group"><div class="hr-line-dashed"></div></div>
+                                            <div class="form-group pull-right">
+                                                <div class="col-xs-12">
+                                                    <label>
+                                                        <a href="{{url('javascript:history.go(-1)')}}" class="btn btn-sm btn-danger">Back</a>
+                                                    </label>
+                                                    <label>
+                                                        <a href="{{url('/'~module~'/'~controller~'/edit/'~childuser.id~'#tab-acl')}}" class="btn btn-sm btn-info">Edit</a>
+                                                    </label>
+                                                </div>
+                                            </div>
                                         </form>
-
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
-
                 </div>
             </div>
         </div>

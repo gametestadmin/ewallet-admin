@@ -7,28 +7,57 @@ use \System\Datalayer\DLUserAclAccess ;
 class General
 {
 
-    public function getACL($user)
-    {
-        $acl = new DLUserAclAccess();
-        $aclList = $acl->getById($user);
-
+    public function getACL($user , $parent ){
+        if( $parent != 0 ){
+            $acl = new DLUserAclAccess();
+            $aclList = $acl->getById($user);
+        } else {
+            $acl = new DLUserAclResource();
+            $aclList = $acl->get();
+        }
         return $aclList;
     }
 
-    public function getCompanyACL()
-    {
+    public function getSubaccountACLParent($user , $parent){
+        if( $parent != 0 ){
+            $acl = new DLUserAclAccess();
+            $aclList = $acl->getByIdMinSubaccount($user);
+        } else {
+            $acl = new DLUserAclResource();
+            $aclList = $acl->getMinSubaccount();
+        }
+        return $aclList;
+    }
+
+
+    public function getCompanyACLbyArrayId($array){
         $acl = new DLUserAclResource();
-        $aclList = $acl->get();
+        $aclList = $acl->getByArrayId($array);
 
         return $aclList;
     }
 
+    public function getAccessACLbyArrayId($array){
+        $acl = new DLUserAclAccess();
+        $aclList = $acl->getByArrayId($array);
 
+        return $aclList;
+    }
 
     public function filterACLlist($aclObject){
         $aclList = array();
         foreach ($aclObject as $key){
             $aclList[$key->module][$key->controller][$key->action] = $key->status ;
+        }
+
+        return $aclList;
+    }
+
+    public function filterACLlistwithId($aclObject){
+        $aclList = array();
+        foreach ($aclObject as $key){
+            $aclList[$key->module][$key->controller][$key->action]['id'] = $key->id ;
+            $aclList[$key->module][$key->controller][$key->action]['status'] = $key->status ;
         }
 
         return $aclList;

@@ -6,9 +6,6 @@
                     <div class="ibox-title row">
                         <h5>{{controller|capitalize}} {{module|capitalize}}</h5>
                     </div>
-
-
-
                     <div class="ibox-content row">
                         <div class="tabs-container">
                             <ul class="nav nav-tabs">
@@ -48,44 +45,43 @@
                                 </div>
                                 <div id="tab-acl" class="tab-pane">
                                     <div class="panel-body">
-                                        <form class="form-horizontal col-xs-12">
-
-
-
-                                                    {% for key , value in aclParent %}
-                                                        <div class="row">
-                                                            <div class="col-xs-4 {% if value.action != null %} col-xs-push-4 {% elseif value.controller != null and value.action == null  %} col-xs-push-2 {% endif %}">
-                                                                <input type="checkbox"
-                                                                {% if aclChild[value.module][value.controller][value.action] == 1 %} checked="checked" {% endif %}
-                                                                {% if value.action != null %} level="subchild" {% elseif value.controller != null and value.action == null  %} level="child" {% else %} level="parent" {% endif %} >
-                                                                {{value.sidebar_name}}
-                                                            </div>
-                                                        </div>
-                                                    {% endfor %}
-
-                                                    <div class="form-group"><div class="hr-line-dashed"></div></div>
-                                                    <div class="form-group pull-right">
-                                                        <div class="col-xs-12">
-                                                            <label>
-                                                                <a href="{{url('javascript:history.go(-1)')}}" class="btn btn-sm btn-danger">Back</a>
-                                                            </label>
-                                                            <label>
-                                                                <input type="submit" class="btn btn-sm btn-info" value="Edit">
-                                                            </label>
-                                                        </div>
+                                        <form class="form-horizontal col-xs-12" action="#tab-acl" method="post">
+                                            {% for key , value in aclParent %}
+                                                {% if aclChild[value.module][value.controller][value.action]['id'] is not defined %}
+                                                    {% set aclID = value.id %}
+                                                    {% set aclname = "aclParent[]" %}
+                                                    {% set aclstatus = 0 %}
+                                                {% else %}
+                                                    {% set aclID = aclChild[value.module][value.controller][value.action]['id'] %}
+                                                    {% set aclname = "aclChild[]" %}
+                                                    {% set aclstatus = aclChild[value.module][value.controller][value.action]['status'] %}
+                                                {% endif %}
+                                                <div class="row">
+                                                    <div class="col-xs-4 {% if value.action != null %} col-xs-push-4 {% elseif value.controller != null and value.action == null  %} col-xs-push-2 {% endif %}">
+                                                        <input type="checkbox" name="{{ aclname }}" value="{{ aclID }}"
+                                                        {% if aclstatus == 1 %} checked="checked" {% endif %}
+                                                        {% if value.action != null %} level="subchild" {% elseif value.controller != null and value.action == null  %} level="child" {% else %} level="parent" {% endif %} >
+                                                        {{value.sidebar_name}}
                                                     </div>
+                                                </div>
+                                            {% endfor %}
+                                            <div class="form-group"><div class="hr-line-dashed"></div></div>
+                                            <div class="form-group pull-right">
+                                                <div class="col-xs-12">
+                                                    <label>
+                                                        <a href="{{url('javascript:history.go(-1)')}}" class="btn btn-sm btn-danger">Back</a>
+                                                    </label>
+                                                    <label>
+                                                        <input type="submit" class="btn btn-sm btn-info" value="Edit">
+                                                    </label>
+                                                </div>
+                                            </div>
                                         </form>
-
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
                     </div>
-
-
-
                 </div>
             </div>
         </div>

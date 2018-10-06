@@ -66,11 +66,8 @@ class IndexController extends \Backoffice\Controllers\BaseController
                     //TODO :: incomplete
                     //set session add acl for the current user
                     $generalLibrary = new General();
-                    if($user->getParent() == 0){
-                        $aclObject = $generalLibrary->getCompanyACL();
-                    } else {
-                        $aclObject = $generalLibrary->getACL($user->getId());
-                    }
+                    $aclObject = $generalLibrary->getACL($user->getId() , $user->getParent() );
+
                     $acl = $generalLibrary->filterACLlist($aclObject);
                     $sideBar = $generalLibrary->getSidebar($aclObject);
 
