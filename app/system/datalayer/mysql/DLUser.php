@@ -86,6 +86,25 @@ class DLUser
 
     }
 
+    public function setNickname($user, $newNickname)
+    {
+        $user->setNickname($newNickname);
+        $user->setResetNickname(0);
+        if (!$user->save()) {
+            throw new \Exception($user->getMessages());
+        }
+        return $user->save();
+    }
+
+    public function setStatus($user, $status)
+    {
+        $user->setStatus($status);
+        if (!$user->save()) {
+            throw new \Exception($user->getMessages());
+        }
+        return $user->save();
+    }
+
     public function checkNickname($newNickname)
     {
         $nickname = User::findFirstByNickname($newNickname);
@@ -95,16 +114,6 @@ class DLUser
             $check = true;
         }
         return $check;
-    }
-
-    public function setNickname($user, $newNickname)
-    {
-        $user->setNickname($newNickname);
-        $user->setResetNickname(0);
-        if (!$user->save()) {
-            throw new \Exception($user->getMessages());
-        }
-        return $user->save();
     }
 
 

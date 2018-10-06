@@ -101,7 +101,7 @@
                     this.value = previouslySelected;
                     return;
                 }
-                location.href = '/{{module}}/{{controller}}/status/'+jQuery(this).val();
+                location.href = '/subaccount/subaccount/status/'+jQuery(this).val();
             });
 
             var url = window.location.href;

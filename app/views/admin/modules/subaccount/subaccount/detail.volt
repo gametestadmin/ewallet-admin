@@ -91,6 +91,18 @@
 {% block action_js %}
     <script>
         jQuery(document).ready(function($){
+            var select = $('.status');
+            var previouslySelected;
+            select.focus(function(){
+                previouslySelected = this.value;
+            }).change(function(){
+                var conf = confirm('Are You Sure?');
+                if(!conf){
+                    this.value = previouslySelected;
+                    return;
+                }
+                location.href = '/subaccount/subaccount/status/'+jQuery(this).val();
+            });
 
             var url = window.location.href;
             var activeTab = url.substring(url.indexOf("#") + 1);
