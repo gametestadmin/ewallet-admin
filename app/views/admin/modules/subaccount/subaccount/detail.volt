@@ -25,22 +25,40 @@
                                                 </label>
                                             </div>
                                             <div class="form-group">
-                                                <label class="col-xs-3 control-label"> {{translate['nickname']}} </label>
-                                                <label class="col-xs-7">
-                                                    <input type="password" placeholder="NickName" class="form-control uppercase" value="xxxxx" readonly>
-                                                </label>
-                                                <label class="col-xs-2">
-                                                    <a href="{{url('/'~module~'/'~controller~'/edit/'~childuser.id~'#tab-acl')}}" class="btn btn-sm btn-info">{{translate['reset_nickname']}}</a>
-                                                </label>
+                                                <label class="col-sm-3 control-label"> {{translate['nickname']}} </label>
+                                                <div class="col-sm-9">
+                                                    <div class="input-group">
+                                                    <input type="text" class="form-control" readonly value="********">
+                                                    <div class="input-group-btn">
+                                                        <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">
+                                                            <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu pull-right">
+                                                            <li>
+                                                                <a href="{{'/'~module~'/nickname/reset/'~childuser.id}}" id="reset_nickname"> {{translate['reset_nickname']}} </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="col-xs-3 control-label"> {{translate['password']}} </label>
-                                                <label class="col-xs-7">
-                                                    <input type="password" placeholder="Password" class="form-control" value="xxxxx" readonly>
-                                                </label>
-                                                <label class="col-xs-2">
-                                                    <a href="{{url('/'~module~'/'~controller~'/edit/'~childuser.id~'#tab-acl')}}" class="btn btn-sm btn-info">{{translate['reset_password']}}</a>
-                                                </label>
+                                                <label class="col-sm-3 control-label"> {{translate['password']}} </label>
+                                                <div class="col-sm-9">
+                                                    <div class="input-group">
+                                                    <input type="text" class="form-control" readonly value="********">
+                                                    <div class="input-group-btn">
+                                                        <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">
+                                                            <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu pull-right">
+                                                            <li>
+                                                                <a href="{{'/'~module~'/password/reset/'~childuser.id}}"> {{translate['reset_password']}} </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-xs-3 control-label"> {{translate['status']}} </label>
@@ -119,6 +137,15 @@
                     return;
                 }
                 location.href = '/subaccount/subaccount/status/'+jQuery(this).val();
+            });
+
+            $(document).ready(function(){
+                $("a#reset_nickname").click(function(){
+                    var conf = confirm('Are You Sure?');
+                    if(!conf){
+                        return false;
+                    }
+                });
             });
 
             var url = window.location.href;
