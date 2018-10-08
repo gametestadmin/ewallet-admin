@@ -7,29 +7,32 @@
                     <h5>{{controller|capitalize}} {{module|capitalize}}</h5>
                 </div>
                 <div class="ibox-content row">
-                    <div class="tabs-container">
-                        <ul class="nav nav-tabs">
-                            <li id="head-tab-general" class="tab"><a data-toggle="tab" href="#tab-general">General</a></li>
-                            <li id="head-tab-currency" class="tab"><a data-toggle="tab" href="#tab-currency">Currency</a></li>
-                            <li id="head-tab-game" class="tab"><a data-toggle="tab" href="#tab-game">Game</a></li>
-                        </ul>
-                        <div class="tab-content padding-0">
-                            <div id="tab-general" class="tab-pane">
-                                <div class="panel-body">
-                                    1
+                    <div class="panel-body">
+                        <form class="form-horizontal col-xs-12" action="{{router.getRewriteUri()}}" method="post">
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">Password</label>
+                                <label class="col-xs-9">
+                                    <input type="password" placeholder="Password" class="form-control" name="password">
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">Confirm Password</label>
+                                <label class="col-xs-9">
+                                    <input type="password" placeholder="Password" class="form-control" name="confirm_password">
+                                </label>
+                            </div>
+                            <div class="form-group"><div class="hr-line-dashed"></div></div>
+                            <div class="form-group pull-right">
+                                <div class="col-xs-12">
+                                  <label>
+                                      <a href="{{url('javascript:history.go(-1)')}}" class="btn btn-sm btn-danger">Back</a>
+                                  </label>
+                                  <label>
+                                      <input type="submit" name="submit" class="btn btn-sm btn-primary" value="Edit">
+                                  </label>
                                 </div>
                             </div>
-                            <div id="tab-currency" class="tab-pane">
-                                <div class="panel-body">
-                                    2
-                                </div>
-                            </div>
-                            <div id="tab-game" class="tab-pane">
-                                <div class="panel-body">
-                                    3
-                                </div>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -53,9 +56,9 @@
             $("#head-tab-general").addClass("active");
             $("#tab-general").addClass("active");
             // temporary
-            {% set gameCurrencyData = 1 %}
+            {% set userCurrencyData = 1 %}
             {% set providerEndPointData = 1 %}
-            {% if gameCurrencyData != 0 and providerEndPointData != 0 %}
+            {% if userCurrencyData != 0 and providerEndPointData != 0 %}
                 $("#head-tab-currency").removeClass("active");
                 $("#tab-currency").removeClass("active");
 

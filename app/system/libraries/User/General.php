@@ -4,22 +4,8 @@ namespace System\Library\User;
 use \System\Datalayer\DLUserAclResource ;
 use \System\Datalayer\DLUserAclAccess ;
 
-
-
 class General
 {
-
-    public function check()
-    {
-        return "this is inside user library" ;
-    }
-
-    public function changePassword()
-    {
-
-
-        return null ;
-    }
 
     public function getACL($user)
     {
@@ -41,10 +27,6 @@ class General
         $aclList = array();
         foreach ($aclObject as $key){
             $aclList[$key->module][$key->controller][$key->action] = $key->status ;
-//            $acl['module'] = $key->module ;
-//            $acl['acl'] = $key->module."/".$key->controller."/".$key->action ;
-//            $acl['status'] = $key->status;
-//            $aclList[] = $acl;
         }
 
         return $aclList;
@@ -98,9 +80,6 @@ class General
                 }
             }
         }
-//        echo "<pre>";
-//        var_dump($aclList);
-//        die;
 
         return $aclList;
     }

@@ -11,7 +11,6 @@ class IndexController extends \Backoffice\Controllers\ProtectedController
     public function indexAction()
     {
         $view = $this->view;
-
         $limit = $this->_limit;
         $page = $this->_page;
 

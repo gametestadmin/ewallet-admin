@@ -32,13 +32,6 @@
                                             {% endfor %}
                                         </select>
                                     </div>
-                                    <!--
-                                        9 = company
-                                        8 = ssma = 2
-                                        7 = sma = 4
-                                        6 = ma = 6
-                                        5 = a = 9
-                                    -->
                                     {% if agent.type == 6 or agent.type == 5 %}
                                     <div class="col-sm-1 col-xs-2">
                                         <select class="form-control code" name="code[]" id="code[]">
@@ -83,7 +76,30 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">Password</label>
                                     <label class="col-sm-9">
-                                        <input type="text" class="form-control" name="password">
+                                        <input type="password" class="form-control" name="password">
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Default Whitelist Ip</label>
+                                    <label class="col-sm-9">
+                                        <input type="text" class="form-control" name="ip">
+                                        <small>
+                                            <div>* For wild card IP</div>
+                                             <div>Group IP ex. :123.*.*.*</div>
+                                             <div>Spesific IP ex. :123.2.3.33</div>
+                                        </small>
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Default Currency</label>
+                                    <label class="col-sm-9">
+                                        <select name="currency" class="form-control">
+                                        {% if userCurrency is not null %}
+                                            {% for userCurrencyData in userCurrency %}
+                                                <option value="{{userCurrencyData.currency.id}}">{{userCurrencyData.currency.name}}</option>
+                                            {% endfor %}
+                                        {% endif %}
+                                        </select>
                                     </label>
                                 </div>
                                 <div class="form-group"><div class="hr-line-dashed"></div></div>

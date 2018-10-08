@@ -1,5 +1,5 @@
 <div class="row" >
-    <div class="col-xs-12" Style="position : absolute ; z-index : 999 ;">
+    <div id="notif-bar" class="col-xs-12" Style="position : absolute ; z-index : 999 ;">
         {% set messages = flash.getMessages() %}
         {% if messages %}
             {% for type, messages in messages %}
@@ -28,5 +28,11 @@
                 {% endfor %}
             {% endfor %}
         {% endif %}
+        <div id="alert" class="hidden notification" >
+            <div id="alert-content" >
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <i id="alert-message"></i>
+            </div>
+        </div>
     </div>
 </div>

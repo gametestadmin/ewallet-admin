@@ -33,7 +33,7 @@
                 {% set i = i +1 %}
             {% endfor %}
         {% else %}
-            <h4>-No data-</h4>
+            <h4 class="text-center">-No data-</h4>
         {% endif %}
         </div>
     </form>

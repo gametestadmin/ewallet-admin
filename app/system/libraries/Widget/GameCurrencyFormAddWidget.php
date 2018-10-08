@@ -4,7 +4,7 @@ namespace System\Widgets;
 
 use System\Datalayer\DLCurrency;
 
-class CurrencyFormWidget extends BaseWidget
+class GameCurrencyFormAddWidget extends BaseWidget
 {
     public function getContent()
     {
@@ -13,7 +13,7 @@ class CurrencyFormWidget extends BaseWidget
         $DLCurrency = new DLCurrency();
         $currency = $DLCurrency->getAllByStatus(1);
 
-        return $this->setView('currency/form', [
+        return $this->setView('currency/game', [
             'currency' => $currency
         ]);
     }

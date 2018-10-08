@@ -9,6 +9,7 @@ $messages = array(
     "category_name_exist" => "Category Name Exist",
     "login_error" => "Login Error",
     "login_success" => "Login Success",
+
     //module name
     "setting" => "Setting",
     "currency" => "Currency",
@@ -31,8 +32,10 @@ $messages = array(
     "agent_list" => "List",
     "agent_add" => "Add",
     //button
-    "check" => "Check Available"
-
+    "check" => "Check Available",
+    "username" => "username",
+    "nickname" => "nickname",
+    "password" => "password",
 );
 
 return $messages;

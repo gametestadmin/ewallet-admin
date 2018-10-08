@@ -19,7 +19,6 @@ class AgentController extends \Backoffice\Controllers\BaseController
             $data = $this->request->getPost();
 
             if(isset($data['code'])){
-                sleep(1);
                 $code = \implode($data['code']);
                 $user = User::findFirst(
                     array(
@@ -44,30 +43,5 @@ class AgentController extends \Backoffice\Controllers\BaseController
             }
             return $response;
         }
-
-
-//        if(!$this->_user){
-//            //return blank json
-//            //response json
-//            $response = new \Phalcon\Http\Response();
-//            $response->setContentType("application/json");
-//            $response->setStatusCode(404);
-//            $response->setContent(json_encode($data));
-//
-//            return $response;
-//        }
-
-        //logic
-//        $data = array(
-//            "asd"=> true
-//        );
-//
-//        //response json
-//        $response = new \Phalcon\Http\Response();
-//        $response->setContentType("application/json");
-//        $response->setStatusCode(200);
-//        $response->setContent(json_encode($data));
-
-//        return $response;
     }
 }

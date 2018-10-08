@@ -58,16 +58,16 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
             try {
                 $this->db->begin();
 
-                $module = $this->router->getModuleName();
-                $controller = $this->router->getControllerName();
-
                 $data = $this->request->getPost();
+                $data['user'] = $this->_user->getId();
 
                 $DLCurrency = new DLCurrency();
-                $currency = $DLCurrency->create($data);
+                $filterData = $DLCurrency->filterInput($data);
+                $DLCurrency->validateAdd($filterData);
+                $currency = $DLCurrency->create($filterData);
 
                 $this->db->commit();
-                return $this->response->redirect($module.'/'.$controller.'/detail/'.strtolower($currency))->send();
+                return $this->response->redirect($this->_module.'/'.$this->_controller.'/detail/'.strtolower($currency))->send();
             } catch (\Exception $e) {
                 $this->db->rollback();
                 $this->flash->error($e->getMessage());

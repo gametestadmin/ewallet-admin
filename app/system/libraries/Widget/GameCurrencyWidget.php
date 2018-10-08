@@ -4,7 +4,7 @@ namespace System\Widgets;
 
 use System\Datalayer\DLGameCurrency;
 
-class CurrencyWidget extends BaseWidget
+class GameCurrencyWidget extends BaseWidget
 {
     protected $_limit = 10;
     protected $_pages = 1;
