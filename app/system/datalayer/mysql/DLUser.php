@@ -57,6 +57,19 @@ class DLUser
         return $user;
     }
 
+    public function getSubaccountById($user)
+    {
+        $user = User::find(
+            array(
+                "conditions" => "type = 10 and parent = :user:",
+                "bind" => array(
+                    "user" => $user,
+                )
+            )
+        );
+        return $user;
+    }
+
 
     public function getByParent($parent)
     {

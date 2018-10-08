@@ -30,7 +30,7 @@ class SubaccountController extends \Backoffice\Controllers\ProtectedController
         $status = GlobalVariable::$threeLayerStatus;
 
         $DLuser = new DLUser();
-        $user = $DLuser->getChildById($this->_user->getId());
+        $user = $DLuser->getSubaccountById($this->_user->getId());
 
         $paginator = new \Phalcon\Paginator\Adapter\Model(
             array(
@@ -58,7 +58,7 @@ class SubaccountController extends \Backoffice\Controllers\ProtectedController
 
         if ($this->request->isPost()) {
             $data = $this->request->getPost();
-            $data['username'] = \filter_var(\strip_tags(\addslashes($data['username'])), FILTER_SANITIZE_STRING);
+            $data['username'] = \filter_var(\strip_tags(\addslashes(strtoupper($data['username']))), FILTER_SANITIZE_STRING);
             $data['password'] = \filter_var(\strip_tags(\addslashes($data['password'])), FILTER_SANITIZE_STRING);
 
             $validation = new Validation();
@@ -99,7 +99,7 @@ class SubaccountController extends \Backoffice\Controllers\ProtectedController
 
                         $this->db->commit();
                         $this->flash->success("subaccount_add_successful");
-                        $this->response->redirect($this->_module."/".$this->_controller."/edit/".$user->getId()."#tab-acl")->send();
+                        $this->response->redirect($this->_module."/".$this->_controller."/detail/".$user->getId()."#tab-acl")->send();
                     } catch (\Exception $e) {
                         $this->db->rollback();
                         $this->flash->error($e->getMessage());

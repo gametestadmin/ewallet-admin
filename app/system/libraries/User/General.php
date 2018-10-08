@@ -7,25 +7,36 @@ use \System\Datalayer\DLUserAclAccess ;
 class General
 {
 
-    public function getACL($user , $parent ){
-        if( $parent != 0 ){
-            $acl = new DLUserAclAccess();
-            $aclList = $acl->getById($user);
-        } else {
-            $acl = new DLUserAclResource();
-            $aclList = $acl->get();
-        }
+//    public function getACL($user , $parent = null ){
+//        if(is_null($parent)){
+//            $acl = new DLUserAclResource();
+//            $aclList = $acl->get();
+//        } else {
+//            $acl = new DLUserAclAccess();
+//            $aclList = $acl->getById($user);
+//        }
+//        return $aclList;
+//    }
+    public function getACL ($user){
+        $acl = new DLUserAclAccess();
+        $aclList = $acl->getById($user);
         return $aclList;
     }
 
-    public function getSubaccountACLParent($user , $parent){
-        if( $parent != 0 ){
-            $acl = new DLUserAclAccess();
-            $aclList = $acl->getByIdMinSubaccount($user);
-        } else {
-            $acl = new DLUserAclResource();
-            $aclList = $acl->getMinSubaccount();
-        }
+//    public function getSubaccountACLParent($user , $parent){
+//        if( is_null($parent) ){
+//            $acl = new DLUserAclResource();
+//            $aclList = $acl->getMinSubaccount();
+//        } else {
+//            $acl = new DLUserAclAccess();
+//            $aclList = $acl->getByIdMinSubaccount($user);
+//        }
+//        return $aclList;
+//    }
+
+    public function getSubaccountACLParent($user){
+        $acl = new DLUserAclAccess();
+        $aclList = $acl->getByIdMinSubaccount($user);
         return $aclList;
     }
 

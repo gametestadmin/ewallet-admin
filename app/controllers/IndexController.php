@@ -40,11 +40,12 @@ class IndexController extends \Backoffice\Controllers\BaseController
 
         if ($this->request->getPost()){
             $data = $this->request->getPost();
-            $username = $data['username'];
+            $username = strtoupper($data['username']);
             $password = $data['password'];
 
             $DLuser = new DLUser();
             $user = $DLuser->getByNickname($username);
+
 
             if($user){
                 $securityLibrary = new SecurityUser();
@@ -59,6 +60,7 @@ class IndexController extends \Backoffice\Controllers\BaseController
                 $captchaTime = $checkcaptcha->checkCaptchaTime();
                 $captcha = $checkcaptcha->checkCatpcha($data["captcha"]);
 
+
                 if( $password === $user->getPassword() && $captchaTime && $captcha ){
                     $this->session->set('user', $user);
 
@@ -66,7 +68,7 @@ class IndexController extends \Backoffice\Controllers\BaseController
                     //TODO :: incomplete
                     //set session add acl for the current user
                     $generalLibrary = new General();
-                    $aclObject = $generalLibrary->getACL($user->getId() , $user->getParent() );
+                    $aclObject = $generalLibrary->getACL($user->getId());
 
                     $acl = $generalLibrary->filterACLlist($aclObject);
                     $sideBar = $generalLibrary->getSidebar($aclObject);

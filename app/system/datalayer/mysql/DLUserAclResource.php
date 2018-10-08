@@ -14,6 +14,7 @@ class DLUserAclResource{
 
     public function get(){
         $module = UserAclResource::query()
+            ->where("status = 1 ")
             ->orderBy("sidebar_order")
             ->execute();
 
@@ -22,7 +23,7 @@ class DLUserAclResource{
 
     public function getMinSubaccount(){
         $module = UserAclResource::query()
-            ->where(" module != 'subaccount' ")
+            ->where(" module != 'subaccount' and module != 'user' and status = 1")
             ->orderBy("sidebar_order")
             ->execute();
 

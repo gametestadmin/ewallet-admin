@@ -11,7 +11,7 @@
                 <p class="margin-top-20"> Welcome to TriTech Company :) </p>
                 <form class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-6 col-xs-offset-3" action="{{url('/login')}}" method="post" role="form">
                     <div class="form-group">
-                        <input type="text" name="username" class="form-control" placeholder="Username" required="" tabindex="1">
+                        <input type="text" name="username" class="form-control uppercase" placeholder="Username" required="" tabindex="1">
                     </div>
                     <div class="form-group">
                         <input type="password" name="password" class="form-control" placeholder="Password" required="" tabindex="2">

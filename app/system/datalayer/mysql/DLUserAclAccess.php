@@ -8,7 +8,7 @@ class DLUserAclAccess{
 
     public function getById($user){
         $acl = UserAclAccess::query()
-            ->where("user = :user:")
+            ->where("user = :user: and status = 1 ")
             ->bind(array("user" => $user ))
             ->orderBy("sidebar_order")
             ->execute();
@@ -18,8 +18,8 @@ class DLUserAclAccess{
 
     public function getByIdMinSubaccount($user){
         $acl = UserAclAccess::query()
-            ->where("user = :user: and module != 'subaccount' ")
-            ->bind(array("user" => $user ))
+            ->where("user = :user: and module != 'subaccount'  and module != 'user' and status = 1 ")
+            ->bind(array( "user" => $user ))
             ->orderBy("sidebar_order")
             ->execute();
 
@@ -47,7 +47,12 @@ class DLUserAclAccess{
             $newacl->setSidebarName($aclrow->getSidebarName());
             $newacl->setSidebarOrder($aclrow->getSidebarOrder());
             $newacl->setSidebarIcon($aclrow->getSidebarIcon());
-            $newacl->setStatus(0);
+
+            if($aclrow->getModule() == "user"){
+                $newacl->setStatus(1);
+            }else{
+                $newacl->setStatus(0);
+            }
             if(!$newacl->save()){
                 throw new \Exception($newacl->getMessages());
             }

@@ -1,5 +1,6 @@
-{% block content %}
+{% set wholeaclstatus = 0 %}
 
+{% block content %}
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
             <div class="col-xs-12">
@@ -20,13 +21,25 @@
                                             <div class="form-group">
                                                 <label class="col-xs-3 control-label"> {{translate['username']}} </label>
                                                 <label class="col-xs-9">
-                                                    <input type="text" placeholder="Type" class="form-control" class="form-control" value="{{childuser.username}}" readonly>
+                                                    <input type="text" placeholder="Type" class="form-control uppercase" class="form-control" value="{{childuser.username}}" readonly>
                                                 </label>
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-xs-3 control-label"> {{translate['nickname']}} </label>
-                                                <label class="col-xs-9">
-                                                    <input type="text" placeholder="Name" class="form-control" value="{{childuser.nickname}}" readonly>
+                                                <label class="col-xs-7">
+                                                    <input type="password" placeholder="NickName" class="form-control uppercase" value="xxxxx" readonly>
+                                                </label>
+                                                <label class="col-xs-2">
+                                                    <a href="{{url('/'~module~'/'~controller~'/edit/'~childuser.id~'#tab-acl')}}" class="btn btn-sm btn-info">{{translate['reset_nickname']}}</a>
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-xs-3 control-label"> {{translate['password']}} </label>
+                                                <label class="col-xs-7">
+                                                    <input type="password" placeholder="Password" class="form-control" value="xxxxx" readonly>
+                                                </label>
+                                                <label class="col-xs-2">
+                                                    <a href="{{url('/'~module~'/'~controller~'/edit/'~childuser.id~'#tab-acl')}}" class="btn btn-sm btn-info">{{translate['reset_password']}}</a>
                                                 </label>
                                             </div>
                                             <div class="form-group">
@@ -53,6 +66,9 @@
                                     <div class="panel-body">
                                         <form class="form-horizontal col-xs-12">
                                             {% for key , value in aclParent %}
+                                                {% if aclChild[value.module][value.controller][value.action]['status'] == 1 %}
+                                                    {% set wholeaclstatus = 1 %}
+                                                {% endif %}
                                                 {% if aclChild[value.module][value.controller][value.action]['id'] is not defined %}
                                                     {% set aclstatus = 0 %}
                                                 {% else %}
@@ -65,6 +81,7 @@
                                                     </div>
                                                 </div>
                                             {% endfor %}
+
                                             <div class="form-group"><div class="hr-line-dashed"></div></div>
                                             <div class="form-group pull-right">
                                                 <div class="col-xs-12">
@@ -116,9 +133,15 @@
             }else{
                 $("#head-tab-general").addClass("active");
                 $("#tab-general").addClass("active");
-
-
             }
+
+            {% if wholeaclstatus == 0 %}
+                $(".tab").removeClass("active");
+                $(".tab-pane").removeClass("active");
+
+                $("#head-tab-acl").addClass("active");
+                $("#tab-acl").addClass("active");
+            {% endif %}
         });
     </script>
 {% endblock %}

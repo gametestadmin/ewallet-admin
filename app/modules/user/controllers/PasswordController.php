@@ -58,7 +58,6 @@ class PasswordController extends \Backoffice\Controllers\ProtectedController
             }
         }
 
-
         \Phalcon\Tag::setTitle("Change Password - ".$this->_website->title);
     }
 
