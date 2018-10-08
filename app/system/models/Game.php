@@ -282,6 +282,7 @@ class Game extends \Phalcon\Mvc\Model
         $this->hasMany('id', 'System\Model\UserGame', 'game', ['alias' => 'UserGame']);
         $this->hasMany('id', 'System\Model\UserPlayerGame', 'game', ['alias' => 'UserPlayerGame']);
         $this->hasMany('id', 'System\Model\ProviderGameEndpoint', 'game', ['alias' => 'ProviderGameEndpoint']);
+        $this->hasMany('id', 'System\Model\GameWhitelistIp', 'game', ['alias' => 'GameWhitelistIp']);
         $this->belongsTo('provider', 'System\Model\ProviderGame', 'id', ['alias' => 'ProviderGame']);
     }
 

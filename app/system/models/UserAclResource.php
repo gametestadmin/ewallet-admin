@@ -172,7 +172,7 @@ class UserAclResource extends \Phalcon\Mvc\Model
     /**
      * Method to set the value of field sidebar_order
      *
-     * @param integer $sidebar_order
+     * @param string $sidebar_order
      * @return $this
      */
     public function setSidebarOrder($sidebar_order)
@@ -278,7 +278,7 @@ class UserAclResource extends \Phalcon\Mvc\Model
     /**
      * Returns the value of field sidebar_order
      *
-     * @return integer
+     * @return string
      */
     public function getSidebarOrder()
     {

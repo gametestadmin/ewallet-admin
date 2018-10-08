@@ -71,7 +71,7 @@
                                 </div>
                             </div>
                             <div id="tab-currency" class="tab-pane">
-                                {{ widget('CurrencyWidget', ["id": game.id]) }}
+                                {{ widget('GameCurrencyWidget', ["id": game.id]) }}
                             </div>
                         </div>
                     </div>

@@ -91,6 +91,10 @@ $di->setShared('view', function () use ($config) {
                 return 'Volt\Libraries\Agent::agentType(' . $resolvedArgs . ')';
             });
 
+            $compiler->addFilter('agentStatus', function ($resolvedArgs) {
+                return 'Volt\Libraries\Agent::agentStatus(' . $resolvedArgs . ')';
+            });
+
             $compiler->addFilter('date', function ($resolvedArgs) {
                 return 'Volt\Libraries\Format::date(' . $resolvedArgs . ')';
             });

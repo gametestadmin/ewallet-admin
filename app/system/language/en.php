@@ -10,7 +10,6 @@ $messages = array(
     "login_error" => "Login Error",
     "login_success" => "Login Success",
 
-
     "username" => "username",
     "nickname" => "nickname",
     "password" => "password",
@@ -38,7 +37,6 @@ $messages = array(
     "agent_add" => "Add",
     //button
     "check" => "Check Available"
-
 );
 
 return $messages;

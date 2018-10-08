@@ -35,7 +35,8 @@ class DLCurrency {
         if(isset($data["code"])) $data['code'] = \filter_var(\strip_tags(\addslashes($data['code'])), FILTER_SANITIZE_STRING);
         if(isset($data["name"])) $data['name'] = \filter_var(\strip_tags(\addslashes($data['name'])), FILTER_SANITIZE_STRING);
         if(isset($data["symbol"])) $data['symbol'] = \filter_var(\strip_tags(\addslashes($data['symbol'])), FILTER_SANITIZE_STRING);
-        if(isset($data["status"])) $data['status'] = \intval($data['status']);
+//        if(isset($data["status"])) $data['status'] = \intval(($data['status']));
+        $data['status'] = (isset($data["status"])?\intval($data['status']):1);
 
         return $data;
     }
@@ -67,17 +68,22 @@ class DLCurrency {
     }
 
     public function create($data){
-        $data = $this->filterInput($data);
-        $this->validateAdd($data);
-
         $newCurrency = new Currency();
 
         if(isset($data["code"]))$newCurrency->setCode($data['code']);
         if(isset($data["name"]))$newCurrency->setName($data['name']);
         if(isset($data["symbol"]))$newCurrency->setSymbol($data['symbol']);
 
-        if(!$newCurrency->save()){
-            throw new \Exception('error_create_currency');
+        if($newCurrency->save()){
+            $userCurrency = new DLUserCurrency();
+            $companyUser = array(
+                "user" => $data['user'],
+                "currency" => $newCurrency->getId(),
+            );
+            $userCurrencyResult = $userCurrency->create($companyUser);
+            if(!$userCurrencyResult) {
+                throw new \Exception('error_create_currency');
+            }
         }
 
         return $newCurrency->getCode();

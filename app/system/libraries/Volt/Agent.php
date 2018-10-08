@@ -14,4 +14,14 @@ class Agent
             }
         }
     }
+
+    public static function agentStatus($status)
+    {
+        $agentStatus = GlobalVariable::$threeLayerStatus;
+        foreach ($agentStatus as $key => $value) {
+            if($status == $value) {
+                return $key;
+            }
+        }
+    }
 }

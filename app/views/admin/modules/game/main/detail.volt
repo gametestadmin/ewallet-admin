@@ -12,6 +12,7 @@
                             <li id="head-tab-general" class="tab"><a data-toggle="tab" href="#tab-general">General</a></li>
                             <li id="head-tab-currency" class="tab"><a data-toggle="tab" href="#tab-currency">Currency</a></li>
                             <li id="head-tab-endpoint" class="tab"><a data-toggle="tab" href="#tab-endpoint">Endpoint</a></li>
+                            <li id="head-tab-ip" class="tab"><a data-toggle="tab" href="#tab-ip">Whitelist IP</a></li>
                         </ul>
                         <div class="tab-content padding-0">
                             <div id="tab-general" class="tab-pane">
@@ -60,11 +61,14 @@
                                 </div>
                             </div>
                             <div id="tab-currency" class="tab-pane">
-                                {{ widget('CurrencyWidget', ["id": game.id]) }}
+                                {{ widget('GameCurrencyWidget', ["id": game.id]) }}
                             </div>
                             <div id="tab-endpoint" class="tab-pane">
                                 {{ widget('ProviderGameEndpointAuthWidget', ["id": game.id]) }}
                                 {{ widget('ProviderGameEndpointWidget', ["id": game.id]) }}
+                            </div>
+                            <div id="tab-ip" class="tab-pane">
+                                {{ widget('GameWhitelistIpWidget', ["id": game.id]) }}
                             </div>
                         </div>
                     </div>

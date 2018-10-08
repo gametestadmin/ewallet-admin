@@ -5,17 +5,18 @@
                 <div class="ibox float-e-margins">
                     <div class="ibox-title row">
                         <div class="row">
-                            <label class="col-xs-12 text-right">
+                            <label class="col-xs-12 text-left">
+                            {% set type = parent.type - 1 %}
+                            [{{parent.username}}] {{type|agentType}} List
                             </label>
                         </div>
                     </div>
                     <div class="ibox-content row">
                         <ul class="list-inline header-list text-center">
-                          <li class="col-sm-1 col-xs-1 list-group-item">No</li>
-                          <li class="col-sm-4 col-xs-4 list-group-item">Username</li>
-                          <li class="col-sm-3 col-xs-3 list-group-item">Nickname</li>
-                          <li class="col-sm-2 col-xs-2 list-group-item">Type</li>
-                          <li class="col-sm-2 col-xs-2 list-group-item">&nbsp;</li>
+                          <li class="col-sm-1 hidden-xs list-group-item">No</li>
+                          <li class="col-sm-6 col-xs-5 list-group-item">Username</li>
+                          <li class="col-sm-3 col-xs-4 list-group-item">Status</li>
+                          <li class="col-sm-2 col-xs-3 list-group-item">Action</li>
                         </ul>
                         {% set i = 1 %}
                         {% for agentData in agent_list %}
@@ -25,11 +26,10 @@
                         {% set class = "content-odd" %}
                         {% endif %}
                         <ul class="list-inline {{class}} text-center">
-                            <li class="col-sm-1 col-xs-1 list-group-item">{{i}}</li>
-                            <li class="col-sm-4 col-xs-4 list-group-item"><a href="{{url(module~'/'~controller~'/'~action~'/'~agentData.id)}}"><u>{{agentData.username}}</u></a></li>
-                            <li class="col-sm-3 col-xs-3 list-group-item">{{agentData.nickname}}</li>
-                            <li class="col-sm-2 col-xs-2 list-group-item text-center">{{agentData.type|agentType}}</li>
-                            <li class="col-sm-2 col-xs-2 list-group-item text-center">
+                            <li class="col-sm-1 hidden-xs list-group-item">{{i}}</li>
+                            <li class="col-sm-6 col-xs-5 list-group-item"><a href="{{url(module~'/'~controller~'/'~action~'/'~agentData.id)}}"><u>{{agentData.username}}</u></a></li>
+                            <li class="col-sm-3 col-xs-4 list-group-item"><strong class="text-{{agentData.status|agentStatus|lower}}">{{agentData.status|agentStatus}}</strong></li>
+                            <li class="col-sm-2 col-xs-3 list-group-item">
                                 <a href="{{url(module~'/detail/'~agentData.id)}}">
                                     <span class="fa fa-search text-danger"></span>
                                 </a>
@@ -45,7 +45,7 @@
                                 {% if totalPage != null %}
                                 {% for i in 1..totalPage %}
                                   <li>
-                                    <a href="{{url(module~'/'~controller)}}?pages={{i}}" {% if i == page %}class="pagination-numb"{% endif %}>{{i}}</a>
+                                    <a href="{{url(router.getRewriteUri())}}?pages={{i}}" {% if i == page %}class="pagination-numb"{% endif %}>{{i}}</a>
                                   </li>
                                 {% endfor %}
                                 {% endif %}

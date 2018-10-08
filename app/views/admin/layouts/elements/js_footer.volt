@@ -49,9 +49,7 @@
         $(".alert").slideUp(500, function() {
             $(this).remove();
         });
-    }, 1232000);
-
+    }, 2000);
 </script>
 {% endblock %}
-
 

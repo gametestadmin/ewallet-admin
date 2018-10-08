@@ -27,7 +27,7 @@ class UserCurrency extends \Phalcon\Mvc\Model
      *
      * @var integer
      */
-    protected $defaulty;
+    protected $default;
 
     /**
      *
@@ -75,14 +75,14 @@ class UserCurrency extends \Phalcon\Mvc\Model
     }
 
     /**
-     * Method to set the value of field defaulty
+     * Method to set the value of field default
      *
-     * @param integer $defaulty
+     * @param integer $default
      * @return $this
      */
-    public function setDefaulty($defaulty)
+    public function setDefault($default)
     {
-        $this->defaulty = $defaulty;
+        $this->default = $default;
 
         return $this;
     }
@@ -131,13 +131,13 @@ class UserCurrency extends \Phalcon\Mvc\Model
     }
 
     /**
-     * Returns the value of field defaulty
+     * Returns the value of field default
      *
      * @return integer
      */
-    public function getDefaulty()
+    public function getDefault()
     {
-        return $this->defaulty;
+        return $this->default;
     }
 
     /**

@@ -104,7 +104,6 @@ class DLUserAclAccess{
         return true ;
     }
 
-
     public function setAclAccess($id, $data){
         $aclAccess = new UserAclAccess();
 
@@ -115,6 +114,7 @@ class DLUserAclAccess{
         $aclAccess->setSidebar($data->getSidebar());
         $aclAccess->setSidebarName($data->getSidebarName());
         $aclAccess->setSidebarIcon($data->getSidebarIcon());
+        $aclAccess->setSidebarOrder($data->getSidebarOrder());
         $aclAccess->setStatus(1);
 
         if(!$aclAccess->save()){
