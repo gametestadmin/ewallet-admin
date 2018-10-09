@@ -57,6 +57,12 @@ class UserAclAccess extends \Phalcon\Mvc\Model
      *
      * @var integer
      */
+    protected $sidebar_order;
+
+    /**
+     *
+     * @var integer
+     */
     protected $status;
 
     /**
@@ -164,6 +170,19 @@ class UserAclAccess extends \Phalcon\Mvc\Model
     }
 
     /**
+     * Method to set the value of field sidebar_order
+     *
+     * @param string $sidebar_order
+     * @return $this
+     */
+    public function setSidebarOrder($sidebar_order)
+    {
+        $this->sidebar_order = $sidebar_order;
+
+        return $this;
+    }
+
+    /**
      * Method to set the value of field status
      *
      * @param integer $status
@@ -257,6 +276,16 @@ class UserAclAccess extends \Phalcon\Mvc\Model
     }
 
     /**
+     * Returns the value of field sidebar_order
+     *
+     * @return string
+     */
+    public function getSidebarOrder()
+    {
+        return $this->sidebar_order;
+    }
+
+    /**
      * Returns the value of field status
      *
      * @return integer
@@ -272,7 +301,17 @@ class UserAclAccess extends \Phalcon\Mvc\Model
     public function initialize()
     {
         $this->setSource("user_acl_access");
-        $this->belongsTo('user', 'System\Model\User', 'id', ['alias' => 'User']);
+        $this->belongsTo('user', 'System\Datalayer\User', 'id', ['alias' => 'User']);
+    }
+
+    /**
+     * Returns table name mapped in the model.
+     *
+     * @return string
+     */
+    public function getSource()
+    {
+        return 'user_acl_access';
     }
 
     /**
@@ -295,16 +334,6 @@ class UserAclAccess extends \Phalcon\Mvc\Model
     public static function findFirst($parameters = null)
     {
         return parent::findFirst($parameters);
-    }
-
-    /**
-     * Returns table name mapped in the model.
-     *
-     * @return string
-     */
-    public function getSource()
-    {
-        return 'user_acl_access';
     }
 
 }

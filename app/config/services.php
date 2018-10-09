@@ -87,6 +87,14 @@ $di->setShared('view', function () use ($config) {
                 return 'System\Widgets\Manager::get(' . $resolvedArgs . ')->getContent()';
             });
 
+            $compiler->addFilter('agentType', function ($resolvedArgs) {
+                return 'Volt\Libraries\Agent::agentType(' . $resolvedArgs . ')';
+            });
+
+            $compiler->addFilter('agentStatus', function ($resolvedArgs) {
+                return 'Volt\Libraries\Agent::agentStatus(' . $resolvedArgs . ')';
+            });
+
             $compiler->addFilter('date', function ($resolvedArgs) {
                 return 'Volt\Libraries\Format::date(' . $resolvedArgs . ')';
             });
@@ -99,21 +107,25 @@ $di->setShared('view', function () use ($config) {
                 return 'Volt\Libraries\Game::gameType(' . $resolvedArgs . ')';
             });
 
+            $compiler->addFilter('endPointType', function ($resolvedArgs) {
+                return 'Volt\Libraries\Endpoint::endPointType(' . $resolvedArgs . ')';
+            });
+
             $compiler->addFilter('providerName', function ($resolvedArgs) {
                 return 'Volt\Libraries\Game::gameProvider(' . $resolvedArgs . ')';
             });
 
-            $compiler->addFilter('currencyCode', function ($resolvedArgs) {
-                return 'Volt\Libraries\Currency::CurrencyCode(' . $resolvedArgs . ')';
-            });
-
-            $compiler->addFilter('currencyName', function ($resolvedArgs) {
-                return 'Volt\Libraries\Currency::CurrencyName(' . $resolvedArgs . ')';
-            });
-
-            $compiler->addFilter('currencySymbol', function ($resolvedArgs) {
-                return 'Volt\Libraries\Currency::CurrencySymbol(' . $resolvedArgs . ')';
-            });
+//            $compiler->addFilter('currencyCode', function ($resolvedArgs) {
+//                return 'Volt\Libraries\Currency::CurrencyCode(' . $resolvedArgs . ')';
+//            });
+//
+//            $compiler->addFilter('currencyName', function ($resolvedArgs) {
+//                return 'Volt\Libraries\Currency::CurrencyName(' . $resolvedArgs . ')';
+//            });
+//
+//            $compiler->addFilter('currencySymbol', function ($resolvedArgs) {
+//                return 'Volt\Libraries\Currency::CurrencySymbol(' . $resolvedArgs . ')';
+//            });
 
             return $volt;
         }

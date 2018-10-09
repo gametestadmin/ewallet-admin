@@ -2,8 +2,8 @@
 
 
 {{translate['user']}}
-                <br>
-                <br>
+    <br>
+    <br>
 
 
 

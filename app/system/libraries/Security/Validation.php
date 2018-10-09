@@ -112,13 +112,13 @@ class Validation extends \System\Library\Main
                                 $this->_valid = false;
                                 $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"])." ".$this->_language['must_filled'];
                             }
-                            if(!$this->minLength($condition["fieldValue"], 5)){
+                            if(!$this->minLength($condition["fieldValue"], $condition["conditionValue"])){
                                 $this->_valid = false;
                                 $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"])." ".$this->_language['minimum_character']." ".$condition["conditionValue"];
                             }
-                            if(!$this->maxLength($condition["fieldValue"], 15)){
+                            if(!$this->maxLength($condition["fieldValue"], $condition["conditionMaxValue"])){
                                 $this->_valid = false;
-                                $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"])." ".$this->_language['maximum_character']." ".$condition["conditionValue"];
+                                $this->_messages[$condition["fieldName"]][] = \ucfirst($condition["fieldName"])." ".$this->_language['maximum_character']." ".$condition["conditionMaxValue"];
                             }
                             if(!$this->checkRegex($condition["fieldValue"], "/^[\w]+$/")){
                                 $this->_valid = false;

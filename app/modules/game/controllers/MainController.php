@@ -1,10 +1,10 @@
 <?php
 namespace Backoffice\Game\Controllers;
 
-use System\Datalayer\DLCurrency;
 use System\Datalayer\DLGame;
 use System\Datalayer\DLGameCurrency;
 use System\Datalayer\DLProviderGame;
+use System\Datalayer\DLProviderGameEndpoint;
 use System\Library\General\GlobalVariable;
 
 class MainController extends \Backoffice\Controllers\ProtectedController
@@ -26,7 +26,6 @@ class MainController extends \Backoffice\Controllers\ProtectedController
 
         }elseif($this->session->has("pages")){
             $pages = $this->session->get("pages");
-
         }
 
         $mainGame = new DLGame();
@@ -139,15 +138,16 @@ class MainController extends \Backoffice\Controllers\ProtectedController
 
         $status = GlobalVariable::$threeLayerStatus;
 
-        $DLCurrency = new DLCurrency();
-        $currency = $DLCurrency->getAllByStatus(1);
-
         $DLGame = new DLGame();
         $game = $DLGame->getByCode($currentCode, $this->_type);
 
-
         $DLGameCurrency = new DLGameCurrency();
         $gameCurrency = $DLGameCurrency->getAll($game->getId());
+        $gameCurrencyData = count($gameCurrency);
+
+        $DLProviderEndPoint = new DLProviderGameEndpoint();
+        $endPoint = $DLProviderEndPoint->getAll($game->getId());
+        $endPointData = count($endPoint);
 
         if(!$game){
             $this->flash->error("undefined_game_code");
@@ -156,8 +156,8 @@ class MainController extends \Backoffice\Controllers\ProtectedController
 
         $view->game = $game;
         $view->status = $status;
-        $view->currency = $currency;
-        $view->gameCurrency = $gameCurrency;
+        $view->gameCurrencyData = $gameCurrencyData;
+        $view->providerEndPointData = $endPointData;
 
         \Phalcon\Tag::setTitle("Update Game Provider - ".$this->_website->title);
     }

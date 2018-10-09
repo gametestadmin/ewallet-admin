@@ -293,17 +293,13 @@ class DLGame{
             $gameParent = Game::findByGameParent($game->getId());
 
             foreach ($gameParent as $key => $value) {
-                $childStatus = $status;
-                if($game->getStatus() == 1 && $status == 1) {
+                if($status == 1 && ($value->getParentStatus() == 2 || $value->getParentStatus() == 0)){
                     $childStatus = 1;
-                }
-                elseif($game->getStatus() == 2 && $status == 2 || $game->getStatus() == 2 && $status == 1) {
+                }elseif($status == 2 && ($value->getParentStatus() == 2 || $value->getParentStatus() == 1)){
                     $childStatus = 2;
-                }
-                elseif($game->getStatus() == 0 && $status == 2 || $game->getStatus() == 0 && $status == 1 || $game->getStatus() == 0 && $status == 0) {
+                }else{
                     $childStatus = 0;
                 }
-
                 $value->setParentStatus($childStatus);
                 $value->save();
 

@@ -127,8 +127,10 @@ class ProviderController extends \Backoffice\Controllers\ProtectedController
     {
         $view = $this->view;
 
-        $status = GlobalVariable::$threeLayerStatus;
-        $gmt = $this->getGmt();
+        $globalVariable = new GlobalVariable();
+
+        $status = $globalVariable::$threeLayerStatus;
+        $gmt = $globalVariable->getGmt();
 
         $currentId = $this->dispatcher->getParam("id");
 

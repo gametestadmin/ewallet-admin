@@ -28,11 +28,11 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
         $previousPage = new GlobalVariable();
 
         if ($this->request->getPost()) {
-
             try {
                 $this->db->begin();
 
                 $data = $this->request->getPost();
+                $tab = $data['tab'];
 
                 $DLGameCurrency = new DLGameCurrency();
 
@@ -42,12 +42,11 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
 
                 $this->db->commit();
                 $this->flash->success('game_currency_added');
-                $this->response->redirect($previousPage->previousPage())->send();
             } catch (\Exception $e) {
                 $this->db->rollback();
                 $this->flash->error($e->getMessage());
-                $this->response->redirect($previousPage->previousPage())->send();
             }
+            $this->response->redirect($previousPage->previousPage()."#".$tab)->send();
         }
 
         \Phalcon\Tag::setTitle("Game Currency - ".$this->_website->title);
@@ -57,25 +56,27 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
     {
         $previousPage = new GlobalVariable();
 
-        $currentId = $this->dispatcher->getParam("id");
+        $data["game_id"] = $this->dispatcher->getParam("id");
+        $data["currency_id"] = $this->request->get("default");
+        $tab = $this->request->get("tab");
 
-        $currentId = explode("|",$currentId);
-
+        if($this->_allowed == 0){
+            return $this->response->redirect($previousPage->previousPage()."#".$tab)->send();
+        }
         try {
             $this->db->begin();
 
             $DLGameCurrency = new DLGameCurrency();
 
-            $DLGameCurrency->set($currentId);
+            $DLGameCurrency->set($data);
 
             $this->db->commit();
             $this->flash->success('game_currency_default');
-            $this->response->redirect($previousPage->previousPage())->send();
         } catch (\Exception $e) {
             $this->db->rollback();
             $this->flash->error($e->getMessage());
-            $this->response->redirect($previousPage->previousPage())->send();
         }
+        $this->response->redirect($previousPage->previousPage()."#".$tab)->send();
 
         \Phalcon\Tag::setTitle("Game Currency - ".$this->_website->title);
     }

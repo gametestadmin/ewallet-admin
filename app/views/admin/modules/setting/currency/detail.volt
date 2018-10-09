@@ -1,5 +1,4 @@
 {% block content %}
-        {{ widget('MenuWidget', []) }}
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
                 <div class="col-xs-12">
@@ -31,29 +30,30 @@
                                     <label class="col-xs-3 control-label">Status</label>
                                     <div class="col-xs-9">
                                         <div class="input-group">
-                                        {% if currency.status == 1 %}
-                                            {% set status = 'Active' %}
-                                            {% set updateStatus = 0 %}
-                                        {% else %}
-                                            {% set status = 'InActive' %}
-                                            {% set updateStatus = 1 %}
-                                        {% endif %}
-                                        <input type="text" class="form-control" readonly value="{{status}}">
-                                        <div class="input-group-btn">
-                                            <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">
-                                                <span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu pull-right">
-                                                <li>
-                                                    <a href="{{'/'~module~'/'~controller~'/status/'~currency.code|lowercase~'|'~updateStatus}}">
-                                                    {% if currency.status == 1 %}
-                                                        InActive
-                                                    {% else %}
-                                                        Active
-                                                    {% endif %}
-                                                    </a>
-                                                </li>
-                                            </ul>
+                                            {% if currency.status == 1 %}
+                                                {% set status = 'Active' %}
+                                                {% set updateStatus = 0 %}
+                                            {% else %}
+                                                {% set status = 'InActive' %}
+                                                {% set updateStatus = 1 %}
+                                            {% endif %}
+                                            <input type="text" class="form-control" readonly value="{{status}}">
+                                            <div class="input-group-btn">
+                                                <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">
+                                                    <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu pull-right">
+                                                    <li>
+                                                        <a href="{{'/'~module~'/'~controller~'/status/'~currency.code|lowercase~'|'~updateStatus}}">
+                                                        {% if currency.status == 1 %}
+                                                            InActive
+                                                        {% else %}
+                                                            Active
+                                                        {% endif %}
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -77,4 +77,5 @@
 {% endblock %}
 
 {% block action_js %}
+
 {% endblock %}

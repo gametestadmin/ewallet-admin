@@ -9,6 +9,7 @@ $namespaces = array(
     'System\Datalayer' => __DIR__ . '/../system/datalayer/'.$config->dbenvironment."/" ,
     'System\Widgets' => __DIR__ . '/../system/libraries/Widget',
     'Volt\Libraries' => __DIR__ . '/../system/libraries/Volt',
+    'General\Libraries' => __DIR__ . '/../system/libraries/General',
 //    'Log\Libraries' => __DIR__ . '/../libraries/Log',
 //    'Security\Libraries' => __DIR__ . '/../libraries/Security',
 

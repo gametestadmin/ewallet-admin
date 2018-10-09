@@ -1,5 +1,4 @@
 {% block content %}
-    {{ widget('MenuWidget', []) }}
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
             <div class="col-xs-12">
@@ -12,42 +11,42 @@
                         </div>
                     </div>
                     <div class="ibox-content row">
-                        <ul class="list-inline header-list">
-                          <li class="col-sm-1 col-xs-1 list-group-item text-center">ID</li>
+                        <ul class="list-inline header-list text-center">
+                          <li class="col-sm-1 hidden-xs list-group-item">No</li>
                           <li class="col-sm-3 col-xs-3 list-group-item">Code</li>
                           <li class="col-sm-4 col-xs-4 list-group-item">Name</li>
-                          <li class="col-sm-2 col-xs-3 list-group-item text-center">Status</li>
+                          <li class="col-sm-2 col-xs-3 list-group-item">Status</li>
                           <li class="col-sm-2 col-xs-2 list-group-item">&nbsp;</li>
                         </ul>
                         {% set i = 1 %}
                         {% for mainData in page %}
-                        {% if i%2 == 0 %}
-                        {% set class = "content-even" %}
-                        {% else %}
-                        {% set class = "content-odd" %}
-                        {% endif %}
-                        <ul class="list-inline {{class}}">
-                            <li class="col-sm-1 col-xs-1 list-group-item text-center">{{i}}</li>
-                            <li class="col-sm-3 col-xs-3 list-group-item">{{mainData.code}}</li>
-                            <li class="col-sm-4 col-xs-4 list-group-item">{{mainData.name}}</li>
-                            <li class="col-sm-2 col-xs-3 list-group-item text-center">
-                                <select class="status">
-                                    {% for key, value in status %}
-                                        <option value="{{mainData.id~"|"~value}}" {% if mainData.status == value %}selected{% endif %}>{{key}}</option>
-                                    {% endfor %}
-                                </select>
-                            </li>
-                            <li class="col-sm-2 col-xs-2 list-group-item text-center">
-                                <a href="{{router.getRewriteUri()~'/detail/'~mainData.code|lowercase}}">
-                                    <span class="fa fa-search text-danger"></span>
-                                </a>
-                                |
-                                <a href="{{router.getRewriteUri()~'/edit/'~mainData.code|lowercase}}">
-                                    <span class="fa fa-edit text-primary"></span>
-                                </a>
-                            </li>
-                        </ul>
-                        {% set i = i +1 %}
+                            {% if i%2 == 0 %}
+                                {% set class = "content-even" %}
+                            {% else %}
+                                {% set class = "content-odd" %}
+                            {% endif %}
+                            <ul class="list-inline {{class}} text-center">
+                                <li class="col-sm-1 hidden-xs list-group-item">{{i}}</li>
+                                <li class="col-sm-3 col-xs-3 list-group-item">{{mainData.code}}</li>
+                                <li class="col-sm-4 col-xs-4 list-group-item">{{mainData.name}}</li>
+                                <li class="col-sm-2 col-xs-3 list-group-item">
+                                    <select class="status">
+                                        {% for key, value in status %}
+                                            <option value="{{mainData.id~"|"~value}}" {% if mainData.status == value %}selected{% endif %}>{{key}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </li>
+                                <li class="col-sm-2 col-xs-2 list-group-item">
+                                    <a href="{{router.getRewriteUri()~'/detail/'~mainData.code|lowercase}}">
+                                        <span class="fa fa-search text-danger"></span>
+                                    </a>
+                                    |
+                                    <a href="{{router.getRewriteUri()~'/edit/'~mainData.code|lowercase}}">
+                                        <span class="fa fa-edit text-primary"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                            {% set i = i +1 %}
                         {% endfor %}
 
                         <div class="row text-center">

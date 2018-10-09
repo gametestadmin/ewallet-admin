@@ -155,6 +155,7 @@ class SubController extends \Backoffice\Controllers\ProtectedController
 
         $DLGameCurrency = new DLGameCurrency();
         $gameCurrency = $DLGameCurrency->getAll($game->getId());
+        $gameCurrencyData = count($gameCurrency);
 
         if(!$game){
             $this->flash->error("undefined_game_code");
@@ -163,7 +164,7 @@ class SubController extends \Backoffice\Controllers\ProtectedController
 
         $view->game = $game;
         $view->status = $status;
-        $view->currency = $currency;
+        $view->gameCurrencyData = $gameCurrencyData;
         $view->gameCurrency = $gameCurrency;
 
         \Phalcon\Tag::setTitle("Update Game Provider - ".$this->_website->title);
