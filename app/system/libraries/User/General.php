@@ -6,33 +6,11 @@ use \System\Datalayer\DLUserAclAccess ;
 
 class General
 {
-
-//    public function getACL($user , $parent = null ){
-//        if(is_null($parent)){
-//            $acl = new DLUserAclResource();
-//            $aclList = $acl->get();
-//        } else {
-//            $acl = new DLUserAclAccess();
-//            $aclList = $acl->getById($user);
-//        }
-//        return $aclList;
-//    }
     public function getACL ($user){
         $acl = new DLUserAclAccess();
         $aclList = $acl->getById($user);
         return $aclList;
     }
-
-//    public function getSubaccountACLParent($user , $parent){
-//        if( is_null($parent) ){
-//            $acl = new DLUserAclResource();
-//            $aclList = $acl->getMinSubaccount();
-//        } else {
-//            $acl = new DLUserAclAccess();
-//            $aclList = $acl->getByIdMinSubaccount($user);
-//        }
-//        return $aclList;
-//    }
 
     public function getSubaccountACLParent($user){
         $acl = new DLUserAclAccess();
@@ -58,6 +36,7 @@ class General
     public function filterACLlist($aclObject){
         $aclList = array();
         foreach ($aclObject as $key){
+            if(!is_null($key->module) && !is_null($key->controller) && !is_null($key->action))
             $aclList[$key->module][$key->controller][$key->action] = $key->status ;
         }
 

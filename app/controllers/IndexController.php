@@ -18,14 +18,9 @@ class IndexController extends \Backoffice\Controllers\BaseController
 
             return $this->response->redirect("/login");
         } else {
-//            $generalLibrary = new General();
-//            if($this->_user->getParent() == 0){
-//                $aclObject = $generalLibrary->getCompanyACL();
-//            } else {
-//                $aclObject = $generalLibrary->getACL($this->_user->getId());
-//            }
+            $sidebar = $this->session->get('sidebar');
 //            echo "<pre>";
-//            var_dump($aclObject);
+//            var_dump($sidebar);
 //            die;
 
 
@@ -98,8 +93,7 @@ class IndexController extends \Backoffice\Controllers\BaseController
     public function logoutAction(){
         $view = $this->view;
 
-//        \Phalcon\Tag::setTitle($this->config->site->title);
-        if($view->user != null){
+        if($this->_user != null){
             $this->session->destroy();
         }
 
