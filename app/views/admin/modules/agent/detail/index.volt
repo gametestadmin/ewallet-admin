@@ -4,7 +4,7 @@
         <div class="col-xs-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title row">
-                    <h5>{{controller|capitalize}} {{module|capitalize}}</h5>
+                    <h5>[{{agent.username}}] Detail</h5>
                 </div>
                 <div class="ibox-content row">
                     <div class="tabs-container">
