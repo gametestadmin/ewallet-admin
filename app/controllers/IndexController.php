@@ -18,34 +18,14 @@ class IndexController extends \Backoffice\Controllers\BaseController
 
             return $this->response->redirect("/login");
         } else {
-//            $view = $this->view;
-
-//        if($this->request->has("flash")) {
-//            $this->noticeFlash("user");
-//            $this->errorFlash("add");
-//            $this->successFlash("success");
-//        }
-
-//            $list = $this->session->get("acl");
-//            echo "<pre>";
-//            var_dump($list);
-//
-//            foreach ($list as $key => $value){
-//                var_dump($key);
-//                var_dump($value);
-//                foreach ($value as $x => $y){
-//                    var_dump($x);
-//                    var_dump($y);
-//                }
+//            $generalLibrary = new General();
+//            if($this->_user->getParent() == 0){
+//                $aclObject = $generalLibrary->getCompanyACL();
+//            } else {
+//                $aclObject = $generalLibrary->getACL($this->_user->getId());
 //            }
-//            die;
-
-
-
-//        $this->_translate["test_new"];
 //            echo "<pre>";
-//            var_dump($this->session->get("acl"));
-//            var_dump($this->session->get("sidebar"));
+//            var_dump($aclObject);
 //            die;
 
 
@@ -58,18 +38,14 @@ class IndexController extends \Backoffice\Controllers\BaseController
         $view = $this->view;
         if($this->_user) return $this->response->redirect("/");
 
-//        echo "something here<pre>";
-//        var_dump($this->session->get('acl'));
-//        die;
-
-
         if ($this->request->getPost()){
             $data = $this->request->getPost();
-            $username = $data['username'];
+            $username = strtoupper($data['username']);
             $password = $data['password'];
 
             $DLuser = new DLUser();
-            $user = $DLuser->getByUsername($username);
+            $user = $DLuser->getByNickname($username);
+
 
             if($user){
                 $securityLibrary = new SecurityUser();
@@ -84,20 +60,16 @@ class IndexController extends \Backoffice\Controllers\BaseController
                 $captchaTime = $checkcaptcha->checkCaptchaTime();
                 $captcha = $checkcaptcha->checkCatpcha($data["captcha"]);
 
+
                 if( $password === $user->getPassword() && $captchaTime && $captcha ){
                     $this->session->set('user', $user);
 
-
                     //TODO :: save and check to redis
                     //TODO :: incomplete
-
                     //set session add acl for the current user
                     $generalLibrary = new General();
-                    if($user->getParent() == 0){
-                        $aclObject = $generalLibrary->getCompanyACL();
-                    } else {
-                        $aclObject = $generalLibrary->getACL($user->getId());
-                    }
+                    $aclObject = $generalLibrary->getACL($user->getId());
+
                     $acl = $generalLibrary->filterACLlist($aclObject);
                     $sideBar = $generalLibrary->getSidebar($aclObject);
 

@@ -1,23 +1,54 @@
 <?php
 namespace Backoffice\Game\Controllers;
 
+use System\Datalayer\DLCurrency;
 use System\Datalayer\DLGame;
+use System\Datalayer\DLGameCurrency;
 use System\Datalayer\DLProviderGame;
 use System\Library\General\GlobalVariable;
 
-class SubController extends \Backoffice\Controllers\BaseController
+class SubController extends \Backoffice\Controllers\ProtectedController
 {
     protected $_categoryType = 1;
     protected $_mainType = 2;
     protected $_type = 3;
+    protected $_limit = 10;
+    protected $_pages = 1;
+
     public function indexAction()
     {
         $view = $this->view;
 
-        $categoryGame = new DLGame();
-        $status = GlobalVariable::$threeLayerStatus;
+        $limit = $this->_limit;
+        $pages = $this->_pages;
 
-        $view->category = $categoryGame->getAll($this->_type);
+        if ($this->request->has("pages")){
+            $pages = $this->request->get("pages");
+
+        }elseif($this->session->has("pages")){
+            $pages = $this->session->get("pages");
+
+        }
+        $subGame = new DLGame();
+        $status = GlobalVariable::$threeLayerStatus;
+        $sub = $subGame->getAll($this->_type);
+
+        $paginator = new \Phalcon\Paginator\Adapter\Model(
+            array(
+                "data" => $sub,
+                "limit"=> $limit,
+                "page" => $pages
+            )
+        );
+        $page = $paginator->getPaginate();
+
+        $pagination = ceil($sub->count()/$limit);
+        $view->page = $page->items;
+        $view->pagination = $pagination;
+        $view->pages = $pages;
+        $view->limit = $limit;
+
+        $view->sub = $sub;
         $view->status = $status;
 
         \Phalcon\Tag::setTitle("Game Category - ".$this->_website->title);
@@ -37,6 +68,7 @@ class SubController extends \Backoffice\Controllers\BaseController
             try {
                 $this->db->begin();
                 $data = $this->request->getPost();
+
                 $data['type'] = $this->_type;
 
                 $module = $this->router->getModuleName();
@@ -46,10 +78,15 @@ class SubController extends \Backoffice\Controllers\BaseController
                 $DLGame->validateSubAdd($filterData);
                 $game = $DLGame->createSub($filterData);
 
+                if($game && $filterData['parent_currency'] == 1){
+                    $gameCurrency = new DLGameCurrency();
+                    $gameCurrency->setFromParent($game->getGameParent(),$game->getId());
+                }
+
                 $this->db->commit();
 
                 $this->flash->success('sub_game_create_success');
-                return $this->response->redirect("/".$module."/".$controller."/detail/".$game)->send();
+                return $this->response->redirect("/".$module."/".$controller."/detail/".$game->getCode())->send();
             } catch (\Exception $e) {
                 $this->db->rollback();
                 $this->flash->error($e->getMessage());
@@ -110,8 +147,15 @@ class SubController extends \Backoffice\Controllers\BaseController
 
         $status = GlobalVariable::$threeLayerStatus;
 
+        $DLCurrency = new DLCurrency();
+        $currency = $DLCurrency->getAllByStatus(1);
+
         $DLGame = new DLGame();
         $game = $DLGame->getByCode($currentCode, $this->_type);
+
+        $DLGameCurrency = new DLGameCurrency();
+        $gameCurrency = $DLGameCurrency->getAll($game->getId());
+        $gameCurrencyData = count($gameCurrency);
 
         if(!$game){
             $this->flash->error("undefined_game_code");
@@ -120,6 +164,8 @@ class SubController extends \Backoffice\Controllers\BaseController
 
         $view->game = $game;
         $view->status = $status;
+        $view->gameCurrencyData = $gameCurrencyData;
+        $view->gameCurrency = $gameCurrency;
 
         \Phalcon\Tag::setTitle("Update Game Provider - ".$this->_website->title);
     }

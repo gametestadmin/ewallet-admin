@@ -1,5 +1,7 @@
 .idea
 
+error.log
+
 /var/*
 /cache/
 /config/development/

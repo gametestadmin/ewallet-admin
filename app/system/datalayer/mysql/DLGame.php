@@ -210,6 +210,7 @@ class DLGame{
         if(isset($data["category"]))$data['category'] = \filter_var(\strip_tags(\addslashes($data['category'])), FILTER_SANITIZE_STRING);
         if(isset($data["main"]))$data['main'] = \filter_var(\strip_tags(\addslashes($data['main'])), FILTER_SANITIZE_STRING);
         if(isset($data["sub_name"]))$data['sub_name'] = \filter_var(\strip_tags(\addslashes($data['sub_name'])), FILTER_SANITIZE_STRING);
+        $data['parent_currency'] = (isset($data['parent_currency'])?1:0);
 
         return $data;
     }
@@ -249,7 +250,8 @@ class DLGame{
 
         $game->setType($data['type']);
         if(isset($data["provider"]))$game->setProvider($data['provider']);
-        if(isset($data["category"]))$game->setGameParent($main->getId());
+//        if(isset($data["category"]))$game->setGameParent($main->getId());
+        if(isset($data["main"]))$game->setGameParent($main->getId());
         if(isset($data["code"]))$game->setCode(strtolower($data["main"]."-".$data['code']));
         if(isset($data["name"]))$game->setName(ucfirst($data['name']));
 
@@ -257,7 +259,7 @@ class DLGame{
             throw new \Exception($game->getMessages());
         }
 
-        return $game->getCode();
+        return $game;
     }
 
     public function setSub($data){
@@ -291,17 +293,13 @@ class DLGame{
             $gameParent = Game::findByGameParent($game->getId());
 
             foreach ($gameParent as $key => $value) {
-                $childStatus = $status;
-                if($game->getStatus() == 1 && $status == 1) {
+                if($status == 1 && ($value->getParentStatus() == 2 || $value->getParentStatus() == 0)){
                     $childStatus = 1;
-                }
-                elseif($game->getStatus() == 2 && $status == 2 || $game->getStatus() == 2 && $status == 1) {
+                }elseif($status == 2 && ($value->getParentStatus() == 2 || $value->getParentStatus() == 1)){
                     $childStatus = 2;
-                }
-                elseif($game->getStatus() == 0 && $status == 2 || $game->getStatus() == 0 && $status == 1 || $game->getStatus() == 0 && $status == 0) {
+                }else{
                     $childStatus = 0;
                 }
-
                 $value->setParentStatus($childStatus);
                 $value->save();
 

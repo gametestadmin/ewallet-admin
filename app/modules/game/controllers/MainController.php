@@ -2,21 +2,52 @@
 namespace Backoffice\Game\Controllers;
 
 use System\Datalayer\DLGame;
+use System\Datalayer\DLGameCurrency;
 use System\Datalayer\DLProviderGame;
+use System\Datalayer\DLProviderGameEndpoint;
 use System\Library\General\GlobalVariable;
 
-class MainController extends \Backoffice\Controllers\BaseController
+class MainController extends \Backoffice\Controllers\ProtectedController
 {
     protected $_categoryType = 1;
     protected $_type = 2;
+    protected $_limit = 10;
+    protected $_pages = 1;
+
     public function indexAction()
     {
         $view = $this->view;
 
-        $categoryGame = new DLGame();
-        $status = GlobalVariable::$threeLayerStatus;
+        $limit = $this->_limit;
+        $pages = $this->_pages;
 
-        $view->category = $categoryGame->getAll($this->_type);
+        if ($this->request->has("pages")){
+            $pages = $this->request->get("pages");
+
+        }elseif($this->session->has("pages")){
+            $pages = $this->session->get("pages");
+        }
+
+        $mainGame = new DLGame();
+        $status = GlobalVariable::$threeLayerStatus;
+        $main = $mainGame->getAll($this->_type);
+
+        $paginator = new \Phalcon\Paginator\Adapter\Model(
+            array(
+                "data" => $main,
+                "limit"=> $limit,
+                "page" => $pages
+            )
+        );
+        $page = $paginator->getPaginate();
+
+        $pagination = ceil($main->count()/$limit);
+        $view->page = $page->items;
+        $view->pagination = $pagination;
+        $view->pages = $pages;
+        $view->limit = $limit;
+
+        $view->main = $main;
         $view->status = $status;
 
         \Phalcon\Tag::setTitle("Game Category - ".$this->_website->title);
@@ -110,6 +141,14 @@ class MainController extends \Backoffice\Controllers\BaseController
         $DLGame = new DLGame();
         $game = $DLGame->getByCode($currentCode, $this->_type);
 
+        $DLGameCurrency = new DLGameCurrency();
+        $gameCurrency = $DLGameCurrency->getAll($game->getId());
+        $gameCurrencyData = count($gameCurrency);
+
+        $DLProviderEndPoint = new DLProviderGameEndpoint();
+        $endPoint = $DLProviderEndPoint->getAll($game->getId());
+        $endPointData = count($endPoint);
+
         if(!$game){
             $this->flash->error("undefined_game_code");
             return $this->response->redirect("/".$module."/".$controller)->send();
@@ -117,6 +156,8 @@ class MainController extends \Backoffice\Controllers\BaseController
 
         $view->game = $game;
         $view->status = $status;
+        $view->gameCurrencyData = $gameCurrencyData;
+        $view->providerEndPointData = $endPointData;
 
         \Phalcon\Tag::setTitle("Update Game Provider - ".$this->_website->title);
     }

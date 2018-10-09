@@ -1,42 +1,77 @@
 {% block content %}
-<div id="wrapper" style="color:white;">
-    <div>
-        <a href="{{router.getRewriteUri()~'/add'}}">Add</a>
-    </div>
-    <table>
-        <tr bgcolor="#000">
-            <td>ID</td>
-            <td>Code</td>
-            <td>Name</td>
-            <td>Symbol</td>
-            <td></td>
-            <td></td>
-        </tr>
-        {% set i = 1 %}
-        {% for currencyData in currency %}
-        <tr>
-            <td>{{i}}</td>
-            <td>{{currencyData.code}}</td>
-            <td>{{currencyData.name}}</td>
-            <td>{{currencyData.symbol}}</td>
-            <td>
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title row">
+                        <div class="row">
+                            <label class="col-xs-12 text-right">
+                                <a href="{{router.getRewriteUri()~'/add'}}" class="btn btn-sm btn-info">Add</a>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="ibox-content row">
+                        <ul class="list-inline header-list text-center">
+                          <li class="col-sm-1 col-xs-1 list-group-item">No</li>
+                          <li class="col-sm-3 col-xs-2 list-group-item">Code</li>
+                          <li class="col-sm-4 col-xs-4 list-group-item">Name</li>
+                          <li class="col-sm-2 col-xs-3 list-group-item">Status</li>
+                          <li class="col-sm-2 col-xs-2 list-group-item">&nbsp;</li>
+                        </ul>
+                        {% set i = 1 %}
+                        {% for currencyData in page %}
+                        {% if i%2 == 0 %}
+                        {% set class = "content-even" %}
+                        {% else %}
+                        {% set class = "content-odd" %}
+                        {% endif %}
+                        <ul class="list-inline {{class}} text-center">
+                            <li class="col-sm-1 col-xs-1 list-group-item">{{i}}</li>
+                            <li class="col-sm-3 col-xs-2 list-group-item">{{currencyData.code}}</li>
+                            <li class="col-sm-4 col-xs-4 list-group-item">{{currencyData.name}}</li>
+                            <li class="col-sm-2 col-xs-3 list-group-item">
+                                <select class="status">
+                                    {% for key, value in status %}
+                                        <option value="{{currencyData.code~"|"~value}}" {% if currencyData.status == value %}selected{% endif %}>{{key}}</option>
+                                    {% endfor %}
+                                </select>
+                            </li>
+                            <li class="col-sm-2 col-xs-2 list-group-item text-center">
+                                <a href="{{router.getRewriteUri()~'/detail/'~currencyData.code|lowercase}}">
+                                    <span class="fa fa-search text-danger"></span>
+                                </a>
+                                |
+                                <a href="{{router.getRewriteUri()~'/edit/'~currencyData.code|lowercase}}">
+                                    <span class="fa fa-edit text-primary"></span>
+                                </a>
+                            </li>
+                        </ul>
+                        {% set i = i +1 %}
+                        {% endfor %}
 
-                <select class="status">
-                    {% for key, value in status %}
-                        <option value="{{currencyData.code~"|"~value}}" {% if currencyData.status == value %}selected{% endif %}>{{key}}</option>
-                    {% endfor %}
-                </select>
-            </td>
-            <td><a href="{{router.getRewriteUri()~'/detail/'~currencyData.code|lowercase}}">Detail</a></td>
-        </tr>
-        {% set i = i +1 %}
-        {% endfor %}
-    </table>
-</div>
-<a href="/" >homepage</a>
+                        <div class="row text-center">
+                            <div class="col-xs-12">
+                                <ul class="pagination">
+                                {% set page = pagination %}
+                                {% if page != null %}
+                                {% for i in 1..page %}
+                                  <li>
+                                    <a href="{{url(module~'/'~controller)}}?pages={{i}}" {% if i == pages %}class="pagination-numb"{% endif %}>{{i}}</a>
+                                  </li>
+                                {% endfor %}
+                                {% endif %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block action_js %}
+
     <script>
         jQuery(document).ready(function($){
             var select = $('.status');
@@ -49,7 +84,7 @@
                     this.value = previouslySelected;
                     return;
                 }
-                location.href = document.URL+'/status/'+jQuery(this).val();
+                location.href = '/{{module}}/{{controller}}/status/'+jQuery(this).val();
             });
         });
     </script>

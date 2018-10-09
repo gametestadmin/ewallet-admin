@@ -4,20 +4,50 @@ namespace Backoffice\Setting\Controllers;
 use System\Datalayer\DLCurrency;
 use System\Library\General\GlobalVariable;
 
-class CurrencyController extends \Backoffice\Controllers\BaseController
+class CurrencyController extends \Backoffice\Controllers\ProtectedController
 {
+    protected $_limit = 10;
+    protected $_pages = 1;
 
     public function indexAction()
     {
         $view = $this->view;
 
+        $limit = $this->_limit;
+        $pages = $this->_pages;
+
+        if ($this->request->has("pages")) {
+            $pages = $this->request->get("pages");
+
+        } elseif ($this->session->has("pages")) {
+            $pages = $this->session->get("pages");
+
+        }
+
         $DLCurrency = new DLCurrency();
         $status = GlobalVariable::$twoLayerStatus;
+        $currency = $DLCurrency->getAll();
 
-        $view->currency = $DLCurrency->getAll();
+        $paginator = new \Phalcon\Paginator\Adapter\Model(
+            array(
+                "data" => $currency,
+                "limit" => $limit,
+                "page" => $pages
+            )
+        );
+        $page = $paginator->getPaginate();
+
+        $pagination = ceil($currency->count() / $limit);
+
+        $view->page = $page->items;
+        $view->pagination = $pagination;
+        $view->pages = $pages;
+        $view->limit = $limit;
+
+        $view->currency = $currency;
         $view->status = $status;
 
-        \Phalcon\Tag::setTitle("Currency - ".$this->_website->title);
+        \Phalcon\Tag::setTitle("Currency - " . $this->_website->title);
     }
 
     public function addAction()
@@ -28,23 +58,23 @@ class CurrencyController extends \Backoffice\Controllers\BaseController
             try {
                 $this->db->begin();
 
-                $module = $this->router->getModuleName();
-                $controller = $this->router->getControllerName();
-
                 $data = $this->request->getPost();
+                $data['user'] = $this->_user->getId();
 
                 $DLCurrency = new DLCurrency();
-                $currency = $DLCurrency->create($data);
+                $filterData = $DLCurrency->filterInput($data);
+                $DLCurrency->validateAdd($filterData);
+                $currency = $DLCurrency->create($filterData);
 
                 $this->db->commit();
-                return $this->response->redirect($module.'/'.$controller.'/detail/'.strtolower($currency))->send();
+                return $this->response->redirect($this->_module . '/' . $this->_controller . '/detail/' . strtolower($currency))->send();
             } catch (\Exception $e) {
                 $this->db->rollback();
                 $this->flash->error($e->getMessage());
             }
         }
 
-        \Phalcon\Tag::setTitle("Add New Currency - ".$this->_website->title);
+        \Phalcon\Tag::setTitle("Add New Currency - " . $this->_website->title);
     }
 
     public function editAction()
@@ -58,9 +88,9 @@ class CurrencyController extends \Backoffice\Controllers\BaseController
 
         $DLCurrency = new DLCurrency();
         $getCurrency = $DLCurrency->getByCode($currentCode);
-        if(!isset($currentCode) || !$getCurrency){
+        if (!isset($currentCode) || !$getCurrency) {
             $this->flash->error("undefined_currency_code");
-            $this->response->redirect($module."/".$controller."/")->send();
+            $this->response->redirect($module . "/" . $controller . "/")->send();
         }
 
         if ($this->request->getPost()) {
@@ -75,7 +105,7 @@ class CurrencyController extends \Backoffice\Controllers\BaseController
                 $getCurrency = $DLCurrency->set($data);
 
                 $this->db->commit();
-                return $this->response->redirect($module.'/'.$controller.'/detail/'.$currentCode)->send();
+                return $this->response->redirect($module . '/' . $controller . '/detail/' . $currentCode)->send();
             } catch (\Exception $e) {
                 $this->db->rollback();
                 $this->flash->error($e->getMessage());
@@ -84,7 +114,7 @@ class CurrencyController extends \Backoffice\Controllers\BaseController
 
         $view->currency = $getCurrency;
 
-        \Phalcon\Tag::setTitle("Edit Currency - ".$this->_website->title);
+        \Phalcon\Tag::setTitle("Edit Currency - " . $this->_website->title);
     }
 
     public function detailAction()
@@ -98,9 +128,9 @@ class CurrencyController extends \Backoffice\Controllers\BaseController
 
         $DLCurrency = new DLCurrency();
         $getCurrency = $DLCurrency->getByCode($currentCode);
-        if(!isset($currentCode) || !$getCurrency){
+        if (!isset($currentCode) || !$getCurrency) {
             $this->flash->error("undefined_currency_code");
-            $this->response->redirect($module."/".$controller."/")->send();
+            $this->response->redirect($module . "/" . $controller . "/")->send();
         }
 
         $module = $this->router->getModuleName();
@@ -129,20 +159,22 @@ class CurrencyController extends \Backoffice\Controllers\BaseController
         $view->module = $module;
         $view->controller = $controller;
 
-        \Phalcon\Tag::setTitle("Edit Currency - ".$this->_website->title);
+        \Phalcon\Tag::setTitle("Edit Currency - " . $this->_website->title);
     }
 
     public function statusAction()
     {
         $view = $this->view;
 
-        $i = 1;
         $getParam = $this->dispatcher->getParam("code");
 
-        $param = explode("|",$getParam);
+        $previousPage = new GlobalVariable();
+
+        $param = explode("|", $getParam);
         $currentCode = $param[0];
         $status = $param[1];
-        if(!isset($currentCode)){
+
+        if (!isset($currentCode)) {
             $this->flash->error("undefined_currency_code");
             $this->response->redirect("/setting/currency")->send();
         }
@@ -160,12 +192,10 @@ class CurrencyController extends \Backoffice\Controllers\BaseController
 
             $this->db->commit();
             $this->flash->success("status_changed");
-            return $this->response->redirect("/setting/currency")->send();
+            $this->response->redirect($previousPage->previousPage())->send();
         } catch (\Exception $e) {
             $this->db->rollback();
             $this->flash->error($e->getMessage());
         }
-
-        \Phalcon\Tag::setTitle("Edit Currency - ".$this->_website->title);
     }
 }

@@ -14,11 +14,6 @@ class ProtectedController extends BaseController
             return $this->response->redirect("/login");
         }
 
-
-
-//        if(!($this->session->has('acl'))){
-//            return $this->response->redirect("/login");
-//        }
     }
 }
 

@@ -1,40 +1,73 @@
 {% block content %}
-<div id="wrapper">
-    <div>
-        <a href="{{router.getRewriteUri()~'/add'}}">Add</a>
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title row">
+                        <div class="row">
+                            <label class="col-xs-12 text-right">
+                                <a href="{{router.getRewriteUri()~'/add'}}" class="btn btn-sm btn-info">Add</a>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="ibox-content row">
+                        <ul class="list-inline header-list text-center">
+                          <li class="col-sm-1 col-xs-1 list-group-item">No</li>
+                          <li class="col-sm-3 col-xs-3 list-group-item">Code</li>
+                          <li class="col-sm-4 col-xs-4 list-group-item">Name</li>
+                          <li class="col-sm-2 col-xs-3 list-group-item">Status</li>
+                          <li class="col-sm-2 col-xs-2 list-group-item">&nbsp;</li>
+                        </ul>
+                        {% set i = 1 %}
+                        {% for subData in page %}
+                        {% if i%2 == 0 %}
+                        {% set class = "content-even" %}
+                        {% else %}
+                        {% set class = "content-odd" %}
+                        {% endif %}
+                        <ul class="list-inline {{class}} text-center">
+                            <li class="col-sm-1 col-xs-1 list-group-item">{{i}}</li>
+                            <li class="col-sm-3 col-xs-3 list-group-item">{{subData.code}}</li>
+                            <li class="col-sm-4 col-xs-4 list-group-item">{{subData.name}}</li>
+                            <li class="col-sm-2 col-xs-3 list-group-item">
+                                <select class="status">
+                                    {% for key, value in status %}
+                                        <option value="{{subData.id~"|"~value}}" {% if subData.status == value %}selected{% endif %}>{{key}}</option>
+                                    {% endfor %}
+                                </select>
+                            </li>
+                            <li class="col-sm-2 col-xs-2 list-group-item">
+                                <a href="{{router.getRewriteUri()~'/detail/'~subData.code|lowercase}}">
+                                    <span class="fa fa-search text-danger"></span>
+                                </a>
+                                |
+                                <a href="{{router.getRewriteUri()~'/edit/'~subData.code|lowercase}}">
+                                    <span class="fa fa-edit text-primary"></span>
+                                </a>
+                            </li>
+                        </ul>
+                        {% set i = i +1 %}
+                        {% endfor %}
+
+                        <div class="row text-center">
+                            <div class="col-xs-12">
+                                <ul class="pagination">
+                                {% set page = pagination %}
+                                {% if page != null %}
+                                {% for i in 1..page %}
+                                  <li>
+                                    <a href="{{url(module~'/'~controller)}}?pages={{i}}" {% if i == pages %}class="pagination-numb"{% endif %}>{{i}}</a>
+                                  </li>
+                                {% endfor %}
+                                {% endif %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <table>
-        <tr bgcolor="#000">
-            <td>ID</td>
-            <td>Type</td>
-            <td>Parent</td>
-            <td>Code</td>
-            <td>Name</td>
-            <td>Status</td>
-            <td></td>
-        </tr>
-        {% set i = 1 %}
-        {% for categoryData in category %}
-        <tr>
-            <td>{{i}}</td>
-            <td>{{categoryData.type|gameType}}</td>
-            <td>{{categoryData.game_parent|gameName}}</td>
-            <td>{{categoryData.code}}</td>
-            <td>{{categoryData.name}}</td>
-            <td>
-                <select class="status">
-                    {% for key, value in status %}
-                        <option value="{{categoryData.id~"|"~value}}" {% if categoryData.status == value %}selected{% endif %}>{{key}}</option>
-                    {% endfor %}
-                </select>
-            </td>
-            <td><a href="{{router.getRewriteUri()~'/detail/'~categoryData.code|lowercase}}">Detail</a></td>
-        </tr>
-        {% set i = i +1 %}
-        {% endfor %}
-    </table>
-</div>
-<a href="/" >homepage</a>
 {% endblock %}
 
 {% block action_js %}
@@ -50,7 +83,7 @@
                     this.value = previouslySelected;
                     return;
                 }
-                location.href = document.URL+'/status/'+jQuery(this).val();
+                location.href = '/{{module}}/{{controller}}/status/'+jQuery(this).val();
             });
         });
     </script>
