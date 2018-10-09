@@ -12,9 +12,9 @@ class General
         return $aclList;
     }
 
-    public function getSubaccountACLParent($user){
+    public function getSubaccountACLParent($user, $subaccount = false){
         $acl = new DLUserAclAccess();
-        $aclList = $acl->getByIdMinSubaccount($user);
+        $aclList = $acl->getByIdParentSubaccount($user, $subaccount);
         return $aclList;
     }
 
@@ -31,6 +31,18 @@ class General
         $aclList = $acl->getByArrayId($array);
 
         return $aclList;
+    }
+
+    public function setSubaccountDefault($acl , $id){
+        foreach ($acl as $aclrow){
+            $status = 0;
+            if($aclrow->getModule() == 'user' ) $status = 1;
+            if($aclrow->getModule() != 'subaccount'){
+                $acl = new DLUserAclAccess();
+                $acl->setAclAccessWithStatus($id , $aclrow , $status);
+            }
+        }
+
     }
 
     public function filterACLlist($aclObject){

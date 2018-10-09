@@ -91,10 +91,10 @@ class SubaccountController extends \Backoffice\Controllers\ProtectedController
                         $user = $DLuser->createSubaccount($data);
                         $generalLibrary = new General();
 //                        $aclObject = $generalLibrary->getACL($this->_user->getId() , $this->_user->getParent() );
-                        $aclObject = $generalLibrary->getSubaccountACLParent($this->_user->getId() , $this->_user->getParent() );
+                        $aclObject = $generalLibrary->getSubaccountACLParent($this->_user->getId());
 
-                        $DLAccess = new DLUserAclAccess();
-                        $access = $DLAccess->setDefaultAclByParent($aclObject , $user->getId());
+                        $access = $generalLibrary->setSubaccountDefault($aclObject , $user->getId());
+                        //TODO :: dont insert subaccount, and module user default = 1
 
 
                         $this->db->commit();
@@ -164,7 +164,7 @@ class SubaccountController extends \Backoffice\Controllers\ProtectedController
 
             } else {
 //                $aclParent = $generalLibrary->getACL($this->_user->getId() , $this->_user->getParent() );
-                $aclParent = $generalLibrary->getSubaccountACLParent($this->_user->getId() , $this->_user->getParent() );
+                $aclParent = $generalLibrary->getSubaccountACLParent($this->_user->getId() , true );
 
                 $aclChild = $generalLibrary->getACL($user->getId() , $user->getParent() );
                 $aclChild = $generalLibrary->filterACLlistwithId($aclChild) ;
@@ -194,9 +194,9 @@ class SubaccountController extends \Backoffice\Controllers\ProtectedController
         if($user->getParent() == $this->_user->getId()){
             $generalLibrary = new General();
 //                $aclParent = $generalLibrary->getACL($this->_user->getId() , $this->_user->getParent() );
-            $aclParent = $generalLibrary->getSubaccountACLParent($this->_user->getId() , $this->_user->getParent() );
+            $aclParent = $generalLibrary->getSubaccountACLParent($this->_user->getId() , true );
 
-            $aclChild = $generalLibrary->getACL($user->getId() , $user->getParent() );
+            $aclChild = $generalLibrary->getACL( $user->getId() );
             $aclChild = $generalLibrary->filterACLlistwithId($aclChild) ;
 
             $view->childuser = $user ;

@@ -16,6 +16,24 @@ class DLUserAclAccess{
         return $acl;
     }
 
+    public function getByIdParentSubaccount($user, $subaccount = false){
+        if($subaccount){
+            $acl = UserAclAccess::query()
+                ->where("user = :user: and module != 'subaccount'  and module != 'user' and status = 1 ")
+                ->bind(array( "user" => $user ))
+                ->orderBy("sidebar_order")
+                ->execute();
+        }else{
+            $acl = UserAclAccess::query()
+                ->where("user = :user: and status = 1 ")
+                ->bind(array( "user" => $user ))
+                ->orderBy("sidebar_order")
+                ->execute();
+        }
+
+        return $acl;
+    }
+
     public function getByIdMinSubaccount($user){
         $acl = UserAclAccess::query()
             ->where("user = :user: and module != 'subaccount'  and module != 'user' and status = 1 ")
@@ -120,6 +138,25 @@ class DLUserAclAccess{
         if(!$aclAccess->save()){
             throw new \Exception($aclAccess->getMessages());
         }
+        return $aclAccess;
+    }
+
+    public function setAclAccessWithStatus($id, $data , $status){
+        $aclAccess = new UserAclAccess();
+        $aclAccess->setUser($id);
+        $aclAccess->setModule($data->getModule());
+        $aclAccess->setController($data->getController());
+        $aclAccess->setAction($data->getAction());
+        $aclAccess->setSidebar($data->getSidebar());
+        $aclAccess->setSidebarName($data->getSidebarName());
+        $aclAccess->setSidebarIcon($data->getSidebarIcon());
+        $aclAccess->setSidebarOrder($data->getSidebarOrder());
+        $aclAccess->setStatus($status);
+
+        if(!$aclAccess->save()){
+            throw new \Exception($aclAccess->getMessages());
+        }
+        return $aclAccess;
     }
 
 }
