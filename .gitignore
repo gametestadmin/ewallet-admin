@@ -1,8 +1,8 @@
 .idea
 app/config/config_app.php
 
-
-/var/*
+error.log
+var/*
 /cache/
 /config/development/
 app/config/config.php

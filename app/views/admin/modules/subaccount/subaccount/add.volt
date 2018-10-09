@@ -23,7 +23,7 @@
                                     <div class="form-group">
                                         <label class="col-xs-3 control-label">{{translate['username']}}</label>
                                         <label class="col-xs-9">
-                                            <input type="text" class="form-control" name="username" placeholder="{{translate['username']}}">
+                                            <input type="text" class="form-control uppercase" name="username" placeholder="{{translate['username']}}">
                                         </label>
                                     </div>
                                     <div class="form-group">

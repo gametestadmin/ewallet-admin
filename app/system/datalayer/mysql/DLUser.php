@@ -4,9 +4,11 @@ namespace System\Datalayer;
 use System\Library\Security\User as SecurityUser ;
 use System\Model\User;
 
-class DLUser{
+class DLUser
+{
 
-    public function createSubaccount($data){
+    public function createSubaccount($data)
+    {
         $user = new User();
         $user->setUsername($data['username']);
         $user->setPassword($data['password']);
@@ -18,28 +20,32 @@ class DLUser{
         $user->setResetPassword(1);
         $user->setResetNickname(1);
 
-        if(!$user->save()){
+        if (!$user->save()) {
             throw new \Exception($user->getMessages());
         }
-        return $user ;
+        return $user;
     }
 
-    public function getByUsername($user){
+    public function getByUsername($user)
+    {
         $user = User::findFirstByUsername($user);
         return $user;
     }
 
-    public function getByNickname($user){
+    public function getByNickname($user)
+    {
         $user = User::findFirstByNickname($user);
         return $user;
     }
 
-    public function getById($user){
+    public function getById($user)
+    {
         $user = User::findFirstById($user);
         return $user;
     }
 
-    public function getChildById($user){
+    public function getChildById($user)
+    {
         $user = User::find(
             array(
                 "conditions" => "parent = :user:",
@@ -51,70 +57,87 @@ class DLUser{
         return $user;
     }
 
-    public function getByParent($parent){
+    public function getSubaccountById($user)
+    {
+        $user = User::find(
+            array(
+                "conditions" => "type = 10 and parent = :user:",
+                "bind" => array(
+                    "user" => $user,
+                )
+            )
+        );
+        return $user;
+    }
+
+
+    public function getByParent($parent)
+    {
         $user = User::findByParent($parent);
 
         return $user;
     }
 
-    public function setUserPassword($user , $password){
+    public function setUserPassword($user, $password)
+    {
         $user->setPassword($password);
         $user->setResetPassword(0);
-        if(!$user->save()){
+        if (!$user->save()) {
             throw new \Exception($user->getMessages());
         }
         return $user->save();
     }
 
-    public function setResetPassword($user , $password){
+    public function setResetPassword($user, $password)
+    {
         $user->setPassword($password);
         $user->setResetPassword(1);
-        if(!$user->save()){
+        if (!$user->save()) {
             throw new \Exception($user->getMessages());
         }
         return $user->save();
 
     }
 
-    public function checkAgent($data, $id = null){
-        if(isset($id)){
-            $agent = User::findFirst(
-                array(
-                    "conditions" => "id != :id: AND username = :code: OR nickname = :code:",
-                    "bind" => array(
-                        "id" => $id,
-                        "code" => $data,
-                    )
-                )
-            );
-        }else {
-            $agent = User::findFirst(
-                array(
-                    "conditions" => "username = :code: OR nickname = :code:",
-                    "bind" => array(
-                        "code" => $data,
-                    )
-                )
-            );
+    public function setNickname($user, $newNickname)
+    {
+        $user->setNickname($newNickname);
+        $user->setResetNickname(0);
+        if (!$user->save()) {
+            throw new \Exception($user->getMessages());
         }
-        return $agent;
+        return $user->save();
     }
 
-    public function filterInputAgent($data){
-
-        if(isset($data["timezone"])) $data['timezone'] = \filter_var(\strip_tags(\addslashes($data['timezone'])), FILTER_SANITIZE_STRING);
-        if(isset($data["code"])) $data['code'] = \implode($data['code']);
-        if(isset($data["code"])) $data['code'] = \filter_var(\strip_tags(\addslashes($data['code'])), FILTER_SANITIZE_STRING);
-        if(isset($data["agent_code"])) $data['agent_code'] = \filter_var(\strip_tags(\addslashes($data['agent_code'])), FILTER_SANITIZE_STRING);
-        if(isset($data["password"])) $data['password'] = \filter_var(\strip_tags(\addslashes($data['password'])), FILTER_SANITIZE_STRING);
-        if(isset($data["nickname"])) $data['nickname'] = \filter_var(\strip_tags(\addslashes($data['nickname'])), FILTER_SANITIZE_STRING);
-
-        return $data;
+    public function setStatus($user, $status)
+    {
+        $user->setStatus($status);
+        if (!$user->save()) {
+            throw new \Exception($user->getMessages());
+        }
+        return $user->save();
     }
 
-    public function filterResetPassword($data){
-        if(isset($data["password"])) $data['password'] = \filter_var(\strip_tags(\addslashes($data['password'])), FILTER_SANITIZE_STRING);
-        if(isset($data["confirm_password"])) $data['confirm_password'] = \filter_var(\strip_tags(\addslashes($data['confirm_password'])), FILTER_SANITIZE_STRING);
+    public function checkNickname($newNickname)
+    {
+        $nickname = User::findFirstByNickname($newNickname);
+        $username = User::findFirstByUsername($newNickname);
+        $check = false;
+        if ($nickname || $username) {
+            $check = true;
+        }
+        return $check;
+    }
+
+
+    public function filterAddAgent($data)
+    {
+
+        if (isset($data["timezone"])) $data['timezone'] = \filter_var(\strip_tags(\addslashes($data['timezone'])), FILTER_SANITIZE_STRING);
+        if (isset($data["code"])) $data['code'] = \implode($data['code']);
+        if (isset($data["code"])) $data['code'] = \filter_var(\strip_tags(\addslashes($data['code'])), FILTER_SANITIZE_STRING);
+        if (isset($data["agent_code"])) $data['agent_code'] = \filter_var(\strip_tags(\addslashes($data['agent_code'])), FILTER_SANITIZE_STRING);
+        if (isset($data["password"])) $data['password'] = \filter_var(\strip_tags(\addslashes($data['password'])), FILTER_SANITIZE_STRING);
 
         return $data;
     }
@@ -124,11 +147,11 @@ class DLUser{
 
         if($this->checkAgent($code)){
             throw new \Exception('username_exist');
-        } elseif($data['code'] == ""){
+        } elseif ($data['code'] == "") {
             throw new \Exception('username_empty');
-        } elseif($data['timezone'] == ""){
+        } elseif ($data['timezone'] == "") {
             throw new \Exception('timezone_empty');
-        } elseif($data['password'] == ""){
+        } elseif ($data['password'] == "") {
             throw new \Exception('password_empty');
         }
 
@@ -158,16 +181,6 @@ class DLUser{
         return true;
     }
 
-    public function checkNickname($newNickname){
-        $nickname = User::findFirstByNickname($newNickname);
-        $username = User::findFirstByUsername($newNickname);
-        $check = false ;
-        if($nickname || $username) {
-            $check = true ;
-        }
-        return $check ;
-    }
-
     public function resetNickname($agentId){
         $agent = $this->getById($agentId);
         $agent->setNickname($agent->getUsername());
@@ -179,21 +192,12 @@ class DLUser{
         return true;
     }
 
-    public function setNickname($user , $newNickname){
-        $user->setNickname($newNickname);
-        $user->setResetNickname(0);
-        if(!$user->save()){
-            throw new \Exception($user->getMessages());
-        }
-        return $user->save();
-    }
-
     public function createAgent($data){
         $code = $data['code'];
-        if(isset($data['agent_code'])){
-            $code = $data['agent_code'].$data['code'];
+        if (isset($data['agent_code'])) {
+            $code = $data['agent_code'] . $data['code'];
         }
-        $type = ($data['agent']->getType() > 0)?$type = $data['agent']->getType() - 1:0 ;
+        $type = ($data['agent']->getType() > 0) ? $type = $data['agent']->getType() - 1 : 0;
 
         $newAgent = new User();
         $securityLibrary = new SecurityUser();
@@ -204,7 +208,7 @@ class DLUser{
             $newAgent->setUsername(strtoupper($code));
             $newAgent->setNickname(strtoupper($code));
         }
-        if(isset($data["password"]))$newAgent->setPassword($password);
+        if (isset($data["password"])) $newAgent->setPassword($password);
         $newAgent->setType($type);
         $newAgent->setParent($data['agent']->getId());
         $newAgent->setCode($code);
@@ -212,7 +216,7 @@ class DLUser{
         $newAgent->setResetPassword(1);
         $newAgent->setParentStatus($data['agent']->getStatus());
 
-        if(!$newAgent->save()){
+        if (!$newAgent->save()) {
             throw new \Exception('agent_create_error');
         }
 
@@ -233,7 +237,7 @@ class DLUser{
         return $agent;
     }
 
-    public function setStatus($id, $status){
+    public function setAgentStatus($id, $status){
         $this->setParentStatus($id, $status);
         $this->setChildStatus($id, $status);
 
@@ -321,4 +325,49 @@ class DLUser{
         }
         return true;
     }
+
+    public function checkAgent($data, $id = null){
+        if(isset($id)){
+            $agent = User::findFirst(
+                array(
+                    "conditions" => "id != :id: AND username = :code: OR nickname = :code:",
+                    "bind" => array(
+                        "id" => $id,
+                        "code" => $data,
+                    )
+                )
+            );
+        }else {
+            $agent = User::findFirst(
+                array(
+                    "conditions" => "username = :code: OR nickname = :code:",
+                    "bind" => array(
+                        "code" => $data,
+                    )
+                )
+            );
+        }
+        return $agent;
+    }
+
+    public function filterInputAgent($data){
+
+        if(isset($data["timezone"])) $data['timezone'] = \filter_var(\strip_tags(\addslashes($data['timezone'])), FILTER_SANITIZE_STRING);
+        if(isset($data["code"])) $data['code'] = \implode($data['code']);
+        if(isset($data["code"])) $data['code'] = \filter_var(\strip_tags(\addslashes($data['code'])), FILTER_SANITIZE_STRING);
+        if(isset($data["agent_code"])) $data['agent_code'] = \filter_var(\strip_tags(\addslashes($data['agent_code'])), FILTER_SANITIZE_STRING);
+        if(isset($data["password"])) $data['password'] = \filter_var(\strip_tags(\addslashes($data['password'])), FILTER_SANITIZE_STRING);
+        if(isset($data["nickname"])) $data['nickname'] = \filter_var(\strip_tags(\addslashes($data['nickname'])), FILTER_SANITIZE_STRING);
+
+        return $data;
+    }
+
+    public function filterResetPassword($data)
+    {
+        if (isset($data["password"])) $data['password'] = \filter_var(\strip_tags(\addslashes($data['password'])), FILTER_SANITIZE_STRING);
+        if (isset($data["confirm_password"])) $data['confirm_password'] = \filter_var(\strip_tags(\addslashes($data['confirm_password'])), FILTER_SANITIZE_STRING);
+
+        return $data;
+    }
+
 }

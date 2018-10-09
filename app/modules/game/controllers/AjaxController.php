@@ -73,6 +73,7 @@ class AjaxController extends \Backoffice\Controllers\ProtectedController
             }
         }
 
-        exit();
+        \Phalcon\Tag::setTitle("Game Category - ".$this->_website->title);
+return true;
     }
 }

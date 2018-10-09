@@ -10,6 +10,10 @@ $messages = array(
     "login_error" => "Login Error",
     "login_success" => "Login Success",
 
+    "username" => "username",
+    "nickname" => "nickname",
+    "password" => "password",
+
     //module name
     "setting" => "Setting",
     "currency" => "Currency",
@@ -32,10 +36,7 @@ $messages = array(
     "agent_list" => "List",
     "agent_add" => "Add",
     //button
-    "check" => "Check Available",
-    "username" => "username",
-    "nickname" => "nickname",
-    "password" => "password",
+    "check" => "Check Available"
 );
 
 return $messages;

@@ -7,10 +7,10 @@
                         <h5>General</h5>
                     </div>
                     <div class="ibox-content row">
-                        <form class="form-horizontal col-sm-12" action="{{router.getRewriteUri()}}" method="post">
+                        <form class="form-horizontal col-xs-12" action="#" method="post">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Provider Game</label>
-                                <label class="col-sm-9">
+                                <label class="col-xs-3 control-label">Provider Game</label>
+                                <label class="col-xs-9">
                                     <select name="provider" class="form-control">
                                         <option value="">-Choose One-</option>
                                     {% for provider in providerGame %}
@@ -20,8 +20,8 @@
                                 </label>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Category Game</label>
-                                <label class="col-sm-7">
+                                <label class="col-xs-3 control-label">Category Game</label>
+                                <label class="col-xs-7">
                                     <select name="category" id="category" class="form-control">
                                         <option value="">-Choose One-</option>
                                         {% for category in categoryGame %}
@@ -29,24 +29,24 @@
                                         {% endfor %}
                                     </select>
                                 </label>
-                                <label class="col-sm-2 text-right">
+                                <label class="col-xs-2 text-right">
                                     <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#exampleModal">
                                         Add New
                                     </button>
                                 </label>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Name</label>
-                                <label class="col-sm-9">
+                                <label class="col-xs-3 control-label">Name</label>
+                                <label class="col-xs-9">
                                     <input type="text" name="main_name" class="form-control" id="main_name" placeholder="Name">
                                 </label>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Code</label>
-                                <label class="col-sm-3">
+                                <label class="col-xs-3 control-label">Code</label>
+                                <label class="col-xs-3">
                                     <input type="text" name="" id="result" class="form-control" placeholder="Code" readonly size="10">
                                 </label>
-                                <label class="col-sm-6">
+                                <label class="col-xs-6">
                                     <input type="text" name="main_code" class="form-control" id="main_code" placeholder="Code">
                                 </label>
                             </div>
@@ -54,7 +54,7 @@
                             <div class="form-group pull-right">
                                 <div class="col-xs-12">
                                     <label>
-                                        <a href="{{url(module~"/"~controller)}}" class="btn btn-sm btn-danger">Back</a>
+                                        <a href="javascript:history.go(-1)" class="btn btn-sm btn-danger">Back</a>
                                     </label>
                                     <label>
                                         <input type="submit" name="submit" class="btn btn-sm btn-primary" value="Add">
@@ -80,15 +80,15 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Category Name</label>
-                        <lable class="col-sm-9">
+                        <label class="col-xs-3 control-label">Category Name</label>
+                        <lable class="col-xs-9">
                             <input type="text" class="form-control" name="category_name" id="name" placeholder="Name">
                             <input type="hidden" name="url" placeholder="Name" value="{{router.getRewriteUri()}}">
                         </label>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Category Code</label>
-                        <lable class="col-sm-9">
+                        <label class="col-xs-3 control-label">Category Code</label>
+                        <lable class="col-xs-9">
                             <input type="text" class="form-control" name="category_code" id="code" placeholder="Code">
                         </label>
                     </div>

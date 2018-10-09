@@ -6,7 +6,6 @@ use \System\Datalayer\DLUser;
 use System\Library\Security\User as SecurityUser ;
 use System\Library\General\Captcha;
 use System\Library\User\General;
-use System\Model\User;
 
 class IndexController extends \Backoffice\Controllers\BaseController
 {
@@ -25,9 +24,7 @@ class IndexController extends \Backoffice\Controllers\BaseController
 //            } else {
 //                $aclObject = $generalLibrary->getACL($this->_user->getId());
 //            }
-//            $sideBar = $generalLibrary->getSidebar($aclObject);
 //            echo "<pre>";
-//            var_dump($sideBar);
 //            var_dump($aclObject);
 //            die;
 
@@ -43,21 +40,18 @@ class IndexController extends \Backoffice\Controllers\BaseController
 
         if ($this->request->getPost()){
             $data = $this->request->getPost();
-            $username = $data['username'];
+            $username = strtoupper($data['username']);
             $password = $data['password'];
 
             $DLuser = new DLUser();
             $user = $DLuser->getByNickname($username);
+
 
             if($user){
                 $securityLibrary = new SecurityUser();
                 $password = $securityLibrary->enc_str($password);
 
                 // TODO :: change password manual
-//                $setpass = User::findFirstByUsername($username);
-//
-//                $setpass->setPassword($password);
-//                $setpass->save();
 //            $test = $DLuser->setUserPassword($user , $password);
 //            var_dump($test);
 
@@ -66,6 +60,7 @@ class IndexController extends \Backoffice\Controllers\BaseController
                 $captchaTime = $checkcaptcha->checkCaptchaTime();
                 $captcha = $checkcaptcha->checkCatpcha($data["captcha"]);
 
+
                 if( $password === $user->getPassword() && $captchaTime && $captcha ){
                     $this->session->set('user', $user);
 
@@ -73,11 +68,8 @@ class IndexController extends \Backoffice\Controllers\BaseController
                     //TODO :: incomplete
                     //set session add acl for the current user
                     $generalLibrary = new General();
-                    if($user->getParent() == 0){
-                        $aclObject = $generalLibrary->getCompanyACL();
-                    } else {
-                        $aclObject = $generalLibrary->getACL($user->getId());
-                    }
+                    $aclObject = $generalLibrary->getACL($user->getId());
+
                     $acl = $generalLibrary->filterACLlist($aclObject);
                     $sideBar = $generalLibrary->getSidebar($aclObject);
 

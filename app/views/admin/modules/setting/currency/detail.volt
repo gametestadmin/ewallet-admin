@@ -9,26 +9,26 @@
                         <div class="ibox-content row">
                             <form class="form-horizontal col-xs-12" action="#" method="post">
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Currency Code</label>
-                                    <label class="col-sm-9">
+                                    <label class="col-xs-3 control-label">Currency Code</label>
+                                    <label class="col-xs-9">
                                         <input type="text" class="form-control" value="{{currency.code}}" readonly>
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Currency Name</label>
-                                    <label class="col-sm-9">
+                                    <label class="col-xs-3 control-label">Currency Name</label>
+                                    <label class="col-xs-9">
                                         <input type="text" name="name" class="form-control" value="{{currency.name}}" readonly>
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Currency Symbol</label>
-                                    <label class="col-sm-9">
+                                    <label class="col-xs-3 control-label">Currency Symbol</label>
+                                    <label class="col-xs-9">
                                         <input type="text" name="symbol" class="form-control" value="{{currency.symbol}}"readonly>
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Status</label>
-                                    <div class="col-sm-9">
+                                    <label class="col-xs-3 control-label">Status</label>
+                                    <div class="col-xs-9">
                                         <div class="input-group">
                                             {% if currency.status == 1 %}
                                                 {% set status = 'Active' %}
@@ -77,4 +77,5 @@
 {% endblock %}
 
 {% block action_js %}
+
 {% endblock %}

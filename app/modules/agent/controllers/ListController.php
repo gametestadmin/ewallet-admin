@@ -127,7 +127,7 @@ class ListController extends \Backoffice\Controllers\ProtectedController
         try {
             $this->db->begin();
 
-            $DLUser->setStatus($id,$status);
+            $DLUser->setAgentStatus($id,$status);
 
             $this->db->commit();
             $this->flash->success("status_changed");

@@ -199,15 +199,6 @@ class BaseController extends Controller
         $this->flash->success($message);
     }
 
-//    //PROTECTED
-//    protected function _setAcl(){
-//
-//        $this->session->set('acl', json_encode(array("asd"=>true)));
-//    }
-
-
-
-
 
 
 //    protected function _setWebsite()
@@ -242,7 +233,4 @@ class BaseController extends Controller
 
 
 }
-
-
-
 

@@ -9,20 +9,20 @@
                         <div class="ibox-content row">
                             <form class="form-horizontal col-xs-12" action="#" method="post">
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Category Name</label>
-                                    <label class="col-sm-9">
+                                    <label class="col-xs-3 control-label">Category Name</label>
+                                    <label class="col-xs-9">
                                         <input type="text" placeholder="Name" class="form-control" value="{{category.name}}" readonly>
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Category Code</label>
-                                    <label class="col-sm-9">
+                                    <label class="col-xs-3 control-label">Category Code</label>
+                                    <label class="col-xs-9">
                                         <input type="text" placeholder="Name" class="form-control" value="{{category.code}}" readonly>
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Status</label>
-                                    <label class="col-sm-9">
+                                    <label class="col-xs-3 control-label">Status</label>
+                                    <label class="col-xs-9">
                                         <select class="status form-control">
                                             {% for key, value in status %}
                                                 <option value="{{category.id~"|"~value}}" {% if category.status == value %}selected{% endif %}>{{key}}</option>

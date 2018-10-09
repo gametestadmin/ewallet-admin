@@ -55,7 +55,7 @@ class UserAclAccess extends \Phalcon\Mvc\Model
 
     /**
      *
-     * @var string
+     * @var integer
      */
     protected $sidebar_order;
 
@@ -301,7 +301,17 @@ class UserAclAccess extends \Phalcon\Mvc\Model
     public function initialize()
     {
         $this->setSource("user_acl_access");
-        $this->belongsTo('user', 'System\Model\User', 'id', ['alias' => 'User']);
+        $this->belongsTo('user', 'System\Datalayer\User', 'id', ['alias' => 'User']);
+    }
+
+    /**
+     * Returns table name mapped in the model.
+     *
+     * @return string
+     */
+    public function getSource()
+    {
+        return 'user_acl_access';
     }
 
     /**
@@ -324,16 +334,6 @@ class UserAclAccess extends \Phalcon\Mvc\Model
     public static function findFirst($parameters = null)
     {
         return parent::findFirst($parameters);
-    }
-
-    /**
-     * Returns table name mapped in the model.
-     *
-     * @return string
-     */
-    public function getSource()
-    {
-        return 'user_acl_access';
     }
 
 }

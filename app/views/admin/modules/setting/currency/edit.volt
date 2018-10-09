@@ -7,22 +7,22 @@
                             <h5>General</h5>
                         </div>
                         <div class="ibox-content row">
-                            <form class="form-horizontal col-sm-12" action="{{router.getRewriteUri()}}" method="post">
+                            <form class="form-horizontal col-xs-12" action="#" method="post">
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Currency Code</label>
-                                    <label class="col-sm-9">
+                                    <label class="col-xs-3 control-label">Currency Code</label>
+                                    <label class="col-xs-9">
                                         <input type="text" class="form-control" value="{{currency.code}}" readonly>
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Currency Name</label>
-                                    <label class="col-sm-9">
+                                    <label class="col-xs-3 control-label">Currency Name</label>
+                                    <label class="col-xs-9">
                                         <input type="text" name="name" class="form-control" value="{{currency.name}}">
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Currency Symbol</label>
-                                    <label class="col-sm-9">
+                                    <label class="col-xs-3 control-label">Currency Symbol</label>
+                                    <label class="col-xs-9">
                                         <input type="text" name="symbol" class="form-control" value="{{currency.symbol}}">
                                     </label>
                                 </div>
@@ -30,7 +30,7 @@
                                 <div class="form-group pull-right">
                                     <div class="col-xs-12">
                                         <label>
-                                            <a href="{{url('javascript:history.go(-1)')}}" class="btn btn-sm btn-danger">Back</a>
+                                            <a href="javascript:history.go(-1)" class="btn btn-sm btn-danger">Back</a>
                                         </label>
                                         <label>
                                             <input type="submit" name="submit" class="btn btn-sm btn-primary" value="Edit">

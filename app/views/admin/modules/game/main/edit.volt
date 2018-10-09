@@ -7,7 +7,7 @@
                             <h5>General</h5>
                         </div>
                         <div class="ibox-content row">
-                            <form class="form-horizontal col-xs-12" action="{{router.getRewriteUri()}}" method="post">
+                            <form class="form-horizontal col-xs-12" action="#" method="post">
                                 <div class="form-group">
                                     <label class="col-xs-3 control-label">Type</label>
                                     <label class="col-xs-9">
