@@ -104,11 +104,15 @@ class General
                     }
 
                     //TODO :: use if action need to have icon
-//                    $actionAcl = array();
-//                    $actionAcl["name"] = $key->getSidebarName();
-//                    $controllerAcl["child"][$key->getAction()] = $actionAcl;
+                    $actionAcl = array();
+                    $actionAcl["name"] = $key->getSidebarName();
+                    $actionAcl["icon"] = $key->getSidebarIcon();
+                    $controllerAcl["child"][$key->getAction()] = $actionAcl;
 
-                    $controllerAcl["child"][$key->getAction()] = $key->getSidebarName();;
+                    //TODO :: use if action only need to have name
+//                    $controllerAcl["child"][$key->getAction()] = $key->getSidebarName();;
+
+
                     $aclList[$key->getModule()]["child"][$key->getController()] = $controllerAcl;
                 }
             }

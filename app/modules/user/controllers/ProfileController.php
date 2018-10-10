@@ -4,16 +4,16 @@ namespace Backoffice\User\Controllers;
 use \System\Datalayer\DLUser;
 use System\Library\Security\Validation ;
 
-class NicknameController extends \Backoffice\Controllers\ProtectedController
+class ProfileController extends \Backoffice\Controllers\ProtectedController
 {
 
-    public function changeAction()
+    public function indexAction()
     {
         $view = $this->view;
         if ($this->request->isPost())
         {
             $data = $this->request->getPost();
-            $data['nickname'] = \filter_var(\strip_tags(\addslashes($data['nickname'])), FILTER_SANITIZE_STRING);
+            $data['nickname'] = \filter_var(\strip_tags(\addslashes(strtoupper($data['nickname']))), FILTER_SANITIZE_STRING);
 
             $validation = new Validation();
             $validation->addCondition("Nickname", $data['nickname'] , "format", "username", 5 , 15  );
@@ -51,6 +51,6 @@ class NicknameController extends \Backoffice\Controllers\ProtectedController
 
         }
         $this->view->parameter = $data ;
-        \Phalcon\Tag::setTitle("Manage Player - ".$this->_website->title);
+        \Phalcon\Tag::setTitle("Profile - ".$this->_website->title);
     }
 }

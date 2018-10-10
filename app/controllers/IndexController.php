@@ -18,11 +18,10 @@ class IndexController extends \Backoffice\Controllers\BaseController
 
             return $this->response->redirect("/login");
         } else {
-            $sidebar = $this->session->get('sidebar');
+            $acl = $this->session->get('sidebar');
 //            echo "<pre>";
-//            var_dump($sidebar);
+//            var_dump($acl);
 //            die;
-
 
 
             \Phalcon\Tag::setTitle($this->_website->title);
@@ -67,6 +66,10 @@ class IndexController extends \Backoffice\Controllers\BaseController
 
                     $acl = $generalLibrary->filterACLlist($aclObject);
                     $sideBar = $generalLibrary->getSidebar($aclObject);
+
+//                    echo "<pre>";
+//                    var_dump($sideBar);
+//                    die;
 
                     $this->session->remove('acl');
                     $this->session->set('acl', $acl);
