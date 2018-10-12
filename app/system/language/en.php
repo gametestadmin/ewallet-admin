@@ -13,6 +13,16 @@ $messages = array(
     "username" => "username",
     "nickname" => "nickname",
     "password" => "password",
+    "change_password" => "change password",
+    "security" => "security",
+    "manage_whitelist_ip" => "manage whitelist ip",
+    "login_ip" => "login ip",
+    "last_login" => "last login",
+    "about_me" => "about me",
+    "old_password" => "old password",
+    "new_password" => "new password",
+    "confirm_new_password" => "confirm new password",
+    "minimum_password" => "minimum password",
 
     //module name
     "setting" => "Setting",

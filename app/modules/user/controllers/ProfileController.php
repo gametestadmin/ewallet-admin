@@ -16,7 +16,7 @@ class ProfileController extends \Backoffice\Controllers\ProtectedController
             $data['nickname'] = \filter_var(\strip_tags(\addslashes(strtoupper($data['nickname']))), FILTER_SANITIZE_STRING);
 
             $validation = new Validation();
-            $validation->addCondition("Nickname", $data['nickname'] , "format", "username", 5 , 15  );
+            $validation->addCondition("Nickname", $data['nickname'] , "format", "username", 6 , 15  );
             $validation->execute();
             if ($validation->_valid == false) {
                 foreach ($validation->_messages as $fieldName => $messages) {
@@ -39,7 +39,7 @@ class ProfileController extends \Backoffice\Controllers\ProtectedController
                         $this->session->set('user', $this->_user);
 
                         $this->successFlash("success_change_nickname");
-                        return $this->response->redirect("/");
+                        return $this->response->redirect("/user/profile/");
                     } else {
                         $this->errorFlash("error_change_nickname");
                     }

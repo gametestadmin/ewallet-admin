@@ -1,133 +1,94 @@
 {% block content %}
-    <div class="wrapper wrapper-content animated fadeInRight">
+<div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
             <div class="col-xs-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title row">
-                        <h5>{{controller|capitalize}} {{module|capitalize}}</h5>
+                        <h5>{{childuser.username}}</h5>
                     </div>
                     <div class="ibox-content row">
-                        <div class="tabs-container">
-                            <ul class="nav nav-tabs">
-                                <li id="head-tab-general" class="tab"><a data-toggle="tab" href="#tab-general"> {{translate['general']}} </a></li>
-                                <li id="head-tab-acl" class="tab"><a data-toggle="tab" href="#tab-acl"> {{translate['acl']}} </a></li>
-                            </ul>
-                            <div class="tab-content padding-0">
-                                <div id="tab-general" class="tab-pane">
-                                    <div class="panel-body">
-                                        <form class="form-horizontal col-xs-12" action="#" method="post">
-                                            <div class="form-group">
-                                                <label class="col-xs-3 control-label"> {{translate['username']}} </label>
-                                                <label class="col-xs-9">
-                                                    <input type="text" placeholder="Type" class="form-control" class="form-control" value="{{childuser.username}}" readonly>
-                                                </label>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-xs-3 control-label"> {{translate['nickname']}} </label>
-                                                <label class="col-xs-9">
-                                                    <input type="text" placeholder="Name" class="form-control" value="{{childuser.nickname}}" readonly>
-                                                </label>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-xs-3 control-label"> {{translate['status']}} </label>
-                                                <label class="col-xs-9">
-                                                <select class="status form-control">
-                                                    {% for key, value in status %}
-                                                        <option value="{{childuser.id~"|"~value}}" {% if childuser.status == value %}selected{% endif %}>{{key}}</option>
-                                                    {% endfor %}
-                                                </select>
-                                                </label>
-                                            </div>
-                                            <div class="form-group"><div class="hr-line-dashed"></div></div>
-
-                                        </form>
-                                    </div>
+                        <div class="panel-body">
+                            <form class="form-horizontal col-xs-12"  method="post">
+                                <b class="text-red"> please rename the below and remove this line </b>
+                                <div class="form-group">
+                                    <div class="col-xs-4"> <b> Module </b> </div>
+                                    <div class="col-xs-4"> <b> Controller </b> </div>
+                                    <div class="col-xs-4"> <b> Action </b> </div>
+                                    <div class="hr-line-dashed"></div>
                                 </div>
-                                <div id="tab-acl" class="tab-pane">
-                                    <div class="panel-body">
-                                        <form class="form-horizontal col-xs-12" action="#tab-acl" method="post">
-                                            {% for key , value in aclParent %}
-                                                {% if aclChild[value.module][value.controller][value.action]['id'] is not defined %}
-                                                    {% set aclID = value.id %}
-                                                    {% set aclname = "aclParent[]" %}
-                                                    {% set aclstatus = 0 %}
-                                                {% else %}
-                                                    {% set aclID = aclChild[value.module][value.controller][value.action]['id'] %}
-                                                    {% set aclname = "aclChild[]" %}
-                                                    {% set aclstatus = aclChild[value.module][value.controller][value.action]['status'] %}
-                                                {% endif %}
-                                                <div class="row">
-                                                    <div class="col-xs-4 {% if value.action != null %} col-xs-push-4 {% elseif value.controller != null and value.action == null  %} col-xs-push-2 {% endif %}">
-                                                        <input type="checkbox" name="{{ aclname }}" value="{{ aclID }}"
-                                                        {% if aclstatus == 1 %} checked="checked" {% endif %}
-                                                        {% if value.action != null %} level="subchild" {% elseif value.controller != null and value.action == null  %} level="child" {% else %} level="parent" {% endif %} >
-                                                        {{value.sidebar_name}}
-                                                    </div>
-                                                </div>
+                                {% for modulename , moduleList in aclParent %}
+                                    <div class="row subaccount-border-bottom level-1-area">
+                                        <div class="col-xs-4 parent">
+                                            <input type="checkbox" data-level="parent" name="acl[]" id="{{modulename}}" disabled hidden {% if aclChild[moduleList['id']] is defined and aclChild[moduleList['id']] == 1 %}  checked="checked" {% endif %} value="{{moduleList['id']}}"   >
+                                            <b>{{moduleList['name']}}</b>
+                                        </div>
+                                        <div class="col-xs-8 level-2-area">
+                                            {% for  controllername , controllerList in moduleList['child'] %}
+                                            {% if controllerList['child']|length > 1 %}
+                                            <div class="row subaccount-border-bottom">
+                                                 <div class="col-xs-6">
+                                                    <input type="checkbox" name="acl[]" data-level="child"  {% if aclChild[controllerList['id']] is defined and aclChild[controllerList['id']] == 1 %}  checked="checked" {% endif %} value="{{controllerList['id']}}"  >
+                                                    <b>{{controllerList['name']}}  </b>
+                                                 </div>
+                                                 <div class="col-xs-6 level-3-area">
+                                            {% endif %}
+                                                {% for actionkey , action in controllerList['child'] %}
+                                                    {% if action != 'index' %}
+                                                        <div class="row subaccount-border-bottom">
+                                                            <div class="col-xs-12">
+                                                                <input type="checkbox"  name="acl[]" data-level="subchild"  {% if aclChild[action['id']] is defined and aclChild[action['id']] == 1 %}  checked="checked" {% endif %} value="{{action['id']}}"  >
+                                                                <b>{{action['name']}}</b>
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% if controllerList['child']|length > 1 %}
+                                                 </div>
+                                            </div>
+                                            {% endif %}
                                             {% endfor %}
-                                            <div class="form-group"><div class="hr-line-dashed"></div></div>
-                                            <div class="form-group pull-right">
-                                                <div class="col-xs-12">
-                                                    <label>
-                                                        <a href="{{url('javascript:history.go(-1)')}}" class="btn btn-sm btn-danger">Back</a>
-                                                    </label>
-                                                    <label>
-                                                        <input type="submit" class="btn btn-sm btn-info" value="Edit">
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </form>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                <div class="form-group"><div class="hr-line-dashed"></div></div>
+                                <div class="form-group pull-right">
+                                    <div class="col-xs-12">
+                                        <label>
+                                            <a href="{{url('javascript:history.go(-1)')}}" class="btn btn-sm btn-danger">Back</a>
+                                        </label>
+                                        <label>
+                                            <input type="submit" class="btn btn-sm btn-info" value="Edit">
+                                        </label>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
 {% endblock %}
 
 {% block action_js %}
-    <script>
-        jQuery(document).ready(function($){
-            var select = $('.status');
-            var previouslySelected;
-            select.focus(function(){
-                previouslySelected = this.value;
-            }).change(function(){
-                var conf = confirm('Are You Sure?');
-                if(!conf){
-                    this.value = previouslySelected;
-                    return;
-                }
-                location.href = '/subaccount/subaccount/status/'+jQuery(this).val();
-            });
-
-            var url = window.location.href;
-            var activeTab = url.substring(url.indexOf("#") + 1);
-
-            if(url.includes("#") == true){
-                $(".tab").removeClass("active");
-                $("#head-" + activeTab).addClass("active");
-
-                $(".tab-pane").removeClass("active");
-                $("#" + activeTab).addClass("active");
-            }else{
-                $("#head-tab-general").addClass("active");
-                $("#tab-general").addClass("active");
-            }
-        });
-    </script>
-
 
     <script>
-        $('input[@type=checkbox][level="child"]').click(function (event) {
+        $('[data-level="child"]').change(function (event) {
             var checked = $(this).is(':checked');
             if (checked) {
-                $(this).closest('td').parent().children('td').first('td').children('input[@type=checkbox][level="parent"]').attr('checked', true);
+                $(this).closest('.level-1-area').find('[data-level="parent"]').attr('checked', true);
             }
         });
+        $('[data-level="subchild"]').change(function (event) {
+            var checked = $(this).is(':checked');
+            if (checked) {
+                $(this).closest('.level-1-area').find('[data-level="parent"]').attr('checked', true);
+                $(this).closest('.level-3-area').parent().find('[data-level="child"]').attr('checked', true);
+            }
+        });
+
     </script>
 
 

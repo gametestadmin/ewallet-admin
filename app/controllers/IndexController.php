@@ -67,10 +67,6 @@ class IndexController extends \Backoffice\Controllers\BaseController
                     $acl = $generalLibrary->filterACLlist($aclObject);
                     $sideBar = $generalLibrary->getSidebar($aclObject);
 
-//                    echo "<pre>";
-//                    var_dump($sideBar);
-//                    die;
-
                     $this->session->remove('acl');
                     $this->session->set('acl', $acl);
                     $this->session->remove('sidebar');

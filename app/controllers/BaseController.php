@@ -6,7 +6,7 @@ defined('APP_PATH') || define('APP_PATH', realpath('.'));
 use System\Language\Language;
 use Phalcon\Mvc\Controller;
 use Phalcon\Translate\Adapter\NativeArray;
-
+use System\Library\Security\General ;
 
 class BaseController extends Controller
 {
@@ -35,7 +35,7 @@ class BaseController extends Controller
         $this->_setLanguage();
         $this->_setNavigation();
         $this->_checkResetPassword();
-        $this->_checkResetNickname();
+//        $this->_checkResetNickname();
         $this->_checkACL();
 //        $this->_language = $this->cookies->get('language')->getValue();
 //        $languageLibrary = new Language();
@@ -66,7 +66,10 @@ class BaseController extends Controller
 
 //        $this->view->frontend = $this->_frontend;
 
+        $security = new General();
+        $this->view->time = date("d-m-Y H:i:s"  ) ;
 
+        $this->view->login_ip = $security->getIP() ;
         $this->view->module = $this->_module = $this->router->getModuleName();
         $this->view->controller = $this->_controller  = $this->router->getControllerName();
         $this->view->action = $this->_action = $this->router->getActionName();
@@ -163,19 +166,17 @@ class BaseController extends Controller
         }
     }
 
-    protected function _checkResetNickname(){
-
-        if( $this->_user ) {
-            if ($this->_user->getResetNickname() == 1) {
-                if (!($this->_module == 'user' && $this->_controller == 'nickname' && $this->_action == 'change')){
-                    $this->errorFlash('please_change_nickname');
-
-//                    return $this->response->redirect("/user/nickname/change");
-                }
-            }
-        }
-
-    }
+//    protected function _checkResetNickname(){
+//        if( $this->_user ) {
+//            if ($this->_user->getResetNickname() == 1) {
+//                if (!($this->_module == 'user' && $this->_controller == 'nickname' && $this->_action == 'change')){
+//                    $this->errorFlash('please_change_nickname');
+//
+////                    return $this->response->redirect("/user/nickname/change");
+//                }
+//            }
+//        }
+//    }
 
 
 

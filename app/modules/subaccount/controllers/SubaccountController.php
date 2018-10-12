@@ -83,8 +83,6 @@ class SubaccountController extends \Backoffice\Controllers\ProtectedController
                     $data['parent'] = $this->_user->getId();
                     $data['timezone'] = $this->_user->getTimezone();
 
-
-                    $previousPage = new GlobalVariable();
                     try {
                         $this->db->begin();
 
@@ -140,23 +138,19 @@ class SubaccountController extends \Backoffice\Controllers\ProtectedController
             if ($this->request->isPost()) {
                 $data = $this->request->getPost();
 
-
                 $DLAccess = new DLUserAclAccess();
                 try {
                     $this->db->begin();
+//
+                    $aclChild = $generalLibrary->getACL( $user->getId() , true );
+                    $DLAccess->setACLSubaccountFalse($aclChild);
 
-                    $acl = $generalLibrary->getACL($user->getId() , $user->getParent() );
-                    $DLAccess->setACLFalseByUser($acl);
-                    if(isset($data['aclParent'])) {
-                        $aclNewInsert = $generalLibrary->getCompanyACLbyArrayId($data['aclParent']);
-                        $DLAccess->setTrueAclByParent($aclNewInsert , $user->getId() );
-                    }
-                    $aclInsert = $generalLibrary->getAccessACLbyArrayId($data['aclChild']);
-                    $DLAccess->setAClTrueByList($aclInsert);
+                    if(!is_null($data['acl']))
+                    $result = $generalLibrary->editSubaccountACL($data['acl'] , $user->getParent() , $user->getId()) ;
 
                     $this->db->commit();
                     $this->flash->success("subaccount_edit_acl_success");
-                    $this->response->redirect($this->_module."/".$this->_controller."/detail/".$user->getId()."#tab-acl");
+                    $this->response->redirect($this->_module."/".$this->_controller."/detail/".$user->getId());
                 } catch (\Exception $e) {
                     $this->db->rollback();
                     $this->flash->error($e->getMessage());
@@ -165,9 +159,10 @@ class SubaccountController extends \Backoffice\Controllers\ProtectedController
             } else {
 //                $aclParent = $generalLibrary->getACL($this->_user->getId() , $this->_user->getParent() );
                 $aclParent = $generalLibrary->getSubaccountACLParent($this->_user->getId() , true );
+                $aclParent = $generalLibrary->filterACLlistSubaccount($aclParent);
 
-                $aclChild = $generalLibrary->getACL($user->getId() , $user->getParent() );
-                $aclChild = $generalLibrary->filterACLlistwithId($aclChild) ;
+                $aclChild = $generalLibrary->getACL( $user->getId() );
+                $aclChild = $generalLibrary->filterACLsubaccountParentId($aclChild) ;
 
                 $view->childuser = $user ;
                 $view->aclParent = $aclParent ;
@@ -195,9 +190,10 @@ class SubaccountController extends \Backoffice\Controllers\ProtectedController
             $generalLibrary = new General();
 //                $aclParent = $generalLibrary->getACL($this->_user->getId() , $this->_user->getParent() );
             $aclParent = $generalLibrary->getSubaccountACLParent($this->_user->getId() , true );
+            $aclParent = $generalLibrary->filterACLlistSubaccount($aclParent);
 
             $aclChild = $generalLibrary->getACL( $user->getId() );
-            $aclChild = $generalLibrary->filterACLlistwithId($aclChild) ;
+            $aclChild = $generalLibrary->filterACLsubaccountParentId($aclChild) ;
 
             $view->childuser = $user ;
             $view->aclParent = $aclParent ;

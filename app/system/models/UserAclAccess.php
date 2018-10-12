@@ -19,6 +19,12 @@ class UserAclAccess extends \Phalcon\Mvc\Model
 
     /**
      *
+     * @var integer
+     */
+    protected $parent;
+
+    /**
+     *
      * @var string
      */
     protected $module;
@@ -87,6 +93,19 @@ class UserAclAccess extends \Phalcon\Mvc\Model
     public function setUser($user)
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Method to set the value of field parent
+     *
+     * @param integer $parent
+     * @return $this
+     */
+    public function setParent($parent)
+    {
+        $this->parent = $parent;
 
         return $this;
     }
@@ -172,7 +191,7 @@ class UserAclAccess extends \Phalcon\Mvc\Model
     /**
      * Method to set the value of field sidebar_order
      *
-     * @param string $sidebar_order
+     * @param integer $sidebar_order
      * @return $this
      */
     public function setSidebarOrder($sidebar_order)
@@ -213,6 +232,16 @@ class UserAclAccess extends \Phalcon\Mvc\Model
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Returns the value of field parent
+     *
+     * @return integer
+     */
+    public function getParent()
+    {
+        return $this->parent;
     }
 
     /**
@@ -278,7 +307,7 @@ class UserAclAccess extends \Phalcon\Mvc\Model
     /**
      * Returns the value of field sidebar_order
      *
-     * @return string
+     * @return integer
      */
     public function getSidebarOrder()
     {
@@ -301,7 +330,7 @@ class UserAclAccess extends \Phalcon\Mvc\Model
     public function initialize()
     {
         $this->setSource("user_acl_access");
-        $this->belongsTo('user', 'System\Datalayer\User', 'id', ['alias' => 'User']);
+        $this->belongsTo('user', 'System\Model\User', 'id', ['alias' => 'User']);
     }
 
     /**
