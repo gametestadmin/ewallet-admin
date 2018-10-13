@@ -56,23 +56,44 @@ class IndexController extends \Backoffice\Controllers\BaseController
 
 
                 if( $password === $user->getPassword() && $captchaTime && $captcha ){
-                    $this->session->set('user', $user);
+                    //TODO :: if Type == 10, subaccount, $user fill with parent, session sidebar and acl filled with its own acl
+                    if($user->getType() == 10) {
+                        //TODO :: save and check to redis
+                        //TODO :: incomplete
+                        //set session add acl for the current user
+                        $generalLibrary = new General();
+                        $aclObject = $generalLibrary->getACL($user->getId());
 
-                    //TODO :: save and check to redis
-                    //TODO :: incomplete
-                    //set session add acl for the current user
-                    $generalLibrary = new General();
-                    $aclObject = $generalLibrary->getACL($user->getId());
+                        $acl = $generalLibrary->filterACLlist($aclObject);
+                        $sideBar = $generalLibrary->getSidebar($aclObject);
 
-                    $acl = $generalLibrary->filterACLlist($aclObject);
-                    $sideBar = $generalLibrary->getSidebar($aclObject);
+                        $this->session->remove('acl');
+                        $this->session->set('acl', $acl);
+                        $this->session->remove('sidebar');
+                        $this->session->set('sidebar', $sideBar);
 
-                    $this->session->remove('acl');
-                    $this->session->set('acl', $acl);
-                    $this->session->remove('sidebar');
-                    $this->session->set('sidebar', $sideBar);
-                    //TODO :: save and check to redis
+                        $this->session->set('child', $user);
+                        $user = $DLuser->getById($user->getParent());
+                        $this->session->set('user', $user);
+                    } else {
+                        $this->session->set('user', $user);
+                        $this->session->set('child', $user);
 
+                        //TODO :: save and check to redis
+                        //TODO :: incomplete
+                        //set session add acl for the current user
+                        $generalLibrary = new General();
+                        $aclObject = $generalLibrary->getACL($user->getId());
+
+                        $acl = $generalLibrary->filterACLlist($aclObject);
+                        $sideBar = $generalLibrary->getSidebar($aclObject);
+
+                        $this->session->remove('acl');
+                        $this->session->set('acl', $acl);
+                        $this->session->remove('sidebar');
+                        $this->session->set('sidebar', $sideBar);
+                        //TODO :: save and check to redis
+                    }
                     $this->successFlash($view->translate['login_success']);
                     return $this->response->redirect("/");
                 } else {

@@ -75,18 +75,24 @@
 {% block action_js %}
 
     <script>
+
         $('[data-level="child"]').change(function (event) {
             var checked = $(this).is(':checked');
             if (checked) {
                 $(this).closest('.level-1-area').find('[data-level="parent"]').attr('checked', true);
             }
         });
+
         $('[data-level="subchild"]').change(function (event) {
             var checked = $(this).is(':checked');
             if (checked) {
                 $(this).closest('.level-1-area').find('[data-level="parent"]').attr('checked', true);
                 $(this).closest('.level-3-area').parent().find('[data-level="child"]').attr('checked', true);
             }
+        });
+
+        $("form").submit(function() {
+            $("input").removeAttr("disabled");
         });
 
     </script>

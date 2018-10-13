@@ -12,6 +12,7 @@ class BaseController extends Controller
 {
     protected $_website = false;
     protected $_user = null;
+    protected $_child = null;
     protected $_environment = null;
     protected $_module = null;
     protected $_controller = null;
@@ -122,8 +123,10 @@ class BaseController extends Controller
         //Set user here
         if($this->session->has('user')){
             $this->_user = $this->session->get('user');
+            $this->_child = $this->session->get('child');
         }
         $this->view->user = $this->_user;
+        $this->view->child = $this->_child;
     }
 
     protected function _setNavigation()

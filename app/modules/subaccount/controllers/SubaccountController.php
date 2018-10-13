@@ -145,6 +145,10 @@ class SubaccountController extends \Backoffice\Controllers\ProtectedController
                     $aclChild = $generalLibrary->getACL( $user->getId() , true );
                     $DLAccess->setACLSubaccountFalse($aclChild);
 
+//                    echo "<pre>";
+//                    var_dump($data);
+//                    die;
+
                     if(!is_null($data['acl']))
                     $result = $generalLibrary->editSubaccountACL($data['acl'] , $user->getParent() , $user->getId()) ;
 
