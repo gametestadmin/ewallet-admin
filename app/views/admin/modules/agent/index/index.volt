@@ -6,7 +6,7 @@
                     <div class="ibox-title row">
                         <div class="row">
                             <label class="col-xs-12 text-right">
-                                <a href="{{url(module~'/add/')}}" class="btn btn-sm btn-info">Add</a>
+                                <a href="{{url(module~'/add')}}" class="btn btn-sm btn-info">Add</a>
                             </label>
                         </div>
                     </div>

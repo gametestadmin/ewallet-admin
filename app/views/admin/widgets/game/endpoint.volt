@@ -12,7 +12,7 @@
           <li class="col-xs-4 list-group-item">Auth</li>
           <li class="col-xs-1 list-group-item">&nbsp;</li>
         </ul>
-        <div style="height:300px; overflow:auto;">
+        <div style="height:200px; overflow:auto;">
         {% if page is not null %}
             {% set i = 1 %}
             {% for providerGameEndpointData in page %}

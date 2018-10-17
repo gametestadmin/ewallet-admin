@@ -54,6 +54,9 @@ class PasswordController extends \Backoffice\Controllers\ProtectedController
                 $this->flash->error($e->getMessage());
             }
         }
+
+        $view->agent = $agent;
+
         \Phalcon\Tag::setTitle("Reset Agent Password- ".$this->_website->title);
     }
 }

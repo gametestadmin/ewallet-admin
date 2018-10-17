@@ -15,6 +15,7 @@ class EditController extends \Backoffice\Controllers\ProtectedController
         $DLUser = new DLUser();
         $globalVariable = new GlobalVariable();
 
+        $parent = $this->_user;
         $agent = $DLUser->getById($userId);
         $gmt = $globalVariable->getGmt();
 
@@ -23,13 +24,25 @@ class EditController extends \Backoffice\Controllers\ProtectedController
             return $this->response->redirect("/".$this->_module."/".$this->_controller)->send();
         }
 
+        $parentUsername = \substr($agent->getUsername(), 0, \strlen($parent->getUsername()));
+
+        if($parent->getId() != $agent->getParent()){
+            $this->errorFlash("cannot_access");
+            return $this->response->redirect("/agent/list")->send();
+        }
+
+        if(($parent->getType() <> 0 && $parent->getType() <> 9) && $parent->getUsername() <> $parentUsername) {
+            $this->errorFlash("cannot_access");
+            return $this->response->redirect("/agent/list")->send();
+        }
+
         if ($this->request->getPost()) {
             try {
                 $this->db->begin();
                 $data = $this->request->getPost();
 
-                $data['agent'] = $this->_user;
                 $data['id'] = $userId;
+                $data['agent'] = $this->_user;
 
                 $DLUser = new DLUser();
                 $filterData = $DLUser->filterInputAgent($data);

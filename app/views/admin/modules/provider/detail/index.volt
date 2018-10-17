@@ -4,42 +4,46 @@
                 <div class="col-xs-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title row">
-                            <h5>General</h5>
+                            <h5>[{{provider.name}}] Detail</h5>
                         </div>
                         <div class="ibox-content row">
                             <form class="form-horizontal col-xs-12" action="#" method="post">
                                 <div class="form-group">
-                                    <label class="col-xs-3 control-label">Type</label>
+                                    <label class="col-xs-3 control-label">Timezone</label>
                                     <label class="col-xs-9">
-                                        <input type="text" placeholder="Game Type" class="form-control" value="{{game.type|gameType}}" readonly>
+                                        {% set gmtDisplay = provider.timezone %}
+                                        {% if provider.timezone == 0%}
+                                        {% set gmtDisplay = '' %}
+                                        {% elseif provider.timezone > 0%}
+                                        {% set gmtDisplay = '+'~provider.timezone %}
+                                        {% endif %}
+                                        <input type="text" placeholder="Code" class="form-control" value="GMT {{gmtDisplay}}" readonly>
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-xs-3 control-label">Game Category</label>
+                                    <label class="col-xs-3 control-label">Name</label>
                                     <label class="col-xs-9">
-                                        <input type="text" placeholder="Game Category" class="form-control" value="{{game.game_parent|gameName}}" readonly>
+                                        <input type="text" placeholder="Name" class="form-control" value="{{provider.name}}" readonly>
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-xs-3 control-label">Game Code</label>
+                                    <label class="col-xs-3 control-label">Status</label>
                                     <label class="col-xs-9">
-                                        <input type="text" placeholder="Name" class="form-control" value="{{game.code}}" readonly>
-                                    </label>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-xs-3 control-label">Game Name</label>
-                                    <label class="col-xs-9">
-                                        <input type="text" name="main_name" placeholder="Name" class="form-control" value="{{game.name}}">
+                                        <select class="status form-control">
+                                            {% for key, value in status %}
+                                                <option value="{{provider.id~"|"~value}}" {% if provider.status == value %}selected{% endif %}>{{key}}</option>
+                                            {% endfor %}
+                                        </select>
                                     </label>
                                 </div>
                                 <div class="form-group"><div class="hr-line-dashed"></div></div>
                                 <div class="form-group pull-right">
                                     <div class="col-xs-12">
                                         <label>
-                                            <a href="{{url('javascript:history.go(-1)')}}" class="btn btn-sm btn-danger">Back</a>
+                                            <a href="{{url('/'~module~'/list')}}" class="btn btn-sm btn-danger">Back</a>
                                         </label>
                                         <label>
-                                            <input type="submit" class="btn btn-sm btn-info" value="Edit">
+                                            <a href="{{url('/'~module~'/edit/'~provider.id)}}" class="btn btn-sm btn-info">Edit</a>
                                         </label>
                                     </div>
                                 </div>
@@ -64,7 +68,7 @@
                     this.value = previouslySelected;
                     return;
                 }
-                location.href = '/game/category/status/'+jQuery(this).val();
+                location.href = '/{{module}}/status/'+jQuery(this).val();
             });
         });
     </script>

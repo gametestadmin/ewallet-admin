@@ -22,14 +22,20 @@ class GlobalVariable
     public static $providerGameEndpointType = array(
         'Login' => 1,
         'Register' => 2,
-        'Transfer In' => 3,
-        'Transfer Out' => 4,
-        'Transfer History' => 5,
-        'User Balance' => 6,
-        'Game Record Transfer' => 7,
-        'Game Record Seamless' => 8,
-        'Game Record Daily Transfer' => 9,
-        'Game Record Daily Seamless' => 10,
+        'User Information' => 3,
+        'User Balance' => 4,
+        '(Transfer) Transaction In' => 5,
+        '(Transfer) Transaction Out' => 6,
+        '(Transfer) Transaction Status' => 7,
+        '(Transfer) Transaction History' => 8,
+        '(Transfer) Transaction Daily' => 9,
+        '(Transfer) Game Record' => 10,
+        '(Seamless) Transaction Bet' => 11,
+        '(Seamless) Transaction History' => 12,
+        '(Seamless) Transaction Daily' => 13,
+        '(Seamless) Game Record' => 14,
+        'Statement Daily' => 15,
+        'Statement Detail' => 16,
     );
 
     public static $agentType = array(

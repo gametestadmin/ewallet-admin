@@ -119,9 +119,25 @@ class ListController extends \Backoffice\Controllers\ProtectedController
 
         $DLUser = new DLUser();
         $user = $DLUser->getById($id);
+
         if(!isset($currentId) || !$user){
             $this->flash->error("undefined_user");
             $this->response->redirect($module."/".$controller."/")->send();
+        }
+
+        $parent = $this->_user;
+        $agent = $DLUser->getById($this->_user->getId());
+
+        $parentUsername = \substr($agent->getUsername(), 0, \strlen($parent->getUsername()));
+
+        if($parent->getId() != $user->getParent()){
+            $this->errorFlash("cannot_access");
+            return $this->response->redirect("/agent/list")->send();
+        }
+
+        if(($parent->getType() <> 0 && $parent->getType() <> 9) && $parent->getUsername() <> $parentUsername) {
+            $this->errorFlash("cannot_access");
+            return $this->response->redirect("/agent/list")->send();
         }
 
         try {

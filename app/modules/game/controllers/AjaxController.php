@@ -23,9 +23,13 @@ class AjaxController extends \Backoffice\Controllers\ProtectedController
                 $category = $DLGame->getByCode($data['code'], $this->_categoryType);
                 $main = $DLGame->getByGameParent($category->getId());
 
-                foreach ($main as $key => $value){
-                    $html = "<option value='".$value->getCode()."'>".$value->getName()."</option>";
-                    echo $html;
+                if(count($main) == 0){
+                    return false;
+                }else {
+                    foreach ($main as $key => $value) {
+                        $html = "<option value='" . $value->getCode() . "'>" . $value->getName() . "</option>";
+                        return $html;
+                    }
                 }
             }elseif(isset($data['mainCode'])){
                 $DLGame = new DLGame();
@@ -34,7 +38,7 @@ class AjaxController extends \Backoffice\Controllers\ProtectedController
                 $category = $DLGame->getByCode($data['mainCode'], $this->_mainType);
                 $provider = $DLProvider->getById($category->getProvider());
 
-                echo $provider->getId()."|".$provider->getName();
+                return $provider->getId()."|".$provider->getName();
 
             }elseif(isset($action)){
                 if($action == "sub"){
@@ -48,7 +52,7 @@ class AjaxController extends \Backoffice\Controllers\ProtectedController
                         $create = $DLGame->createMain($filterData);
 
                         $this->db->commit();
-                        echo $create->getCode()."|".$create->getName();
+                        return $create->getCode()."|".$create->getName();
                     } catch (\Exception $e) {
                         $this->db->rollback();
                         var_dump($e->getMessage());
@@ -65,15 +69,15 @@ class AjaxController extends \Backoffice\Controllers\ProtectedController
                     $create = $DLGame->createCategory($filterData);
 
                     $this->db->commit();
-                    echo $create->getCode()."|".$create->getName();
+                    return $create->getCode()."|".$create->getName();
                 } catch (\Exception $e) {
                     $this->db->rollback();
-                    echo "error";
+                    return "error";
                 }
             }
         }
 
         \Phalcon\Tag::setTitle("Game Category - ".$this->_website->title);
-return true;
+//return true;
     }
 }

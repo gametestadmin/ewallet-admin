@@ -13,41 +13,69 @@ class DLUserCurrency {
     }
 
     public function getAllByUser($user){
-        $userCurrency = UserCurrency::findByUser($user);
+        $userCurrency = UserCurrency::find(
+            array(
+                "conditions" => "user = :user: AND status = 1",
+                "bind" => array(
+                    "user" => $user,
+                )
+            )
+        );
 
         return $userCurrency;
     }
 
-    public function getAllByUserAndParent($user,$agent){
-        $agentCurrency = UserCurrency::find(
+    public function getAllByParent($user){
+        $userCurrency = UserCurrency::find(
             array(
-                "conditions" => "user = :agent:",
+                "conditions" => "user = :user: AND status = 1",
                 "bind" => array(
-                    "agent" => $agent
+                    "user" => $user,
                 )
             )
         );
-//        $userCurrency = array();
-//        foreach ($agentCurrency as $key => $value){
-            $userCurrency = UserCurrency::find(
-                array(
-                    "conditions" => "user = :user:",
-                    "bind" => array(
-                        "user" => $user,
-                    )
-                )
-            );
-//        }
-//        echo "<pre>";
-//        foreach ($userCurrency as $key => $value){
-//            var_dump($userCurrency);
-//        }
-//        die;
-//        $agentCurrency = (object)(array)$agentCurrency;
-//        $userCurrency = (object)(array)$userCurrency;
-//        $currency = array_diff($agentCurrency,$userCurrency);
 
         return $userCurrency;
+    }
+
+    public function getByUser($user){
+        $userCurrency = UserCurrency::find(
+            array(
+                "conditions" => "user = :user: AND status = 1",
+                "bind" => array(
+                    "user" => $user,
+                )
+            )
+        );
+
+        return $userCurrency;
+    }
+
+    public function getAllByAgent($agent){
+//        $agentCurrency = UserCurrency::findByUser($agent);
+//        $userCurrency = array();
+//        foreach ($agentCurrency as $key) {
+//            $userCurrency = UserCurrency::find(
+//                array(
+//                    "conditions" => "user = :user: AND user != :agent: AND currency != :currency:",
+//                    "bind" => array(
+//                        "user" => $user,
+//                        "agent" => $agent,
+//                        "currency" => $key->getCurrency(),
+//                    )
+//                )
+//            );
+//        }
+        $agentCurrency = UserCurrency::find(
+            array(
+                "conditions" => "user = :user:",
+                "bind" => array(
+                    "user" => $agent,
+                )
+            )
+        );
+
+        return $agentCurrency;
     }
 
     public function getById($id){
@@ -56,7 +84,35 @@ class DLUserCurrency {
         return $userCurrency;
     }
 
-    public function getByIdAndDefault($user){
+    public function getUserCurrency($user,$currency){
+        $currency = UserCurrency::findFirst(
+            array(
+                "conditions" => "user = :user: AND currency = :currency:",
+                "bind" => array(
+                    "user" => $user,
+                    "currency" => $currency
+                )
+            )
+        );
+
+        return $currency;
+    }
+
+    public function getByUserAndId($user,$id){
+        $userCurrency = UserCurrency::findFirst(
+            array(
+                "conditions" => "id = :id: AND user = :user:",
+                "bind" => array(
+                    "user" => $user,
+                    "id" => $id,
+                )
+            )
+        );
+
+        return $userCurrency;
+    }
+
+    public function getByUserAndDefault($user){
         $userCurrency = UserCurrency::findFirst(
             array(
                 "conditions" => "user = :user: AND default = 1",
@@ -84,7 +140,7 @@ class DLUserCurrency {
     public function checkCurrentUserCurrency($user,$currency){
         $userCurrency = UserCurrency::findFirst(
             array(
-                "conditions" => "user = :user_id: AND currency = :currency_id:",
+                "conditions" => "user = :user_id: AND currency = :currency_id: AND status = 1",
                 "bind" => array(
                     "user_id" => $user,
                     "currency_id" => $currency,
@@ -114,17 +170,23 @@ class DLUserCurrency {
     }
 
     public function create($user,$currency){
-        $newUserCurrency = new UserCurrency();
+        $userCurrency = $this->getUserCurrency($user,$currency);
 
-        if(isset($user))$newUserCurrency->setUser($user);
-        if(isset($currency))$newUserCurrency->setCurrency($currency);
-        if(count($this->getAllByUser($user)) == 0){
-            $newUserCurrency->setDefault(1);
+        if($userCurrency){
+            $userCurrency->setStatus(1);
         }else {
-            $newUserCurrency->setDefault(0);
+            $userCurrency = new UserCurrency();
+
+            if (isset($user)) $userCurrency->setUser($user);
+            if (isset($currency)) $userCurrency->setCurrency($currency);
+            if (count($this->getAllByUser($user)) == 0) {
+                $userCurrency->setDefault(1);
+            } else {
+                $userCurrency->setDefault(0);
+            }
         }
 
-        if(!$newUserCurrency->save()){
+        if(!$userCurrency->save()){
             throw new \Exception('error_add_user_currency');
         }
 
@@ -135,13 +197,15 @@ class DLUserCurrency {
         $userId = $data["agent_id"];
         $userCurrencyId = $data["currency_id"];
 
-        $currentUserCurrency = $this->getByIdAndDefault($userId);
+        $userCurrency = $this->getByUserAndId($userId,$userCurrencyId);
+        if($userCurrency->getStatus() == 0){
+            throw new \Exception('error_set_default_currency');
+        }
 
+        $currentUserCurrency = $this->getByUserAndDefault($userId,$userCurrencyId);
         $currentUserCurrency->setDefault(0);
 
         if($currentUserCurrency->save()){
-            $userCurrency = $this->getById($userCurrencyId);
-
             $userCurrency->setDefault(1);
 
             if(!$userCurrency->save()){
@@ -151,6 +215,23 @@ class DLUserCurrency {
             throw new \Exception('error_set_currency');
         }
         return $userCurrency;
+    }
+
+    public function delete($data){
+        $userId = $data["agent_id"];
+        $userCurrencyId = $data["currency_id"];
+
+        $currentUserCurrency = $this->getByUserAndId($userId,$userCurrencyId);
+
+        if($currentUserCurrency->getDefault() == 1){
+            throw new \Exception('error_remove_currency');
+        }
+
+        $currentUserCurrency->setStatus(0);
+        if(!$currentUserCurrency->save()){
+            throw new \Exception('error_remove_currency');
+        }
+        return $currentUserCurrency;
     }
 
 

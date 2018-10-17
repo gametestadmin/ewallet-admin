@@ -273,38 +273,77 @@ class DLGame{
         return $mainGame;
     }
 
+//    public function setStatus($id, $status){
+//        $this->setParentStatus($id, $status);
+//        $this->setChildStatus($id, $status);
+//        return true;
+//    }
+//
+//    protected function setParentStatus($id, $status){
+//        $game = Game::findFirstById($id);
+//        $game->setStatus($status);
+//        $game->save();
+//
+//        return true;
+//    }
+//    protected function setChildStatus($id, $status){
+//        $game = Game::findFirstById($id);
+//
+//        if($game) {
+//            $gameParent = Game::findByGameParent($game->getId());
+//
+//            foreach ($gameParent as $key => $value) {
+//                if($status == 1 && ($value->getParentStatus() == 2 || $value->getParentStatus() == 0)){
+//                    $childStatus = 1;
+//                }elseif($status == 2 && ($value->getParentStatus() == 2 || $value->getParentStatus() == 1)){
+//                    $childStatus = 2;
+//                }else{
+//                    $childStatus = 0;
+//                }
+//                $value->setParentStatus($childStatus);
+//                $value->save();
+//
+//                self::setChildStatus($value->getId(), $childStatus);
+//            }
+//        }
+//        return true;
+//    }
+
+
     public function setStatus($id, $status){
-        $this->setParentStatus($id, $status);
-        $this->setChildStatus($id, $status);
+        $this->setGameStatus($id, $status);
+
         return true;
     }
 
-    protected function setParentStatus($id, $status){
-        $game = Game::findFirstById($id);
+    protected function setGameStatus($id, $status){
+        $game = $this->getById($id);
         $game->setStatus($status);
         $game->save();
 
+        $this->setChildParentStatus($id, $status, $game->getParentStatus());
+
         return true;
     }
-    protected function setChildStatus($id, $status){
-        $game = Game::findFirstById($id);
 
-        if($game) {
-            $gameParent = Game::findByGameParent($game->getId());
+    protected function setChildParentStatus($parentId, $parentStatus, $grandParentStatus){
+        $childParentStatus = 1;
+        if($grandParentStatus == 0 || $parentStatus == 0){
+            $childParentStatus = 0;
+        }else if($grandParentStatus == 2 || $parentStatus == 2){
+            $childParentStatus = 2;
+        }
 
-            foreach ($gameParent as $key => $value) {
-                if($status == 1 && ($value->getParentStatus() == 2 || $value->getParentStatus() == 0)){
-                    $childStatus = 1;
-                }elseif($status == 2 && ($value->getParentStatus() == 2 || $value->getParentStatus() == 1)){
-                    $childStatus = 2;
-                }else{
-                    $childStatus = 0;
-                }
-                $value->setParentStatus($childStatus);
-                $value->save();
+        //get childs
+        //$childs = User::findByParent($parentId);
+        $childs = $this->getByGameParent($parentId);
 
-                self::setChildStatus($value->getId(), $childStatus);
-            }
+        foreach ($childs as $child){
+            $child->setParentStatus($childParentStatus);
+            $child->save();
+
+            //change all childs parent status
+            $this->setChildParentStatus($child->getId(), $child->getStatus(), $childParentStatus);
         }
         return true;
     }

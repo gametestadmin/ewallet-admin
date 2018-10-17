@@ -13,7 +13,7 @@ class GameCurrencyFormAddWidget extends BaseWidget
         $DLCurrency = new DLCurrency();
         $currency = $DLCurrency->getAllByStatus(1);
 
-        return $this->setView('currency/game', [
+        return $this->setView('currency/game/add', [
             'currency' => $currency
         ]);
     }

@@ -5,7 +5,7 @@
             <form class="form-horizontal" action="{{url('game/endpoint/edit')}}" method="post" id="form">
             <div class="modal-header">
                 <label class="col-xs-6">
-                    <h3 class="modal-title" id="modalLabel">Endpoint Edit</h3>
+                    <h3 class="modal-title" id="form-edit-endpoint-label">API Endpoint Edit</h3>
                 </label>
                 <label class="col-xs-6">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">

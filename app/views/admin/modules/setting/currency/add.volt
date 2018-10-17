@@ -4,10 +4,10 @@
                 <div class="col-xs-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title row">
-                            <h5>General</h5>
+                            <h5>Add Currency</h5>
                         </div>
                         <div class="ibox-content row">
-                            <form method="post" action="{{url('/content-editor/add')}}" class="form-horizontal col-xs-12">
+                            <form method="post" action="{{url('/setting/currency/add')}}" class="form-horizontal col-xs-12">
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">Currency Code</label>
                                     <div class="col-md-9">
@@ -55,5 +55,5 @@
             }
             this.value = this.value.toUpperCase();
         });
-    </script>s
+    </script>
 {% endblock %}

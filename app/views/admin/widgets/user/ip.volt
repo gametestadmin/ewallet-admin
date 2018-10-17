@@ -13,7 +13,7 @@
         <li class="col-xs-2 list-group-item">&nbsp;</li>
       {% endif %}
     </ul>
-    <div style="height:300px; overflow:auto;">
+    <div style="height:200px; overflow:auto;">
     {% if user_ip is not null %}
         {% set i = 1 %}
         {% for userWhitelistIpData in user_ip %}
@@ -28,7 +28,7 @@
                 {% if loginId == agentParent %}
                     <li class="col-xs-2 list-group-item">
                     <!--<span class="ip-edit fa fa-edit text-primary" data-id="{{userWhitelistIpData.id}}" data-toggle="modal" data-target="#form-edit-user-ip"></span>-->
-                        <a href="{{url(module~'/whitelist/delete/'~userWhitelistIpData.id)}}" class="delete"><span class="ip-edit fa fa-ban text-danger" title="delete"></span></a>
+                        <a href="{{url(module~'/whitelist/delete/'~agent.id~'?delete='~userWhitelistIpData.id)}}" class="delete"><span class="ip-edit fa fa-ban text-danger" title="delete"></span></a>
                     </li>
                 {% endif %}
             </ul>

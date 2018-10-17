@@ -2,7 +2,6 @@
 
 namespace System\Widgets;
 
-use System\Datalayer\DLCurrency;
 use System\Datalayer\DLUserCurrency;
 
 class UserCurrencyFormAddWidget extends BaseWidget
@@ -11,14 +10,25 @@ class UserCurrencyFormAddWidget extends BaseWidget
     {
         $DLUserCurrency = new DLUserCurrency();
 
-//        $currency = $DLUserCurrency->getAllByUserAndParent($this->params['loginId'],$this->params['agentId']);
-        $currency = $DLUserCurrency->getAllByUser($this->params['loginId']);
-//        $agentCurrency = $DLUserCurrency->getAllByUser($this->params['agentId']);
+        $parentId = $this->params['loginId'];
+        $agentId = $this->params['agentId'];
+
+        $parentCurrencies = $DLUserCurrency->getByUser($parentId);
+        $agentCurrencies = $DLUserCurrency->getByUser($agentId);
+
+        $currencyList = array();
+
+        foreach ($parentCurrencies as $parentCurrency){
+            $currencyList[$parentCurrency->getCurrency()] = $parentCurrency->getCurrency();
+        }
+
+        foreach ($agentCurrencies as $agentCurrency){
+            if(isset($currencyList[$agentCurrency->getCurrency()]))
+                unset($currencyList[$agentCurrency->getCurrency()]);
+        }
 
         return $this->setView('currency/user/add', [
-            'currency' => $currency,
-//            'parentCurrency' => $parentCurrency,
-//            'agentCurrency' => $agentCurrency,
+            'currency' => $currencyList,
         ]);
     }
 }

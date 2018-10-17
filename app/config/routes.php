@@ -124,9 +124,19 @@ $routes = array(
 //    ),
 
     array(
-        'url' => '/agent/(detail|edit)/([0-9|]+)',
+        'url' => '/agent/(detail|edit)/([a-zA-Z0-9|]+)',
         'params' => array(
             'module' => 'agent',
+            'controller' => 1,
+            'action' => 'index',
+            'id' => 2
+        )
+    ),
+
+    array(
+        'url' => '/provider/(detail|edit|status)/([a-zA-Z0-9|]+)',
+        'params' => array(
+            'module' => 'provider',
             'controller' => 1,
             'action' => 'index',
             'id' => 2

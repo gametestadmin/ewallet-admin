@@ -1,6 +1,7 @@
 <?php
 namespace Backoffice\Agent\Controllers;
 
+use System\Datalayer\DLUser;
 use System\Datalayer\DLUserCurrency;
 use System\Library\General\GlobalVariable;
 
@@ -31,6 +32,16 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
 
                 $data = $this->request->getPost();
                 $tab = $data['tab'];
+                $userId = $data['user'];
+
+                $DLUser = new DLUser();
+                $parent = $this->_user;
+                $agent = $DLUser->getById($userId);
+
+                if($parent->getId() != $agent->getParent()){
+                    $this->errorFlash("cannot_access");
+                    return $this->response->redirect("/agent/list")->send();
+                }
 
                 $DLUserCurrency = new DLUserCurrency();
 
@@ -58,6 +69,17 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
         $data["currency_id"] = $this->request->get("default");
         $tab = $this->request->get("tab");
 
+        $userId = $data['agent_id'];
+
+        $DLUser = new DLUser();
+        $parent = $this->_user;
+        $agent = $DLUser->getById($userId);
+
+        if($parent->getId() != $agent->getParent()){
+            $this->errorFlash("cannot_access");
+            return $this->response->redirect("/agent/list")->send();
+        }
+
         if($this->_allowed == 0){
             return $this->response->redirect($previousPage->previousPage()."#".$tab)->send();
         }
@@ -77,5 +99,43 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
         $this->response->redirect($previousPage->previousPage()."#".$tab)->send();
 
         \Phalcon\Tag::setTitle("User Currency - ".$this->_website->title);
+    }
+
+    public function deleteAction()
+    {
+        $previousPage = new GlobalVariable();
+
+        $data["agent_id"] = $this->dispatcher->getParam("id");
+        $data["currency_id"] = $this->request->get("delete");
+        $tab = $this->request->get("tab");
+
+        $userId = $data['agent_id'];
+
+        $DLUser = new DLUser();
+        $parent = $this->_user;
+        $agent = $DLUser->getById($userId);
+
+        if($parent->getId() != $agent->getParent()){
+            $this->errorFlash("cannot_access");
+            return $this->response->redirect("/agent/list")->send();
+        }
+
+        if($this->_allowed == 0){
+            return $this->response->redirect($previousPage->previousPage()."#".$tab)->send();
+        }
+        try {
+            $this->db->begin();
+
+            $DLUserCurrency = new DLUserCurrency();
+
+            $DLUserCurrency->delete($data);
+
+            $this->db->commit();
+            $this->flash->success('user_currency_remove');
+        } catch (\Exception $e) {
+            $this->db->rollback();
+            $this->flash->error($e->getMessage());
+        }
+        $this->response->redirect($previousPage->previousPage()."#".$tab)->send();
     }
 }

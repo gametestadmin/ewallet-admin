@@ -17,8 +17,9 @@
                     <div class="ibox-content row">
                         <ul class="list-inline header-list text-center">
                           <li class="col-sm-1 hidden-xs list-group-item">No</li>
-                          <li class="col-sm-6 col-xs-5 list-group-item">Username</li>
-                          <li class="col-sm-3 col-xs-4 list-group-item">Status</li>
+                          <li class="col-sm-3 col-xs-3 list-group-item">Username</li>
+                          <li class="col-sm-3 col-xs-3 list-group-item">Parent Status</li>
+                          <li class="col-sm-3 col-xs-3 list-group-item">Status</li>
                           <li class="col-sm-2 col-xs-3 list-group-item">Action</li>
                         </ul>
                         {% set i = 1 %}
@@ -30,14 +31,17 @@
                         {% endif %}
                         <ul class="list-inline {{class}} text-center">
                             <li class="col-sm-1 hidden-xs list-group-item">{{i}}</li>
-                            <li class="col-sm-6 col-xs-5 list-group-item"><a href="{{url(router.getRewriteUri()~'/child/'~agentData.id)}}"><u>{{agentData.username}}</u></a></li>
-                            <li class="col-sm-3 col-xs-4 list-group-item text-center">
-                                <select class="status">
-                                    {% for key, value in status %}
-                                        <option value="{{agentData.id~"|"~value}}" {% if agentData.status == value %}selected{% endif %}>{{key}}</option>
-                                    {% endfor %}
-                                </select>
+                            <li class="col-sm-3 col-xs-3 list-group-item">
+                                <a href="{{url(router.getRewriteUri()~'/child/'~agentData.id)}}"><u>{{agentData.username}}</u></a>
                             </li>
+                            <li class="col-sm-3 col-xs-3 list-group-item text-center"><strong class="text-{{agentData.parent_status|agentStatus|lower}}">{{agentData.parent_status|agentStatus}}</strong></li>
+                            <li class="col-sm-3 col-xs-3 list-group-item text-center">
+                                 <select class="status">
+                                     {% for key, value in status %}
+                                         <option value="{{agentData.id~"|"~value}}" {% if agentData.status == value %}selected{% endif %}>{{key}}</option>
+                                     {% endfor %}
+                                 </select>
+                             </li>
                             <li class="col-sm-2 col-xs-3 list-group-item text-center">
                                 <a href="{{url(module~'/detail/'~agentData.id)}}">
                                     <span class="fa fa-search text-danger"></span>
@@ -70,6 +74,19 @@
             </div>
         </div>
     </div>
+<!--
+Check Availablity Box
+    margin-left: 10px;
+    height: 30px;
+    vertical-align: top;
+    line-height: 30px;
+    width: 30px;
+    text-align: center;
+    background-color: green;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 16px;
+-->
 {% endblock %}
 
 {% block action_js %}

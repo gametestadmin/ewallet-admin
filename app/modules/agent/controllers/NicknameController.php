@@ -22,7 +22,6 @@ class NicknameController extends \Backoffice\Controllers\ProtectedController
             $this->response->redirect($this->_module."/".$this->_controller."/")->send();
         }
 
-//        $realParent = false;
         if($parent->getId() != $agent->getParent()){
             $this->errorFlash("cannot_access");
             return $this->response->redirect("/agent/list")->send();

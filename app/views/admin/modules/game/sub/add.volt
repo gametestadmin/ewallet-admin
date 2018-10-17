@@ -4,10 +4,10 @@
             <div class="col-xs-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title row">
-                        <h5>General</h5>
+                        <h5>Add SubGame</h5>
                     </div>
                     <div class="ibox-content row">
-                        <form class="form-horizontal" action="#" method="post">
+                        <form class="form-horizontal" action="{{url(router.getRewriteUri())}}" method="post">
                             <div class="form-group">
                                 <label class="col-xs-3 control-label">Category Game</label>
                                 <label class="col-xs-9">
@@ -81,10 +81,14 @@
             <div class="modal-content">
                 <form class="form-horizontal" action="{{url('#')}}" method="post" id="form">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="form-main-game-label">Add New Main Game</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        <label class="col-xs-6">
+                            <h4 class="modal-title" id="form-main-game-label">Add New Game</h4>
+                        </label>
+                        <label class="col-xs-6">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </label>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
@@ -201,10 +205,15 @@
                     url: "{{url('game/ajax')}}",
                     data: { code : selectedCode }
                 }).done(function(data){
-                    $("#result").val("");
-                    $("#provider").val("");
-                    $("#providerId").val(providerId);
-                    $("#main").html("<option value=''>-Choose One-</option>"+data);
+                    console.log(data);
+                    if(data == false){
+                        $("#main").html("<option value=''>-Create One-</option>"+data);
+                    }else{
+                        $("#result").val("");
+                        $("#provider").val("");
+                        $("#providerId").val(providerId);
+                        $("#main").html("<option value=''>-Choose One-</option>"+data);
+                    }
                 });
             });
 

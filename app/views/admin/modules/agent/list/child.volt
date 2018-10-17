@@ -14,8 +14,9 @@
                     <div class="ibox-content row">
                         <ul class="list-inline header-list text-center">
                           <li class="col-sm-1 hidden-xs list-group-item">No</li>
-                          <li class="col-sm-6 col-xs-5 list-group-item">Username</li>
-                          <li class="col-sm-3 col-xs-4 list-group-item">Status</li>
+                          <li class="col-sm-3 col-xs-3 list-group-item">Username</li>
+                          <li class="col-sm-3 col-xs-3 list-group-item">Parent Status</li>
+                          <li class="col-sm-3 col-xs-3 list-group-item">Status</li>
                           <li class="col-sm-2 col-xs-3 list-group-item">Action</li>
                         </ul>
                         {% set i = 1 %}
@@ -27,8 +28,15 @@
                         {% endif %}
                         <ul class="list-inline {{class}} text-center">
                             <li class="col-sm-1 hidden-xs list-group-item">{{i}}</li>
-                            <li class="col-sm-6 col-xs-5 list-group-item"><a href="{{url(module~'/'~controller~'/'~action~'/'~agentData.id)}}"><u>{{agentData.username}}</u></a></li>
-                            <li class="col-sm-3 col-xs-4 list-group-item"><strong class="text-{{agentData.status|agentStatus|lower}}">{{agentData.status|agentStatus}}</strong></li>
+                            <li class="col-sm-3 col-xs-3 list-group-item">
+                                {% if agentData.type is not 5 %}
+                                    <a href="{{url(module~'/'~controller~'/'~action~'/'~agentData.id)}}"><u>{{agentData.username}}</u></a>
+                                {% else %}
+                                    {{agentData.username}}
+                                {% endif %}
+                            </li>
+                            <li class="col-sm-3 col-xs-3 list-group-item"><strong class="text-{{agentData.parent_status|agentStatus|lower}}">{{agentData.parent_status|agentStatus}}</strong></li>
+                            <li class="col-sm-3 col-xs-3 list-group-item"><strong class="text-{{agentData.status|agentStatus|lower}}">{{agentData.status|agentStatus}}</strong></li>
                             <li class="col-sm-2 col-xs-3 list-group-item">
                                 <a href="{{url(module~'/detail/'~agentData.id)}}">
                                     <span class="fa fa-search text-danger"></span>

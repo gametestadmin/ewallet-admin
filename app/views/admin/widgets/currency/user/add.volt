@@ -4,20 +4,24 @@
         <div class="modal-content">
             <form class="form-horizontal" action="{{url('agent/currency/add')}}" method="post" id="form">
                 <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <label class="col-xs-6">
+                        <h3 class="modal-title" id="form-user-currency-label">Add Currency</h3>
+                    </label>
+                    <label class="col-xs-6">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </label>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
                         <label class="col-xs-3 control-label">Currency</label>
-                        <lable class="col-xs-9">
+                        <label class="col-xs-9">
                             <input type="hidden" name="user" value="{{agent.id}}">
                             <select name="currency" class="form-control">
                                 <option value="">-Choose One-</option>
                                 {% for currencyData in currency %}
-                                    <option value="{{currencyData.currency.id}}">{{currencyData.currency.name}}</option>
+                                    <option value="{{currencyData}}">{{currencyData|currencyName}}</option>
                                 {% endfor %}
                             </select>
                             <input type="hidden" name="tab" value="tab-currency">

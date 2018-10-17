@@ -16,7 +16,7 @@ class BaseController extends Controller
     protected $_module = null;
     protected $_controller = null;
     protected $_action = null;
-    protected $_allowed = 1 ;
+    protected $_allowed = 1;
 
 //    protected $_application_name = null;
 //    protected $_template = null;
@@ -37,6 +37,14 @@ class BaseController extends Controller
         $this->_checkResetPassword();
         $this->_checkResetNickname();
         $this->_checkACL();
+
+        // TODO :: BV temporary
+//        $acl = $this->session->get('acl') ;
+//
+//        if($acl[$this->_module][$this->_controller]['add'] != 1) {
+//            $this->_allowed = 0;
+//        }
+//        $this->view->allowed = $this->_allowed;
 
 //        $this->_language = $this->cookies->get('language')->getValue();
 //        $languageLibrary = new Language();

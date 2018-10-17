@@ -120,16 +120,15 @@ class DLGameCurrency {
         $parentGameCurrency = $this->getAll($parentId);
 
         if(count($parentGameCurrency) == 0){
-            echo 3;
-            die;
+            return true;
         }else{
             foreach ($parentGameCurrency as $key => $value){
                 $childGameCurrency = new GameCurrency();
                 $childGameCurrency->setGame($gameId);
-                $childGameCurrency->setCurrency($value->getCurrencyId());
+                $childGameCurrency->setCurrency($value->getCurrency());
                 $childGameCurrency->setDefault($value->getDefault());
 
-                if($childGameCurrency->save()){
+                if(!$childGameCurrency->save()){
                     throw new \Exception($childGameCurrency->getMessages());
                 }
             }
