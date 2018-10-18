@@ -1,6 +1,7 @@
 <?php
 namespace Volt\Libraries;
 
+use System\Datalayer\DLProviderGameEndpointAuth;
 use System\Library\General\GlobalVariable;
 
 class Endpoint
@@ -12,5 +13,15 @@ class Endpoint
                 return $key;
             }
         }
+    }
+
+    public static function endPointAuth($id){
+        $dlProviderGameEndpointAuth = new DLProviderGameEndpointAuth;
+        $providerGameEndpointAuth = $dlProviderGameEndpointAuth->getById($id);
+
+        if($id == 0){
+            return "-";
+        }
+        return $providerGameEndpointAuth->getAppId().":".$providerGameEndpointAuth->getAppSecret();
     }
 }

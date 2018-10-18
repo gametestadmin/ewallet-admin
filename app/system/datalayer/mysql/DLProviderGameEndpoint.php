@@ -11,6 +11,12 @@ class DLProviderGameEndpoint {
         return $providerGameEndpoint;
     }
 
+    public function getByGame($game){
+        $providerGameEndpoint = ProviderGameEndpoint::findFirstByGame($game);
+
+        return $providerGameEndpoint;
+    }
+
     public function getById($id){
         $providerGameEndpoint = ProviderGameEndpoint::findFirstById($id);
 
@@ -21,7 +27,7 @@ class DLProviderGameEndpoint {
         if(isset($id)){
             $providerGameEndpoint = ProviderGameEndpoint::findFirst(
                 array(
-                    "conditions" => "id != :id: AND game = :game: OR id != :id: AND type = :type: ",
+                    "conditions" => "id <> :id: AND game = :game: AND type = :type: ",
                     "bind" => array(
                         "id" => $id,
                         "game" => $data['game'],

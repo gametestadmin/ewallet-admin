@@ -18,7 +18,7 @@
                     </div>
 
                     <div class="form-group col-xs-7">
-                        <input type="text" name="captcha" class="row form-control" placeholder="Captcha" required="" tabindex="3" maxlength="4" >
+                        <input type="text" name="captcha" class="row form-control" placeholder="Captcha" required="" tabindex="3" maxlength="4" autocomplete="off" >
                     </div>
                     <div class="captcha-box col-xs-5">
                         <img id="captcha" src="/captcha" width="60" class="padding-5-0">

@@ -91,6 +91,7 @@ class WhitelistController extends \Backoffice\Controllers\ProtectedController
             $this->flash->error("cannot_access");
             return $this->response->redirect($previousPage->previousPage() . "#tab-ip")->send();
         }
+
         try {
             $this->db->begin();
 

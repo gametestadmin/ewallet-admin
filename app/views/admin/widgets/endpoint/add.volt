@@ -20,8 +20,8 @@
                         <input type="hidden" name="game" value="{{game.id}}">
                         <select name="type" class="form-control">
                             <option value="">-Choose One-</option>
-                            {% for value, providerGameEndpointTypeData in providerGameEndpointType %}
-                                <option value="{{providerGameEndpointTypeData}}">{{value}}</option>
+                            {% for providerGameEndpointTypeValue, providerGameEndpointTypeData in providerGameEndpointTypes %}
+                                <option value="{{providerGameEndpointTypeValue}}">{{providerGameEndpointTypeData}}</option>
                             {% endfor %}
                         </select>
                         <input type="hidden" name="tab" value="tab-endpoint">
@@ -46,7 +46,7 @@
                         <select name="auth" class="form-control">
                             <option value="0">No Auth</option>
                             {% for providerGameEndpointData in providerGameEndpoint %}
-                                <option value="{{providerGameEndpointData.id}}">{{providerGameEndpointData.app_id~" : "~providerGameEndpointData.app_secret}}</option>
+                                <option value="{{providerGameEndpointData.id}}">{{providerGameEndpointData.app_id~":"~providerGameEndpointData.app_secret}}</option>
                             {% endfor %}
                         </select>
                     </label>

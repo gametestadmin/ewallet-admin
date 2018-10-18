@@ -2,24 +2,27 @@
 
 namespace System\Widgets;
 
+use System\Datalayer\DLCurrency;
 use System\Datalayer\DLUserCurrency;
 
 class UserCurrencyFormAddWidget extends BaseWidget
 {
     public function getContent()
     {
-        $DLUserCurrency = new DLUserCurrency();
+        $dlCurrency = new DLCurrency();
+        $dlUserCurrency = new DLUserCurrency();
 
         $parentId = $this->params['loginId'];
         $agentId = $this->params['agentId'];
 
-        $parentCurrencies = $DLUserCurrency->getByUser($parentId);
-        $agentCurrencies = $DLUserCurrency->getByUser($agentId);
+        $parentCurrencies = $dlUserCurrency->getByUser($parentId);
+        $agentCurrencies = $dlUserCurrency->getByUser($agentId);
 
         $currencyList = array();
 
         foreach ($parentCurrencies as $parentCurrency){
-            $currencyList[$parentCurrency->getCurrency()] = $parentCurrency->getCurrency();
+            $currency = $dlCurrency->getById($parentCurrency->getCurrency());
+            $currencyList[$parentCurrency->getCurrency()] = $currency;
         }
 
         foreach ($agentCurrencies as $agentCurrency){

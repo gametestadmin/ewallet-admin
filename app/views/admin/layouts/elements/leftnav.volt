@@ -26,6 +26,7 @@
 
 
             {% for modulename, modulelist in navigationlist %}
+                {% if modulename != 'user' %}
                 <li {%if module == modulename %}class="active"{%endif%}>
                     <a href="">
                         <i class="fa {{modulelist['icon']}}"></i>
@@ -33,6 +34,7 @@
                         <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level collapse">
+                {% endif %}
                         {% if modulelist['child'] is defined %}
                         {% for  controllername , controllerlist in modulelist['child'] %}
                             {% if controllerlist|length > 1 %}
@@ -45,21 +47,26 @@
                                     <ul class="nav nav-third-level collapse">
                             {% endif %}
                             {% for actionkey , actionname in controllerlist['child'] %}
+                              {% set actionLink = "/"~actionkey %}
                               {% if actionkey == "index" %}
                                   {% set actionLink = "" %}
-                              {% else %}
-                                  {% set actionLink = "/"~actionkey %}
                               {% endif %}
                               {% if controllername == "index" %}
                                   {% set controllername = "" %}
                               {% endif %}
                               {% if loop.length == 1 %}
                                   <li {% if action == actionkey %}}class="active"{%endif%} >
-                                      <a href="{{url~modulename~'/'~controllername~actionLink}}"> <b>{{translate[actionname]}}</b> </a>
+                                      <a href="{{url~modulename~'/'~controllername~actionLink}}">
+                                        <i class="fa {{actionname['icon']}}"></i>
+                                        <b>{{ translate[actionname['name']] }}</b>
+                                      </a>
                                   </li>
                               {% else %}
                                   <li {% if action == actionkey %}}class="active"{%endif%} >
-                                      <a href="{{url~modulename~'/'~controllername~actionLink}}"> <b>{{translate[actionname]}}</b>  </a>
+                                      <a href="{{url~modulename~'/'~controllername~actionLink}}">
+                                        <i class="fa {{actionname['icon']}}"></i>
+                                        <b>{{ translate[actionname['name']] }}</b>
+                                      </a>
                                   </li>
                               {% endif %}
                             {% endfor %}
@@ -70,11 +77,12 @@
 
                         {% endfor %}
                         {% endif %}
+                {% if modulename != 'user' %}
                     </ul>
                 </li>
+                {% endif %}
             {% endfor %}
 
-            </li>
         </ul>
     </div>
 </nav>

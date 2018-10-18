@@ -115,6 +115,10 @@ $di->setShared('view', function () use ($config) {
                 return 'Volt\Libraries\Endpoint::endPointType(' . $resolvedArgs . ')';
             });
 
+            $compiler->addFilter('endPointAuth', function ($resolvedArgs) {
+                return 'Volt\Libraries\Endpoint::endPointAuth(' . $resolvedArgs . ')';
+            });
+
             $compiler->addFilter('providerName', function ($resolvedArgs) {
                 return 'Volt\Libraries\Game::gameProvider(' . $resolvedArgs . ')';
             });

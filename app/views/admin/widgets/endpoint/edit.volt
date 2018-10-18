@@ -22,6 +22,7 @@
                 <div class="form-group">
                     <label class="col-xs-3 control-label">Type</label>
                     <label class="col-xs-9">
+                        <input type="hidden" name="game" value="{{game.id}}">
                         <select name="type" id="endpoint_type" class="form-control">
                             <option value="">-Choose One-</option>
                             {% for value, providerGameEndpointTypeData in providerGameEndpointType %}
@@ -51,7 +52,7 @@
                         <select name="auth" id="endpoint_auth" class="form-control">
                             <option value="0">No Auth</option>
                             {% for providerGameEndpointData in providerGameEndpoint %}
-                                <option value="{{providerGameEndpointData.id}}">{{providerGameEndpointData.app_id~" : "~providerGameEndpointData.app_secret}}</option>
+                                <option value="{{providerGameEndpointData.id}}">{{providerGameEndpointData.app_id~":"~providerGameEndpointData.app_secret}}</option>
                             {% endfor %}
                         </select>
                     </label>

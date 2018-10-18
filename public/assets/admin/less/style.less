@@ -1,4 +1,6 @@
 @import url(config.less);
+@import url(profile.less);
+@import url(subaccount.less);
 @import url(dropdown.less);
 @import url(header.less);
 @import url(content.less);
@@ -41,13 +43,13 @@ span.fa{
 /*** end_of_background ***/
 
 /*** text colouring ***/
-.theme-text{  color: #02B4E3 ;}
-.inherit-text{  color : inherit !important ;}
-.white-text{  color: white !important ;}
-.black-text{  color: black !important ;}
-.red-text{  color: #CC0003 ;}
-.orange-text{  color: #F4C20B ;}
-.brown-text{  color: #673000 ;}
+.text-theme{  color: #02B4E3 ;}
+.text-inherit{  color : inherit !important ;}
+.text-white{  color: white !important ;}
+.text-black{  color: black !important ;}
+.text-red{  color: #CC0003 ;}
+.text-orange{  color: #F4C20B ;}
+.text-brown{  color: #673000 ;}
 
 /*** end_of_text-color ***/
 
@@ -144,7 +146,6 @@ span.fa{
 /*** aligning style ***/
 .float-left {  float: left          ;}
 .float-right{  float: right         ;}
-//.text-center{  text-align : center  ;}
 .text-right {  text-align: right    ;}
 .text-left  {  text-align : left    ;}
 /*** end_of_aligning ***/
@@ -156,6 +157,14 @@ span.fa{
 .pos-absolute{  position : absolute ;}
 
 /*** end_of_positioning ***/
+
+/*** display ***/
+
+.display-block{  display : block ;}
+.display-flex{  display : flex ;}
+
+/*** end_of_display ***/
+
 
 
 /*** width adjustment ***/
@@ -221,4 +230,9 @@ span.fa{
 .opacity-10 { opacity : 1 ;}
 .border-radius-5{  border-radius : 5px ;}
 .border-radius-10{  border-radius : 10px ;}
+
+.left-vr-line-dashed{
+  border-left : 1px dashed #e7eaec;
+}
 /*** end_of_miscellaneous ***/
+

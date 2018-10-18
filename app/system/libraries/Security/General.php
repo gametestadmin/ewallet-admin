@@ -1,6 +1,6 @@
 <?php
 
-namespace System\Libraries\Security;
+namespace System\Library\Security;
 
 class General
 {

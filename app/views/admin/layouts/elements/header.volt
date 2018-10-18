@@ -6,7 +6,7 @@
             </a>
             <span class="header-menu-information">
                 <b class="header-info-user"> {{ user.username }} </b>
-                <b class="header-info-code"> {{ user.code }} </b>
+                <b class="header-info-code"> {{ child.nickname }} </b>
                 <b class="header-info-cur"> Currency </b>
             </span>
         </div>

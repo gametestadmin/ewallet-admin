@@ -25,7 +25,7 @@
                     <li class="col-sm-1 col-xs-1 list-group-item">{{i}}</li>
                     <li class="col-sm-3 col-xs-3 list-group-item"><span id="endpoint_type_{{providerGameEndpointData.id}}" class="hidden">{{providerGameEndpointData.type}}</span>{{providerGameEndpointData.type|endPointType}}</li>
                     <li class="col-sm-3 col-xs-3 list-group-item"><span id="endpoint_url_{{providerGameEndpointData.id}}">{{providerGameEndpointData.endpoint}}</span></li>
-                    <li class="col-sm-4 col-xs-4 list-group-item"><span id="endpoint_auth_{{providerGameEndpointData.id}}" class="hidden">{{providerGameEndpointData.provider_game_endpoint_auth}}</span>{{providerGameEndpointData.provider_game_endpoint_auth}}</li>
+                    <li class="col-sm-4 col-xs-4 list-group-item" title="{{providerGameEndpointData.provider_game_endpoint_auth|endPointAuth}}"><span id="endpoint_auth_{{providerGameEndpointData.id}}" class="hidden">{{providerGameEndpointData.provider_game_endpoint_auth}}</span>{{providerGameEndpointData.provider_game_endpoint_auth|endPointAuth}}</li>
                     <li class="col-sm-1 col-xs-1 list-group-item">
                         <span class="endpoint-edit fa fa-edit text-primary" data-id="{{providerGameEndpointData.id}}" data-toggle="modal" data-target="#form-edit-endpoint"></span>
                     </li>

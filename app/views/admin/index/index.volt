@@ -1,11 +1,6 @@
 {% block content %}
 
 
-{{translate['user']}}
-    <br>
-    <br>
-
-
 
 
 {% endblock %}

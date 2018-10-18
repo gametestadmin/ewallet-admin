@@ -5,6 +5,12 @@ use System\Model\Currency;
 
 class DLCurrency {
 
+    public function getById($id){
+        $currency = Currency::findFirst($id);
+
+        return $currency;
+    }
+
     public function getAll(){
         $currency = Currency::find();
 

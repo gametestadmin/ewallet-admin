@@ -18,7 +18,7 @@ class DLUserCurrency {
                 "conditions" => "user = :user: AND status = 1",
                 "bind" => array(
                     "user" => $user,
-                )
+                ),
             )
         );
 
@@ -224,6 +224,9 @@ class DLUserCurrency {
         $currentUserCurrency = $this->getByUserAndId($userId,$userCurrencyId);
 
         if($currentUserCurrency->getDefault() == 1){
+            throw new \Exception('error_remove_currency');
+        }
+        if($currentUserCurrency->getStatus() == 0) {
             throw new \Exception('error_remove_currency');
         }
 

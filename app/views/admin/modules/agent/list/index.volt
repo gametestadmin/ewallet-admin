@@ -102,7 +102,7 @@ Check Availablity Box
                     this.value = previouslySelected;
                     return;
                 }
-                location.href = '/{{module}}/{{controller}}/status/'+jQuery(this).val();
+                location.href = '/{{module}}/status/'+jQuery(this).val();
             });
         });
     </script>

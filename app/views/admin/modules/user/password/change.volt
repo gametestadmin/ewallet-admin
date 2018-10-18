@@ -5,16 +5,7 @@
         <div class="col-xs-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title row">
-                    <h5> <label class="col-xs-12">
-                        {{module|capitalize}}
-                        {% if controller != "index" %}
-                            >
-                            {{controller|capitalize}}
-                        {% endif %}
-                        {% if action != "index" %}
-                            >
-                            {{action|capitalize}}
-                        {% endif %}
+                    <h5> <label class="col-xs-12"> {{translate['change_password']|capitalize}}
                     </label> </h5>
                 </div>
                 <div class="ibox-content row">

@@ -12,6 +12,12 @@ class DLGameCurrency {
         return $gameCurrency;
     }
 
+    public function getByGame($game){
+        $gameCurrency = GameCurrency::findByGame($game);
+
+        return $gameCurrency;
+    }
+
     public function getById($id){
         $gameCurrency = GameCurrency::findFirstById($id);
 
@@ -43,6 +49,20 @@ class DLGameCurrency {
         return $currency;
     }
 
+    public function checkCurrencyFromParent($parent,$currency){
+        $parentCurrency = GameCurrency::findFirst(
+            array(
+                "conditions" => "game = :parent: AND currency = :currency:",
+                "bind" => array(
+                    "parent" => $parent,
+                    "currency" => $currency,
+                )
+            )
+        );
+
+        return $parentCurrency;
+    }
+
     public function checkCurrentGameCurrency($game,$currency){
         $gameCurrency = GameCurrency::findFirst(
             array(
@@ -65,13 +85,23 @@ class DLGameCurrency {
     }
 
     public function validateAdd($data){
+        $dlGame = new DLGame();
+        $game = $dlGame->getById($data['game']);
+
         if(!$this->checkGame($data['game'])){
             throw new \Exception('undefined_game');
-        }elseif(!$this->checkCurrency($data['currency'])){
+        }
+        elseif(!$this->checkCurrency($data['currency'])){
             throw new \Exception('undefined_currency');
         }elseif($this->checkCurrentGameCurrency($data['game'],$data['currency'])){
             throw new \Exception('currency_exist');
         }
+        if($game->gettype() == 3) {
+            if (!$this->checkCurrencyFromParent($game->getGameParent(), $data['currency'])){
+                throw new \Exception('undefined_currency_from_parent');
+            }
+        }
+
         return true;
     }
 
@@ -134,5 +164,4 @@ class DLGameCurrency {
             }
         }
     }
-
 }

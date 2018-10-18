@@ -101,18 +101,14 @@
                                                 </select>
                                             </label>
                                         </div>
-                                        {% endif %}
-
+                                        {% else %}
                                         <div class="form-group">
                                             <label class="col-xs-3 control-label">Status</label>
                                             <label class="col-xs-9">
-                                                <select class="status form-control">
-                                                    {% for key, value in status %}
-                                                        <option value="{{agent.id~"|"~value}}" {% if agent.status == value %}selected{% endif %}>{{key}}</option>
-                                                    {% endfor %}
-                                                </select>
+                                                <input type="text" placeholder="Code" class="form-control" value="{{agent.status|agentStatus}}" readonly>
                                             </label>
                                         </div>
+                                        {% endif %}
                                         <div class="form-group"><div class="hr-line-dashed"></div></div>
                                         <div class="form-group pull-right">
                                             <div class="col-xs-12">
@@ -166,7 +162,7 @@
                     this.value = previouslySelected;
                     return;
                 }
-                location.href = '/agent/detail/status/'+jQuery(this).val();
+                location.href = '/{{module}}/status/'+jQuery(this).val();
             });
         });
         $(document).ready(function(){

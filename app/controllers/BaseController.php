@@ -6,12 +6,13 @@ defined('APP_PATH') || define('APP_PATH', realpath('.'));
 use System\Language\Language;
 use Phalcon\Mvc\Controller;
 use Phalcon\Translate\Adapter\NativeArray;
-
+use System\Library\Security\General ;
 
 class BaseController extends Controller
 {
     protected $_website = false;
     protected $_user = null;
+    protected $_child = null;
     protected $_environment = null;
     protected $_module = null;
     protected $_controller = null;
@@ -35,16 +36,8 @@ class BaseController extends Controller
         $this->_setLanguage();
         $this->_setNavigation();
         $this->_checkResetPassword();
-        $this->_checkResetNickname();
+//        $this->_checkResetNickname();
         $this->_checkACL();
-
-        // TODO :: BV temporary
-//        $acl = $this->session->get('acl') ;
-//
-//        if($acl[$this->_module][$this->_controller]['add'] != 1) {
-//            $this->_allowed = 0;
-//        }
-//        $this->view->allowed = $this->_allowed;
 
 //        $this->_language = $this->cookies->get('language')->getValue();
 //        $languageLibrary = new Language();
@@ -75,7 +68,10 @@ class BaseController extends Controller
 
 //        $this->view->frontend = $this->_frontend;
 
+        $security = new General();
+        $this->view->time = date("d-m-Y H:i:s"  ) ;
 
+        $this->view->login_ip = $security->getIP() ;
         $this->view->module = $this->_module = $this->router->getModuleName();
         $this->view->controller = $this->_controller  = $this->router->getControllerName();
         $this->view->action = $this->_action = $this->router->getActionName();
@@ -128,8 +124,10 @@ class BaseController extends Controller
         //Set user here
         if($this->session->has('user')){
             $this->_user = $this->session->get('user');
+            $this->_child = $this->session->get('child');
         }
         $this->view->user = $this->_user;
+        $this->view->child = $this->_child;
     }
 
     protected function _setNavigation()
@@ -172,19 +170,17 @@ class BaseController extends Controller
         }
     }
 
-    protected function _checkResetNickname(){
-
-        if( $this->_user ) {
-            if ($this->_user->getResetNickname() == 1) {
-                if (!($this->_module == 'user' && $this->_controller == 'nickname' && $this->_action == 'change')){
-                    $this->errorFlash('please_change_nickname');
-
-//                    return $this->response->redirect("/user/nickname/change");
-                }
-            }
-        }
-
-    }
+//    protected function _checkResetNickname(){
+//        if( $this->_user ) {
+//            if ($this->_user->getResetNickname() == 1) {
+//                if (!($this->_module == 'user' && $this->_controller == 'nickname' && $this->_action == 'change')){
+//                    $this->errorFlash('please_change_nickname');
+//
+////                    return $this->response->redirect("/user/nickname/change");
+//                }
+//            }
+//        }
+//    }
 
 
 

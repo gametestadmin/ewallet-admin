@@ -24,9 +24,11 @@
         </div>
     </div>
     <ul class="list-inline header-list text-center">
+      <li class="col-xs-1 list-group-item list">No</li>
       <li class="col-xs-1 list-group-item list">Symbol</li>
-      <li class="col-xs-3 list-group-item list">Code</li>
+      <li class="col-xs-2 list-group-item list">Code</li>
       <li class="col-xs-4 list-group-item list">Name</li>
+      {% if loginId == agentParent %}
       <li class="col-xs-4 list-group-item list-act">
         <div class="text">Action</div>
         <div class="text">
@@ -34,6 +36,9 @@
             <span class="col-xs-6">Delete</span>
         </div>
       </li>
+      {% else %}
+      <li class="col-xs-4 list-group-item list">Default</li>
+      {% endif %}
     </ul>
     {% if user_currency is not null %}
         {% set i = 1 %}
@@ -44,9 +49,11 @@
             {% set class = "content-odd" %}
             {% endif %}
             <ul class="list-inline {{class}} text-center">
+                <li class="col-xs-1 list-group-item">{{i}}</li>
                 <li class="col-xs-1 list-group-item">{{userCurrencyData.currency.symbol}}</li>
-                <li class="col-xs-3 list-group-item">{{userCurrencyData.currency.code}}</li>
+                <li class="col-xs-2 list-group-item">{{userCurrencyData.currency.code}}</li>
                 <li class="col-xs-4 list-group-item">{{userCurrencyData.currency.name}}</li>
+                {% if loginId == agentParent %}
                 <li class="col-xs-2 list-group-item">
                     {% if userCurrencyData.default == 1 %}
                         <i class="fa fa-check text-success" data-toggle="tooltip" data-placement="right" title="Default"></i>
@@ -59,6 +66,15 @@
                 <li class="col-xs-2 list-group-item">
                     <a href="{{url(module~'/currency/delete/'~agent.id~'?delete='~userCurrencyData.id~'&tab=tab-currency')}}" class="delete"><span class="ip-edit fa fa-ban text-danger" data-toggle="tooltip" data-placement="right" title="Delete"></span></a>
                 </li>
+                {% else %}
+                <li class="col-xs-4 list-group-item">
+                    {% if userCurrencyData.default == 1 %}
+                        <i class="fa fa-check text-success" data-toggle="tooltip" data-placement="right" title="Default"></i>
+                    {% else %}
+                        <i class="fa fa-times text-danger" data-toggle="tooltip" data-placement="right" title="Not Default"></i>
+                    {%endif%}
+                </li>
+                {% endif %}
             </ul>
             {% set i = i +1 %}
         {% endfor %}

@@ -124,7 +124,7 @@ $routes = array(
 //    ),
 
     array(
-        'url' => '/agent/(detail|edit)/([a-zA-Z0-9|]+)',
+        'url' => '/agent/(detail|edit|status)/([a-zA-Z0-9|]+)',
         'params' => array(
             'module' => 'agent',
             'controller' => 1,

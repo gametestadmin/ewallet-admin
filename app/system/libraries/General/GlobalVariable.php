@@ -38,6 +38,25 @@ class GlobalVariable
         'Statement Detail' => 16,
     );
 
+    public static $providerGameEndpointTypes = array(
+        1 => "Login",
+        2 => 'Register',
+        3 => 'User Information',
+        4 => 'User Balance',
+        5 => '(Transfer) Transaction In',
+        6 => '(Transfer) Transaction Out',
+        7 => '(Transfer) Transaction Status',
+        8 => '(Transfer) Transaction History',
+        9 => '(Transfer) Transaction Daily',
+        10 => '(Transfer) Game Record',
+        11 => '(Seamless) Transaction Bet',
+        12 => '(Seamless) Transaction History',
+        13 => '(Seamless) Transaction Daily',
+        14 => '(Seamless) Game Record',
+        15 => 'Statement Daily',
+        16 => 'Statement Detail',
+    );
+
     public static $agentType = array(
         'God' => 0,
         'Company' => 9,

@@ -6,7 +6,7 @@
             <div class="col-xs-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title row">
-                        <h5>{{controller|capitalize}} {{module|capitalize}}</h5>
+                        <h5>{{childuser.username}} </h5>
                     </div>
                     <div class="ibox-content row">
                         <div class="tabs-container">
@@ -73,8 +73,6 @@
                                             <div class="form-group"><div class="hr-line-dashed"></div></div>
                                             <div class="form-group pull-right">
                                                 <div class="col-xs-12">
-
-
                                                 </div>
                                             </div>
                                         </form>
@@ -83,23 +81,40 @@
                                 <div id="tab-acl" class="tab-pane">
                                     <div class="panel-body">
                                         <form class="form-horizontal col-xs-12">
-                                            {% for key , value in aclParent %}
-                                                {% if aclChild[value.module][value.controller][value.action]['status'] == 1 %}
-                                                    {% set wholeaclstatus = 1 %}
-                                                {% endif %}
-                                                {% if aclChild[value.module][value.controller][value.action]['id'] is not defined %}
-                                                    {% set aclstatus = 0 %}
-                                                {% else %}
-                                                    {% set aclstatus = aclChild[value.module][value.controller][value.action]['status'] %}
-                                                {% endif %}
-                                                <div class="row">
-                                                    <div class="col-xs-4{% if value.action != null %} col-xs-push-4 {% elseif value.controller != null and value.action == null  %} col-xs-push-2 {% endif %}">
-                                                        <input type="checkbox"  {% if aclstatus == 1 %}checked="checked" {% endif %} disabled >
-                                                        {{value.sidebar_name}}
+                                            {% for modulename , moduleList in aclParent %}
+                                                <div class="row subaccount-border-bottom">
+                                                    <div class="col-xs-4">
+                                                        <input type="checkbox" disabled hidden {% if aclChild[moduleList['id']] is defined and aclChild[moduleList['id']] == 1 %}  checked="checked" {% endif %}  >
+                                                        <b>{{moduleList['name']}}</b>
+                                                    </div>
+                                                    <div class="col-xs-8 level-2-area">
+                                                        {% for  controllername , controllerList in moduleList['child'] %}
+                                                        {% if controllerList['child']|length > 1 %}
+                                                        <div class="row subaccount-border-bottom">
+                                                             <div class="col-xs-6">
+                                                                <input type="checkbox" disabled {% if aclChild[controllerList['id']] is defined and aclChild[controllerList['id']] == 1 %}  checked="checked" {% endif %} >
+                                                                <b>{{controllerList['name']}}  </b>
+                                                             </div>
+                                                             <div class="col-xs-6 level-3-area">
+                                                        {% endif %}
+                                                            {% for actionkey , action in controllerList['child'] %}
+                                                                {% if action != 'index' %}
+                                                                    <div class="row subaccount-border-bottom">
+                                                                        <div class="col-xs-12">
+                                                                            <input type="checkbox" disabled {% if aclChild[action['id']] is defined and aclChild[action['id']] == 1 %}  checked="checked" {% endif %} >
+                                                                            <b>{{action['name']}}</b>
+                                                                        </div>
+                                                                    </div>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        {% if controllerList['child']|length > 1 %}
+                                                             </div>
+                                                        </div>
+                                                        {% endif %}
+                                                        {% endfor %}
                                                     </div>
                                                 </div>
                                             {% endfor %}
-
                                             <div class="form-group"><div class="hr-line-dashed"></div></div>
                                             <div class="form-group pull-right">
                                                 <div class="col-xs-12">
@@ -107,7 +122,7 @@
                                                         <a href="{{url('javascript:history.go(-1)')}}" class="btn btn-sm btn-danger">Back</a>
                                                     </label>
                                                     <label>
-                                                        <a href="{{url('/'~module~'/'~controller~'/edit/'~childuser.id~'#tab-acl')}}" class="btn btn-sm btn-info">Edit</a>
+                                                        <a href="{{url('/'~module~'/'~controller~'/edit/'~childuser.id)}}" class="btn btn-sm btn-info">Edit</a>
                                                     </label>
                                                 </div>
                                             </div>
