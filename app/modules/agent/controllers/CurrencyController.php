@@ -4,6 +4,7 @@ namespace Backoffice\Agent\Controllers;
 use System\Datalayer\DLUser;
 use System\Datalayer\DLUserCurrency;
 use System\Library\General\GlobalVariable;
+use System\Library\Security\Agent;
 
 class CurrencyController extends \Backoffice\Controllers\ProtectedController
 {
@@ -38,8 +39,11 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
                 $parent = $this->_user;
                 $agent = $DLUser->getById($userId);
 
-                if($parent->getId() != $agent->getParent()){
-                    $this->errorFlash("cannot_access");
+                $agentSecurity = new Agent();
+                $security = $agentSecurity->checkAgentAction($parent->getUsername(),$agent->getUsername());
+
+                if($security <> 2){
+                    $this->errorFlash("cannot_access_security");
                     return $this->response->redirect("/agent/list")->send();
                 }
 
@@ -75,8 +79,11 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
         $parent = $this->_user;
         $agent = $DLUser->getById($userId);
 
-        if($parent->getId() != $agent->getParent()){
-            $this->errorFlash("cannot_access");
+        $agentSecurity = new Agent();
+        $security = $agentSecurity->checkAgentAction($parent->getUsername(),$agent->getUsername());
+
+        if($security <> 2){
+            $this->errorFlash("cannot_access_security");
             return $this->response->redirect("/agent/list")->send();
         }
 
@@ -109,14 +116,15 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
         $data["currency_id"] = $this->request->get("delete");
         $tab = $this->request->get("tab");
 
-        $userId = $data['agent_id'];
-
         $DLUser = new DLUser();
         $parent = $this->_user;
-        $agent = $DLUser->getById($userId);
+        $agent = $DLUser->getById($data['agent_id']);
 
-        if($parent->getId() != $agent->getParent()){
-            $this->errorFlash("cannot_access");
+        $agentSecurity = new Agent();
+        $security = $agentSecurity->checkAgentAction($parent->getUsername(),$agent->getUsername());
+
+        if($security <> 2){
+            $this->errorFlash("cannot_access_security");
             return $this->response->redirect("/agent/list")->send();
         }
 

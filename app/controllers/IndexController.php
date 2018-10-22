@@ -72,12 +72,15 @@ class IndexController extends \Backoffice\Controllers\BaseController
                         $this->session->remove('sidebar');
                         $this->session->set('sidebar', $sideBar);
 
-                        $this->session->set('child', $user);
+//                        $this->session->set('child', $user);
+                        $this->session->set('real_user', $user);
+
                         $user = $DLuser->getById($user->getParent());
                         $this->session->set('user', $user);
                     } else {
                         $this->session->set('user', $user);
-                        $this->session->set('child', $user);
+//                        $this->session->set('child', $user);
+                        $this->session->set('real_user', $user);
 
                         //TODO :: save and check to redis
                         //TODO :: incomplete

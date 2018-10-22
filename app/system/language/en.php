@@ -27,7 +27,7 @@ $messages = array(
     //module name
     "setting" => "Setting",
     "currency" => "Currency",
-    "currency_list" => "List",
+    "currency_list" => "Currency",
     "currency_add" => "Add",
     "game" => "Game",
     "provider_game" => "Provider",

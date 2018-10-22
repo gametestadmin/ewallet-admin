@@ -27,9 +27,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Nickname</label>
                                             <label class="col-sm-9">
-                                            {% if realParent is false %}
-                                                <input type="text" class="form-control" readonly value="********">
-                                            {% else %}
+                                            {% if realParent == 2 %}
                                                 <div class="input-group">
                                                     <input type="text" class="form-control" readonly value="********">
                                                     <div class="input-group-btn">
@@ -45,15 +43,15 @@
                                                         </ul>
                                                     </div>
                                                 </div>
+                                            {% else %}
+                                                <input type="text" class="form-control" readonly value="********">
                                             {% endif %}
                                             </label>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Password</label>
                                             <label class="col-sm-9">
-                                            {% if realParent is false %}
-                                                <input type="text" class="form-control" readonly value="********">
-                                            {% else %}
+                                            {% if realParent == 2 %}
                                                 <div class="input-group">
                                                     <input type="text" class="form-control" readonly value="********">
                                                     <div class="input-group-btn">
@@ -69,6 +67,8 @@
                                                         </ul>
                                                     </div>
                                                 </div>
+                                            {% else %}
+                                                <input type="text" class="form-control" readonly value="********">
                                             {% endif %}
                                             </label>
                                         </div>
@@ -90,7 +90,7 @@
                                                 <input type="text" placeholder="Code" class="form-control" value="GMT {{gmtDisplay}}" readonly>
                                             </label>
                                         </div>
-                                        {% if realParent is not false %}
+                                        {% if realParent == 2 %}
                                         <div class="form-group">
                                             <label class="col-xs-3 control-label">Status</label>
                                             <label class="col-xs-9">

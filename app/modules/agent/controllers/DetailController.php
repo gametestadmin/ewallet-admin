@@ -12,7 +12,7 @@ class DetailController extends \Backoffice\Controllers\ProtectedController
     {
         $view = $this->view;
 
-        $userId = $this->dispatcher->getParam("id");
+        $agentId = $this->dispatcher->getParam("id");
 
         $DLUser = new DLUser();
         $DLUserCurrency = new DLUserCurrency();
@@ -20,9 +20,9 @@ class DetailController extends \Backoffice\Controllers\ProtectedController
         $status = GlobalVariable::$threeLayerStatus;
 
         $parent = $this->_user;
-        $agent = $DLUser->getById($userId);
+        $agent = $DLUser->getById($agentId);
 
-        $userCurrency = $DLUserCurrency->getAllByUser($userId);
+        $userCurrency = $DLUserCurrency->getAllByUser($agentId);
         $userCurrencyData = count($userCurrency);
 
         if(!$agent){
@@ -30,35 +30,18 @@ class DetailController extends \Backoffice\Controllers\ProtectedController
             return $this->response->redirect("/".$this->_module."/".$this->_controller)->send();
         }
 
-//        if($parent->getId() != $agent->getParent()){
-//            $this->errorFlash("cannot_access");
-//            return $this->response->redirect("agent/list/")->send();
-//        }
-
         $agentSecurity = new Agent();
 
         $security = $agentSecurity->checkAgentAction($parent->getUsername(),$agent->getUsername());
-        if($security == false){
+        if($security == 4){
             $this->errorFlash("cannot_access_security");
             return $this->response->redirect("/agent/list")->send();
         }
 
-        // TODO : NOTE for view not child
-//        $parentUsername = \substr($agent->getUsername(), 0, \strlen($parent->getUsername()));
-//        if(($parent->getType() <> 0 && $parent->getType() <> 9) && $parent->getUsername() <> $parentUsername) {
-//            $this->errorFlash("cannot_access");
-//            return $this->response->redirect("/agent/list")->send();
-//        }
-//
-//        $realParent = true;
-//        if($parent->getId() != $agent->getParent()){
-//            $realParent = false;
-//        }
-
         $view->agent = $agent;
         $view->status = $status;
         $view->userCurrencyData = $userCurrencyData;
-        $view->realParent = $realParent;
+        $view->realParent = $security;
 
         \Phalcon\Tag::setTitle("Agent System - ".$this->_website->title);
     }

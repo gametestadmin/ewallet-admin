@@ -69,11 +69,11 @@ class GlobalVariable
     public function gameType($data){
         $gameType = "";
         if($data == 1){
-            $gameType = "Game Category";
+            $gameType = "Category Game";
         }elseif($data == 2){
-            $gameType = "Main Game";
+            $gameType = "Game";
         }elseif($data == 3){
-            $gameType = "Sub Game";
+            $gameType = "Subgame";
         }
 
         return $gameType;

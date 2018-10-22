@@ -33,8 +33,8 @@
         }, 3000);
     }
 
-    // For Notification
     $(document).ready(function() {
+        // For Notification
         $(".alert").show();
         $(".alert").addClass("in");
 
@@ -43,6 +43,21 @@
                 $(this).remove();
             });
         });
+
+        $( ".navbar-minimalize" ).click(function() {
+            var mini = $("body").hasClass("mini-navbar");
+            if(mini == true){
+                $(".large-logo").addClass("profile-element");
+                $(".mini-logo").removeClass("hide");
+            }else{
+                $(".mini-logo").addClass("hide");
+                $(".large-logo").removeClass("profile-element");
+            }
+        });
+        var active = $(".nav-header li").hasClass("active");
+        if(active == true){
+            $("li.active span.nav-label").addClass("nav-label-active");
+        }
     });
 
     window.setTimeout(function() {

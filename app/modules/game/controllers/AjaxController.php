@@ -23,14 +23,24 @@ class AjaxController extends \Backoffice\Controllers\ProtectedController
                 $category = $DLGame->getByCode($data['code'], $this->_categoryType);
                 $main = $DLGame->getByGameParent($category->getId());
 
+//                echo "<pre>";
+                $result = array();
                 if(count($main) == 0){
                     return false;
                 }else {
-                    foreach ($main as $key => $value) {
-                        $html = "<option value='" . $value->getCode() . "'>" . $value->getName() . "</option>";
-                        return $html;
+                    foreach ($main as $key) {
+                        $html = "<option value='" . $key->getCode() . "'>" . $key->getName() . "</option>";
+                        $result[] = $html;
+//                        var_dump($html);
                     }
+//                    die;
+                    return $result;
                 }
+//                var_dump($category->getId());
+//                foreach ($main as $key){
+//                    var_dump($key->getName());
+//                }
+//                die;
             }elseif(isset($data['mainCode'])){
                 $DLGame = new DLGame();
                 $DLProvider = new DLProviderGame();

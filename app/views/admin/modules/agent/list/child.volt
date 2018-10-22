@@ -29,7 +29,7 @@
                         <ul class="list-inline {{class}} text-center">
                             <li class="col-sm-1 hidden-xs list-group-item">{{i}}</li>
                             <li class="col-sm-3 col-xs-3 list-group-item">
-                                {% if agentData.type is not 5 %}
+                                {% if agentData.type <> 5 %}
                                     <a href="{{url(module~'/'~controller~'/'~action~'/'~agentData.id)}}"><u>{{agentData.username}}</u></a>
                                 {% else %}
                                     {{agentData.username}}

@@ -32,7 +32,11 @@
                         <ul class="list-inline {{class}} text-center">
                             <li class="col-sm-1 hidden-xs list-group-item">{{i}}</li>
                             <li class="col-sm-3 col-xs-3 list-group-item">
-                                <a href="{{url(router.getRewriteUri()~'/child/'~agentData.id)}}"><u>{{agentData.username}}</u></a>
+                                {% if agentData.type <> 5 %}
+                                    <a href="{{url(router.getRewriteUri()~'/child/'~agentData.id)}}"><u>{{agentData.username}}</u></a>
+                                {% else %}
+                                    {{agentData.username}}
+                                {% endif %}
                             </li>
                             <li class="col-sm-3 col-xs-3 list-group-item text-center"><strong class="text-{{agentData.parent_status|agentStatus|lower}}">{{agentData.parent_status|agentStatus}}</strong></li>
                             <li class="col-sm-3 col-xs-3 list-group-item text-center">

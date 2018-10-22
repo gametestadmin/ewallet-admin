@@ -20,14 +20,14 @@
                                     </div>
                                     {% endif %}
                                     <div class="col-sm-1 col-xs-2">
-                                        <select class="form-control code" name="code[]" id="code[]">
+                                        <select class="form-control code" name="code[]">
                                             {% for agentCode in code %}
                                                 <option value="{{agentCode}}">{{agentCode}}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
                                     <div class="col-sm-1 col-xs-2">
-                                        <select class="form-control code" name="code[]" id="code[]">
+                                        <select class="form-control code" name="code[]">
                                             {% for agentCode in code %}
                                                 <option value="{{agentCode}}">{{agentCode}}</option>
                                             {% endfor %}
@@ -35,7 +35,7 @@
                                     </div>
                                     {% if agent.type == 6 or agent.type == 5 %}
                                     <div class="col-sm-1 col-xs-2">
-                                        <select class="form-control code" name="code[]" id="code[]">
+                                        <select class="form-control code" name="code[]">
                                             {% for agentCode in code %}
                                                 <option value="{{agentCode}}">{{agentCode}}</option>
                                             {% endfor%}
@@ -44,7 +44,7 @@
                                     {% endif %}
                                     {% if agent.type == 5 %}
                                     <div class="col-sm-1 col-xs-2">
-                                        <select class="form-control code" name="code[]" id="code[]">
+                                        <select class="form-control code" name="code[]">
                                             {% for agentCode in code %}
                                                 <option value="{{agentCode}}">{{agentCode}}</option>
                                             {% endfor%}

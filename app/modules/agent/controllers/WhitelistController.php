@@ -4,6 +4,7 @@ namespace Backoffice\Agent\Controllers;
 use System\Datalayer\DLUser;
 use System\Datalayer\DLUserWhitelistIp;
 use System\Library\General\GlobalVariable;
+use System\Library\Security\Agent;
 
 class WhitelistController extends \Backoffice\Controllers\ProtectedController
 {
@@ -30,19 +31,25 @@ class WhitelistController extends \Backoffice\Controllers\ProtectedController
 
                 $data = $this->request->getPost();
                 $tab = $data['tab'];
-                $userId = $data['user'];
 //                if($this->_allowed == 0){
 //                    return $this->response->redirect($previousPage->previousPage()."#".$tab)->send();
 //                }
 
                 $DLUser = new DLUser();
                 $parent = $this->_user;
-                $agent = $DLUser->getById($userId);
+                $agent = $DLUser->getById($data['user']);
 
-                if($parent->getId() != $agent->getParent()){
-                    $this->errorFlash("cannot_access");
+                $agentSecurity = new Agent();
+
+                $security = $agentSecurity->checkAgentAction($parent->getUsername(),$agent->getUsername());
+                if($security <> 2){
+                    $this->errorFlash("cannot_access_security");
                     return $this->response->redirect("/agent/list")->send();
                 }
+//                if($parent->getId() != $agent->getParent()){
+//                    $this->errorFlash("cannot_access");
+//                    return $this->response->redirect("/agent/list")->send();
+//                }
 
                 $DLUserWhitelistIp = new DLUserWhitelistIp();
 
@@ -65,18 +72,25 @@ class WhitelistController extends \Backoffice\Controllers\ProtectedController
         $previousPage = new GlobalVariable();
 
         if ($this->request->getPost()) {
+
             $data = $this->request->getPost();
             $tab = $data['tab'];
-            $userId = $data['user'];
 
             $DLUser = new DLUser();
             $parent = $this->_user;
-            $agent = $DLUser->getById($userId);
+            $agent = $DLUser->getById($data['user']);
 
-            if($parent->getId() != $agent->getParent()){
-                $this->errorFlash("cannot_access");
+            $agentSecurity = new Agent();
+
+            $security = $agentSecurity->checkAgentAction($parent->getUsername(),$agent->getUsername());
+            if($security <> 2){
+                $this->errorFlash("cannot_access_security");
                 return $this->response->redirect("/agent/list")->send();
             }
+//            if($parent->getId() != $agent->getParent()){
+//                $this->errorFlash("cannot_access");
+//                return $this->response->redirect("/agent/list")->send();
+//            }
 
             try {
                 $this->db->begin();
@@ -100,20 +114,25 @@ class WhitelistController extends \Backoffice\Controllers\ProtectedController
     public function deleteAction()
     {
         $previousPage = new GlobalVariable();
-//        $currentId = $this->dispatcher->getParam("id");
         $data["agent_id"] = $this->dispatcher->getParam("id");
         $data["whitelist_id"] = $this->request->get("delete");
 
-        $userId = $data['agent_id'];
-
         $DLUser = new DLUser();
         $parent = $this->_user;
-        $agent = $DLUser->getById($userId);
+        $agent = $DLUser->getById($data['agent_id']);
 
-        if($parent->getId() != $agent->getParent()){
-            $this->errorFlash("cannot_access");
+        $agentSecurity = new Agent();
+
+        $security = $agentSecurity->checkAgentAction($parent->getUsername(),$agent->getUsername());
+        if($security <> 2){
+            $this->errorFlash("cannot_access_security");
             return $this->response->redirect("/agent/list")->send();
         }
+
+//        if($parent->getId() != $agent->getParent()){
+//            $this->errorFlash("cannot_access");
+//            return $this->response->redirect("/agent/list")->send();
+//        }
 
         $DLUserWhitelistIp = new DLUserWhitelistIp();
 

@@ -158,14 +158,14 @@
                 e.preventDefault();
                 $.ajax({
                     type: "POST",
-                    url: '{{url('game/ajax?action=sub')}}',
+                    url: "{{url('ajax/game/add')}}",
                     data: $('#form').serialize(),
-                    success: function(data) {
-                        if(data == "error"){
-                            alert(data);
+                    success: function(response) {
+                        //console.log(response);
+                        if(response == false){
+                            alert("Error");
                         }else{
-                        //alert(data);
-                            dataSplit = data.split("|");
+                            dataSplit = response.split("|");
                             mainCode = dataSplit[0];
                             mainName = dataSplit[1];
                             $("#main").append("<option value='"+mainCode+"'>"+mainName+"</option>");
@@ -202,17 +202,19 @@
                 }
                 $.ajax({
                     type: "POST",
-                    url: "{{url('game/ajax')}}",
+                    url: "{{url('ajax/game/list')}}",
                     data: { code : selectedCode }
-                }).done(function(data){
-                    console.log(data);
-                    if(data == false){
-                        $("#main").html("<option value=''>-Create One-</option>"+data);
+                }).done(function(response){
+                    //console.log(response);
+                    if(response == false){
+                        $("#main").html("<option value=''>-Create One-</option>");
                     }else{
+                        //console.log(response);
                         $("#result").val("");
                         $("#provider").val("");
                         $("#providerId").val(providerId);
-                        $("#main").html("<option value=''>-Choose One-</option>"+data);
+                        $("#main").html("<option value=''>-Choose One-</option>");
+                        $("#main").append(response);
                     }
                 });
             });

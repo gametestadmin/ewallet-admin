@@ -12,7 +12,8 @@ class BaseController extends Controller
 {
     protected $_website = false;
     protected $_user = null;
-    protected $_child = null;
+//    protected $_child = null;
+    protected $_realUser = null;
     protected $_environment = null;
     protected $_module = null;
     protected $_controller = null;
@@ -124,10 +125,12 @@ class BaseController extends Controller
         //Set user here
         if($this->session->has('user')){
             $this->_user = $this->session->get('user');
-            $this->_child = $this->session->get('child');
+//            $this->_child = $this->session->get('child');
+            $this->_realUser = $this->session->get('real_user');
         }
         $this->view->user = $this->_user;
-        $this->view->child = $this->_child;
+//        $this->view->child = $this->_child;
+        $this->view->real_user = $this->_realUser;
     }
 
     protected function _setNavigation()
@@ -135,8 +138,10 @@ class BaseController extends Controller
         //Get ACL for navigation
         if($this->session->has('sidebar')){
             $this->view->navigationlist = $this->session->get('sidebar') ;
-
         }
+//        echo "<pre>";
+//        var_dump($this->view->navigationlist);
+//        die;
 
     }
 

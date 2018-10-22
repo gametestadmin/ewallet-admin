@@ -78,7 +78,14 @@ class DLUser
 
     public function getByParent($parent)
     {
-        $user = User::findByParent($parent);
+        $user = User::find(
+            array(
+                "conditions" => "parent = :parent: AND type <> 10",
+                "bind" => array(
+                    "parent" => $parent
+                )
+            )
+        );
 
         return $user;
     }
