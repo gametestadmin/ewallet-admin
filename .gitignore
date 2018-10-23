@@ -1,5 +1,7 @@
 .idea
 app/config/config_app.php
+.idea/workspace.xml
+
 
 error.log
 var/*
