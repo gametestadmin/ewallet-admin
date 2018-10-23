@@ -92,7 +92,7 @@
                     this.value = previouslySelected;
                     return;
                 }
-                location.href = '/game/category/status/'+jQuery(this).val();
+                location.href = '/game/game/status/'+jQuery(this).val();
             });
         });
 
@@ -100,11 +100,19 @@
         var activeTab = url.substring(url.indexOf("#") + 1);
 
         if(url.includes("#") == true){
-            $(".tab").removeClass("active");
-            $("#head-" + activeTab).addClass("active");
+            if(activeTab == ""){
+                $(".tab-pane").removeClass("active");
+                $("#" + activeTab).addClass("active");
 
-            $(".tab-pane").removeClass("active");
-            $("#" + activeTab).addClass("active");
+                $("#head-tab-general").addClass("active");
+                $("#tab-general").addClass("active");
+            }else{
+                $(".tab").removeClass("active");
+                $("#head-" + activeTab).addClass("active");
+
+                $(".tab-pane").removeClass("active");
+                $("#" + activeTab).addClass("active");
+            }
         }else{
             $("#head-tab-general").addClass("active");
             $("#tab-general").addClass("active");

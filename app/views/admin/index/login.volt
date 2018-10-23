@@ -46,7 +46,7 @@
 <script>
     $('.captcha-box').on({
         'click': function(){
-            $('#captcha').attr('src','http://localhost.dev.admin/captcha');
+            $('#captcha').attr('src','{{base_url}}/captcha');
 
 
             //setTimeout( function(){

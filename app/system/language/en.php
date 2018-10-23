@@ -1,5 +1,5 @@
 <?php
-
+// TODO :: fix all language
 $messages = array(
     //module none
     "user" => "User",
@@ -27,20 +27,20 @@ $messages = array(
     //module name
     "setting" => "Setting",
     "currency" => "Currency",
-    "currency_list" => "List",
+    "currency_list" => "Currency",
     "currency_add" => "Add",
     "game" => "Game",
-    "provider" => "Provider",
-    "provider_list" => "List",
-    "provider_add" => "Add",
+    "provider_game" => "Provider",
+    "list_provider_game" => "List",
+    "add_provider_game" => "Add",
     "category" => "Category",
-    "category_list" => "List",
+    "category_list" => "Category",
     "category_add" => "Add",
-    "main" => "Main",
-    "main_list" => "List",
+    "main" => "Game",
+    "main_list" => "Game",
     "main_add" => "Add",
     "sub" => "SubGame",
-    "sub_list" => "List",
+    "sub_list" => "Sub game",
     "sub_add" => "Add",
     "agent" => "Agent",
     "agent_list" => "List",

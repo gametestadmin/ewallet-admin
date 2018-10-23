@@ -4,10 +4,10 @@
             <div class="col-xs-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title row">
-                        <h5>General</h5>
+                        <h5>Add Game</h5>
                     </div>
                     <div class="ibox-content row">
-                        <form class="form-horizontal col-xs-12" action="#" method="post">
+                        <form class="form-horizontal col-xs-12" action="{{url(router.getRewriteUri())}}" method="post">
                             <div class="form-group">
                                 <label class="col-xs-3 control-label">Provider Game</label>
                                 <label class="col-xs-9">
@@ -30,7 +30,7 @@
                                     </select>
                                 </label>
                                 <label class="col-xs-2 text-right">
-                                    <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#exampleModal">
+                                    <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#form-add-category">
                                         Add New
                                     </button>
                                 </label>
@@ -68,15 +68,19 @@
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="form-add-category" tabindex="-1" role="dialog" aria-labelledby="form-add-category-label" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form class="form-horizontal" action="{{url('#')}}" method="post" id="form">
+                <form class="form-horizontal" action="{{url(router.getRewriteUri())}}" method="post" id="form">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add New Categroy</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <label class="col-xs-6">
+                        <h4 class="modal-title" id="form-add-category-label">Add Category Game</h4>
+                    </label>
+                    <label class="col-xs-6">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </label>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">

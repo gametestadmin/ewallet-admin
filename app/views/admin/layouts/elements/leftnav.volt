@@ -2,28 +2,26 @@
     <div class="sidebar-collapse">
         <ul class="nav metismenu" id="side-menu">
             <li class="nav-header">
-                <div class="dropdown profile-element">
-                    <span><img alt="image" class="img-circle" src="{{assets_url}}thirdparty/img/profile.jpg" width="30%" /></span>
+                <div class="">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <div class="clear">
-                        <span class="block m-t-xs">
-                            <strong class="font-bold">Admin</strong> <b class="caret"></b>
+                        <span class="block">
+                            <img alt="image" class="large-logo img-responsive" src="{{assets_url}}admin/img/login-logo.png"/>
+
+                            <img alt="image" class="mini-logo hide" src="{{assets_url}}admin/img/icon-login-logo.png" width="65%"/>
                         </span>
                     </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                        <li><a href="profile.html">Profile</a></li>
-                        <li><a href="contacts.html">Contacts</a></li>
-                        <li><a href="mailbox.html">Mailbox</a></li>
+                        <li><a href="{{url('user/profile')}}">Profile</a></li>
                         <li class="divider"></li>
                         <li><a href="{{url('/logout')}}">Logout</a></li>
                     </ul>
                 </div>
             </li>
+            <li><hr class="header"></li>
             <li {%if module == ""%}class="active"{%endif%}>
                 <a href="{{url('/')}}"><i class="fa fa-th-large"></i><span class="nav-label">Home</span>
                 </a>
             </li>
-
 
             {% for modulename, modulelist in navigationlist %}
                 {% if modulename != 'user' %}
@@ -31,7 +29,7 @@
                     <a href="">
                         <i class="fa {{modulelist['icon']}}"></i>
                         <span class="nav-label">{{translate[modulelist['name']]}}</span>
-                        <span class="fa arrow"></span>
+                        <!--<span class="fa arrow"></span>-->
                     </a>
                     <ul class="nav nav-second-level collapse">
                 {% endif %}
@@ -42,7 +40,7 @@
                                     <a href="">
                                         <i class="fa {{controllerlist['icon']}}"></i>
                                         <b>{{translate[controllerlist['name']]}}</b>
-                                        <i class="fa arrow"></i>
+                                        <!--<i class="fa arrow"></i>-->
                                     </a>
                                     <ul class="nav nav-third-level collapse">
                             {% endif %}
@@ -55,14 +53,14 @@
                                   {% set controllername = "" %}
                               {% endif %}
                               {% if loop.length == 1 %}
-                                  <li {% if action == actionkey %}}class="active"{%endif%} >
+                                  <li {% if action == actionkey %}class="active"{%endif%}>
                                       <a href="{{url~modulename~'/'~controllername~actionLink}}">
                                         <i class="fa {{actionname['icon']}}"></i>
-                                        <b>{{ translate[actionname['name']] }}</b>
+                                        <span class="nav-label">{{ translate[actionname['name']] }}</span>
                                       </a>
                                   </li>
                               {% else %}
-                                  <li {% if action == actionkey %}}class="active"{%endif%} >
+                                  <li {% if action == actionkey %}class="active"{%endif%}>
                                       <a href="{{url~modulename~'/'~controllername~actionLink}}">
                                         <i class="fa {{actionname['icon']}}"></i>
                                         <b>{{ translate[actionname['name']] }}</b>
@@ -82,7 +80,6 @@
                 </li>
                 {% endif %}
             {% endfor %}
-
         </ul>
     </div>
 </nav>

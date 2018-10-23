@@ -6,6 +6,6 @@ class GameWhitelistIpFormAddWidget extends BaseWidget
 {
     public function getContent()
     {
-        return $this->setView('ip/add', []);
+        return $this->setView('ip/game/add', []);
     }
 }

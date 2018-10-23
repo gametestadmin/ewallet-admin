@@ -4,7 +4,7 @@
       <li class="col-xs-6 list-group-item">App Id</li>
       <li class="col-xs-5 list-group-item">App Secret</li>
     </ul>
-    <div style="height:300px; overflow:auto;">
+    <div style="height:200px; overflow:auto;">
     {% if user_auth is not null %}
         {% set i = 1 %}
         {% for userAuthData in user_auth %}

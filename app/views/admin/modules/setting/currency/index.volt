@@ -5,7 +5,8 @@
                 <div class="ibox float-e-margins">
                     <div class="ibox-title row">
                         <div class="row">
-                            <label class="col-xs-12 text-right">
+                            <label class="col-xs-6">Currency List</label>
+                            <label class="col-xs-6 text-right">
                                 <a href="{{router.getRewriteUri()~'/add'}}" class="btn btn-sm btn-info">Add</a>
                             </label>
                         </div>
@@ -88,5 +89,4 @@
             });
         });
     </script>
-
 {% endblock %}

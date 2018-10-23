@@ -5,7 +5,7 @@
             <form class="form-horizontal" action="{{url('agent/whitelist/add')}}" method="post" id="form">
             <div class="modal-header">
                 <label class="col-xs-6">
-                    <h3 class="modal-title" id="modalLabel">User Whitelist IP Form Add</h3>
+                    <span class="modal-title" id="modalLabel">Add Whitelist IP</span>
                 </label>
                 <label class="col-xs-6">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">

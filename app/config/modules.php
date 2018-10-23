@@ -25,5 +25,9 @@ $application->registerModules(array(
         'className' => 'Backoffice\Ajax\Module',
         'path' => __DIR__ . '/../modules/ajax/Module.php'
     ),
+    'provider' => array(
+        'className' => 'Backoffice\Provider\Module',
+        'path' => __DIR__ . '/../modules/provider/Module.php'
+    ),
 ));
 

@@ -3,6 +3,7 @@ namespace Backoffice\Agent\Controllers;
 
 use System\Datalayer\DLUser;
 use System\Library\General\GlobalVariable;
+use System\Library\Security\Agent;
 
 class ListController extends \Backoffice\Controllers\ProtectedController
 {
@@ -52,7 +53,7 @@ class ListController extends \Backoffice\Controllers\ProtectedController
     {
         $view = $this->view;
 
-        $userId = $this->dispatcher->getParam("id");
+        $agentId = $this->dispatcher->getParam("id");
 
         $limit = $this->_limit;
         $page = $this->_page;
@@ -68,17 +69,19 @@ class ListController extends \Backoffice\Controllers\ProtectedController
 
         $DLUser = new DLUser();
         $parent = $this->_user;
-        $agentList = $DLUser->getByParent($userId);
-        $agent = $DLUser->getById($userId);
+        $agent = $DLUser->getById($agentId);
+        $agentList = $DLUser->getByParent($agentId);
 
         if(!$agent){
             $this->errorFlash("undefined_id");
             return $this->response->redirect("/".$this->_module."/".$this->_controller)->send();
         }
-        $parentUsername = \substr($agent->getUsername(), 0, \strlen($parent->getUsername()));
 
-        if(($parent->getType() <> 0 && $parent->getType() <> 9) && $parent->getUsername() <> $parentUsername) {
-            $this->errorFlash("cannot_access");
+        $agentSecurity = new Agent();
+
+        $security = $agentSecurity->checkAgentAction($parent->getUsername(),$agent->getUsername());
+        if($security == 4){
+            $this->errorFlash("cannot_access_security");
             return $this->response->redirect("/agent/list")->send();
         }
 
@@ -101,40 +104,5 @@ class ListController extends \Backoffice\Controllers\ProtectedController
         $view->limit = $limit;
 
         \Phalcon\Tag::setTitle("Agent System - ".$this->_website->title);
-    }
-
-    public function statusAction()
-    {
-        $view = $this->view;
-
-        $previousPage = new GlobalVariable();
-        $currentId = $this->dispatcher->getParam("id");
-
-        $module = $this->router->getModuleName();
-        $controller = $this->router->getControllerName();
-
-        $currentId = explode("|",$currentId);
-        $id = $currentId[0];
-        $status = $currentId[1];
-
-        $DLUser = new DLUser();
-        $user = $DLUser->getById($id);
-        if(!isset($currentId) || !$user){
-            $this->flash->error("undefined_user");
-            $this->response->redirect($module."/".$controller."/")->send();
-        }
-
-        try {
-            $this->db->begin();
-
-            $DLUser->setAgentStatus($id,$status);
-
-            $this->db->commit();
-            $this->flash->success("status_changed");
-            $this->response->redirect($previousPage->previousPage())->send();
-        } catch (\Exception $e) {
-            $this->db->rollback();
-            $this->flash->error($e->getMessage());
-        }
     }
 }
