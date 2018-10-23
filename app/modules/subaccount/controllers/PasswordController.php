@@ -46,10 +46,9 @@ class PasswordController extends \Backoffice\Controllers\ProtectedController
                 $this->flash->error($e->getMessage());
             }
         }
+
+        $view->subaccountusername = $Child->getUsername() ;
         \Phalcon\Tag::setTitle("Reset Subaccount Password- ".$this->_website->title);
-
-
-
     }
 
 

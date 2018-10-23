@@ -19,9 +19,9 @@
                     <div class="ibox-content row">
                         <ul class="list-inline header-list text-center">
                           <li class="col-sm-1 col-xs-1 list-group-item">No</li>
-                          <li class="col-sm-3 col-xs-3 list-group-item">translate['username']</li>
-                          <li class="col-sm-3 col-xs-3 list-group-item">translate['nickname']</li>
-                          <li class="col-sm-3 col-xs-3 list-group-item">translate['status']</li>
+                          <li class="col-sm-3 col-xs-3 list-group-item">{{translate['username']|upper}}</li>
+                          <li class="col-sm-3 col-xs-3 list-group-item">{{translate['nickname']|upper}}</li>
+                          <li class="col-sm-3 col-xs-3 list-group-item">{{translate['status']|upper}}</li>
                           <li class="col-sm-2 col-xs-2 list-group-item">&nbsp;</li>
                         </ul>
                         {% set i = 1 %}
@@ -38,7 +38,7 @@
                                 <li class="col-sm-3 col-xs-3 list-group-item">
                                     <select class="status">
                                         {% for key, value in status %}
-                                            <option value="{{mainData.id~"|"~value}}" {% if mainData.status == value %}selected{% endif %}>{{key}}</option>
+                                            <option value="{{mainData.id~"|"~value}}" {% if mainData.status == value %}selected{% endif %}>{{ key|upper }}</option>
                                         {% endfor %}
                                     </select>
                                 </li>
