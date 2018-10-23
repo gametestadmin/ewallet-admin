@@ -1,6 +1,7 @@
 <?php
 namespace Backoffice\Agent\Controllers;
 
+use System\Library\Security\Agent;
 use System\Library\Security\User as SecurityUser ;
 use System\Datalayer\DLUser;
 use System\Library\General\GlobalVariable;
@@ -14,25 +15,33 @@ class PasswordController extends \Backoffice\Controllers\ProtectedController
         $agentId = $this->dispatcher->getParam("id");
 
         $DLUser = new DLUser();
-        $agent = $DLUser->getById($agentId);
         $parent = $this->_user;
+        $agent = $DLUser->getById($agentId);
 
         if(!isset($agentId) || !$agent){
             $this->flash->error("undefined_agent");
             $this->response->redirect($this->_module."/".$this->_controller."/")->send();
         }
 
-        if($parent->getId() != $agent->getParent()){
-            $this->errorFlash("cannot_access");
+        $agentSecurity = new Agent();
+
+        $security = $agentSecurity->checkAgentAction($parent->getUsername(),$agent->getUsername());
+        if($security <> 2){
+            $this->errorFlash("cannot_access_security");
             return $this->response->redirect("/agent/list")->send();
         }
 
-        $parentUsername = \substr($agent->getUsername(), 0, \strlen($parent->getUsername()));
-
-        if(($parent->getType() <> 0 && $parent->getType() <> 9) && $parent->getUsername() <> $parentUsername) {
-            $this->errorFlash("cannot_access");
-            return $this->response->redirect("/agent/list")->send();
-        }
+//        if($parent->getId() != $agent->getParent()){
+//            $this->errorFlash("cannot_access");
+//            return $this->response->redirect("/agent/list")->send();
+//        }
+//
+//        $parentUsername = \substr($agent->getUsername(), 0, \strlen($parent->getUsername()));
+//
+//        if(($parent->getType() <> 0 && $parent->getType() <> 9) && $parent->getUsername() <> $parentUsername) {
+//            $this->errorFlash("cannot_access");
+//            return $this->response->redirect("/agent/list")->send();
+//        }
 
         if ($this->request->getPost()) {
             try {
@@ -54,6 +63,9 @@ class PasswordController extends \Backoffice\Controllers\ProtectedController
                 $this->flash->error($e->getMessage());
             }
         }
+
+        $view->agent = $agent;
+
         \Phalcon\Tag::setTitle("Reset Agent Password- ".$this->_website->title);
     }
 }

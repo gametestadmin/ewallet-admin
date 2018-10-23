@@ -1,6 +1,7 @@
 <?php
 namespace Backoffice\Game\Controllers;
 
+use System\Datalayer\DLGame;
 use System\Datalayer\DLGameWhitelistIp;
 use System\Library\General\GlobalVariable;
 
@@ -74,6 +75,34 @@ class WhitelistController extends \Backoffice\Controllers\ProtectedController
                 $this->flash->error($e->getMessage());
             }
             $this->response->redirect($previousPage->previousPage() . "#" . $tab)->send();
+        }
+    }
+
+    public function deleteAction()
+    {
+        $previousPage = new GlobalVariable();
+        $data["agent_id"] = $this->dispatcher->getParam("id");
+        $data["whitelist_id"] = $this->request->get("delete");
+
+        $DLGameWhitelistIp = new DLGameWhitelistIp();
+
+        // TODO :: Temporary Code
+        if($this->_user->getType() != 9){
+            $this->flash->error("cannot_access");
+            return $this->response->redirect($previousPage->previousPage() . "#tab-ip")->send();
+        }
+
+        try {
+            $this->db->begin();
+
+            $DLGameWhitelistIp->delete($data["whitelist_id"]);
+
+            $this->db->commit();
+            $this->flash->success("ip_deleted");
+            $this->response->redirect($previousPage->previousPage() . "#tab-ip")->send();
+        } catch (\Exception $e) {
+            $this->db->rollback();
+            $this->flash->error($e->getMessage());
         }
     }
 }

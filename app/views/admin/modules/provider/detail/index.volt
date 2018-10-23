@@ -4,7 +4,7 @@
                 <div class="col-xs-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title row">
-                            <h5>General</h5>
+                            <h5>[{{provider.name}}] Detail</h5>
                         </div>
                         <div class="ibox-content row">
                             <form class="form-horizontal col-xs-12" action="#" method="post">
@@ -40,10 +40,10 @@
                                 <div class="form-group pull-right">
                                     <div class="col-xs-12">
                                         <label>
-                                            <a href="{{'/'~module~'/'~controller}}" class="btn btn-sm btn-danger">Back</a>
+                                            <a href="{{url('/'~module~'/list')}}" class="btn btn-sm btn-danger">Back</a>
                                         </label>
                                         <label>
-                                            <a href="{{'/'~module~'/'~controller~'/edit/'~provider.id}}" class="btn btn-sm btn-info">Edit</a>
+                                            <a href="{{url('/'~module~'/edit/'~provider.id)}}" class="btn btn-sm btn-info">Edit</a>
                                         </label>
                                     </div>
                                 </div>
@@ -68,7 +68,7 @@
                     this.value = previouslySelected;
                     return;
                 }
-                location.href = '/game/provider/status/'+jQuery(this).val();
+                location.href = '/{{module}}/status/'+jQuery(this).val();
             });
         });
     </script>

@@ -3,6 +3,7 @@ namespace Backoffice\Game\Controllers;
 
 use System\Datalayer\DLGame;
 use System\Datalayer\DLGameCurrency;
+use System\Datalayer\DLGameWhitelistIp;
 use System\Datalayer\DLProviderGame;
 use System\Library\General\GlobalVariable;
 

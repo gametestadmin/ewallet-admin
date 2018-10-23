@@ -4,7 +4,7 @@
         <div class="col-xs-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title row">
-                    <h5>{{controller|capitalize}} {{module|capitalize}}</h5>
+                    <h5>[{{game.name}}] Detail</h5>
                 </div>
                 <div class="ibox-content row">
                     <div class="tabs-container">
@@ -95,7 +95,7 @@
                     this.value = previouslySelected;
                     return;
                 }
-                location.href = '/game/category/status/'+jQuery(this).val();
+                location.href = '/game/sub/status/'+jQuery(this).val();
             });
 
             var url = window.location.href;

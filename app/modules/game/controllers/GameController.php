@@ -7,7 +7,7 @@ use System\Datalayer\DLProviderGame;
 use System\Datalayer\DLProviderGameEndpoint;
 use System\Library\General\GlobalVariable;
 
-class MainController extends \Backoffice\Controllers\ProtectedController
+class GameController extends \Backoffice\Controllers\ProtectedController
 {
     protected $_categoryType = 1;
     protected $_type = 2;

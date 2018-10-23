@@ -5,6 +5,12 @@ use System\Model\Currency;
 
 class DLCurrency {
 
+    public function getById($id){
+        $currency = Currency::findFirst($id);
+
+        return $currency;
+    }
+
     public function getAll(){
         $currency = Currency::find();
 
@@ -75,12 +81,19 @@ class DLCurrency {
         if(isset($data["symbol"]))$newCurrency->setSymbol($data['symbol']);
 
         if($newCurrency->save()){
+            $userCurrencyResult = false;
+
             $userCurrency = new DLUserCurrency();
-            $companyUser = array(
-                "user" => $data['user'],
-                "currency" => $newCurrency->getId(),
-            );
-            $userCurrencyResult = $userCurrency->create($companyUser);
+            $DLUser = new DLUser();
+            $companies = $DLUser->getCompany();
+            foreach ($companies as $company){
+                $userCurrencyResult = $userCurrency->create($company->getId(),$newCurrency->getId());
+            }
+//            $companyUser = array(
+//                "user" => $data['user'],
+//                "currency" => $newCurrency->getId(),
+//            );
+//            $userCurrencyResult = $userCurrency->create($companyUser);
             if(!$userCurrencyResult) {
                 throw new \Exception('error_create_currency');
             }

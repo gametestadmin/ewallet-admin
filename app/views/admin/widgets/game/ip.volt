@@ -10,7 +10,7 @@
           <li class="col-xs-8 list-group-item">IP</li>
           <li class="col-xs-2 list-group-item">&nbsp;</li>
         </ul>
-        <div style="height:300px; overflow:auto;">
+        <div style="height:200px; overflow:auto;">
         {% if page is not null %}
             {% set i = 1 %}
             {% for gameWhitelistIpData in page %}
@@ -23,7 +23,7 @@
                     <li class="col-sm-2 col-xs-2 list-group-item">{{i}}</li>
                     <li class="col-sm-8 col-xs-8 list-group-item"><span id="id_{{gameWhitelistIpData.id}}">{{gameWhitelistIpData.ip}}</span></li>
                     <li class="col-sm-2 col-xs-2 list-group-item">
-                        <span class="ip-edit fa fa-edit text-primary" data-id="{{gameWhitelistIpData.id}}" data-toggle="modal" data-target="#form-edit-ip"></span>
+                        <a href="{{url(module~'/whitelist/delete/'~game.id~'?delete='~gameWhitelistIpData.id)}}" class="delete"><span class="ip-edit fa fa-ban text-danger" title="delete"></span></a>
                     </li>
                 </ul>
                 {% set i = i +1 %}
@@ -37,3 +37,14 @@
 
 {{ widget('GameWhitelistIpFormAddWidget', []) }}
 {{ widget('GameWhitelistIpFormEditWidget', ["id": game.id]) }}
+
+<script>
+    $(document).ready(function(){
+        $(".delete").click(function(){
+            var conf = confirm('Are You Sure?');
+            if(!conf){
+                return false;
+            }
+        });
+    });
+</script>
