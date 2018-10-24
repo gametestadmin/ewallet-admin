@@ -4,10 +4,10 @@
                 <div class="col-xs-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title row">
-                            <h5>General</h5>
+                            <h5>Add Category Game</h5>
                         </div>
                         <div class="ibox-content row">
-                            <form class="form-horizontal col-xs-12" action="#" method="post">
+                            <form class="form-horizontal col-xs-12" action="{{url(router.getRewriteUri())}}" method="post">
                                 <div class="form-group">
                                     <label class="col-xs-3 control-label">Category Name</label>
                                     <label class="col-xs-9">

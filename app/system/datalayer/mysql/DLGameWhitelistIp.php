@@ -104,4 +104,15 @@ class DLGameWhitelistIp{
 
         return true;
     }
+
+    public function delete($ip){
+        $gameWhitelistIp = $this->getById($ip);
+
+        if(!$gameWhitelistIp->delete()){
+            throw new \Exception('error_delete_game_whitelist_ip');
+        }
+
+        return true;
+    }
+
 }

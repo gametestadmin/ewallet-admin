@@ -79,7 +79,7 @@ class DLProviderGame{
     public function validateEdit($data){
         if($this->checkByIdName($data['id'],$data['name'])){
             throw new \Exception('provider_name_exist');
-        }elseif(empty($data['timezone'])){
+        }elseif($data['timezone'] == ""){
             throw new \Exception('provider_timezone_empty');
         }elseif(empty($data['name'])){
             throw new \Exception('provider_name_empty');

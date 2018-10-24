@@ -4,7 +4,7 @@
         <div class="col-xs-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title row">
-                    <h5>{{controller|capitalize}} {{module|capitalize}}</h5>
+                    <h5>[{{agent.username}}] Detail</h5>
                 </div>
                 <div class="ibox-content row">
                     <div class="tabs-container">
@@ -13,7 +13,6 @@
                             <li id="head-tab-currency" class="tab"><a data-toggle="tab" href="#tab-currency">Currency</a></li>
                             <li id="head-tab-game" class="tab"><a data-toggle="tab" href="#tab-game">Game</a></li>
                             <li id="head-tab-ip" class="tab"><a data-toggle="tab" href="#tab-ip">Whitelist IP</a></li>
-                            <li id="head-tab-auth" class="tab"><a data-toggle="tab" href="#tab-auth">User Auth</a></li>
                         </ul>
                         <div class="tab-content padding-0">
                             <div id="tab-general" class="tab-pane">
@@ -27,43 +26,51 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Nickname</label>
-                                            <div class="col-sm-9">
+                                            <label class="col-sm-9">
+                                            {% if realParent == 1 or realParent == 3 %}
                                                 <div class="input-group">
+                                                    <input type="text" class="form-control" readonly value="********">
+                                                    <div class="input-group-btn">
+                                                        <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">
+                                                            <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu pull-right">
+                                                            <li>
+                                                                <a href="{{'/'~module~'/nickname/reset/'~agent.id}}" id="reset_nickname">
+                                                                    Reset Nickname
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            {% else %}
                                                 <input type="text" class="form-control" readonly value="********">
-                                                <div class="input-group-btn">
-                                                    <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">
-                                                        <span class="caret"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu pull-right">
-                                                        <li>
-                                                            <a href="{{'/'~module~'/nickname/reset/'~agent.id}}" id="reset_nickname">
-                                                                Reset Nickname
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                </div>
-                                            </div>
+                                            {% endif %}
+                                            </label>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Password</label>
-                                            <div class="col-sm-9">
+                                            <label class="col-sm-9">
+                                            {% if realParent == 1 or realParent == 3 %}
                                                 <div class="input-group">
+                                                    <input type="text" class="form-control" readonly value="********">
+                                                    <div class="input-group-btn">
+                                                        <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">
+                                                            <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu pull-right">
+                                                            <li>
+                                                                <a href="{{'/'~module~'/password/reset/'~agent.id}}">
+                                                                    Reset Password
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            {% else %}
                                                 <input type="text" class="form-control" readonly value="********">
-                                                <div class="input-group-btn">
-                                                    <button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">
-                                                        <span class="caret"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu pull-right">
-                                                        <li>
-                                                            <a href="{{'/'~module~'/password/reset/'~agent.id}}">
-                                                                Reset Password
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                </div>
-                                            </div>
+                                            {% endif %}
+                                            </label>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-xs-3 control-label">Agent</label>
@@ -83,6 +90,7 @@
                                                 <input type="text" placeholder="Code" class="form-control" value="GMT {{gmtDisplay}}" readonly>
                                             </label>
                                         </div>
+                                        {% if realParent == 1 or realParent == 3 %}
                                         <div class="form-group">
                                             <label class="col-xs-3 control-label">Status</label>
                                             <label class="col-xs-9">
@@ -93,6 +101,14 @@
                                                 </select>
                                             </label>
                                         </div>
+                                        {% else %}
+                                        <div class="form-group">
+                                            <label class="col-xs-3 control-label">Status</label>
+                                            <label class="col-xs-9">
+                                                <input type="text" placeholder="Code" class="form-control" value="{{agent.status|agentStatus}}" readonly>
+                                            </label>
+                                        </div>
+                                        {% endif %}
                                         <div class="form-group"><div class="hr-line-dashed"></div></div>
                                         <div class="form-group pull-right">
                                             <div class="col-xs-12">
@@ -116,17 +132,12 @@
                             </div>
                             <div id="tab-game" class="tab-pane">
                                 <div class="panel-body">
-                                    3
+                                    {{ widget('UserGameWidget', ["agentId" : agent.id,"loginId": user.id]) }}
                                 </div>
                             </div>
                             <div id="tab-ip" class="tab-pane">
                                 <div class="panel-body">
                                     {{ widget('UserWhitelistIpWidget', ["id" : agent.id,"loginId": user.id,"agentParent": agent.parent]) }}
-                                </div>
-                            </div>
-                            <div id="tab-auth" class="tab-pane">
-                                <div class="panel-body">
-                                    {{ widget('UserAuthWidget', ["userId" : agent.id]) }}
                                 </div>
                             </div>
                         </div>
@@ -151,9 +162,10 @@
                     this.value = previouslySelected;
                     return;
                 }
-                location.href = '/agent/detail/status/'+jQuery(this).val();
+                location.href = '/{{module}}/status/'+jQuery(this).val();
             });
         });
+
         $(document).ready(function(){
             $("a#reset_nickname").click(function(){
                 var conf = confirm('Are You Sure?');

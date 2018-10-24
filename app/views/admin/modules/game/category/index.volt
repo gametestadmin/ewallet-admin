@@ -5,7 +5,8 @@
                 <div class="ibox float-e-margins">
                     <div class="ibox-title row">
                         <div class="row">
-                            <label class="col-xs-12 text-right">
+                            <label class="col-xs-6">Category Game List</label>
+                            <label class="col-xs-6 text-right">
                                 <a href="{{router.getRewriteUri()~'/add'}}" class="btn btn-sm btn-info">Add</a>
                             </label>
                         </div>
@@ -16,7 +17,7 @@
                           <li class="col-sm-3 col-xs-3 list-group-item">Code</li>
                           <li class="col-sm-4 col-xs-4 list-group-item">Name</li>
                           <li class="col-sm-2 col-xs-3 list-group-item">Status</li>
-                          <li class="col-sm-2 col-xs-2 list-group-item">&nbsp;</li>
+                          <li class="col-sm-2 col-xs-2 list-group-item">Action</li>
                         </ul>
                         {% set i = 1 %}
                         {% for categoryData in page %}

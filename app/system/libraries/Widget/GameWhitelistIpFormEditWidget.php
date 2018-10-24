@@ -7,7 +7,7 @@ class GameWhitelistIpFormEditWidget extends BaseWidget
 {
     public function getContent()
     {
-        return $this->setView('ip/edit', [
+        return $this->setView('ip/game/edit', [
             'gameId' => $this->params["id"],
         ]);
     }

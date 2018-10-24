@@ -7,7 +7,8 @@
                             <img src="{{assets_url}}admin/img/loading.gif">
                         </div>
                         <div class="ibox-title row">
-                            <h5>General</h5>
+                            {% set type = user.type - 1 %}
+                            <h5>Add {{type|agentType}}</h5>
                         </div>
                         <div class="ibox-content row">
                             <form method="post" action="{{router.getRewriteUri()}}" class="form-horizontal col-sm-12">
@@ -19,14 +20,14 @@
                                     </div>
                                     {% endif %}
                                     <div class="col-sm-1 col-xs-2">
-                                        <select class="form-control code" name="code[]" id="code[]">
+                                        <select class="form-control code" name="code[]">
                                             {% for agentCode in code %}
                                                 <option value="{{agentCode}}">{{agentCode}}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
                                     <div class="col-sm-1 col-xs-2">
-                                        <select class="form-control code" name="code[]" id="code[]">
+                                        <select class="form-control code" name="code[]">
                                             {% for agentCode in code %}
                                                 <option value="{{agentCode}}">{{agentCode}}</option>
                                             {% endfor %}
@@ -34,7 +35,7 @@
                                     </div>
                                     {% if agent.type == 6 or agent.type == 5 %}
                                     <div class="col-sm-1 col-xs-2">
-                                        <select class="form-control code" name="code[]" id="code[]">
+                                        <select class="form-control code" name="code[]">
                                             {% for agentCode in code %}
                                                 <option value="{{agentCode}}">{{agentCode}}</option>
                                             {% endfor%}
@@ -43,18 +44,16 @@
                                     {% endif %}
                                     {% if agent.type == 5 %}
                                     <div class="col-sm-1 col-xs-2">
-                                        <select class="form-control code" name="code[]" id="code[]">
+                                        <select class="form-control code" name="code[]">
                                             {% for agentCode in code %}
                                                 <option value="{{agentCode}}">{{agentCode}}</option>
                                             {% endfor%}
                                         </select>
                                     </div>
                                     {% endif %}
-                                    <div class="col-xs-2">
+                                    <div class="col-xs-3">
+                                        <span id="check-availablity" class="available fa"></span>
                                         <button class="btn btn-sm btn-warning" id="check-available">{{translate['check']}}</button>
-                                    </div>
-                                    <div class="col-sm-1 col-xs-2">
-                                        <span class="available fa"></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -77,6 +76,12 @@
                                     <label class="col-sm-3 control-label">Password</label>
                                     <label class="col-sm-9">
                                         <input type="password" class="form-control" name="password">
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Confirm Password</label>
+                                    <label class="col-sm-9">
+                                        <input type="password" class="form-control" name="confirm_password">
                                     </label>
                                 </div>
                                 <div class="form-group">

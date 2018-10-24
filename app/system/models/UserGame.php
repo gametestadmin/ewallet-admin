@@ -27,6 +27,12 @@ class UserGame extends \Phalcon\Mvc\Model
      *
      * @var integer
      */
+    protected $game_type;
+
+    /**
+     *
+     * @var integer
+     */
     protected $user_game_historical_position_taking;
 
     /**
@@ -40,6 +46,12 @@ class UserGame extends \Phalcon\Mvc\Model
      * @var integer
      */
     protected $status;
+
+    /**
+     *
+     * @var integer
+     */
+    protected $disabled;
 
     /**
      * Method to set the value of field id
@@ -76,6 +88,19 @@ class UserGame extends \Phalcon\Mvc\Model
     public function setGame($game)
     {
         $this->game = $game;
+
+        return $this;
+    }
+
+    /**
+     * Method to set the value of field game_type
+     *
+     * @param integer $game_type
+     * @return $this
+     */
+    public function setGameType($game_type)
+    {
+        $this->game_type = $game_type;
 
         return $this;
     }
@@ -120,6 +145,19 @@ class UserGame extends \Phalcon\Mvc\Model
     }
 
     /**
+     * Method to set the value of field disabled
+     *
+     * @param integer $disabled
+     * @return $this
+     */
+    public function setDisabled($disabled)
+    {
+        $this->disabled = $disabled;
+
+        return $this;
+    }
+
+    /**
      * Returns the value of field id
      *
      * @return integer
@@ -150,6 +188,16 @@ class UserGame extends \Phalcon\Mvc\Model
     }
 
     /**
+     * Returns the value of field game_type
+     *
+     * @return integer
+     */
+    public function getGameType()
+    {
+        return $this->game_type;
+    }
+
+    /**
      * Returns the value of field user_game_historical_position_taking
      *
      * @return integer
@@ -177,6 +225,16 @@ class UserGame extends \Phalcon\Mvc\Model
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Returns the value of field disabled
+     *
+     * @return integer
+     */
+    public function getDisabled()
+    {
+        return $this->disabled;
     }
 
     /**

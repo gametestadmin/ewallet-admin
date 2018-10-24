@@ -5,7 +5,7 @@
             <form class="form-horizontal" action="{{url('game/auth/edit')}}" method="post" id="form">
             <div class="modal-header">
                 <label class="col-xs-6">
-                    <h3 class="modal-title" id="modalLabel">Edit Auth</h3>
+                    <h3 class="modal-title" id="modalLabel">API Authentication Edit</h3>
                 </label>
                 <label class="col-xs-6">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">

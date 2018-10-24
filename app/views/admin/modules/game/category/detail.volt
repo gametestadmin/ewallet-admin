@@ -4,7 +4,7 @@
                 <div class="col-xs-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title row">
-                            <h5>General</h5>
+                            <h5>[{{category.name}}] Detail</h5>
                         </div>
                         <div class="ibox-content row">
                             <form class="form-horizontal col-xs-12" action="#" method="post">

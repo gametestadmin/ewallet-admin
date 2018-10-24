@@ -1,11 +1,14 @@
 .idea
 
+/app/config/config_app.php
+/app/config/config.php
+/app/config/config_app.json
+/app/config/config_app.php
+
 error.log
 
+/var
 /var/*
+
 /cache/
 /config/development/
-app/config/config.php
-app/config/config_app.php
-app/config/config_app.json
-var/

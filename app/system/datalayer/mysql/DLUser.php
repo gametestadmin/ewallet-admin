@@ -6,6 +6,12 @@ use System\Model\User;
 
 class DLUser
 {
+    public function getCompany()
+    {
+        $company = User::findByType(9);
+
+        return $company;
+    }
 
     public function createSubaccount($data)
     {
@@ -70,10 +76,16 @@ class DLUser
         return $user;
     }
 
-
     public function getByParent($parent)
     {
-        $user = User::findByParent($parent);
+        $user = User::find(
+            array(
+                "conditions" => "parent = :parent: AND type <> 10",
+                "bind" => array(
+                    "parent" => $parent
+                )
+            )
+        );
 
         return $user;
     }
@@ -109,6 +121,7 @@ class DLUser
         return $user->save();
     }
 
+    //TODO: CHANGE TO setUserStatus
     public function setStatus($user, $status)
     {
         $user->setStatus($status);
@@ -138,6 +151,7 @@ class DLUser
         if (isset($data["code"])) $data['code'] = \filter_var(\strip_tags(\addslashes($data['code'])), FILTER_SANITIZE_STRING);
         if (isset($data["agent_code"])) $data['agent_code'] = \filter_var(\strip_tags(\addslashes($data['agent_code'])), FILTER_SANITIZE_STRING);
         if (isset($data["password"])) $data['password'] = \filter_var(\strip_tags(\addslashes($data['password'])), FILTER_SANITIZE_STRING);
+        if (isset($data["confirm_password"])) $data['confirm_password'] = \filter_var(\strip_tags(\addslashes($data['confirm_password'])), FILTER_SANITIZE_STRING);
 
         return $data;
     }
@@ -153,6 +167,8 @@ class DLUser
             throw new \Exception('timezone_empty');
         } elseif ($data['password'] == "") {
             throw new \Exception('password_empty');
+        } elseif ($data['confirm_password'] != $data['password']) {
+            throw new \Exception('invalid_confirm_password');
         }
 
         return true;
@@ -160,8 +176,8 @@ class DLUser
 
     public function validateEditAgent($data){
 
-        if($this->checkAgent($data['nickname'],$data['id'])){
-            throw new \Exception('username_exist');
+        if($data['id'] == ""){
+            throw new \Exception('undefined_agent');
         } elseif($data['timezone'] == ""){
             throw new \Exception('timezone_empty');
         }
@@ -227,8 +243,6 @@ class DLUser
         $agent = $this->getById($data['id']);
 
         if(isset($data["timezone"]))$agent->setTimezone($data['timezone']);
-        if(isset($data["nickname"]))$agent->setNickname($data['nickname']);
-        if(isset($data["nickname"]))$agent->setResetNickname(0);
 
         if(!$agent->save()){
             throw new \Exception('agent_edit_error');
@@ -237,39 +251,143 @@ class DLUser
         return $agent;
     }
 
-    protected function setParentStatus($id, $status){
-        $user = User::findFirstById($id);
-        $user->setStatus($status);
-        $user->save();
+    public function setAgentStatus($id, $status){
+        $this->setUserStatus($id, $status);
 
         return true;
     }
 
-    protected function setChildStatus($id, $status){
+    protected function setUserStatus($id, $status){
+//        $user = User::findFirstById($id);
+        $user = $this->getById($id);
+        $user->setStatus($status);
+        $user->save();
+
+
+        // get agent game
+
+        $this->setChildParentStatus($id, $status, $user->getParentStatus());
+
+        return true;
+    }
+
+//    protected function setChildParentStatus($id, $status){
+    protected function setChildParentStatus($parentId, $parentStatus, $grandParentStatus){
+        $childParentStatus = 1;
+        if($grandParentStatus == 0 || $parentStatus == 0){
+            $childParentStatus = 0;
+        }else if($grandParentStatus == 2 || $parentStatus == 2){
+            $childParentStatus = 2;
+        }
+
+        //get childs
+//        $childs = User::findByParent($parentId);
+        $childs = $this->getByParent($parentId);
+
+        foreach ($childs as $child){
+            $child->setParentStatus($childParentStatus);
+            $child->save();
+
+            //change all childs parent status
+            $this->setChildParentStatus($child->getId(), $child->getStatus(), $childParentStatus);
+        }
+
+        // get subaccount
+
+
+        // get agent game
+
+
+        /*
+         * TODO: CLEAN THIS
+         */
+        /*
         $user = User::findFirstById($id);
 
         if($user) {
             $userParent = User::findByParent($user->getId());
 
             foreach ($userParent as $key => $value) {
-                if($status == 1 && ($value->getParentStatus() == 2 || $value->getParentStatus() == 0)){
-                    $childStatus = 1;
-                }elseif($status == 2){
-                    if($user->getStatus() != 0 && $value->getParentStatus() == 2 || $value->getParentStatus() == 1){
+//                $childStatus = $status;
+//                echo "<pre>";
+//                var_dump("parentId = ".$user->getId());
+//                var_dump("parentId ".$user->getId()." status = ".$value->getStatus());
+//                var_dump("parentId ".$user->getId()." parent status = ".$value->getParentStatus());
+//                var_dump("childId = ".$value->getId());
+//                var_dump("childId ".$value->getId()." status = ".$value->getStatus());
+//                var_dump("childId ".$value->getId()." parent status = ".$value->getParentStatus());
+
+                if($user->getStatus() == $status){
+                    $childStatus = $status;
+                }
+                elseif($status == 1){
+//                    var_dump(1);
+                    if($value->getParentStatus() == 2 && $value->getStatus() == 1 || $value->getParentStatus() == 1 && $value->getStatus() == 2){
                         $childStatus = 2;
-                    } elseif($user->getStatus() == 0){
+                    }elseif($user->getParentStatus() == 0 && $user->getStatus() == 1 || $user->getParentStatus() == 1 && $user->getStatus() == 0){
+                        $childStatus = 0;
+                    }else{
+                        $childStatus = 1;
+                    }
+//                    $childStatus = 1;
+                }elseif($status == 2){
+//                    var_dump(2);
+                    if($value->getParentStatus() == 2 && $value->getStatus() == 1 || $value->getParentStatus() == 1 && $value->getStatus() == 2){
+                        $childStatus = 2;
+                    }elseif($user->getParentStatus() == 2 && $user->getStatus() == 1 || $user->getParentStatus() == 1 && $user->getStatus() == 2){
+                        $childStatus = 2;
+                    }else{
                         $childStatus = 0;
                     }
                 }else{
+//                    var_dump(0);
                     $childStatus = 0;
                 }
+//                die;
+//                if($status == 1){
+//                    if($value->getParentStatus() == 2 || $value->getParentStatus() == 0) {
+//                        if($user->getStatus() != 0){
+//                            if($user->getStatus() == 1){
+//                                if($value->getParentStatus() == 0){
+//                                    $childStatus = 0;
+//                                }else{
+//                                    $childStatus = 1;
+//                                }
+//                            }elseif($user->getStatus() == 2){
+//                                if($value->getParentStatus() == 0) {
+//                                    $childStatus = 0;
+//                                }else{
+//                                    $childStatus = 2;
+//                                }
+//                            }
+//                        }else{
+//                            $childStatus = 0;
+//                        }
+//                    }
+//                }elseif($status == 2){
+//                    if($value->getParentStatus() == 2 || $value->getParentStatus() == 1){
+//                        if($user->getStatus() != 0){
+//                            if($user->getStatus() == 1) {
+//                                $childStatus = 2;
+//                            }
+//                        }
+//                        else{
+//                            $childStatus = 0;
+//                        }
+//                    }
+//                }else{
+//                    $childStatus = 0;
+//                }
 
                 $value->setParentStatus($childStatus);
                 $value->save();
 
-                self::setChildStatus($value->getId(), $childStatus);
+//                self::setChildStatus($value->getId(), $childStatus);
+                $this->setChildStatus($value->getId(), $childStatus);
             }
         }
+        */
+
         return true;
     }
 

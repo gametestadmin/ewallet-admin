@@ -1,8 +1,10 @@
 <?php
 namespace Backoffice\Agent\Controllers;
 
+use System\Datalayer\DLUser;
 use System\Datalayer\DLUserWhitelistIp;
 use System\Library\General\GlobalVariable;
+use System\Library\Security\Agent;
 
 class WhitelistController extends \Backoffice\Controllers\ProtectedController
 {
@@ -28,11 +30,26 @@ class WhitelistController extends \Backoffice\Controllers\ProtectedController
                 $this->db->begin();
 
                 $data = $this->request->getPost();
-
                 $tab = $data['tab'];
-                if($this->_allowed == 0){
-                    return $this->response->redirect($previousPage->previousPage()."#".$tab)->send();
+//                if($this->_allowed == 0){
+//                    return $this->response->redirect($previousPage->previousPage()."#".$tab)->send();
+//                }
+
+                $DLUser = new DLUser();
+                $parent = $this->_user;
+                $agent = $DLUser->getById($data['user']);
+
+                $agentSecurity = new Agent();
+
+                $security = $agentSecurity->checkAgentAction($parent->getUsername(),$agent->getUsername());
+                if($security <> 1 && $security <> 3){
+                    $this->errorFlash("cannot_access_security");
+                    return $this->response->redirect("/agent/list")->send();
                 }
+//                if($parent->getId() != $agent->getParent()){
+//                    $this->errorFlash("cannot_access");
+//                    return $this->response->redirect("/agent/list")->send();
+//                }
 
                 $DLUserWhitelistIp = new DLUserWhitelistIp();
 
@@ -55,8 +72,25 @@ class WhitelistController extends \Backoffice\Controllers\ProtectedController
         $previousPage = new GlobalVariable();
 
         if ($this->request->getPost()) {
+
             $data = $this->request->getPost();
             $tab = $data['tab'];
+
+            $DLUser = new DLUser();
+            $parent = $this->_user;
+            $agent = $DLUser->getById($data['user']);
+
+            $agentSecurity = new Agent();
+
+            $security = $agentSecurity->checkAgentAction($parent->getUsername(),$agent->getUsername());
+            if($security <> 1 && $security <> 3){
+                $this->errorFlash("cannot_access_security");
+                return $this->response->redirect("/agent/list")->send();
+            }
+//            if($parent->getId() != $agent->getParent()){
+//                $this->errorFlash("cannot_access");
+//                return $this->response->redirect("/agent/list")->send();
+//            }
 
             try {
                 $this->db->begin();
@@ -80,18 +114,36 @@ class WhitelistController extends \Backoffice\Controllers\ProtectedController
     public function deleteAction()
     {
         $previousPage = new GlobalVariable();
-        $currentId = $this->dispatcher->getParam("id");
+        $data["agent_id"] = $this->dispatcher->getParam("id");
+        $data["whitelist_id"] = $this->request->get("delete");
+
+        $DLUser = new DLUser();
+        $parent = $this->_user;
+        $agent = $DLUser->getById($data['agent_id']);
+
+        $agentSecurity = new Agent();
+
+        $security = $agentSecurity->checkAgentAction($parent->getUsername(),$agent->getUsername());
+        if($security <> 1 && $security <> 3){
+            $this->errorFlash("cannot_access_security");
+            return $this->response->redirect("/agent/list")->send();
+        }
+
+//        if($parent->getId() != $agent->getParent()){
+//            $this->errorFlash("cannot_access");
+//            return $this->response->redirect("/agent/list")->send();
+//        }
 
         $DLUserWhitelistIp = new DLUserWhitelistIp();
 
         try {
             $this->db->begin();
 
-            $DLUserWhitelistIp->delete($currentId);
+            $DLUserWhitelistIp->delete($data["whitelist_id"]);
 
             $this->db->commit();
             $this->flash->success("ip_deleted");
-            $this->response->redirect($previousPage->previousPage())->send();
+            $this->response->redirect($previousPage->previousPage() . "#tab-ip")->send();
         } catch (\Exception $e) {
             $this->db->rollback();
             $this->flash->error($e->getMessage());

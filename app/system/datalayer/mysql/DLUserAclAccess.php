@@ -6,14 +6,64 @@ use System\Model\UserAclResource;
 
 class DLUserAclAccess{
 
-    public function getById($user){
-        $acl = UserAclAccess::query()
-            ->where("user = :user: and status = 1 ")
-            ->bind(array("user" => $user ))
-            ->orderBy("sidebar_order")
-            ->execute();
+    public function getById($user , $subaccount = false ){
+        if($subaccount){
+            $acl = UserAclAccess::query()
+                ->where("user = :user: and module != 'user' ")
+                ->bind(array("user" => $user ))
+                ->orderBy("sidebar_order")
+                ->execute();
+        } else {
+            $acl = UserAclAccess::query()
+                ->where("user = :user: and status = 1 ")
+                ->bind(array("user" => $user ))
+                ->orderBy("sidebar_order")
+                ->execute();
+        }
 
         return $acl;
+    }
+
+    public function getByIdParentSubaccount($user, $subaccount = false){
+        if($subaccount){
+            $acl = UserAclAccess::query()
+                ->where("user = :user: and module != 'subaccount'  and module != 'user' and status = 1 ")
+                ->bind(array( "user" => $user ))
+                ->orderBy("sidebar_order")
+                ->execute();
+        }else{
+            $acl = UserAclAccess::query()
+                ->where("user = :user: and status = 1 ")
+                ->bind(array( "user" => $user ))
+                ->orderBy("sidebar_order")
+                ->execute();
+        }
+
+        return $acl;
+    }
+
+    public function checkParent($id , $user){
+        $acl = UserAclAccess::query()
+            ->where("user = :user: and id= :id: and status = 1 ")
+            ->bind(array(
+                "user" => $user,
+                "id" => $id
+                ))
+            ->execute();
+
+        return $acl ;
+    }
+
+    public function checkChild($id , $user){
+        $acl = UserAclAccess::query()
+            ->where("user = :user: and parent=:id: ")
+            ->bind(array(
+                "user" => $user,
+                "id" => $id
+            ))
+            ->execute();
+
+        return $acl ;
     }
 
     public function getByIdMinSubaccount($user){
@@ -28,6 +78,17 @@ class DLUserAclAccess{
 
     public function getByArrayId($data){
         $module = UserAclAccess::query()
+            ->inWhere('id', $data)
+            ->orderBy("sidebar_order")
+            ->execute();
+
+        return $module ;
+    }
+
+    public function getByArrayIdParent($data , $user){
+        $module = UserAclAccess::query()
+            ->where("user = :user: and status = 1 ")
+            ->bind(array( "user" => $user ))
             ->inWhere('id', $data)
             ->orderBy("sidebar_order")
             ->execute();
@@ -104,6 +165,19 @@ class DLUserAclAccess{
         return true ;
     }
 
+    //update all status into 0 by providing the acl(object) for the subaccount
+    public function setACLSubaccountFalse($acl){
+        foreach ($acl as $aclrow){
+            if($aclrow->getModule() != 'user' )
+            $newacl = $aclrow->setStatus(0);
+            if(!$newacl->save()){
+                throw new \Exception($newacl->getMessages());
+            }
+        }
+
+        return true ;
+    }
+
     public function setAclAccess($id, $data){
         $aclAccess = new UserAclAccess();
 
@@ -120,6 +194,26 @@ class DLUserAclAccess{
         if(!$aclAccess->save()){
             throw new \Exception($aclAccess->getMessages());
         }
+        return $aclAccess;
+    }
+
+    public function setAclAccessWithStatus($id, $data , $status){
+        $aclAccess = new UserAclAccess();
+        $aclAccess->setUser($id);
+        $aclAccess->setParent($data->getId());
+        $aclAccess->setModule($data->getModule());
+        $aclAccess->setController($data->getController());
+        $aclAccess->setAction($data->getAction());
+        $aclAccess->setSidebar($data->getSidebar());
+        $aclAccess->setSidebarName($data->getSidebarName());
+        $aclAccess->setSidebarIcon($data->getSidebarIcon());
+        $aclAccess->setSidebarOrder($data->getSidebarOrder());
+        $aclAccess->setStatus($status);
+
+        if(!$aclAccess->save()){
+            throw new \Exception($aclAccess->getMessages());
+        }
+        return $aclAccess;
     }
 
 }

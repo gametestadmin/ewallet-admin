@@ -22,14 +22,39 @@ class GlobalVariable
     public static $providerGameEndpointType = array(
         'Login' => 1,
         'Register' => 2,
-        'Transfer In' => 3,
-        'Transfer Out' => 4,
-        'Transfer History' => 5,
-        'User Balance' => 6,
-        'Game Record Transfer' => 7,
-        'Game Record Seamless' => 8,
-        'Game Record Daily Transfer' => 9,
-        'Game Record Daily Seamless' => 10,
+        'User Information' => 3,
+        'User Balance' => 4,
+        '(Transfer) Transaction In' => 5,
+        '(Transfer) Transaction Out' => 6,
+        '(Transfer) Transaction Status' => 7,
+        '(Transfer) Transaction History' => 8,
+        '(Transfer) Transaction Daily' => 9,
+        '(Transfer) Game Record' => 10,
+        '(Seamless) Transaction Bet' => 11,
+        '(Seamless) Transaction History' => 12,
+        '(Seamless) Transaction Daily' => 13,
+        '(Seamless) Game Record' => 14,
+        'Statement Daily' => 15,
+        'Statement Detail' => 16,
+    );
+
+    public static $providerGameEndpointTypes = array(
+        1 => "Login",
+        2 => 'Register',
+        3 => 'User Information',
+        4 => 'User Balance',
+        5 => '(Transfer) Transaction In',
+        6 => '(Transfer) Transaction Out',
+        7 => '(Transfer) Transaction Status',
+        8 => '(Transfer) Transaction History',
+        9 => '(Transfer) Transaction Daily',
+        10 => '(Transfer) Game Record',
+        11 => '(Seamless) Transaction Bet',
+        12 => '(Seamless) Transaction History',
+        13 => '(Seamless) Transaction Daily',
+        14 => '(Seamless) Game Record',
+        15 => 'Statement Daily',
+        16 => 'Statement Detail',
     );
 
     public static $agentType = array(
@@ -44,11 +69,11 @@ class GlobalVariable
     public function gameType($data){
         $gameType = "";
         if($data == 1){
-            $gameType = "Game Category";
+            $gameType = "Category Game";
         }elseif($data == 2){
-            $gameType = "Main Game";
+            $gameType = "Game";
         }elseif($data == 3){
-            $gameType = "Sub Game";
+            $gameType = "Subgame";
         }
 
         return $gameType;

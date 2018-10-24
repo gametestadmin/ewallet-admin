@@ -5,8 +5,14 @@
                 <b class="fa fa-bars header-menu-minimalize"></b>
             </a>
             <span class="header-menu-information">
-                <b class="header-info-user"> {{ user.username }} </b>
-                <b class="header-info-code"> {{ user.code }} </b>
+                <b class="header-info-user"> {{ real_user.username }} </b>
+                <b class="header-info-code">
+                {% if real_user.id == user.id %}
+                    {{ user.type|agentType }}
+                {% else %}
+                    SUBACCOUNT
+                {% endif %}
+                </b>
                 <b class="header-info-cur"> Currency </b>
             </span>
         </div>

@@ -6,11 +6,11 @@
             </button>
         </div>
         <ul class="list-inline header-list text-center">
-          <li class="col-sm-1 col-xs-1 list-group-item">ID</li>
-          <li class="col-sm-3 col-xs-3 list-group-item">Symbol</li>
+          <li class="col-sm-1 col-xs-1 list-group-item">No</li>
+          <li class="col-sm-1 col-xs-1 list-group-item">Symbol</li>
           <li class="col-sm-3 col-xs-3 list-group-item">Code</li>
-          <li class="col-sm-3 col-xs-3 list-group-item">Name</li>
-          <li class="col-sm-2 col-xs-2 list-group-item">&nbsp;</li>
+          <li class="col-sm-5 col-xs-5 list-group-item">Name</li>
+          <li class="col-sm-2 col-xs-2 list-group-item">Default</li>
         </ul>
         {% if page is not null %}
             {% set i = 1 %}
@@ -22,14 +22,16 @@
                 {% endif %}
                 <ul class="list-inline {{class}} text-center">
                     <li class="col-sm-1 col-xs-1 list-group-item">{{i}}</li>
-                    <li class="col-sm-3 col-xs-3 list-group-item">{{gameCurrencyData.currency.symbol}}</li>
+                    <li class="col-sm-1 col-xs-1 list-group-item">{{gameCurrencyData.currency.symbol}}</li>
                     <li class="col-sm-3 col-xs-3 list-group-item">{{gameCurrencyData.currency.code}}</li>
-                    <li class="col-sm-3 col-xs-3 list-group-item">{{gameCurrencyData.currency.name}}</li>
+                    <li class="col-sm-5 col-xs-5 list-group-item">{{gameCurrencyData.currency.name}}</li>
                     <li class="col-sm-2 col-xs-2 list-group-item">
                         {% if gameCurrencyData.default == 1 %}
-                            Default
+                            <i class="fa fa-check text-success" data-toggle="tooltip" data-placement="right" title="Default"></i>
                         {% else %}
-                            <a href="{{'/game/currency/edit/'~game.id~'?default='~gameCurrencyData.id~'&tab=tab-currency'}}">Make Default</a>
+                            <a href="{{'/game/currency/edit/'~game.id~'?default='~gameCurrencyData.id~'&tab=tab-currency'}}">
+                                <span class="fa fa-times text-danger"></span>
+                            </a>
                         {%endif%}
                     </li>
                 </ul>
@@ -39,6 +41,9 @@
             <h4 class="text-center">-No data-</h4>
         {% endif %}
     </form>
+    <small class="col-xs-12 text-left">
+        *<span class="fa fa-times text-danger"></span> = Not Default
+    </small>
 
     <div class="row text-center">
         <div class="col-xs-12">
@@ -56,4 +61,9 @@
     </div>
 </div>
 
-{{ widget('GameCurrencyFormAddWidget', []) }}
+{{ widget('GameCurrencyFormAddWidget', ['gameId' : game.id,'gameParent' : game.game_parent,'gameType' : game.type]) }}
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
