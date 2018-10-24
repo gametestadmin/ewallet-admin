@@ -33,7 +33,7 @@ class StatusController extends \Backoffice\Controllers\ProtectedController
         $agentSecurity = new Agent();
 
         $security = $agentSecurity->checkAgentAction($parent->getUsername(),$agent->getUsername());
-        if($security <> 2){
+        if($security <> 1 && $security <> 3){
             $this->errorFlash("cannot_access_security");
             return $this->response->redirect("/agent/list")->send();
         }

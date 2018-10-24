@@ -33,7 +33,8 @@ class DetailController extends \Backoffice\Controllers\ProtectedController
         $agentSecurity = new Agent();
 
         $security = $agentSecurity->checkAgentAction($parent->getUsername(),$agent->getUsername());
-        if($security == 4){
+
+        if($security == false){
             $this->errorFlash("cannot_access_security");
             return $this->response->redirect("/agent/list")->send();
         }

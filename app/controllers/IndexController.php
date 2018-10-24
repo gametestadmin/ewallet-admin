@@ -23,6 +23,7 @@ class IndexController extends \Backoffice\Controllers\BaseController
 //            var_dump($acl);
 //            die;
 
+//            $this->view->menu = "home";
 
             \Phalcon\Tag::setTitle($this->_website->title);
         }
