@@ -28,7 +28,7 @@
                 <li {%if module == modulename %}class="active"{%endif%}>
                     <a href="">
                         <i class="fa {{modulelist['icon']}}"></i>
-                        <span class="nav-label">{{translate[modulelist['name']]}}</span>
+                        <span class="nav-label">{{ translate[modulelist['name']]|upper }}</span>
                         <!--<span class="fa arrow"></span>-->
                     </a>
                     <ul class="nav nav-second-level collapse">
@@ -39,7 +39,7 @@
                                 <li {% if controller == controllername %}class="active" {%endif%}>
                                     <a href="">
                                         <i class="fa {{controllerlist['icon']}}"></i>
-                                        <b>{{translate[controllerlist['name']]}}</b>
+                                        <b>{{ translate[controllerlist['name']]|upper }}</b>
                                         <!--<i class="fa arrow"></i>-->
                                     </a>
                                     <ul class="nav nav-third-level collapse">
@@ -56,14 +56,14 @@
                                   <li {% if action == actionkey %}class="active"{%endif%}>
                                       <a href="{{url~modulename~'/'~controllername~actionLink}}">
                                         <i class="fa {{actionname['icon']}}"></i>
-                                        <span class="nav-label">{{ translate[actionname['name']] }}</span>
+                                        <span class="nav-label">{{ translate[actionname['name']]|upper }}</span>
                                       </a>
                                   </li>
                               {% else %}
                                   <li {% if action == actionkey %}class="active"{%endif%}>
                                       <a href="{{url~modulename~'/'~controllername~actionLink}}">
                                         <i class="fa {{actionname['icon']}}"></i>
-                                        <b>{{ translate[actionname['name']] }}</b>
+                                        <b>{{ translate[actionname['name']]|upper }}</b>
                                       </a>
                                   </li>
                               {% endif %}

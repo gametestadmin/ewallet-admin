@@ -1,4 +1,5 @@
 .idea
+.idea/workspace.xml
 
 /app/config/config_app.php
 /app/config/config.php
