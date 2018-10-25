@@ -4,23 +4,16 @@
             <div class="col-xs-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title row">
-                        <h5> <label class="col-xs-12">
-                            {{module|capitalize}}
-                            {% if controller != "index" %}
-                                >
-                                {{controller|capitalize}}
-                            {% endif %}
-                            {% if action != "index" %}
-                                >
-                                {{action|capitalize}}
-                            {% endif %}
-                        </label> </h5>
+                        <h5> <label class="col-xs-12"> {{ translate[subaccounttitle]|upper }} </label> </h5>
                     </div>
                     <div class="ibox-content row">
                         <form class="form-horizontal col-xs-12" action="#" method="post">
                             <div class="form-group">
                                 <label class="col-xs-3 control-label">{{translate['username']|upper }}</label>
-                                <label class="col-xs-9">
+                                <label class="col-xs-2">
+                                    <input type="text" disabled class="form-control uppercase" value="{{user.username}}SUB">
+                                </label>
+                                <label class="col-xs-7">
                                     <input type="text" class="form-control uppercase" name="username" placeholder="{{translate['username']|upper }}">
                                 </label>
                             </div>

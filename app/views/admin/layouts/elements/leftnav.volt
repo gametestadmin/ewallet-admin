@@ -22,7 +22,6 @@
                 <a href="{{url('/')}}"><i class="fa fa-th-large"></i><span class="nav-label">Home</span>
                 </a>
             </li>
-
             {% for modulename, modulelist in navigationlist %}
                 {% if modulename != 'user' %}
                 <li {%if module == modulename %}class="active"{%endif%}>
@@ -53,14 +52,18 @@
                                   {% set controllername = "" %}
                               {% endif %}
                               {% if loop.length == 1 %}
-                                  <li {% if action == actionkey %}class="active"{%endif%}>
+                                  <li {% if action == actionkey and controller == controllername and module == modulename %} class="active" {%endif%} >
                                       <a href="{{url~modulename~'/'~controllername~actionLink}}">
                                         <i class="fa {{actionname['icon']}}"></i>
-                                        <span class="nav-label">{{ translate[actionname['name']]|upper }}</span>
+                                        {% if modulename == 'user' %}
+                                            <span class="nav-label">{{ translate[actionname['name']]|upper }}</span>
+                                        {% else %}
+                                            <b>{{ translate[actionname['name']]|upper }}</b>
+                                        {% endif %}
                                       </a>
                                   </li>
                               {% else %}
-                                  <li {% if action == actionkey %}class="active"{%endif%}>
+                                  <li {% if action == actionkey and controller == controllername and module == modulename %} class="active" {%endif%} >
                                       <a href="{{url~modulename~'/'~controllername~actionLink}}">
                                         <i class="fa {{actionname['icon']}}"></i>
                                         <b>{{ translate[actionname['name']]|upper }}</b>
@@ -72,7 +75,6 @@
                                     </ul>
                                 </li>
                             {% endif %}
-
                         {% endfor %}
                         {% endif %}
                 {% if modulename != 'user' %}

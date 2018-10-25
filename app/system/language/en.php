@@ -6,6 +6,9 @@ $messages = array(
     "change" => "change",
     "reset" => "reset",
     "edit" => "edit",
+    "login" => "login",
+    "logout" => "logout",
+    "captcha" => "captcha",
     "login_error" => "login error",
     "login_success" => "login success",
     "username" => "username",
@@ -38,6 +41,10 @@ $messages = array(
     "add_provider_game" => "Add",
     //button
     "check" => "Check Available",
+
+
+
+
 
 
     //sidebar
@@ -88,9 +95,7 @@ $messages = array(
     "currency" => "currency",
     "category" => "category",
     "main" => "game",
-    "sub" => "subGame",
-
-
+    "sub" => "subgame",
 
     //agent
     "god" => "god",

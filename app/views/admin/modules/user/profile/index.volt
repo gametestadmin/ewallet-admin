@@ -6,7 +6,7 @@
                         <div class="loading text-center" style="width:100%;position:absolute;z-index:9; top:25%; margin:0;padding:0;">
                             <img src="{{assets_url}}admin/img/loading.gif">
                         </div>
-                        {% if user.resetnickname == 1 %}
+                        {% if real_user.resetnickname == 1 %}
                             <div class="ibox-content row padding-0">
                                 <div class="profile-title col-xs-1 text-orange" >
                                     <b> {{translate['nickname']|upper}} </b>

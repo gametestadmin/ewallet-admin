@@ -19,7 +19,7 @@
                                 {% for modulename , moduleList in aclParent %}
                                     <div class="row subaccount-border-bottom level-1-area">
                                         <div class="col-xs-4 parent">
-                                            <input type="checkbox" data-level="parent" name="acl[]" id="{{modulename}}" disabled hidden {% if aclChild[moduleList['id']] is defined and aclChild[moduleList['id']] == 1 %}  checked="checked" {% endif %} value="{{moduleList['id']}}"   >
+                                            <input type="checkbox" data-level="parent" name="acl[]" id="{{modulename}}" disabled {% if aclChild[moduleList['id']] is defined and aclChild[moduleList['id']] == 1 %}  checked="checked" {% endif %} value="{{moduleList['id']}}"   >
                                             <b>{{ translate[moduleList['name']]|upper }}</b>
                                         </div>
                                         <div class="col-xs-8 level-2-area">
@@ -77,18 +77,44 @@
     <script>
 
         $('[data-level="child"]').change(function (event) {
-            var checked = $(this).is(':checked');
+            var checked = $(this).is(':checked') ;
+            var parent = $(this).closest('.level-1-area').find('[data-level="parent"]') ;
+            var child = $(this) ;
+            var subchild = $(this).parent().parent().find('[data-level="subchild"]') ;
+
             if (checked) {
-                $(this).closest('.level-1-area').find('[data-level="parent"]').attr('checked', true);
+                parent.prop('checked', true);
+                subchild.prop('checked', true);
+            } else {
+                parent.prop('checked', false);
+                subchild.prop('checked', false);
             }
         });
 
         $('[data-level="subchild"]').change(function (event) {
             var checked = $(this).is(':checked');
+            var parent = $(this).closest('.level-1-area').find('[data-level="parent"]') ;
+            var child =  $(this).closest('.level-3-area').parent().find('[data-level="child"]') ;
+            var subchild =  $(this) ;
+
             if (checked) {
-                $(this).closest('.level-1-area').find('[data-level="parent"]').attr('checked', true);
-                $(this).closest('.level-3-area').parent().find('[data-level="child"]').attr('checked', true);
+                parent.prop('checked', true);
+                child.prop('checked', true);
             }
+
+            //count child => active subchild
+            $totalSelected = 0;
+            $(this).closest('.level-3-area').find('[data-level="subchild"]').each(function() {
+                if($(this).is(':checked')){
+                    $totalSelected++;
+                }
+            });
+
+
+
+                console.log($totalSelected);
+            console.log( $(this).siblings );
+
         });
 
         $("form").submit(function() {

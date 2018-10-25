@@ -167,8 +167,8 @@ class BaseController extends Controller
     }
 
     protected function _checkResetPassword(){
-        if( $this->_user ){
-            if ($this->_user->getResetPassword() == 1){
+        if( $this->_realUser ){
+            if ($this->_realUser->getResetPassword() == 1){
                 if (!($this->_module == 'user' && $this->_controller == 'password' && $this->_action == 'change')){
                     $this->errorFlash('please_change_password');
 

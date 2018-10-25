@@ -24,7 +24,7 @@
                 {% endfor %}
             </select>
             <a href="{{url('/logout')}}" class="header-button-logout" >
-                Log out
+                {{ translate['logout']|upper }}
             </a>
         </div>
     </nav>
