@@ -27,7 +27,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Nickname</label>
                                             <label class="col-sm-9">
-                                            {% if realParent == 2 %}
+                                            {% if realParent == 1 or realParent == 3 %}
                                                 <div class="input-group">
                                                     <input type="text" class="form-control" readonly value="********">
                                                     <div class="input-group-btn">
@@ -51,7 +51,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Password</label>
                                             <label class="col-sm-9">
-                                            {% if realParent == 2 %}
+                                            {% if realParent == 1 or realParent == 3 %}
                                                 <div class="input-group">
                                                     <input type="text" class="form-control" readonly value="********">
                                                     <div class="input-group-btn">
@@ -90,7 +90,7 @@
                                                 <input type="text" placeholder="Code" class="form-control" value="GMT {{gmtDisplay}}" readonly>
                                             </label>
                                         </div>
-                                        {% if realParent == 2 %}
+                                        {% if realParent == 1 or realParent == 3 %}
                                         <div class="form-group">
                                             <label class="col-xs-3 control-label">Status</label>
                                             <label class="col-xs-9">
@@ -132,7 +132,7 @@
                             </div>
                             <div id="tab-game" class="tab-pane">
                                 <div class="panel-body">
-                                    3
+                                    {{ widget('UserGameWidget', ["agentId" : agent.id,"loginId": user.id]) }}
                                 </div>
                             </div>
                             <div id="tab-ip" class="tab-pane">
@@ -165,6 +165,7 @@
                 location.href = '/{{module}}/status/'+jQuery(this).val();
             });
         });
+
         $(document).ready(function(){
             $("a#reset_nickname").click(function(){
                 var conf = confirm('Are You Sure?');

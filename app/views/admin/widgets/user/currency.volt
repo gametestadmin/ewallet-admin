@@ -16,7 +16,7 @@
 <form class="form-horizontal col-xs-12">
     <div class="list-inline">
         <div class="text-right">
-        {% if realParent == 2 %}
+        {% if realParent == 1 or realParent == 3 %}
             <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#form-user-currency">
                 Add New
             </button>
@@ -28,7 +28,7 @@
       <li class="col-xs-1 list-group-item list">Symbol</li>
       <li class="col-xs-2 list-group-item list">Code</li>
       <li class="col-xs-4 list-group-item list">Name</li>
-      {% if realParent == 2 %}
+      {% if realParent == 1 or realParent == 3 %}
       <li class="col-xs-4 list-group-item list-act">
         <div class="text">Action</div>
         <div class="text">
@@ -53,7 +53,7 @@
                 <li class="col-xs-1 list-group-item">{{userCurrencyData.currency.symbol}}</li>
                 <li class="col-xs-2 list-group-item">{{userCurrencyData.currency.code}}</li>
                 <li class="col-xs-4 list-group-item">{{userCurrencyData.currency.name}}</li>
-                {% if realParent == 2 %}
+                {% if realParent == 1 or realParent == 3 %}
                 <li class="col-xs-2 list-group-item">
                     {% if userCurrencyData.default == 1 %}
                         <i class="fa fa-check text-success" data-toggle="tooltip" data-placement="right" title="Default"></i>

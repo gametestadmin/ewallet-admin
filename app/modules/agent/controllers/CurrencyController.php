@@ -42,7 +42,7 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
                 $agentSecurity = new Agent();
                 $security = $agentSecurity->checkAgentAction($parent->getUsername(),$agent->getUsername());
 
-                if($security <> 2){
+                if($security <> 1 && $security <> 3){
                     $this->errorFlash("cannot_access_security");
                     return $this->response->redirect("/agent/list")->send();
                 }
@@ -82,9 +82,10 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
         $agentSecurity = new Agent();
         $security = $agentSecurity->checkAgentAction($parent->getUsername(),$agent->getUsername());
 
-        if($security <> 2){
+        if($security <> 1 && $security <> 3){
             $this->errorFlash("cannot_access_security");
-            return $this->response->redirect("/agent/list")->send();
+            return $this->response->redirect($previousPage->previousPage())->send();
+//            return $this->response->redirect("/agent/list")->send();
         }
 
         if($this->_allowed == 0){
@@ -123,9 +124,10 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
         $agentSecurity = new Agent();
         $security = $agentSecurity->checkAgentAction($parent->getUsername(),$agent->getUsername());
 
-        if($security <> 2){
+        if($security <> 1 && $security <> 3){
             $this->errorFlash("cannot_access_security");
-            return $this->response->redirect("/agent/list")->send();
+            return $this->response->redirect($previousPage->previousPage())->send();
+//            return $this->response->redirect("/agent/list")->send();
         }
 
         if($this->_allowed == 0){

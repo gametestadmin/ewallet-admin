@@ -12,6 +12,19 @@ class DLGameCurrency {
         return $gameCurrency;
     }
 
+    public function getByGameAndStatus($game){
+        $gameCurrency = GameCurrency::find(
+            array(
+                "conditions" => "game = :game: AND status = 1",
+                "bind" => array(
+                    "game" => $game
+                )
+            )
+        );
+
+        return $gameCurrency;
+    }
+
     public function getByGame($game){
         $gameCurrency = GameCurrency::findByGame($game);
 

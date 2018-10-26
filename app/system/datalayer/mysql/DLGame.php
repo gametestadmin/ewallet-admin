@@ -28,6 +28,20 @@ class DLGame{
         return $game;
     }
 
+    public function getByGameParentAndGame($category,$id){
+        $game = Game::findFirst(
+            array(
+                "conditions" => "game_parent = :category: AND id = :id:",
+                "bind" => array(
+                    "category" => $category,
+                    "id" => $id
+                )
+            )
+        );
+
+        return $game;
+    }
+
     public function getByCode($code, $type){
         $gameCategory = Game::findFirst(
             array(

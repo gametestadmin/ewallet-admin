@@ -19,7 +19,7 @@
                           <li class="col-sm-3 col-xs-3 list-group-item">Code</li>
                           <li class="col-sm-4 col-xs-4 list-group-item">Name</li>
                           <li class="col-sm-2 col-xs-3 list-group-item">Status</li>
-                          <li class="col-sm-2 col-xs-2 list-group-item">&nbsp;</li>
+                          <li class="col-sm-2 col-xs-2 list-group-item">Action</li>
                         </ul>
                         {% set i = 1 %}
                         {% for mainData in page %}

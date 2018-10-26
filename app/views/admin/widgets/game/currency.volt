@@ -10,7 +10,7 @@
           <li class="col-sm-1 col-xs-1 list-group-item">Symbol</li>
           <li class="col-sm-3 col-xs-3 list-group-item">Code</li>
           <li class="col-sm-5 col-xs-5 list-group-item">Name</li>
-          <li class="col-sm-2 col-xs-2 list-group-item">Action</li>
+          <li class="col-sm-2 col-xs-2 list-group-item">Default</li>
         </ul>
         {% if page is not null %}
             {% set i = 1 %}
