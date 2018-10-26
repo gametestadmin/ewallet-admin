@@ -30,7 +30,7 @@
                 <li class="col-xs-2 list-group-item"><strong class="text-{{agentSubGame.parent_status|gameStatus|lower}}">{{agentSubGame.parent_status|gameStatus}}</strong></li>
                 <li class="col-xs-2 list-group-item"><strong class="text-{{agentSubGame.status|gameStatus|lower}}">{{agentSubGame.status|gameStatus}}</strong></li>
                 <li class="col-xs-2 list-group-item">
-                    <a href="{{url(module~'/game/detail/'~agentSubGame.id)}}">
+                    <a href="{{url(module~'/subgame/detail/'~agentSubGame.id)}}">
                         <span class="fa fa-search text-danger"></span>
                     </a>
                 </li>

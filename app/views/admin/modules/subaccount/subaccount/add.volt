@@ -4,49 +4,44 @@
             <div class="col-xs-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title row">
-                        <h5> <label class="col-xs-12">
-                            {{module|capitalize}}
-                            {% if controller != "index" %}
-                                >
-                                {{controller|capitalize}}
-                            {% endif %}
-                            {% if action != "index" %}
-                                >
-                                {{action|capitalize}}
-                            {% endif %}
-                        </label> </h5>
+                        <h5> <label class="col-xs-12"> {{ translate[subaccounttitle]|upper }} </label> </h5>
                     </div>
-
-
-                            <div class="ibox-content row">
-                                <form class="form-horizontal col-xs-12" action="#" method="post">
-                                    <div class="form-group">
-                                        <label class="col-xs-3 control-label">{{translate['username']}}</label>
-                                        <label class="col-xs-9">
-                                            <input type="text" class="form-control uppercase" name="username" placeholder="{{translate['username']}}">
-                                        </label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-xs-3 control-label">{{translate['password']}}</label>
-                                        <label class="col-xs-9">
-                                            <input type="password" class="form-control" name="password"placeholder="{{translate['password']}}">
-                                        </label>
-                                    </div>
-                                    <div class="form-group"><div class="hr-line-dashed"></div></div>
-                                    <div class="form-group pull-right">
-                                        <div class="col-xs-12">
-                                            <label>
-                                                <a href="javascript:history.go(-1)" class="btn btn-sm btn-danger">Back</a>
-                                            </label>
-                                            <label>
-                                                <input type="submit" name="submit" class="btn btn-sm btn-primary" value="Add">
-                                            </label>
-                                        </div>
-                                    </div>
-                                </form>
+                    <div class="ibox-content row">
+                        <form class="form-horizontal col-xs-12" action="#" method="post">
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">{{translate['username']|upper }}</label>
+                                <label class="col-xs-2">
+                                    <input type="text" disabled class="form-control uppercase" value="{{user.username}}SUB">
+                                </label>
+                                <label class="col-xs-7">
+                                    <input type="text" class="form-control uppercase" name="username" placeholder="{{translate['username']|upper }}">
+                                </label>
                             </div>
-
-
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">{{translate['password']|upper }}</label>
+                                <label class="col-xs-9">
+                                    <input type="password" class="form-control" name="password" placeholder="{{translate['password']|upper }}">
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">{{translate['password_confirm']|upper }}</label>
+                                <label class="col-xs-9">
+                                    <input type="password" class="form-control" name="password_confirm" placeholder="{{translate['password_confirm']|upper }}">
+                                </label>
+                            </div>
+                            <div class="form-group"><div class="hr-line-dashed"></div></div>
+                            <div class="form-group pull-right">
+                                <div class="col-xs-12">
+                                    <label>
+                                        <a href="javascript:history.go(-1)" class="btn btn-sm btn-danger">Back</a>
+                                    </label>
+                                    <label>
+                                        <input type="submit" name="submit" class="btn btn-sm btn-primary" value="Add">
+                                    </label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

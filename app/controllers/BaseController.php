@@ -126,8 +126,11 @@ class BaseController extends Controller
         if($this->session->has('user')){
             $this->_user = $this->session->get('user');
 //            $this->_child = $this->session->get('child');
+        }
+        if($this->session->has('real_user')) {
             $this->_realUser = $this->session->get('real_user');
         }
+
         $this->view->user = $this->_user;
 //        $this->view->child = $this->_child;
         $this->view->real_user = $this->_realUser;
@@ -164,8 +167,8 @@ class BaseController extends Controller
     }
 
     protected function _checkResetPassword(){
-        if( $this->_user ){
-            if ($this->_user->getResetPassword() == 1){
+        if( $this->_realUser ){
+            if ($this->_realUser->getResetPassword() == 1){
                 if (!($this->_module == 'user' && $this->_controller == 'password' && $this->_action == 'change')){
                     $this->errorFlash('please_change_password');
 

@@ -64,7 +64,13 @@
         $(".alert").slideUp(500, function() {
             $(this).remove();
         });
-    }, 1231232000);
+
+    }, 2000);
+
+
+    $('#myModal').on('shown.bs.modal', function () {
+      $('#myInput').trigger('focus')
+    })
 </script>
 {% endblock %}
 

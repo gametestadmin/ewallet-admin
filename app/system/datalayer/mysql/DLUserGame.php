@@ -116,8 +116,8 @@ class DLUserGame
         if(isset($data["game"]))$agentGame->setGame($data['game']);
         if(isset($data["game_type"]))$agentGame->setGameType($data['game_type']);
         $agentGame->setUserGameHistoricalPositionTaking(null);
-        $agentGame->setParentStatus(1);
-        $agentGame->setStatus(1);
+        $agentGame->setParentStatus(0);
+        $agentGame->setStatus(0);
         $agentGame->setDisabled(0);
 
         $agentGame->save();
