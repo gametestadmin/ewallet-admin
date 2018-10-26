@@ -26,4 +26,14 @@ class Game
 
         return $provider->getName();
     }
+
+    public static function gameStatus($status)
+    {
+        $agentStatus = GlobalVariable::$threeLayerStatus;
+        foreach ($agentStatus as $key => $value) {
+            if($status == $value) {
+                return $key;
+            }
+        }
+    }
 }

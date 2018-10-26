@@ -6,7 +6,7 @@ use System\Datalayer\DLGame;
 use System\Datalayer\DLUserGame;
 use System\Library\General\GlobalVariable;
 
-class GameController extends \Backoffice\Controllers\ProtectedController
+class SubgameController extends \Backoffice\Controllers\ProtectedController
 {
     protected $_limit = 10;
     protected $_pages = 1;
