@@ -65,6 +65,11 @@
             $(this).remove();
         });
     }, 2000);
+
+
+    $('#myModal').on('shown.bs.modal', function () {
+      $('#myInput').trigger('focus')
+    })
 </script>
 {% endblock %}
 
