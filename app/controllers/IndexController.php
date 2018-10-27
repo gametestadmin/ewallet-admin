@@ -24,6 +24,7 @@ class IndexController extends \Backoffice\Controllers\BaseController
 //            var_dump($acl);
 //            die;
 
+//            $this->view->menu = "home";
 
 
 

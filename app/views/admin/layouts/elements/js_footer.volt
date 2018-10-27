@@ -64,6 +64,7 @@
         $(".alert").slideUp(500, function() {
             $(this).remove();
         });
+
     }, 2000);
 
 

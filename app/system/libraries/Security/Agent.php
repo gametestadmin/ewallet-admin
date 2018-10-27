@@ -8,12 +8,17 @@ class Agent
     public function checkAgentAction($parentUsername, $agentUsername, $checkType = 1){
         $dlUser = new DLUser();
         $parent = $dlUser->getByUsername($parentUsername);
+        $child = $dlUser->getByUsername($agentUsername);
 
         if($parent->getType() == 9) {
-            $realType = 3;
+            if($parent->getId() == $child->getParent()){
+                // company and real parent
+                $realType = 3;
+            }else{
+                // company and descendant
+                $realType = 4;
+            }
         }else {
-            $child = $dlUser->getByUsername($agentUsername);
-
             $directUsername = \substr($agentUsername, 0, \strlen($parentUsername));
 
             $realType = false;
@@ -27,9 +32,9 @@ class Agent
         }
 
         if($realType <= $checkType){
-            return true;
+            return $realType;
         }
 
-        return false;
+        return $realType;
     }
 }

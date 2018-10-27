@@ -2,38 +2,30 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cbc368e4-6403-41e1-89b9-1fe1d3b98ff3" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/modules/ajax/controllers/SubgameController.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/admin/less/sidebar.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/admin/modules/agent/subgame/detail.volt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/BaseController.php" afterPath="$PROJECT_DIR$/app/controllers/BaseController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/IndexController.php" afterPath="$PROJECT_DIR$/app/controllers/IndexController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/modules/agent/controllers/CurrencyController.php" afterPath="$PROJECT_DIR$/app/modules/agent/controllers/CurrencyController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/modules/agent/controllers/DetailController.php" afterPath="$PROJECT_DIR$/app/modules/agent/controllers/DetailController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/modules/agent/controllers/EditController.php" afterPath="$PROJECT_DIR$/app/modules/agent/controllers/EditController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/modules/agent/controllers/ListController.php" afterPath="$PROJECT_DIR$/app/modules/agent/controllers/ListController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/modules/agent/controllers/NicknameController.php" afterPath="$PROJECT_DIR$/app/modules/agent/controllers/NicknameController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/modules/agent/controllers/PasswordController.php" afterPath="$PROJECT_DIR$/app/modules/agent/controllers/PasswordController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/modules/agent/controllers/StatusController.php" afterPath="$PROJECT_DIR$/app/modules/agent/controllers/StatusController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/modules/agent/controllers/WhitelistController.php" afterPath="$PROJECT_DIR$/app/modules/agent/controllers/WhitelistController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/modules/ajax/controllers/GameController.php" afterPath="$PROJECT_DIR$/app/modules/ajax/controllers/GameController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/modules/game/controllers/AjaxController.php" afterPath="$PROJECT_DIR$/app/modules/game/controllers/AjaxController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/system/datalayer/mysql/DLGame.php" afterPath="$PROJECT_DIR$/app/system/datalayer/mysql/DLGame.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/system/datalayer/mysql/DLUser.php" afterPath="$PROJECT_DIR$/app/system/datalayer/mysql/DLUser.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/modules/agent/controllers/GameController.php" afterPath="$PROJECT_DIR$/app/modules/agent/controllers/GameController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/modules/subaccount/controllers/PasswordController.php" afterPath="$PROJECT_DIR$/app/modules/subaccount/controllers/PasswordController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/modules/subaccount/controllers/SubaccountController.php" afterPath="$PROJECT_DIR$/app/modules/subaccount/controllers/SubaccountController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/modules/user/controllers/PasswordController.php" afterPath="$PROJECT_DIR$/app/modules/user/controllers/PasswordController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/system/datalayer/mysql/DLUserGame.php" afterPath="$PROJECT_DIR$/app/system/datalayer/mysql/DLUserGame.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/system/language/en.php" afterPath="$PROJECT_DIR$/app/system/language/en.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/system/libraries/General/GlobalVariable.php" afterPath="$PROJECT_DIR$/app/system/libraries/General/GlobalVariable.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/system/libraries/Security/Agent.php" afterPath="$PROJECT_DIR$/app/system/libraries/Security/Agent.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/admin/index/login.volt" afterPath="$PROJECT_DIR$/app/views/admin/index/login.volt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/admin/layouts/elements/header.volt" afterPath="$PROJECT_DIR$/app/views/admin/layouts/elements/header.volt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/admin/layouts/elements/js_footer.volt" afterPath="$PROJECT_DIR$/app/views/admin/layouts/elements/js_footer.volt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/admin/layouts/elements/leftnav.volt" afterPath="$PROJECT_DIR$/app/views/admin/layouts/elements/leftnav.volt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/admin/modules/agent/add/index.volt" afterPath="$PROJECT_DIR$/app/views/admin/modules/agent/add/index.volt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/admin/modules/agent/detail/index.volt" afterPath="$PROJECT_DIR$/app/views/admin/modules/agent/detail/index.volt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/admin/modules/agent/list/child.volt" afterPath="$PROJECT_DIR$/app/views/admin/modules/agent/list/child.volt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/admin/modules/agent/list/index.volt" afterPath="$PROJECT_DIR$/app/views/admin/modules/agent/list/index.volt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/admin/modules/game/sub/add.volt" afterPath="$PROJECT_DIR$/app/views/admin/modules/game/sub/add.volt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/admin/widgets/user/currency.volt" afterPath="$PROJECT_DIR$/app/views/admin/widgets/user/currency.volt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/admin/widgets/user/ip.volt" afterPath="$PROJECT_DIR$/app/views/admin/widgets/user/ip.volt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/admin/less/header.less" afterPath="$PROJECT_DIR$/public/assets/admin/less/header.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/admin/modules/subaccount/password/reset.volt" afterPath="$PROJECT_DIR$/app/views/admin/modules/subaccount/password/reset.volt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/admin/modules/subaccount/subaccount/add.volt" afterPath="$PROJECT_DIR$/app/views/admin/modules/subaccount/subaccount/add.volt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/admin/modules/subaccount/subaccount/detail.volt" afterPath="$PROJECT_DIR$/app/views/admin/modules/subaccount/subaccount/detail.volt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/admin/modules/subaccount/subaccount/edit.volt" afterPath="$PROJECT_DIR$/app/views/admin/modules/subaccount/subaccount/edit.volt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/admin/modules/subaccount/subaccount/index.volt" afterPath="$PROJECT_DIR$/app/views/admin/modules/subaccount/subaccount/index.volt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/admin/modules/user/password/change.volt" afterPath="$PROJECT_DIR$/app/views/admin/modules/user/password/change.volt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/admin/modules/user/profile/index.volt" afterPath="$PROJECT_DIR$/app/views/admin/modules/user/profile/index.volt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/admin/widgets/user/subgame/list.volt" afterPath="$PROJECT_DIR$/app/views/admin/widgets/user/subgame/list.volt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/admin/less/sidebar.less" afterPath="$PROJECT_DIR$/public/assets/admin/less/sidebar.less" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/admin/less/style.less" afterPath="$PROJECT_DIR$/public/assets/admin/less/style.less" />
     </list>
     <ignored path="admin.iws" />
@@ -55,101 +47,51 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="SubController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/modules/game/controllers/SubController.php">
+      <file leaf-file-name="add.volt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/admin/widgets/user/subgame/add.volt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="71" column="45" selection-start-line="71" selection-start-column="45" selection-end-line="71" selection-end-column="45" />
+            <state relative-caret-position="138">
+              <caret line="20" column="124" selection-start-line="20" selection-start-column="124" selection-end-line="20" selection-end-column="124" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Agent.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/system/libraries/Security/Agent.php">
+      <file leaf-file-name="DLUserGame.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/system/datalayer/mysql/DLUserGame.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+            <state relative-caret-position="294">
+              <caret line="112" column="37" selection-start-line="112" selection-start-column="37" selection-end-line="112" selection-end-column="37" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DetailController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/modules/agent/controllers/DetailController.php">
+      <file leaf-file-name="detail.volt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/admin/modules/agent/game/detail.volt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="14" column="16" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
+            <state relative-caret-position="90">
+              <caret line="6" column="108" selection-start-line="6" selection-start-column="108" selection-end-line="6" selection-end-column="108" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="login.volt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/admin/index/login.volt">
+      <file leaf-file-name="detail.volt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/admin/modules/agent/subgame/detail.volt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="393">
-              <caret line="48" column="50" selection-start-line="48" selection-start-column="50" selection-end-line="48" selection-end-column="50" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="leftnav.volt" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/views/admin/layouts/elements/leftnav.volt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="213">
-              <caret line="23" column="17" selection-start-line="23" selection-start-column="17" selection-end-line="23" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BaseController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/BaseController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="307">
-              <caret line="141" column="14" selection-start-line="141" selection-start-column="14" selection-end-line="143" selection-end-column="14" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="IndexController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/IndexController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="118">
-              <caret line="82" column="54" selection-start-line="82" selection-start-column="54" selection-end-line="82" selection-end-column="54" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="head.volt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/admin/layouts/elements/head.volt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
+            <state relative-caret-position="-675">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="header.volt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/admin/layouts/elements/header.volt">
+      <file leaf-file-name="list.volt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/admin/widgets/user/subgame/list.volt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="12" column="30" selection-start-line="12" selection-start-column="30" selection-end-line="12" selection-end-column="30" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SubgameController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/modules/ajax/controllers/SubgameController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="33" selection-start-line="7" selection-start-column="33" selection-end-line="7" selection-end-column="33" />
+            <state relative-caret-position="378">
+              <caret line="35" column="21" selection-start-line="35" selection-start-column="21" selection-end-line="35" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -170,57 +112,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/views/admin/widgets/currency/user/add.volt" />
-        <option value="$PROJECT_DIR$/app/system/datalayer/mysql/DLUserCurrency.php" />
-        <option value="$PROJECT_DIR$/app/views/admin/widgets/auth/edit.volt" />
-        <option value="$PROJECT_DIR$/app/views/admin/widgets/endpoint/edit.volt" />
-        <option value="$PROJECT_DIR$/app/modules/game/controllers/EndpointController.php" />
-        <option value="$PROJECT_DIR$/app/system/datalayer/mysql/DLProviderGameEndpoint.php" />
-        <option value="$PROJECT_DIR$/app/views/admin/widgets/endpoint/add.volt" />
-        <option value="$PROJECT_DIR$/app/system/libraries/Widget/EndpointFormAddWidget.php" />
-        <option value="$PROJECT_DIR$/app/config/services.php" />
-        <option value="$PROJECT_DIR$/app/system/libraries/Volt/Endpoint.php" />
-        <option value="$PROJECT_DIR$/app/views/admin/widgets/game/endpoint.volt" />
-        <option value="$PROJECT_DIR$/app/views/admin/widgets/game/currency.volt" />
-        <option value="$PROJECT_DIR$/app/system/libraries/Widget/GameCurrencyFormAddWidget.php" />
-        <option value="$PROJECT_DIR$/app/views/admin/widgets/currency/game/add.volt" />
-        <option value="$PROJECT_DIR$/app/system/datalayer/mysql/DLGameCurrency.php" />
-        <option value="$PROJECT_DIR$/app/views/admin/modules/subaccount/subaccount/detail.volt" />
-        <option value="$PROJECT_DIR$/app/system/language/en.php" />
-        <option value="$PROJECT_DIR$/app/system/datalayer/mysql/DLUser.php" />
-        <option value="$PROJECT_DIR$/app/views/admin/modules/agent/list/child.volt" />
-        <option value="$PROJECT_DIR$/app/views/admin/modules/agent/list/index.volt" />
-        <option value="$PROJECT_DIR$/app/system/libraries/Widget/UserCurrencyWidget.php" />
-        <option value="$PROJECT_DIR$/app/views/admin/widgets/user/ip.volt" />
-        <option value="$PROJECT_DIR$/app/views/admin/modules/agent/detail/index.volt" />
-        <option value="$PROJECT_DIR$/app/views/admin/widgets/user/currency.volt" />
-        <option value="$PROJECT_DIR$/app/modules/agent/controllers/StatusController.php" />
-        <option value="$PROJECT_DIR$/app/modules/agent/controllers/NicknameController.php" />
-        <option value="$PROJECT_DIR$/app/modules/agent/controllers/WhitelistController.php" />
-        <option value="$PROJECT_DIR$/app/modules/agent/controllers/PasswordController.php" />
-        <option value="$PROJECT_DIR$/app/modules/agent/controllers/EditController.php" />
-        <option value="$PROJECT_DIR$/app/modules/agent/controllers/ListController.php" />
-        <option value="$PROJECT_DIR$/app/modules/agent/controllers/CurrencyController.php" />
-        <option value="$PROJECT_DIR$/app/modules/agent/controllers/DetailController.php" />
-        <option value="$PROJECT_DIR$/public/assets/admin/less/style.less" />
-        <option value="$PROJECT_DIR$/public/assets/thirdparty/css/style.css" />
-        <option value="$PROJECT_DIR$/app/views/admin/layouts/elements/js_footer.volt" />
-        <option value="$PROJECT_DIR$/app/views/admin/modules/agent/add/index.volt" />
-        <option value="$PROJECT_DIR$/public/assets/admin/less/sidebar.less" />
-        <option value="$PROJECT_DIR$/public/assets/admin/less/header.less" />
-        <option value="$PROJECT_DIR$/app/modules/game/controllers/AjaxController.php" />
-        <option value="$PROJECT_DIR$/app/system/datalayer/mysql/DLGame.php" />
-        <option value="$PROJECT_DIR$/app/modules/ajax/controllers/SubgameController.php" />
-        <option value="$PROJECT_DIR$/app/modules/ajax/controllers/GameController.php" />
         <option value="$PROJECT_DIR$/app/views/admin/modules/game/sub/add.volt" />
         <option value="$PROJECT_DIR$/app/system/libraries/General/GlobalVariable.php" />
-        <option value="$PROJECT_DIR$/app/system/libraries/Security/Agent.php" />
         <option value="$PROJECT_DIR$/app/views/admin/index/login.volt" />
         <option value="$PROJECT_DIR$/app/modules/agent/controllers/AddController.php" />
-        <option value="$PROJECT_DIR$/app/controllers/IndexController.php" />
         <option value="$PROJECT_DIR$/app/views/admin/layouts/elements/header.volt" />
         <option value="$PROJECT_DIR$/app/controllers/BaseController.php" />
         <option value="$PROJECT_DIR$/app/views/admin/layouts/elements/leftnav.volt" />
+        <option value="$PROJECT_DIR$/app/views/admin/widgets/game/currency.volt" />
+        <option value="$PROJECT_DIR$/app/modules/agent/controllers/DetailController.php" />
+        <option value="$PROJECT_DIR$/app/controllers/IndexController.php" />
+        <option value="$PROJECT_DIR$/app/modules/agent/controllers/CurrencyController.php" />
+        <option value="$PROJECT_DIR$/app/views/admin/widgets/user/currency.volt" />
+        <option value="$PROJECT_DIR$/app/views/admin/widgets/user/ip.volt" />
+        <option value="$PROJECT_DIR$/app/modules/agent/controllers/WhitelistController.php" />
+        <option value="$PROJECT_DIR$/app/modules/agent/controllers/EditController.php" />
+        <option value="$PROJECT_DIR$/app/modules/agent/controllers/StatusController.php" />
+        <option value="$PROJECT_DIR$/app/modules/agent/controllers/NicknameController.php" />
+        <option value="$PROJECT_DIR$/app/modules/agent/controllers/PasswordController.php" />
+        <option value="$PROJECT_DIR$/app/modules/agent/controllers/ListController.php" />
+        <option value="$PROJECT_DIR$/app/system/libraries/Security/Agent.php" />
+        <option value="$PROJECT_DIR$/app/views/admin/modules/provider/list/index.volt" />
+        <option value="$PROJECT_DIR$/app/views/admin/modules/game/category/index.volt" />
+        <option value="$PROJECT_DIR$/app/views/admin/modules/game/game/index.volt" />
+        <option value="$PROJECT_DIR$/app/views/admin/modules/game/sub/index.volt" />
+        <option value="$PROJECT_DIR$/app/views/admin/modules/setting/currency/index.volt" />
+        <option value="$PROJECT_DIR$/app/views/admin/modules/agent/list/index.volt" />
+        <option value="$PROJECT_DIR$/app/system/models/UserGame.php" />
+        <option value="$PROJECT_DIR$/app/views/admin/modules/agent/detail/index.volt" />
+        <option value="$PROJECT_DIR$/public/index.php" />
+        <option value="$PROJECT_DIR$/app/system/datalayer/mysql/DLGameCurrency.php" />
+        <option value="$PROJECT_DIR$/app/system/datalayer/mysql/DLGame.php" />
+        <option value="$PROJECT_DIR$/app/modules/ajax/controllers/AgentController.php" />
+        <option value="$PROJECT_DIR$/app/views/admin/widgets/user/game/add.volt" />
+        <option value="$PROJECT_DIR$/app/modules/ajax/controllers/TestController.php" />
+        <option value="$PROJECT_DIR$/app/config/services.php" />
+        <option value="$PROJECT_DIR$/app/system/libraries/Volt/Game.php" />
+        <option value="$PROJECT_DIR$/app/views/admin/widgets/user/game/list.volt" />
+        <option value="$PROJECT_DIR$/app/views/admin/modules/agent/game/child.volt" />
+        <option value="$PROJECT_DIR$/app/views/admin/modules/agent/game/index.volt" />
+        <option value="$PROJECT_DIR$/app/modules/agent/controllers/SubgameController.php" />
+        <option value="$PROJECT_DIR$/app/system/libraries/Widget/UserSubGameWidget.php" />
+        <option value="$PROJECT_DIR$/app/system/libraries/Widget/UserGameWidget.php" />
+        <option value="$PROJECT_DIR$/app/system/libraries/Widget/UserGameFormAddWidget.php" />
+        <option value="$PROJECT_DIR$/app/system/libraries/Widget/UserSubGameFormAddWidget.php" />
+        <option value="$PROJECT_DIR$/app/views/admin/widgets/user/subgame/add.volt" />
+        <option value="$PROJECT_DIR$/app/views/admin/modules/agent/game/detail.volt" />
+        <option value="$PROJECT_DIR$/app/views/admin/layouts/elements/js_footer.volt" />
+        <option value="$PROJECT_DIR$/app/system/datalayer/mysql/DLUserAclAccess.php" />
+        <option value="$PROJECT_DIR$/app/modules/agent/controllers/GameController.php" />
+        <option value="$PROJECT_DIR$/app/views/admin/widgets/user/subgame/list.volt" />
+        <option value="$PROJECT_DIR$/app/system/datalayer/mysql/DLUserGame.php" />
       </list>
     </option>
   </component>
@@ -326,41 +268,23 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
+              <option name="myItemId" value="app" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="less" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="softco-admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="public" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
+              <option name="myItemId" value="views" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="widgets" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="user" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -383,6 +307,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="widgets" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -438,11 +366,7 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sub" />
+              <option name="myItemId" value="agent" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -465,70 +389,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="game" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="softco-admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="layouts" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="softco-admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="layouts" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="elements" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -586,11 +446,7 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="system" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="datalayer" />
+              <option name="myItemId" value="modules" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -609,6 +465,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ajax" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="softco-admin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="modules" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="agent" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -669,11 +551,11 @@
       <recent name="$PROJECT_DIR$/public/assets/admin/development" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/modules/ajax/controllers" />
-      <recent name="$PROJECT_DIR$/public/assets/admin/less" />
+      <recent name="$PROJECT_DIR$/app/views/admin/modules/agent" />
       <recent name="$PROJECT_DIR$/app/modules/agent/controllers" />
-      <recent name="$PROJECT_DIR$/app/system/libraries/Security" />
-      <recent name="$PROJECT_DIR$/app/views/admin/modules/provider" />
+      <recent name="$PROJECT_DIR$/app/system/libraries/Widget" />
+      <recent name="$PROJECT_DIR$/app/views/admin/widgets/user" />
+      <recent name="$PROJECT_DIR$/app/modules/ajax/controllers" />
     </key>
   </component>
   <component name="RunManager">
@@ -743,12 +625,12 @@
       <workItem from="1537262780406" duration="2856000" />
       <workItem from="1537341729492" duration="23390000" />
       <workItem from="1537468918834" duration="201399000" />
-      <workItem from="1539842677531" duration="33135000" />
+      <workItem from="1539842677531" duration="72695000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="436880000" />
+    <option name="totallyTimeSpent" value="476440000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="738" extended-state="6" />
@@ -792,66 +674,10 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/views/admin/widgets/currency/game/add.volt">
+    <entry file="file://$PROJECT_DIR$/app/views/admin/modules/agent/edit/index.volt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="44" selection-start-line="18" selection-start-column="44" selection-end-line="18" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/modules/game/controllers/CurrencyController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="40" column="42" selection-start-line="40" selection-start-column="42" selection-end-line="40" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/system/datalayer/mysql/DLGameCurrency.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="318">
-          <caret line="89" column="0" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/system/libraries/Widget/UserCurrencyFormAddWidget.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="14" column="45" selection-start-line="14" selection-start-column="45" selection-end-line="14" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/admin/modules/subaccount/subaccount/edit.volt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/system/language/en.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="29" column="32" selection-start-line="29" selection-start-column="32" selection-end-line="29" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/system/datalayer/mysql/DLUser.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="82" column="65" selection-start-line="82" selection-start-column="50" selection-end-line="82" selection-end-column="65" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/admin/modules/subaccount/subaccount/detail.volt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="97" column="96" selection-start-line="97" selection-start-column="96" selection-end-line="97" selection-end-column="96" />
+        <state relative-caret-position="228">
+          <caret line="55" column="46" selection-start-line="55" selection-start-column="44" selection-end-line="55" selection-end-column="46" />
           <folding />
         </state>
       </provider>
@@ -859,139 +685,127 @@
     <entry file="file://$PROJECT_DIR$/app/views/admin/modules/agent/list/child.volt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
-          <caret line="31" column="32" selection-start-line="31" selection-start-column="32" selection-end-line="31" selection-end-column="60" />
+          <caret line="36" column="33" selection-start-line="36" selection-start-column="33" selection-end-line="36" selection-end-column="33" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/system/libraries/Widget/UserCurrencyWidget.php">
+    <entry file="file://$PROJECT_DIR$/app/views/admin/modules/agent/password/reset.volt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="33" column="30" selection-start-line="33" selection-start-column="30" selection-end-line="33" selection-end-column="30" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/admin/widgets/user/auth.volt">
+    <entry file="file://$PROJECT_DIR$/app/modules/agent/controllers/ListController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="23" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
+        <state relative-caret-position="279">
+          <caret line="93" column="10" selection-start-line="93" selection-start-column="10" selection-end-line="93" selection-end-column="10" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/admin/modules/agent/detail/index.volt">
+    <entry file="file://$PROJECT_DIR$/app/system/libraries/Security/Agent.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" column="28" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/admin/widgets/game/currency.volt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="63" selection-start-line="12" selection-start-column="63" selection-end-line="12" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/admin/modules/provider/list/index.volt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="78" selection-start-line="21" selection-start-column="78" selection-end-line="21" selection-end-column="78" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/admin/modules/game/category/index.volt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="72" selection-start-line="19" selection-start-column="72" selection-end-line="19" selection-end-column="78" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/admin/modules/game/sub/index.volt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="78" selection-start-line="21" selection-start-column="78" selection-end-line="21" selection-end-column="78" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/admin/modules/setting/currency/index.volt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="78" selection-start-line="19" selection-start-column="78" selection-end-line="19" selection-end-column="78" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="7" selection-start-line="5" selection-start-column="7" selection-end-line="5" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/IndexController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="56" column="0" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/config/config_app.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="52" column="44" selection-start-line="51" selection-start-column="24" selection-end-line="52" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/config/config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/admin/widgets/currency/game/add.volt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
-          <caret line="42" column="37" selection-start-line="42" selection-start-column="37" selection-end-line="42" selection-end-column="37" />
+          <caret line="26" column="61" selection-start-line="0" selection-start-column="0" selection-end-line="37" selection-end-column="6" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/admin/widgets/user/currency.volt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="71" column="43" selection-start-line="71" selection-start-column="43" selection-end-line="71" selection-end-column="43" />
+        <state relative-caret-position="468">
+          <caret line="90" column="22" selection-start-line="90" selection-start-column="22" selection-end-line="90" selection-end-column="22" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/admin/widgets/user/ip.volt">
+    <entry file="file://$PROJECT_DIR$/public/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="30" column="72" selection-start-line="30" selection-start-column="72" selection-end-line="30" selection-end-column="72" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/modules/agent/controllers/StatusController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="429">
-          <caret line="50" column="11" selection-start-line="50" selection-start-column="11" selection-end-line="50" selection-end-column="11" />
-          <folding>
-            <element signature="e#47#75#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/modules/agent/controllers/IndexController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-171">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/modules/agent/controllers/WhitelistController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="32" column="36" selection-start-line="32" selection-start-column="36" selection-end-line="32" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/modules/agent/controllers/PasswordController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-81">
-          <caret line="17" column="31" selection-start-line="17" selection-start-column="31" selection-end-line="17" selection-end-column="31" />
-          <folding>
-            <element signature="e#47#81#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/modules/agent/controllers/NicknameController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="25" column="8" selection-start-line="25" selection-start-column="8" selection-end-line="31" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/modules/agent/controllers/EditController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-276">
-          <caret line="24" column="43" selection-start-line="24" selection-start-column="43" selection-end-line="24" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/modules/agent/controllers/CurrencyController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="99">
-          <caret line="116" column="42" selection-start-line="116" selection-start-column="42" selection-end-line="116" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/assets/admin/less/subaccount.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/assets/admin/less/content.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="31" column="14" selection-start-line="31" selection-start-column="14" selection-end-line="31" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/assets/admin/less/profile.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-303">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/admin/layouts/core.volt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="444">
+          <caret line="36" column="10" selection-start-line="36" selection-start-column="10" selection-end-line="36" selection-end-column="10" />
           <folding />
         </state>
       </provider>
@@ -1004,175 +818,99 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/assets/thirdparty/css/style.css">
+    <entry file="file://$PROJECT_DIR$/app/system/models/UserGame.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6855">
-          <caret line="457" column="1" selection-start-line="457" selection-start-column="1" selection-end-line="457" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/assets/admin/less/style.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1758">
-          <caret line="6" column="19" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/admin/modules/agent/add/index.volt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="45" column="67" selection-start-line="45" selection-start-column="67" selection-end-line="45" selection-end-column="67" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/admin/layouts/elements/js_footer.volt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="423">
-          <caret line="58" column="25" selection-start-line="58" selection-start-column="25" selection-end-line="58" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/assets/admin/less/sidebar.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="25" column="8" selection-start-line="25" selection-start-column="8" selection-end-line="25" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/assets/admin/less/header.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="26" column="20" selection-start-line="26" selection-start-column="20" selection-end-line="26" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/modules/agent/controllers/ListController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="99" column="31" selection-start-line="99" selection-start-column="31" selection-end-line="99" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/admin/modules/agent/list/index.volt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="64" selection-start-line="9" selection-start-column="50" selection-end-line="9" selection-end-column="64" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/modules/game/controllers/GameController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="62" column="37" selection-start-line="62" selection-start-column="37" selection-end-line="62" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/modules/game/controllers/AjaxController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1005">
-          <caret line="68" column="21" selection-start-line="54" selection-start-column="20" selection-end-line="68" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/system/datalayer/mysql/DLGame.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="393">
-          <caret line="188" column="0" selection-start-line="188" selection-start-column="0" selection-end-line="188" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/modules/game/controllers/SubController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="71" column="45" selection-start-line="71" selection-start-column="45" selection-end-line="71" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/modules/ajax/controllers/SubgameController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="33" selection-start-line="7" selection-start-column="33" selection-end-line="7" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/modules/ajax/controllers/GameController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="46" column="24" selection-start-line="46" selection-start-column="24" selection-end-line="46" selection-end-column="24" />
+        <state relative-caret-position="-1890">
+          <caret line="4" column="6" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/admin/modules/game/sub/add.volt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="163" column="26" selection-start-line="163" selection-start-column="26" selection-end-line="163" selection-end-column="26" />
+        <state relative-caret-position="318">
+          <caret line="219" column="15" selection-start-line="193" selection-start-column="12" selection-end-line="219" selection-end-column="15" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/system/libraries/General/GlobalVariable.php">
+    <entry file="file://$PROJECT_DIR$/app/system/libraries/Widget/GameCurrencyFormAddWidget.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="85" column="49" selection-start-line="85" selection-start-column="49" selection-end-line="85" selection-end-column="49" />
+        <state relative-caret-position="384">
+          <caret line="38" column="34" selection-start-line="38" selection-start-column="21" selection-end-line="38" selection-end-column="34" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/system/libraries/Security/Agent.php">
+    <entry file="file://$PROJECT_DIR$/app/modules/ajax/controllers/TestController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="153">
+          <caret line="52" column="30" selection-start-line="52" selection-start-column="30" selection-end-line="52" selection-end-column="30" />
+          <folding>
+            <element signature="e#46#74#0#PHP" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/modules/agent/controllers/DetailController.php">
+    <entry file="file://$PROJECT_DIR$/app/modules/ajax/controllers/AgentController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="14" column="16" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
-          <folding />
+        <state relative-caret-position="945">
+          <caret line="63" column="26" selection-start-line="63" selection-start-column="26" selection-end-line="63" selection-end-column="26" />
+          <folding>
+            <element signature="e#46#68#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/admin/index/login.volt">
+    <entry file="file://$PROJECT_DIR$/app/views/admin/modules/game/game/index.volt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="393">
-          <caret line="48" column="50" selection-start-line="48" selection-start-column="50" selection-end-line="48" selection-end-column="50" />
+        <state relative-caret-position="135">
+          <caret line="21" column="78" selection-start-line="21" selection-start-column="78" selection-end-line="21" selection-end-column="78" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/modules/agent/controllers/AddController.php">
+    <entry file="file://$PROJECT_DIR$/app/config/services.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="429">
-          <caret line="82" column="26" selection-start-line="82" selection-start-column="26" selection-end-line="82" selection-end-column="26" />
+        <state relative-caret-position="360">
+          <caret line="102" column="43" selection-start-line="102" selection-start-column="43" selection-end-line="102" selection-end-column="43" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/IndexController.php">
+    <entry file="file://$PROJECT_DIR$/app/system/libraries/Volt/Game.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
-          <caret line="82" column="54" selection-start-line="82" selection-start-column="54" selection-end-line="82" selection-end-column="54" />
+        <state relative-caret-position="420">
+          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/admin/layouts/elements/head.volt">
+    <entry file="file://$PROJECT_DIR$/app/system/libraries/Volt/Agent.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="4" selection-start-line="17" selection-start-column="4" selection-end-line="25" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/admin/modules/agent/list/index.volt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="49" column="32" selection-start-line="49" selection-start-column="32" selection-end-line="51" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/admin/widgets/user/game/list.volt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="33" column="56" selection-start-line="33" selection-start-column="56" selection-end-line="33" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/admin/modules/agent/game/child.volt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -1180,26 +918,178 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/admin/layouts/elements/header.volt">
+    <entry file="file://$PROJECT_DIR$/app/views/admin/modules/agent/detail/index.volt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="30" selection-start-line="12" selection-start-column="30" selection-end-line="12" selection-end-column="30" />
+        <state relative-caret-position="78">
+          <caret line="151" column="21" selection-start-line="151" selection-start-column="21" selection-end-line="201" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/BaseController.php">
+    <entry file="file://$PROJECT_DIR$/app/views/admin/modules/game/game/detail.volt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="307">
-          <caret line="141" column="14" selection-start-line="141" selection-start-column="14" selection-end-line="143" selection-end-column="14" />
+        <state relative-caret-position="708">
+          <caret line="122" column="55" selection-start-line="122" selection-start-column="55" selection-end-line="122" selection-end-column="55" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/admin/layouts/elements/leftnav.volt">
+    <entry file="file://$PROJECT_DIR$/app/modules/agent/controllers/DetailController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="23" column="17" selection-start-line="23" selection-start-column="17" selection-end-line="23" selection-end-column="17" />
+        <state relative-caret-position="-21">
+          <caret line="14" column="8" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/system/datalayer/mysql/DLUserCurrency.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="8" column="20" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/admin/widgets/user/game/add.volt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="918">
+          <caret line="75" column="13" selection-start-line="75" selection-start-column="13" selection-end-line="75" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/system/libraries/Widget/UserSubGameWidget.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="9" selection-start-line="18" selection-start-column="9" selection-end-line="18" selection-end-column="9" />
+          <folding>
+            <element signature="e#34#62#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/system/datalayer/mysql/DLGame.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="24" column="20" selection-start-line="24" selection-start-column="20" selection-end-line="24" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/system/datalayer/mysql/DLGameCurrency.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="14" column="20" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/system/models/UserAclAccess.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="100" column="46" selection-start-line="100" selection-start-column="40" selection-end-line="100" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/system/datalayer/mysql/DLUserAclAccess.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="212" column="32" selection-start-line="212" selection-start-column="32" selection-end-line="212" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/admin/layouts/elements/js_footer.volt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="975">
+          <caret line="65" column="11" selection-start-line="65" selection-start-column="11" selection-end-line="65" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/admin/modules/agent/game/detail.volt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="108" selection-start-line="6" selection-start-column="108" selection-end-line="6" selection-end-column="108" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/modules/agent/controllers/SubgameController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="9">
+          <caret line="28" column="54" selection-start-line="28" selection-start-column="54" selection-end-line="28" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/modules/agent/controllers/GameController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-36">
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding>
+            <element signature="e#48#76#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/admin/modules/agent/subgame/detail.volt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-675">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/admin/widgets/user/subgame/list.volt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="35" column="21" selection-start-line="35" selection-start-column="21" selection-end-line="35" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/system/libraries/Widget/UserSubGameFormAddWidget.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="47" column="66" selection-start-line="47" selection-start-column="66" selection-end-line="47" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/system/libraries/Widget/UserGameFormAddWidget.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="38" column="42" selection-start-line="38" selection-start-column="42" selection-end-line="38" selection-end-column="42" />
+          <folding>
+            <element signature="e#34#62#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/system/libraries/Widget/UserGameWidget.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="22" column="39" selection-start-line="22" selection-start-column="39" selection-end-line="22" selection-end-column="39" />
+          <folding>
+            <element signature="e#34#62#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/admin/widgets/user/subgame/add.volt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="20" column="124" selection-start-line="20" selection-start-column="124" selection-end-line="20" selection-end-column="124" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/system/datalayer/mysql/DLUserGame.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="112" column="37" selection-start-line="112" selection-start-column="37" selection-end-line="112" selection-end-column="37" />
           <folding />
         </state>
       </provider>
