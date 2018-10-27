@@ -74,7 +74,7 @@
                                 <div class="col-xs-3">
                                     <div class="profile-password-box">
                                         <div class="row" > <b class="col-xs-12" > {{translate['security']|upper}}  </b>  </div>
-                                        <div class="row margin-top-5" > <b class="col-xs-12" > <a href="{{url('user/password/change')}}" class="btn btn-sm btn-danger width-100P"> {{translate['manage_whitelist_ip']|upper}} </a>  </b> </div>
+                                        <div class="row margin-top-5" > <b class="col-xs-12" > <a href="{{url('user/whitelist/index')}}" class="btn btn-sm btn-danger width-100P"> {{translate['manage_whitelist_ip']|upper}} </a>  </b> </div>
                                     </div>
                                 </div>
                             </div>

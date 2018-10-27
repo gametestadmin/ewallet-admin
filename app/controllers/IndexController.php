@@ -3,6 +3,7 @@
 namespace Backoffice\Controllers;
 
 use \System\Datalayer\DLUser;
+use \System\Datalayer\DLCurrency;
 use System\Library\Security\User as SecurityUser ;
 use System\Library\General\Captcha;
 use System\Library\User\General;
@@ -18,10 +19,12 @@ class IndexController extends \Backoffice\Controllers\BaseController
 
             return $this->response->redirect("/login");
         } else {
-            $acl = $this->session->get('sidebar');
+//            $acl = $this->session->get('sidebar');
 //            echo "<pre>";
 //            var_dump($acl);
 //            die;
+
+
 
 
             \Phalcon\Tag::setTitle($this->_website->title);
@@ -72,14 +75,12 @@ class IndexController extends \Backoffice\Controllers\BaseController
                         $this->session->remove('sidebar');
                         $this->session->set('sidebar', $sideBar);
 
-//                        $this->session->set('child', $user);
                         $this->session->set('real_user', $user);
 
                         $user = $DLuser->getById($user->getParent());
                         $this->session->set('user', $user);
                     } else {
                         $this->session->set('user', $user);
-//                        $this->session->set('child', $user);
                         $this->session->set('real_user', $user);
 
                         //TODO :: save and check to redis
@@ -97,6 +98,12 @@ class IndexController extends \Backoffice\Controllers\BaseController
                         $this->session->set('sidebar', $sideBar);
                         //TODO :: save and check to redis
                     }
+
+                    $DLCurrency = new DLCurrency();
+                    $currency = $DLCurrency->getAll($user->getId());
+                    $this->session->remove('currency');
+                    $this->session->set('currency', $currency);
+
                     $this->successFlash($view->translate['login_success']);
                     return $this->response->redirect("/");
                 } else {
