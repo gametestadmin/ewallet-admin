@@ -54,26 +54,26 @@
                 <li class="col-xs-2 list-group-item">{{userCurrencyData.currency.code}}</li>
                 <li class="col-xs-4 list-group-item">{{userCurrencyData.currency.name}}</li>
                 {% if realParent == 1 or realParent == 3 %}
-                <li class="col-xs-2 list-group-item">
-                    {% if userCurrencyData.default == 1 %}
-                        <i class="fa fa-check text-success" data-toggle="tooltip" data-placement="right" title="Default"></i>
-                    {% else %}
-                        <a href="{{url('/agent/currency/edit/'~agent.id~'?default='~userCurrencyData.id~'&tab=tab-currency')}}">
-                            <span class="fa fa-times text-danger"></span>
-                        </a>
-                    {%endif%}
-                </li>
-                <li class="col-xs-2 list-group-item">
-                    <a href="{{url(module~'/currency/delete/'~agent.id~'?delete='~userCurrencyData.id~'&tab=tab-currency')}}" class="delete"><span class="ip-edit fa fa-ban text-danger" data-toggle="tooltip" data-placement="right" title="Delete"></span></a>
-                </li>
+                    <li class="col-xs-2 list-group-item">
+                        {% if userCurrencyData.default == 1 %}
+                            <i class="fa fa-check text-success" data-toggle="tooltip" data-placement="right" title="Default"></i>
+                        {% else %}
+                            <a href="{{url('/agent/currency/edit/'~agent.id~'?default='~userCurrencyData.id~'&tab=tab-currency')}}">
+                                <span class="fa fa-times text-danger"></span>
+                            </a>
+                        {%endif%}
+                    </li>
+                    <li class="col-xs-2 list-group-item">
+                        <a href="{{url(module~'/currency/delete/'~agent.id~'?delete='~userCurrencyData.id~'&tab=tab-currency')}}" class="delete"><span class="ip-edit fa fa-ban text-danger" data-toggle="tooltip" data-placement="right" title="Delete"></span></a>
+                    </li>
                 {% else %}
-                <li class="col-xs-4 list-group-item">
-                    {% if userCurrencyData.default == 1 %}
-                        <i class="fa fa-check text-success" data-toggle="tooltip" data-placement="right" title="Default"></i>
-                    {% else %}
-                        <i class="fa fa-times text-danger" data-toggle="tooltip" data-placement="right" title="Not Default"></i>
-                    {%endif%}
-                </li>
+                    <li class="col-xs-4 list-group-item">
+                        {% if userCurrencyData.default == 1 %}
+                            <i class="fa fa-check text-success" data-toggle="tooltip" data-placement="right" title="Default"></i>
+                        {% else %}
+                            <i class="fa fa-times text-danger" data-toggle="tooltip" data-placement="right" title="Not Default"></i>
+                        {%endif%}
+                    </li>
                 {% endif %}
             </ul>
             {% set i = i +1 %}

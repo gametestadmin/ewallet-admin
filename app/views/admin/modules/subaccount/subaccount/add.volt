@@ -33,10 +33,10 @@
                             <div class="form-group pull-right">
                                 <div class="col-xs-12">
                                     <label>
-                                        <a href="javascript:history.go(-1)" class="btn btn-sm btn-danger">Back</a>
+                                        <a href="javascript:history.go(-1)" class="btn btn-sm btn-danger">{{translate['back']|upper }}</a>
                                     </label>
                                     <label>
-                                        <input type="submit" name="submit" class="btn btn-sm btn-primary" value="Add">
+                                        <input type="submit" name="submit" class="btn btn-sm btn-primary" value=" {{translate['add']|upper }}">
                                     </label>
                                 </div>
                             </div>

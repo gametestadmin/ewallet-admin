@@ -32,32 +32,54 @@
 
 <!-- Modal -->
 <div class="modal fade" id="header-currency-list" tabindex="-1" role="dialog" aria-labelledby="currency-list" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog header-modal-currency" role="document">
         <div class="modal-content">
-                <div class="modal-header">
-                    <label class="col-xs-6">
-                        <h4 class="modal-title" id="currency-list"> {{translate['currency_list']|upper }} </h4>
-                    </label>
-                    <label class="col-xs-6">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+            <div class="modal-header">
+                <label class="col-xs-6">
+                    <h4 class="modal-title" id="currency-list"> {{translate['currency_list']|upper }} </h4>
+                </label>
+                <label class="col-xs-6">
+                    <span aria-hidden="true">
+                        <button type="button" class="close uppercase" data-dismiss="modal" aria-label="Close">
+                            &times;
                         </button>
-                    </label>
-                </div>
-
-
-                <div class="modal-body">
-                    <ul class="list-inline header-list text-center">
-                        <li class="col-xs-2 list-group-item list">Symbol</li>
-                        <li class="col-xs-4 list-group-item list">Code</li>
-                        <li class="col-xs-6 list-group-item list">Name</li>
+                    </span>
+                </label>
+            </div>
+            <div class="modal-body min-height-200 max-height-400">
+                <ul class="list-inline header-list text-center">
+                    <li class="col-xs-2 list-group-item list">{{ translate['symbol']|upper }}</li>
+                    <li class="col-xs-4 list-group-item list">{{ translate['code']|upper }}</li>
+                    <li class="col-xs-4 list-group-item list">{{ translate['currency_name']|upper }}</li>
+                    <li class="col-xs-2 list-group-item list">{{ translate['default']|upper }}</li>
+                </ul>
+                {% set i = 1 %}
+                {% for currencylist in user_currency_list %}
+                    {% if i%2 == 0 %}
+                        {% set class = "content-even" %}
+                    {% else %}
+                        {% set class = "content-odd" %}
+                    {% endif %}
+                    <ul class="list-inline {{class}} text-center">
+                        <li class="col-xs-2 list-group-item">{{ currencylist.currency.symbol|upper }}</li>
+                        <li class="col-xs-4 list-group-item">{{ currencylist.currency.code|upper }}</li>
+                        <li class="col-xs-4 list-group-item">{{ currencylist.currency.name|upper }}</li>
+                        <li class="col-xs-2 list-group-item">
+                            {% if currencylist.default == 1 %}
+                                <i class="fa fa-check text-success" data-toggle="tooltip" data-placement="right" title="{{ translate['default']|upper }}"></i>
+                            {% else %}
+                                <a href="{{url('/user/currency/edit/'~currencylist.id)}}">
+                                    <i class="fa fa-times text-danger" data-toggle="tooltip" data-placement="right" title="{{ translate['not_default']|upper }}"></i>
+                                </a>
+                            {%endif%}
+                        </li>
                     </ul>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-
-
+                    {% set i = i +1 %}
+                {% endfor %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
         </div>
     </div>
 </div>
