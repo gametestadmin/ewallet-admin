@@ -11,7 +11,7 @@ class ProtectedController extends BaseController
         if (empty($this->_user)) {
             $this->response->setHeader('X-Robots-Tag', 'noindex, nofollow');
 
-            return $this->response->redirect("/login");
+            return $this->response->redirect("/login")->send();
         }
 
     }

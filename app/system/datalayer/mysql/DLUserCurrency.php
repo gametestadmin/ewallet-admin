@@ -217,6 +217,28 @@ class DLUserCurrency {
         return $userCurrency;
     }
 
+    public function setCurrencyDefault($userId , $CurrencyId){
+        $userCurrency = $this->getByUserAndId($userId,$CurrencyId);
+        if($userCurrency->getStatus() == 0){
+            throw new \Exception('error_set_default_currency');
+        }
+        $currentUserCurrency = $this->getByUserAndDefault($userId,$CurrencyId);
+        $currentUserCurrency->setDefault(0);
+
+        if($currentUserCurrency->save()){
+            $userCurrency->setDefault(1);
+
+            if(!$userCurrency->save()){
+                throw new \Exception('error_set_currency');
+            }
+        }else{
+            throw new \Exception('error_set_currency');
+        }
+        return $userCurrency;
+
+
+    }
+
     public function delete($data){
         $userId = $data["agent_id"];
         $userCurrencyId = $data["currency_id"];

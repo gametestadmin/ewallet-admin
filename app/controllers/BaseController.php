@@ -4,6 +4,7 @@ namespace Backoffice\Controllers;
 defined('APP_PATH') || define('APP_PATH', realpath('.'));
 
 use System\Language\Language;
+use \System\Datalayer\DLUserCurrency;
 use Phalcon\Mvc\Controller;
 use Phalcon\Translate\Adapter\NativeArray;
 use System\Library\Security\General ;
@@ -134,9 +135,14 @@ class BaseController extends Controller
             $currency = $this->session->get('currency');
         }
 
-        $this->view->user = $this->_user;
-        $this->view->real_user = $this->_realUser;
-        $this->view->user_currency_list = $currency ;
+        if (isset($this->_user)){
+            $DL = new DLUserCurrency();
+            $currency = $DL->getAll($this->_user->getId());
+            $this->view->user_currency_list = $currency ;
+        }
+
+        $this->view->user = $this->_user ;
+        $this->view->real_user = $this->_realUser ;
     }
 
     protected function _setNavigation()

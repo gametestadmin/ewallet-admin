@@ -3,7 +3,6 @@
 namespace Backoffice\Controllers;
 
 use \System\Datalayer\DLUser;
-use \System\Datalayer\DLCurrency;
 use System\Library\Security\User as SecurityUser ;
 use System\Library\General\Captcha;
 use System\Library\User\General;
@@ -25,6 +24,13 @@ class IndexController extends \Backoffice\Controllers\BaseController
 //            die;
 
 //            $this->view->menu = "home";
+
+
+//            $DL = new DLUserCurrency();
+//            $currency = $DL->getAll($this->_user->getId());
+//            echo "<pre>";
+//            var_dump($currency);
+//            die;
 
 
 
@@ -99,11 +105,6 @@ class IndexController extends \Backoffice\Controllers\BaseController
                         $this->session->set('sidebar', $sideBar);
                         //TODO :: save and check to redis
                     }
-
-                    $DLCurrency = new DLCurrency();
-                    $currency = $DLCurrency->getAll($user->getId());
-                    $this->session->remove('currency');
-                    $this->session->set('currency', $currency);
 
                     $this->successFlash($view->translate['login_success']);
                     return $this->response->redirect("/");
