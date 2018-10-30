@@ -92,6 +92,26 @@ class DLUserGame
         if(isset($data["agent"]))$data['agent'] = \intval($data['agent']);
         if(isset($data["game_type"]))$data['game_type'] = \intval($data['game_type']);
 
+        $userModel = new DLUser();
+        $agent = $userModel->getById($data['agent']);
+        $parent = $userModel->getById($agent->getParent());
+        $data["parent"] = $parent->getId();
+
+//        if($parent->getType() == 9){
+            $data["parent_status"] = 1;
+//        }else{
+//            $gameModel = new DLUserGame();
+//            $parentGame = $gameModel->checkAgentGame($parent->getId(), $data['game']);
+//
+//            if($parentGame->getParentStatus() == 9 || $parentGame->getStatus() == 9) {
+//                $data["parent_status"] = 9;
+//            }else if($parentGame->getParentStatus() == 0 || $parentGame->getStatus() == 0) {
+//                $data["parent_status"] = 0;
+//            }else if($parentGame->getParentStatus() == 1 && $parentGame->getStatus() == 1){
+//                $data["parent_status"] = 1;
+//            }
+//        }
+
         return $data;
     }
 
@@ -116,7 +136,7 @@ class DLUserGame
         if(isset($data["game"]))$agentGame->setGame($data['game']);
         if(isset($data["game_type"]))$agentGame->setGameType($data['game_type']);
         $agentGame->setUserGameHistoricalPositionTaking(null);
-        $agentGame->setParentStatus(0);
+        $agentGame->setParentStatus($data["parent_status"]);
         $agentGame->setStatus(0);
         $agentGame->setDisabled(0);
 

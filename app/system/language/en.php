@@ -11,12 +11,12 @@ $messages = array(
     "captcha" => "captcha",
     "login_error" => "login error",
     "login_success" => "login success",
-    "username" => "username",
+    "username" => "Username",
     "nickname" => "nickname",
     "nickname_reset" => "reset nickname",
-    "password" => "password",
+    "password" => "Password",
     "password_change" => "change password",
-    "password_confirm" => "confirm password",
+    "password_confirm" => "Confirm Password",
     "password_old" => "old password",
     "password_new" => "new password",
     "password_confirm_new" => "confirm new password",
@@ -27,6 +27,16 @@ $messages = array(
     "last_login" => "last login",
     "about_me" => "about me",
 
+    // TODO :: new insert 30102018
+    "timezone" => "Timezone",
+    "default_whitelist_ip" => "Default Whitelist Ip",
+    "default_currency" => "Default Currency",
+    "for_wild_card_ip" => "* For wild card IP",
+    "example_group_ip" => "Group IP ex. :123.*.*.*",
+    "example_specific_ip" => "Spesific IP ex. :123.2.3.33",
+    "button_back" => "Back",
+    "button_add" => "Add",
+    "text_add" => "Add",
 
     "user" => "User",
     "add" => "add",
@@ -41,6 +51,7 @@ $messages = array(
     "add_provider_game" => "Add",
     //button
     "check" => "Check Available",
+    "button_check_available" => "Check Available",
 
 
 
@@ -98,13 +109,20 @@ $messages = array(
     "sub" => "subgame",
 
     //agent
-    "god" => "god",
-    "company" => "company",
-    "super_senior_master_agent" => "super senior master agent",
-    "senior_master_agent" => "senior master agent",
-    "master_agent" => "master agent",
-    "agent" => "agent",
-    "subaccount" => "subaccount",
+    "level_god" => "God",
+    "level_company" => "Company",
+    "level_super_senior_master_agent" => "SSMA",
+    "level_senior_master_agent" => "SMA",
+    "level_master_agent" => "MA",
+    "level_agent" => "A",
+
+    "god" => "God",
+    "company" => "Company",
+    "super_senior_master_agent" => "Super Senior Master Agent",
+    "senior_master_agent" => "Senior Master Agent",
+    "master_agent" => "Master Agent",
+    "agent" => "Agent",
+//    "subaccount" => "subaccount",
 
     //language
     "language_en" => "english",
