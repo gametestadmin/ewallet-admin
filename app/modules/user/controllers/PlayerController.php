@@ -8,7 +8,7 @@ class PlayerController extends \Backoffice\Controllers\ProtectedController
     {
 
         $user_player = $this->postgre->query(
-                'SELECT * FROM mainframe.user_profile WHERE agent_id = '.$this->_user->getId().' AND status = 1 '
+                'SELECT * FROM api.user_player WHERE agent_id = '.$this->_user->getId().' AND status = 1 '
             )->fetchAll();
 
         $this->view->user_player = $user_player ;
