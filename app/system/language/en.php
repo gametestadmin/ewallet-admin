@@ -26,6 +26,7 @@ $messages = array(
     "login_ip" => "login ip",
     "last_login" => "last login",
     "about_me" => "about me",
+    "add_new" => "add new",
 
 
     "user" => "User",
