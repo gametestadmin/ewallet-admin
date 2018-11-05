@@ -26,6 +26,7 @@ $messages = array(
     "login_ip" => "login ip",
     "last_login" => "last login",
     "about_me" => "about me",
+    "add_new" => "add new",
 
     // TODO :: new insert 30102018
     "timezone" => "Timezone",

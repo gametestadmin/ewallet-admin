@@ -10,12 +10,24 @@
                         <form class="form-horizontal col-xs-12" action="#" method="post">
                             <div class="form-group">
                                 <label class="col-xs-3 control-label">{{translate['username']|upper }}</label>
+
                                 <label class="col-xs-2">
                                     <input type="text" disabled class="form-control uppercase" value="{{user.username}}SUB">
                                 </label>
+                                {% for counteri in 1..3 %}
+                                <div class="col-xs-1">
+                                    <select class="form-control code" name="code[]">
+                                        {% for agentCode in code %}
+                                            <option value="{{agentCode}}">{{agentCode}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                {% endfor %}
+                                <!--
                                 <label class="col-xs-7">
                                     <input type="text" class="form-control uppercase" name="username" placeholder="{{translate['username']|upper }}">
                                 </label>
+                                -->
                             </div>
                             <div class="form-group">
                                 <label class="col-xs-3 control-label">{{translate['password']|upper }}</label>

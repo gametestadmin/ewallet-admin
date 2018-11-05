@@ -54,6 +54,19 @@ $di->setShared('db', function () use ($config) {
 });
 
 /**
+ * Database connection for postgresql
+ */
+$di->setShared('postgre', function () use ($config) {
+    $dbConfig = $config->postgre_db->toArray();
+    $adapter = $dbConfig['adapter'];
+    unset($dbConfig['adapter']);
+
+    $class = 'Phalcon\Db\Adapter\Pdo\\' . $adapter;
+
+    return new $class($dbConfig);
+});
+
+/**
  * Registering a router
  */
 $di['router'] = function () {

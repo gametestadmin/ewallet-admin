@@ -13,7 +13,7 @@
                     {{ translate['subaccount']|upper }}
                 {% endif %}
                 </b>
-                <span class="header-info-cur cursor-pointer" data-toggle="modal" data-target="#header-currency-list"> <b> {{translate['currency']|upper }} </b> </span>
+                <span class="header-info-cur cursor-pointer" data-toggle="modal" data-target="#header-currency-list" onclick="myCurrency()"> <b> {{translate['currency']|upper }} </b> </span>
             </span>
         </div>
 

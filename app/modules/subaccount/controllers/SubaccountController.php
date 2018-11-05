@@ -55,15 +55,24 @@ class SubaccountController extends \Backoffice\Controllers\ProtectedController
     public function addAction()
     {
         $view = $this->view;
+        $code = array();
+        foreach(range(0,9) as $v){
+            $code[] = $v;
+        }
+        foreach(range('A','Z') as $v){
+            $code[] = $v;
+        }
 
         if ($this->request->isPost()) {
             $data = $this->request->getPost();
+
+            $data['username'] = \implode($data['code']);
             $data['username'] = \filter_var(\strip_tags(\addslashes(strtoupper($data['username']))), FILTER_SANITIZE_STRING);
             $data['password'] = \filter_var(\strip_tags(\addslashes($data['password'])), FILTER_SANITIZE_STRING);
             $data['password_confirm'] = \filter_var(\strip_tags(\addslashes($data['password_confirm'])), FILTER_SANITIZE_STRING);
 
             $validation = new Validation();
-            $validation->addCondition("Username", $data['username'] , "format", "username", 1 , 15  );
+            $validation->addCondition("Username", $data['username'] , "format", "username", 3 , 3  );
             $validation->addCondition("Password", $data['password'], "format", "password");
             $validation->addCondition("confirm_password", $data['password_confirm'], "value", "equal", $data['password']);
             $validation->execute();
@@ -125,6 +134,7 @@ class SubaccountController extends \Backoffice\Controllers\ProtectedController
 
         }
 
+        $view->code = $code;
         $view->subaccounttitle = "subaccount_add" ;
         \Phalcon\Tag::setTitle("Add SubAccount - ".$this->_website->title);
     }
