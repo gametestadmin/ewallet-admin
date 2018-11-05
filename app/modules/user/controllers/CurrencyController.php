@@ -16,7 +16,6 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
             $this->db->begin();
 
             $DLUserCurrency = new DLUserCurrency();
-
             $DLUserCurrency->setCurrencyDefault($this->_realUser->getId() , $currencyId);
 
             $this->db->commit();

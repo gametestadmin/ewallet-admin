@@ -27,6 +27,7 @@ $messages = array(
     "last_login" => "last login",
     "about_me" => "about me",
     "add_new" => "add new",
+    "currency_name" => "currency name",
 
 
     "user" => "User",
