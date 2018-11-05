@@ -63,7 +63,7 @@ class SubaccountController extends \Backoffice\Controllers\ProtectedController
             $data['password_confirm'] = \filter_var(\strip_tags(\addslashes($data['password_confirm'])), FILTER_SANITIZE_STRING);
 
             $validation = new Validation();
-            $validation->addCondition("Username", $data['username'] , "format", "username", 5 , 15  );
+            $validation->addCondition("Username", $data['username'] , "format", "username", 1 , 15  );
             $validation->addCondition("Password", $data['password'], "format", "password");
             $validation->addCondition("confirm_password", $data['password_confirm'], "value", "equal", $data['password']);
             $validation->execute();
@@ -75,6 +75,7 @@ class SubaccountController extends \Backoffice\Controllers\ProtectedController
                 }
             } else {
                 $DLuser = new DLUser();
+                $data['username'] = $this->_user->getUsername()."SUB".$data['username'];
                 $checknick = $DLuser->checkNickname($data['username']);
 
                 if($checknick){
@@ -124,6 +125,7 @@ class SubaccountController extends \Backoffice\Controllers\ProtectedController
 
         }
 
+        $view->subaccounttitle = "subaccount_add" ;
         \Phalcon\Tag::setTitle("Add SubAccount - ".$this->_website->title);
     }
 

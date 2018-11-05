@@ -3,7 +3,7 @@
         <div class="text-center animated fadeInDown">
             <select class="header-language-list float-right margin-top-10" name="language" onchange="location = this.value;">
                {% for langkey , language_code in language_list%}
-                   <option value="/language?code={{language_code}}" {% if language_code == language %} selected {% endif %}> {{translate['language_'~language_code]}} </option>
+                   <option value="/language?code={{language_code}}" {% if language_code == language %} selected {% endif %}> {{translate['language_'~language_code]|upper }} </option>
                {% endfor %}
             </select>
             <div>
@@ -14,11 +14,11 @@
                         <input type="text" name="username" class="form-control uppercase" placeholder="Username" required="" tabindex="1">
                     </div>
                     <div class="form-group">
-                        <input type="password" name="password" class="form-control" placeholder="Password" required="" tabindex="2">
+                        <input type="password" name="password" class="form-control" placeholder="{{ translate['password']|upper }}" required="" tabindex="2">
                     </div>
 
                     <div class="form-group col-xs-7">
-                        <input type="text" name="captcha" class="row form-control" placeholder="Captcha" required="" tabindex="3" maxlength="4" autocomplete="off" >
+                        <input type="text" name="captcha" class="row form-control" placeholder="{{ translate['captcha']|upper }}" required="" tabindex="3" maxlength="4" autocomplete="off" >
                     </div>
                     <div class="captcha-box col-xs-5">
                         <img id="captcha" src="/captcha" width="60" class="padding-5-0">
@@ -29,7 +29,7 @@
 
                     <div class="row">
                         <div class="form-group col-xs-12">
-                            <input type="submit" value="Login" class="btn btn-primary block full-width" tabindex="4">
+                            <input type="submit" value="{{ translate['login']|upper }}" class="btn btn-primary block full-width" tabindex="4">
                         </div>
                     </div>
                     <div class="row">

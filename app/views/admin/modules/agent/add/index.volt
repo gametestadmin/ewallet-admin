@@ -8,12 +8,12 @@
                         </div>
                         <div class="ibox-title row">
                             {% set type = user.type - 1 %}
-                            <h5>Add {{type|agentType}}</h5>
+                            <h5>{{translate['text_add']}} {{translate['level_'~type|agentType]}}</h5>
                         </div>
                         <div class="ibox-content row">
                             <form method="post" action="{{router.getRewriteUri()}}" class="form-horizontal col-sm-12">
                                 <div class="form-group">
-                                    <label class="col-sm-3 col-xs-12 control-label">Username</label>
+                                    <label class="col-sm-3 col-xs-12 control-label">{{translate['username']}}</label>
                                     {% if agent.type != 0 and agent.type != 9 %}
                                     <div class="col-xs-2">
                                         <input type="text" class="form-control code" name="agent_code" id="agent-code" value="{{agent.username}}" readonly>
@@ -53,11 +53,11 @@
                                     {% endif %}
                                     <div class="col-xs-3">
                                         <span id="check-availablity" class="available fa"></span>
-                                        <button class="btn btn-sm btn-warning" id="check-available">{{translate['check']}}</button>
+                                        <button class="btn btn-sm btn-warning" id="check-available">{{translate['button_check_available']}}</button>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Timezone</label>
+                                    <label class="col-sm-3 control-label">{{translate['timezone']}}</label>
                                     <label class="col-sm-9">
                                         <select name="timezone" class="form-control">
                                             {% for gmtTime in gmt %}
@@ -73,30 +73,30 @@
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Password</label>
+                                    <label class="col-sm-3 control-label">{{translate['password']}}</label>
                                     <label class="col-sm-9">
                                         <input type="password" class="form-control" name="password">
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Confirm Password</label>
+                                    <label class="col-sm-3 control-label">{{translate['password_confirm']}}</label>
                                     <label class="col-sm-9">
                                         <input type="password" class="form-control" name="confirm_password">
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Default Whitelist Ip</label>
+                                    <label class="col-sm-3 control-label">{{translate['default_whitelist_ip']}}</label>
                                     <label class="col-sm-9">
                                         <input type="text" class="form-control" name="ip">
                                         <small>
-                                            <div>* For wild card IP</div>
-                                             <div>Group IP ex. :123.*.*.*</div>
-                                             <div>Spesific IP ex. :123.2.3.33</div>
+                                            <div>{{translate['for_wild_card_ip']}}</div>
+                                            <div>{{translate['example_group_ip']}}</div>
+                                            <div>{{translate['example_specific_ip']}}</div>
                                         </small>
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Default Currency</label>
+                                    <label class="col-sm-3 control-label">{{translate['default_currency']}}</label>
                                     <label class="col-sm-9">
                                         <select name="currency" class="form-control">
                                         {% if userCurrency is not null %}
@@ -111,10 +111,10 @@
                                 <div class="form-group pull-right">
                                     <div class="col-xs-12">
                                         <label>
-                                            <a href="{{url(module~"/"~controller)}}" class="btn btn-md btn-danger">Back</a>
+                                            <a href="{{url(module~"/"~controller)}}" class="btn btn-md btn-danger">{{translate['button_back']}}</a>
                                         </label>
                                         <label>
-                                            <input type="submit" class="btn btn-primary" name="submit" value="Add">
+                                            <input type="submit" class="btn btn-primary" name="submit" value="{{translate['button_add']}}">
                                         </label>
                                     </div>
                                 </div>

@@ -26,19 +26,19 @@
                                             {% for  controllername , controllerList in moduleList['child'] %}
                                             {% if controllerList['child']|length > 1 %}
                                             <div class="row subaccount-border-bottom">
-                                                 <div class="col-xs-6">
+                                                 <label class="col-xs-6">
                                                     <input type="checkbox" name="acl[]" data-level="child"  {% if aclChild[controllerList['id']] is defined and aclChild[controllerList['id']] == 1 %}  checked="checked" {% endif %} value="{{controllerList['id']}}"  >
-                                                    <b>{{ translate[controllerList['name']]|upper }}  </b>
-                                                 </div>
+                                                    <b>{{ translate[controllerList['name']]|upper }}</b>
+                                                 </label>
                                                  <div class="col-xs-6 level-3-area">
                                             {% endif %}
                                                 {% for actionkey , action in controllerList['child'] %}
                                                     {% if action != 'index' %}
                                                         <div class="row subaccount-border-bottom">
-                                                            <div class="col-xs-12">
+                                                            <label class="col-xs-12">
                                                                 <input type="checkbox"  name="acl[]" data-level="subchild"  {% if aclChild[action['id']] is defined and aclChild[action['id']] == 1 %}  checked="checked" {% endif %} value="{{action['id']}}"  >
                                                                 <b>{{ translate[action['name']]|upper }}</b>
-                                                            </div>
+                                                            </label>
                                                         </div>
                                                     {% endif %}
                                                 {% endfor %}
@@ -77,18 +77,68 @@
     <script>
 
         $('[data-level="child"]').change(function (event) {
-            var checked = $(this).is(':checked');
+            var checked = $(this).is(':checked') ;
+            var parent = $(this).closest('.level-1-area').find('[data-level="parent"]') ;
+            var child = $(this) ;
+            var subchild = $(this).parent().parent().find('[data-level="subchild"]') ;
+
             if (checked) {
-                $(this).closest('.level-1-area').find('[data-level="parent"]').attr('checked', true);
+                parent.prop('checked', true);
+                subchild.prop('checked', true);
+            } else {
+                subchild.prop('checked', false);
+            }
+            $childSelected = 0 ;
+            $(this).closest('.level-1-area').find('[data-level="child"]').each(function() {
+                if($(this).is(':checked')){
+                    $childSelected++;
+                }
+            });
+            if($subchildSelected == 0 && $childSelected == 0){
+                parent.prop('checked', false);
             }
         });
 
         $('[data-level="subchild"]').change(function (event) {
             var checked = $(this).is(':checked');
+            var parent = $(this).closest('.level-1-area').find('[data-level="parent"]') ;
+            var child =  $(this).closest('.level-3-area').parent().find('[data-level="child"]') ;
+            var subchild =  $(this) ;
+
             if (checked) {
-                $(this).closest('.level-1-area').find('[data-level="parent"]').attr('checked', true);
-                $(this).closest('.level-3-area').parent().find('[data-level="child"]').attr('checked', true);
+                child.prop('checked', true);
             }
+
+            $subchildSelected = 0;
+            $(this).closest('.level-3-area').find('[data-level="subchild"]').each(function() {
+                if($(this).is(':checked')){
+                    $subchildSelected++;
+                }
+            });
+            if($subchildSelected == 0){
+                child.prop('checked', false);
+            }
+            $childSelected = 0 ;
+            $(this).closest('.level-1-area').find('[data-level="child"]').each(function() {
+                if($(this).is(':checked')){
+                    $childSelected++;
+                }
+            });
+            if($subchildSelected == 0 && $childSelected == 0){
+                parent.prop('checked', false);
+            }
+            $totalSubchild = 0 ;
+            $(this).closest('.level-1-area').find('[data-level="subchild"]').each(function() {
+                if($(this).is(':checked')){
+                    $totalSubchild++;
+                }
+            });
+            if($totalSubchild == 0){
+                parent.prop('checked', false);
+            } else {
+                parent.prop('checked', true);
+            }
+
         });
 
         $("form").submit(function() {

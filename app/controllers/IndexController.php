@@ -18,12 +18,21 @@ class IndexController extends \Backoffice\Controllers\BaseController
 
             return $this->response->redirect("/login");
         } else {
-            $acl = $this->session->get('sidebar');
+//            $acl = $this->session->get('sidebar');
 //            echo "<pre>";
 //            var_dump($acl);
 //            die;
 
 //            $this->view->menu = "home";
+
+
+//            $DL = new DLUserCurrency();
+//            $currency = $DL->getAll($this->_user->getId());
+//            echo "<pre>";
+//            var_dump($currency);
+//            die;
+
+
 
             \Phalcon\Tag::setTitle($this->_website->title);
         }
@@ -73,14 +82,12 @@ class IndexController extends \Backoffice\Controllers\BaseController
                         $this->session->remove('sidebar');
                         $this->session->set('sidebar', $sideBar);
 
-//                        $this->session->set('child', $user);
                         $this->session->set('real_user', $user);
 
                         $user = $DLuser->getById($user->getParent());
                         $this->session->set('user', $user);
                     } else {
                         $this->session->set('user', $user);
-//                        $this->session->set('child', $user);
                         $this->session->set('real_user', $user);
 
                         //TODO :: save and check to redis
@@ -98,6 +105,7 @@ class IndexController extends \Backoffice\Controllers\BaseController
                         $this->session->set('sidebar', $sideBar);
                         //TODO :: save and check to redis
                     }
+
                     $this->successFlash($view->translate['login_success']);
                     return $this->response->redirect("/");
                 } else {

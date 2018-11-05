@@ -57,6 +57,58 @@ class GlobalVariable
         16 => 'Statement Detail',
     );
 
+//    public static $newProviderGameEndpointTypes = array(
+//        101 => "Login",
+//        102 => 'Register',
+//        103 => 'User Information',
+//        104 => 'User Balance',
+//        105 => '(Transfer) Transaction In',
+//        106 => '(Transfer) Transaction Out',
+//        107 => '(Transfer) Transaction Status',
+//        108 => '(Transfer) Transaction History',
+//        109 => '(Transfer) Transaction Daily',
+//        110 => '(Transfer) Game Record',
+//        201 => '(Seamless) Transaction Buy In',
+//        202 => '(Seamless) Transaction Stand Up',
+//        203 => '(Seamless) Transaction Bet',
+//        204 => '(Seamless) Transaction History',
+//        205 => '(Seamless) Transaction Daily',
+//        206 => '(Seamless) Game Record',
+//        111 => 'Statement Daily',
+//        112 => 'Statement Detail',
+//    );
+
+    public static $transferProviderGameEndpointTypes = array(
+        101 => "Login",
+        102 => 'Register',
+        103 => 'User Information',
+        104 => 'User Balance',
+        105 => 'Transaction In',
+        106 => 'Transaction Out',
+        108 => 'Transaction Status',
+        109 => 'Transaction History',
+        110 => 'Transaction Daily',
+        111 => 'Game Record',
+        112 => 'Statement Daily',
+        113 => 'Statement Detail',
+    );
+
+    public static $seamlessProviderGameEndpointTypes = array(
+        201 => "Login",
+        202 => 'Register',
+        203 => 'User Information',
+        204 => 'User Balance',
+        205 => 'Transaction Buy In',
+        206 => 'Transaction Stand Up',
+        207 => 'Transaction Bet',
+        208 => 'Transaction Status',
+        209 => 'Transaction History',
+        210 => 'Transaction Daily',
+        211 => 'Game Record',
+        212 => 'Statement Daily',
+        213 => 'Statement Detail',
+    );
+
     public static $agentType = array(
         'god' => 0,
         'company' => 9,

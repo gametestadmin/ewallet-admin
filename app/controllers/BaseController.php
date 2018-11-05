@@ -4,6 +4,7 @@ namespace Backoffice\Controllers;
 defined('APP_PATH') || define('APP_PATH', realpath('.'));
 
 use System\Language\Language;
+use \System\Datalayer\DLUserCurrency;
 use Phalcon\Mvc\Controller;
 use Phalcon\Translate\Adapter\NativeArray;
 use System\Library\Security\General ;
@@ -130,10 +131,18 @@ class BaseController extends Controller
         if($this->session->has('real_user')) {
             $this->_realUser = $this->session->get('real_user');
         }
+        if($this->session->has('currency')) {
+            $currency = $this->session->get('currency');
+        }
 
-        $this->view->user = $this->_user;
-//        $this->view->child = $this->_child;
-        $this->view->real_user = $this->_realUser;
+        if (isset($this->_user)){
+            $DL = new DLUserCurrency();
+            $currency = $DL->getAll($this->_user->getId());
+            $this->view->user_currency_list = $currency ;
+        }
+
+        $this->view->user = $this->_user ;
+        $this->view->real_user = $this->_realUser ;
     }
 
     protected function _setNavigation()
@@ -167,8 +176,8 @@ class BaseController extends Controller
     }
 
     protected function _checkResetPassword(){
-        if( $this->_user ){
-            if ($this->_user->getResetPassword() == 1){
+        if( $this->_realUser ){
+            if ($this->_realUser->getResetPassword() == 1){
                 if (!($this->_module == 'user' && $this->_controller == 'password' && $this->_action == 'change')){
                     $this->errorFlash('please_change_password');
 

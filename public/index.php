@@ -33,8 +33,8 @@ try {
     echo $application->handle()->getContent();
 } catch (\Exception $e) {
     //redirect to 500 error
-    header("Location: /500");
-//    echo "<pre>";
-//    var_dump($e->getMessage());
-//    die;
+//    header("Location: /500");
+    echo "<pre>";
+    var_dump($e->getMessage());
+    die;
 }

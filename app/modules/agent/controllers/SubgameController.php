@@ -6,7 +6,7 @@ use System\Datalayer\DLGame;
 use System\Datalayer\DLUserGame;
 use System\Library\General\GlobalVariable;
 
-class GameController extends \Backoffice\Controllers\ProtectedController
+class SubgameController extends \Backoffice\Controllers\ProtectedController
 {
     protected $_limit = 10;
     protected $_pages = 1;
@@ -23,6 +23,7 @@ class GameController extends \Backoffice\Controllers\ProtectedController
             try {
                 $this->db->begin();
 
+//                $data['agent'] = $this->_user;
                 $dlGame = new DLGame();
                 $game = $dlGame->getById($data['game']);
                 $data['game_type'] = $game->getType();

@@ -10,6 +10,7 @@ class ProfileController extends \Backoffice\Controllers\ProtectedController
     public function indexAction()
     {
         $view = $this->view;
+        $data = null ;
         if ($this->request->isPost())
         {
             $data = $this->request->getPost();

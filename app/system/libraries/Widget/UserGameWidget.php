@@ -21,22 +21,7 @@ class UserGameWidget extends BaseWidget
         }
 
         $dlUserGame = new DLUserGame();
-        $dlGame = new DLGame();
-        $games = $dlGame->getAll(2);
-        $userGames = $dlUserGame->getAgentGame($this->params["agentId"]);
-
-//        echo "<pre>";
-//        var_dump($this->params);
-//        if(count($userGames) > 0) {
-//            foreach ($userGames as $userGame) {
-//                var_dump($userGame->getGame());
-//            }
-//        }else{
-//            foreach ($games as $game){
-//                var_dump($game->getName());
-//            }
-//        }
-//        die;
+        $userGames = $dlUserGame->getAgentGame($this->params["agentId"],2);
 
         $paginator = new \Phalcon\Paginator\Adapter\Model(
             array(
@@ -50,7 +35,7 @@ class UserGameWidget extends BaseWidget
         $totalPage = ceil($userGames->count()/$limit);
 
         return $this->setView('user/game/list', [
-            'user_game' => $records->items,
+            'user_games' => $records->items,
             'total_page' => $totalPage,
             'pages' => $pages,
             'limit' => $limit,

@@ -18,8 +18,8 @@
                         <ul class="list-inline header-list text-center">
                           <li class="col-sm-1 hidden-xs list-group-item">No</li>
                           <li class="col-sm-3 col-xs-3 list-group-item">Username</li>
-                          <li class="col-sm-3 col-xs-3 list-group-item">Parent Status</li>
-                          <li class="col-sm-3 col-xs-3 list-group-item">Status</li>
+                          <li class="col-sm-3 col-xs-3 list-group-item">[{{user.type|agentType}}] Status</li>
+                          <li class="col-sm-3 col-xs-3 list-group-item">[{{type|agentType}}] Status</li>
                           <li class="col-sm-2 col-xs-3 list-group-item">Action</li>
                         </ul>
                         {% set i = 1 %}
