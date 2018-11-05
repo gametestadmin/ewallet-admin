@@ -1,8 +1,20 @@
+.btn-info,
+.btn-primary{
+  background: #E15121 !important;
+  border: 1px #C3C3C3 outset;
+}
+.btn-danger{
+  background: #BD441C !important;
+  border: 1px #C3C3C3 outset;
+}
 .list-group-item{
-  border-style: solid;
-  border-color: #545151;
-  border-width: thin;
+  //border-style: solid;
+  //border-color: #545151;
+  //border-width: thin;
 
+  //border: 1px #8F8D8D solid;
+  border: none;
+  border-bottom: 1px #8F8D8D solid;
   color:#3C3C3C;
   padding: 0;
 
@@ -17,8 +29,29 @@
 .list-group-item:last-child{
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
+  border-right: none !important;
 }
+.list-inline
+{
+  &.content-odd,
+  &.content-even{
+    line-height: 33px;
 
+    &:hover{
+      background: #E6D8D2;
+    }
+  }
+  &.content-odd{
+    background:#E6E6E6;
+    border-left: 1px #8F8D8D solid;
+    border-right: 1px #8F8D8D solid;
+  }
+  &.content-even{
+    background:#CDCDCD;
+    border-left: 1px #8F8D8D solid;
+    border-right: 1px #8F8D8D solid;
+  }
+}
 ul.header-list,
 ul.content-odd,
 ul.content-even{
@@ -28,20 +61,28 @@ ul.content-even{
   overflow: hidden;
 }
 .header-list{
-  background:#A09E9E;
+  background:#AFAFAF;
   line-height:45px;
   font-weight:bolder;
+
+  border: 1px #8F8D8D solid;
+  border-bottom: none;
+  .list-group-item{
+
+    //border-style: solid;
+    //border-color: #545151;
+    //border-width: thin;
+
+    border-right: 1px #8F8D8D solid;
+    color:#3C3C3C;
+    padding: 0;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
 }
-.content-odd,
-.content-even{
-  line-height: 33px;
-}
-.content-odd{
-  background:#CDCDCD;
-}
-.content-even{
-  background:#E6E6E6;
-}
+
 .text-suspended{
   color: #930002;
 }

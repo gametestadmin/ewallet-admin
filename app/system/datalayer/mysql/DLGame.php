@@ -348,7 +348,6 @@ class DLGame{
         }
 
         //get childs
-        //$childs = User::findByParent($parentId);
         $childs = $this->getByGameParent($parentId);
 
         foreach ($childs as $child){

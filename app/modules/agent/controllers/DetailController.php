@@ -17,7 +17,7 @@ class DetailController extends \Backoffice\Controllers\ProtectedController
         $DLUser = new DLUser();
         $DLUserCurrency = new DLUserCurrency();
 
-        $status = GlobalVariable::$threeLayerStatus;
+        $status = GlobalVariable::$threeLayerStatusTypes;
 
         $parent = $this->_user;
         $agent = $DLUser->getById($agentId);

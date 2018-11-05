@@ -4,37 +4,37 @@
         <div class="col-xs-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title row">
-                    <h5>[{{agent.username}}] Edit</h5>
+                    <h5>[{{agent.username}}] {{translate['title_text_edit']}}</h5>
                 </div>
                 <div class="ibox-content row">
                     <div class="panel-body">
                         <form class="form-horizontal col-xs-12" action="{{router.getRewriteUri()}}" method="post">
                             <div class="form-group">
-                                <label class="col-xs-3 control-label">Username</label>
+                                <label class="col-xs-3 control-label">{{translate['form_username']}}</label>
                                 <label class="col-xs-9">
-                                    <input type="text" placeholder="Username" class="form-control" value="{{agent.username}}" readonly>
+                                    <input type="text" placeholder="{{translate['placeholder_username']}}" class="form-control" value="{{agent.username}}" readonly>
                                 </label>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Nickname</label>
+                                <label class="col-sm-3 control-label">{{translate['form_nickname']}}</label>
                                 <label class="col-sm-9">
-                                    <input type="text" class="form-control" readonly value="********">
+                                    <input type="text" class="form-control" readonly value="********" placeholder="{{translate['placeholder_nickname']}}">
                                 </label>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">Password</label>
+                                <label class="col-sm-3 control-label">{{translate['form_password']}}</label>
                                 <label class="col-sm-9">
-                                    <input type="text" class="form-control" readonly value="********">
+                                    <input type="text" class="form-control" readonly value="********" placeholder="{{translate['placeholder_password']}}">
                                 </label>
                             </div>
                             <div class="form-group">
-                                <label class="col-xs-3 control-label">Agent</label>
+                                <label class="col-xs-3 control-label">{{translate['form_agent']}}</label>
                                 <label class="col-xs-9">
-                                    <input type="text" placeholder="Nickname" class="form-control" value="{{agent.type|agentType}}" readonly>
+                                    <input type="text" placeholder="{{translate['placeholder_agent']}}" class="form-control" value="{{agent.type|agentType}}" readonly>
                                 </label>
                             </div>
                             <div class="form-group">
-                                <label class="col-xs-3 control-label">Timezone</label>
+                                <label class="col-xs-3 control-label">{{translate['form_timezone']}}</label>
                                 <label class="col-xs-9">
                                     <select name="timezone" class="form-control">
                                         {% for gmtTime in gmt %}
@@ -53,11 +53,11 @@
                             <div class="form-group pull-right">
                                 <div class="col-xs-12">
                                     <label>
-                                        <a href="{{url('javascript:history.go(-1)')}}" class="btn btn-sm btn-danger">Back</a>
+                                        <a href="{{url('javascript:history.go(-1)')}}" class="btn btn-sm btn-danger">{{translate['button_back']}}</a>
                                     </label>
                                     {% if user.id == agent.parent %}
                                     <label>
-                                        <input type="submit" name="submit" class="btn btn-sm btn-info" value="Edit">
+                                        <input type="submit" name="submit" class="btn btn-sm btn-info" value="{{translate['button_edit']}}">
                                     </label>
                                     {% endif %}
                                 </div>

@@ -24,7 +24,7 @@ class ListController extends \Backoffice\Controllers\ProtectedController
             $page = $this->session->get("pages");
         }
 
-        $status = GlobalVariable::$threeLayerStatus;
+        $status = GlobalVariable::$threeLayerStatusTypes;
 
         $DLUser = new DLUser();
         $agent = $DLUser->getByParent($this->_user->getId());
@@ -65,7 +65,7 @@ class ListController extends \Backoffice\Controllers\ProtectedController
             $page = $this->session->get("pages");
         }
 
-        $status = GlobalVariable::$threeLayerStatus;
+        $status = GlobalVariable::$threeLayerStatusTypes;
 
         $DLUser = new DLUser();
         $parent = $this->_user;

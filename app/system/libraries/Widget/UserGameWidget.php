@@ -21,7 +21,7 @@ class UserGameWidget extends BaseWidget
         }
 
         $dlUserGame = new DLUserGame();
-        $userGames = $dlUserGame->getAgentGame($this->params["agentId"],2);
+        $userGames = $dlUserGame->getAgentGame($this->params["agentId"],2,0);
 
         $paginator = new \Phalcon\Paginator\Adapter\Model(
             array(

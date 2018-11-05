@@ -5,19 +5,19 @@
                 <div class="ibox float-e-margins">
                     <div class="ibox-title row">
                         <div class="row">
-                            <label class="col-xs-6">Currency List</label>
+                            <label class="col-xs-6">{{translate['title_text_currency_list']}}</label>
                             <label class="col-xs-6 text-right">
-                                <a href="{{router.getRewriteUri()~'/add'}}" class="btn btn-sm btn-info">Add</a>
+                                <a href="{{router.getRewriteUri()~'/add'}}" class="btn btn-sm btn-info">{{translate['button_add']}}</a>
                             </label>
                         </div>
                     </div>
                     <div class="ibox-content row">
                         <ul class="list-inline header-list text-center">
-                          <li class="col-sm-1 col-xs-1 list-group-item">No</li>
-                          <li class="col-sm-3 col-xs-2 list-group-item">Code</li>
-                          <li class="col-sm-4 col-xs-4 list-group-item">Name</li>
-                          <li class="col-sm-2 col-xs-3 list-group-item">Status</li>
-                          <li class="col-sm-2 col-xs-2 list-group-item">Action</li>
+                          <li class="col-sm-1 col-xs-1 list-group-item">{{translate['head_list_number']}}</li>
+                          <li class="col-sm-3 col-xs-2 list-group-item">{{translate['head_list_code']}}</li>
+                          <li class="col-sm-4 col-xs-4 list-group-item">{{translate['head_list_name']}}</li>
+                          <li class="col-sm-2 col-xs-3 list-group-item">{{translate['head_list_status']}}</li>
+                          <li class="col-sm-2 col-xs-2 list-group-item">{{translate['head_list_action']}}</li>
                         </ul>
                         {% set i = 1 %}
                         {% for currencyData in page %}
@@ -33,17 +33,17 @@
                             <li class="col-sm-2 col-xs-3 list-group-item">
                                 <select class="status">
                                     {% for key, value in status %}
-                                        <option value="{{currencyData.code~"|"~value}}" {% if currencyData.status == value %}selected{% endif %}>{{key}}</option>
+                                        <option value="{{currencyData.code~"|"~key}}" {% if currencyData.status == key %}selected{% endif %}>{{translate[value]}}</option>
                                     {% endfor %}
                                 </select>
                             </li>
                             <li class="col-sm-2 col-xs-2 list-group-item text-center">
                                 <a href="{{router.getRewriteUri()~'/detail/'~currencyData.code|lowercase}}">
-                                    <span class="fa fa-search text-danger"></span>
+                                    <i class="fa fa-search text-danger" data-toggle="tooltip" data-placement="left" title="{{translate['text_detail']}}"></i>
                                 </a>
                                 |
                                 <a href="{{router.getRewriteUri()~'/edit/'~currencyData.code|lowercase}}">
-                                    <span class="fa fa-edit text-primary"></span>
+                                    <i class="fa fa-edit text-primary" data-toggle="tooltip" data-placement="right" title="{{translate['text_edit']}}"></i>
                                 </a>
                             </li>
                         </ul>

@@ -5,14 +5,16 @@ use System\Model\UserGame;
 
 class DLUserGame
 {
-    public function getAgentGame($agent,$type){
+    public function getAgentGame($agent,$type,$status = 1){
         $agentGame = UserGame::find(
             array(
-                "conditions" => "user = :user: AND game_type = :game_type:",
+                "conditions" => "user = :user: AND game_type = :game_type: AND status >= :status:",
                 "bind" => array(
                     "user" => $agent,
-                    "game_type" => $type
-                )
+                    "game_type" => $type,
+                    "status" => $status
+                ),
+                "order" => "id"
             )
         );
 
@@ -47,8 +49,55 @@ class DLUserGame
         return $agentGame;
     }
 
-    public function getParentGame($parent){
-        $parentGames = UserGame::findByUser($parent);
+    public function getParentGame($parent,$type){
+//        $userId = $parent;
+//        $gameType = $type;
+//        $status = 1;
+//
+//        $postData = array(
+//            'app_id' => $this->_config->api->id,
+//            'app_secret' => $this->_config->api->secret,
+//            'user_id' => $userId,
+//            'game_type' => $gameType,
+//            'status' => $status,
+//            'ip' => GeneralSecurity::getIP(),
+//        );
+//
+//        // Setup cURL
+//        $ch = curl_init($this->_config->api->url.'user/game');
+//        curl_setopt_array($ch, array(
+//            CURLOPT_POST => TRUE,
+//            CURLOPT_RETURNTRANSFER => TRUE,
+////            CURLOPT_HTTPHEADER => array('Content-Type: application/x-www-form-urlencoded'),
+//            CURLOPT_HTTPHEADER => array('Content-Type: application/json'),
+////            CURLOPT_POSTFIELDS => http_build_query($postData),
+//            CURLOPT_POSTFIELDS => json_encode($postData),
+//        ));
+//
+//        // Send the request
+//        $parentGames = json_decode(curl_exec($ch));
+//
+//        return $parentGames;
+
+        $parentGames = UserGame::find(
+            array(
+                "conditions" => "user = :user: AND game_type = :game_type: AND status = :status:",
+                "bind" => array(
+                    "user" => $parent,
+                    "game_type" => $type,
+                    "status" => 1
+                )
+            )
+        );
+//        $parentGames = UserGame::find(
+//            array(
+//                "conditions" => "user = :user: AND status = :status:",
+//                "bind" => array(
+//                    "user" => $parent,
+//                    "status" => 1
+//                )
+//            )
+//        );
 
         return $parentGames;
     }
@@ -69,6 +118,49 @@ class DLUserGame
 
     public function getById($agentGameId){
         $agentGame = UserGame::findFirst($agentGameId);
+
+        return $agentGame;
+    }
+
+    public function getAgentGameAndGameId($agentId,$gameId,$gameType){
+        $agentGame = UserGame::findFirst(
+            array(
+                "conditions" => "user = :user: AND game = :game: AND game_type = :game_type:",
+                "bind" => array(
+                    "user" => $agentId,
+                    "game" => $gameId,
+                    "game_type" => $gameType
+                )
+            )
+        );
+
+        return $agentGame;
+    }
+
+    public function getByAgentIdAndGameId($agentId,$gameId,$status = null){
+        if($status == null){
+            $agentGame = UserGame::findFirst(
+                array(
+                    "conditions" => "user = :user: AND game = :game:",
+                    "bind" => array(
+                        "user" => $agentId,
+                        "game" => $gameId,
+                    )
+                )
+            );
+        }
+        else{
+            $agentGame = UserGame::findFirst(
+                array(
+                    "conditions" => "user = :user: AND game = :game: AND status = :status:",
+                    "bind" => array(
+                        "user" => $agentId,
+                        "game" => $gameId,
+                        "status" => $status,
+                    )
+                )
+            );
+        }
 
         return $agentGame;
     }
@@ -143,5 +235,67 @@ class DLUserGame
         $agentGame->save();
 
         return $agentGame;
+    }
+
+    public function setAgentGameStatus($agentId, $agentGameId, $status){
+        $agentGame = $this->getById($agentGameId);
+        $agentGame->setStatus($status);
+        $agentGame->save();
+        // get agent game
+
+        $this->setChildParentStatus($agentId, $agentGame->getGame(), $status, $agentGame->getParentStatus());
+
+        return true;
+    }
+
+    protected function setChildParentStatus($parentId, $gameId, $parentStatus, $grandParentStatus){
+
+        $dlUser = new DLUser();
+        $agents = $dlUser->getByParent($parentId);
+
+        $dlGame = new DLGame();
+        $subGames = $dlGame->getByGameParent($gameId);
+
+        $subGamesId = array();
+
+        if($subGames) {
+            foreach ($subGames as $subGame) {
+                $selfSubGame = $this->getByAgentIdAndGameId($parentId, $subGame->getId());
+                if($selfSubGame){
+                    // set self parent_status to subgame filter by game parent id
+                    $selfSubGame->setParentStatus($parentStatus);
+                    $selfSubGame->save();
+                }
+                $subGamesId[] = $subGame->getId();
+            }
+        }
+        $childParentStatus = 1;
+        if($grandParentStatus == 0 || $parentStatus == 0){
+            $childParentStatus = 0;
+        }else if($grandParentStatus == 2 || $parentStatus == 2){
+            $childParentStatus = 2;
+        }
+
+        foreach ($agents as $agent){
+            $agentGame = $this->getByAgentIdAndGameId($agent->getId(),$gameId);
+            if($agentGame) {
+                if($subGames) {
+                    foreach ($subGamesId as $id) {
+                        $agentSubGame = $this->getByAgentIdAndGameId($agent->getId(), $id);
+                        if($agentSubGame) {
+                            // set parent_status game type 3 filter by game parent id
+                            $agentSubGame->setParentStatus($childParentStatus);
+                            $agentSubGame->save();
+                        }
+                    }
+                }
+                // set parent_status game type 2 filter by agent parent id
+                $agentGame->setParentStatus($childParentStatus);
+                $agentGame->save();
+
+                $this->setChildParentStatus($agentGame->getId(), $gameId, $agentGame->getStatus(), $childParentStatus);
+            }
+        }
+        return true;
     }
 }

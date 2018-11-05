@@ -4,36 +4,36 @@
                 <div class="col-xs-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title row">
-                            <h5>Add Currency</h5>
+                            <h5>{{translate['title_text_add_currency']}}</h5>
                         </div>
                         <div class="ibox-content row">
                             <form method="post" action="{{url('/setting/currency/add')}}" class="form-horizontal col-xs-12">
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label">Currency Code</label>
+                                    <label class="col-md-3 control-label">{{translate['form_currency_code']}}</label>
                                     <div class="col-md-9">
-                                        <input type="text" name="code" id="code" class="form-control" placeholder="Code">
+                                        <input type="text" name="code" id="code" class="form-control" placeholder="{{translate['placeholder_currency_code']}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label">Currency Name</label>
+                                    <label class="col-md-3 control-label">{{translate['form_currency_name']}}</label>
                                     <div class="col-md-9">
-                                        <input type="text" name="name" class="form-control" placeholder="Name">
+                                        <input type="text" name="name" class="form-control" placeholder="{{translate['placeholder_currency_name']}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label">Currency Symbol</label>
+                                    <label class="col-md-3 control-label">{{translate['form_currency_symbol']}}</label>
                                     <div class="col-md-9">
-                                        <input type="text" name="symbol" class="form-control" placeholder="Symbol">
+                                        <input type="text" name="symbol" class="form-control" placeholder="{{translate['placeholder_currency_symbol']}}">
                                     </div>
                                 </div>
                                 <div class="form-group"><div class="hr-line-dashed"></div></div>
                                 <div class="form-group pull-right">
                                     <div class="col-xs-12">
                                         <label>
-                                            <a href="javascript:history.go(-1)" class="btn btn-md btn-danger">Back</a>
+                                            <a href="{{url(module~'/'~controller)}}" class="btn btn-sm btn-danger">{{translate['button_back']}}</a>
                                         </label>
                                         <label>
-                                            <input type="submit" class="btn btn-primary" name="submit" value="Add">
+                                            <input type="submit" class="btn btn-sm btn-primary" name="submit" value="{{translate['button_add']}}">
                                         </label>
                                     </div>
                                 </div>

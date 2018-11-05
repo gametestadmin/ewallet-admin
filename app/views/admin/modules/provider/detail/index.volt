@@ -4,12 +4,12 @@
                 <div class="col-xs-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title row">
-                            <h5>[{{provider.name}}] Detail</h5>
+                            <h5>[{{provider.name}}] {{translate['title_text_detail']}}</h5>
                         </div>
                         <div class="ibox-content row">
                             <form class="form-horizontal col-xs-12" action="#" method="post">
                                 <div class="form-group">
-                                    <label class="col-xs-3 control-label">Timezone</label>
+                                    <label class="col-xs-3 control-label">{{translate['form_timezone']}}</label>
                                     <label class="col-xs-9">
                                         {% set gmtDisplay = provider.timezone %}
                                         {% if provider.timezone == 0%}
@@ -17,21 +17,21 @@
                                         {% elseif provider.timezone > 0%}
                                         {% set gmtDisplay = '+'~provider.timezone %}
                                         {% endif %}
-                                        <input type="text" placeholder="Code" class="form-control" value="GMT {{gmtDisplay}}" readonly>
+                                        <input type="text" placeholder="{{translate['placeholder_timezone']}}" class="form-control" value="GMT {{gmtDisplay}}" readonly>
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-xs-3 control-label">Name</label>
+                                    <label class="col-xs-3 control-label">{{translate['form_provider_name']}}</label>
                                     <label class="col-xs-9">
-                                        <input type="text" placeholder="Name" class="form-control" value="{{provider.name}}" readonly>
+                                        <input type="text" placeholder="{{translate['placeholder_provider_name']}}" class="form-control" value="{{provider.name}}" readonly>
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-xs-3 control-label">Status</label>
+                                    <label class="col-xs-3 control-label">{{translate['form_status']}}</label>
                                     <label class="col-xs-9">
                                         <select class="status form-control">
                                             {% for key, value in status %}
-                                                <option value="{{provider.id~"|"~value}}" {% if provider.status == value %}selected{% endif %}>{{key}}</option>
+                                                <option value="{{provider.id~"|"~key}}" {% if provider.status == key %}selected{% endif %}>{{translate[value]}}</option>
                                             {% endfor %}
                                         </select>
                                     </label>
@@ -40,10 +40,10 @@
                                 <div class="form-group pull-right">
                                     <div class="col-xs-12">
                                         <label>
-                                            <a href="{{url('/'~module~'/list')}}" class="btn btn-sm btn-danger">Back</a>
+                                            <a href="{{url('/'~module~'/list')}}" class="btn btn-sm btn-danger">{{translate['button_back']}}</a>
                                         </label>
                                         <label>
-                                            <a href="{{url('/'~module~'/edit/'~provider.id)}}" class="btn btn-sm btn-info">Edit</a>
+                                            <a href="{{url('/'~module~'/edit/'~provider.id)}}" class="btn btn-sm btn-info">{{translate['button_edit']}}</a>
                                         </label>
                                     </div>
                                 </div>
