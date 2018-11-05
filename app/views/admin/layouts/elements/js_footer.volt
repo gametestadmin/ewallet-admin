@@ -67,6 +67,24 @@
 
     }, 2000);
 
+    function myCurrency(){
+        $.ajax({
+          type: "POST",
+          url: '{{url('ajax/currency/list')}}',
+          data: {},
+          dataType : "json",
+          success: function(result) {
+            console.log('success');
+            console.log(result);
+
+          },
+          error: function(result) {
+            console.log('error');
+            console.log(result);
+
+          }
+      });
+    }
 
     $('#myModal').on('shown.bs.modal', function () {
       $('#myInput').trigger('focus')

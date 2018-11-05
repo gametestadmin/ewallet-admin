@@ -59,6 +59,7 @@ class IndexController extends \Backoffice\Controllers\BaseController
 //            $test = $DLuser->setUserPassword($user , $password);
 //            var_dump($test);
 
+
                 //check Captcha
                 $checkcaptcha = new Captcha();
                 $captchaTime = $checkcaptcha->checkCaptchaTime();
