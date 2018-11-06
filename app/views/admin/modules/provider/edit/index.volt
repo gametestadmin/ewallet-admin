@@ -4,7 +4,7 @@
                 <div class="col-xs-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title row">
-                            <h5>[{{provider.name}}] Edit</h5>
+                            <h5>[{{provider.name}}] {{translate['title_text_edit']}}</h5>
                         </div>
                         <div class="ibox-content row">
                             <form class="form-horizontal col-xs-12" action="{{url(router.getRewriteUri())}}" method="post">
@@ -12,7 +12,6 @@
                                     <label class="col-xs-3 control-label">Timezone</label>
                                     <label class="col-xs-9">
                                         <select name="provider_timezone" class="form-control">
-                                            <option value="">-Choose One-</option>
                                             {% for gmtTime in gmt %}
                                                 {% set gmtDisplay = gmtTime %}
                                                 {% if gmtTime == 0%}
@@ -28,17 +27,17 @@
                                 <div class="form-group">
                                     <label class="col-xs-3 control-label">Name</label>
                                     <label class="col-xs-9">
-                                        <input type="text" name="provider_name" class="form-control" placeholder="Name" value="{{provider.name}}">
+                                        <input type="text" name="provider_name" class="form-control" placeholder="{{translate['placeholder_provider_name']}}" value="{{provider.name}}">
                                     </label>
                                 </div>
                                 <div class="form-group"><div class="hr-line-dashed"></div></div>
                                 <div class="form-group pull-right">
                                     <div class="col-xs-12">
                                         <label>
-                                            <a href="javascript:history.go(-1)" class="btn btn-sm btn-danger">Back</a>
+                                            <a href="javascript:history.go(-1)" class="btn btn-sm btn-danger">{{translate['button_back']}}</a>
                                         </label>
                                         <label>
-                                            <input type="submit" name="submit" class="btn btn-sm btn-primary" value="Edit">
+                                            <input type="submit" name="submit" class="btn btn-sm btn-primary" value="{{translate['button_edit']}}">
                                         </label>
                                     </div>
                                 </div>

@@ -103,6 +103,7 @@ class DLUser extends \System\Datalayers\Main
         return $user->save();
     }
 
+
     public function setResetPassword($user, $password)
     {
         $user->setPassword($password);
@@ -111,7 +112,6 @@ class DLUser extends \System\Datalayers\Main
             throw new \Exception($user->getMessages());
         }
         return $user->save();
-
     }
 
     public function setNickname($user, $newNickname)

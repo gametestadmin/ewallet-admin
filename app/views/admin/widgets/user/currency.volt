@@ -18,26 +18,26 @@
         <div class="text-right">
         {% if realParent == 1 or realParent == 3 %}
             <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#form-user-currency">
-                Add New
+                {{translate['button_add']}}
             </button>
         {% endif %}
         </div>
     </div>
     <ul class="list-inline header-list text-center">
-      <li class="col-xs-1 list-group-item list">No</li>
-      <li class="col-xs-1 list-group-item list">Symbol</li>
-      <li class="col-xs-2 list-group-item list">Code</li>
-      <li class="col-xs-4 list-group-item list">Name</li>
+      <li class="col-xs-1 list-group-item list">{{translate['head_list_number']}}</li>
+      <li class="col-xs-1 list-group-item list">{{translate['head_list_symbol']}}</li>
+      <li class="col-xs-2 list-group-item list">{{translate['head_list_code']}}</li>
+      <li class="col-xs-4 list-group-item list">{{translate['head_list_name']}}</li>
       {% if realParent == 1 or realParent == 3 %}
       <li class="col-xs-4 list-group-item list-act">
-        <div class="text">Action</div>
+        <div class="text">{{translate['head_list_action']}}</div>
         <div class="text">
-            <span class="col-xs-6">Default</span>
-            <span class="col-xs-6">Delete</span>
+            <span class="col-xs-6">{{translate['head_list_default']}}</span>
+            <span class="col-xs-6">{{translate['head_list_delete']}}</span>
         </div>
       </li>
       {% else %}
-      <li class="col-xs-4 list-group-item list">Default</li>
+      <li class="col-xs-4 list-group-item list">{{translate['head_list_default']}}</li>
       {% endif %}
     </ul>
     {% if user_currency is not null %}
@@ -56,10 +56,10 @@
                 {% if realParent == 1 or realParent == 3 %}
                     <li class="col-xs-2 list-group-item">
                         {% if userCurrencyData.default == 1 %}
-                            <i class="fa fa-check text-success" data-toggle="tooltip" data-placement="right" title="Default"></i>
+                            <i class="fa fa-check text-success" data-toggle="tooltip" data-placement="right" title="{{translate['text_default']}}"></i>
                         {% else %}
                             <a href="{{url('/agent/currency/edit/'~agent.id~'?default='~userCurrencyData.id~'&tab=tab-currency')}}">
-                                <span class="fa fa-times text-danger"></span>
+                                <i class="fa fa-times text-danger"></i>
                             </a>
                         {%endif%}
                     </li>
@@ -69,9 +69,9 @@
                 {% else %}
                     <li class="col-xs-4 list-group-item">
                         {% if userCurrencyData.default == 1 %}
-                            <i class="fa fa-check text-success" data-toggle="tooltip" data-placement="right" title="Default"></i>
+                            <i class="fa fa-check text-success" data-toggle="tooltip" data-placement="right" title="{{translate['text_default']}}"></i>
                         {% else %}
-                            <i class="fa fa-times text-danger" data-toggle="tooltip" data-placement="right" title="Not Default"></i>
+                            <i class="fa fa-times text-danger" data-toggle="tooltip" data-placement="right" title="{{translate['text_not_default']}}"></i>
                         {%endif%}
                     </li>
                 {% endif %}
@@ -79,16 +79,14 @@
             {% set i = i +1 %}
         {% endfor %}
     {% else %}
-        <h4 class="text-center">-No data-</h4>
+        <h4 class="text-center">{{translate['text_no_data']}}</h4>
     {% endif %}
 </form>
 <small class="col-xs-12 text-left">
-    *<span class="fa fa-times text-danger"></span> = Not Default
+    *<span class="fa fa-times text-danger"></span> = {{translate['important_text_not_default']}}
 </small>
 
 {{ widget('UserCurrencyFormAddWidget', ["loginId" : user.id, "agentId" : agent.id]) }}
 <script>
-    $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();
-    });
+
 </script>

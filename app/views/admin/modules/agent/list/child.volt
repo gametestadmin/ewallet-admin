@@ -7,17 +7,17 @@
                         <div class="row">
                             <label class="col-xs-12 text-left">
                             {% set type = parent.type - 1 %}
-                            [{{parent.username}}] {{type|agentType}} List
+                            [{{parent.username}}] {{translate['level_'~type|agentType]}} {{translate['title_text_list']}}
                             </label>
                         </div>
                     </div>
                     <div class="ibox-content row">
                         <ul class="list-inline header-list text-center">
-                          <li class="col-sm-1 hidden-xs list-group-item">No</li>
-                          <li class="col-sm-3 col-xs-3 list-group-item">Username</li>
-                          <li class="col-sm-3 col-xs-3 list-group-item">Parent Status</li>
-                          <li class="col-sm-3 col-xs-3 list-group-item">Status</li>
-                          <li class="col-sm-2 col-xs-3 list-group-item">Action</li>
+                          <li class="col-sm-1 hidden-xs list-group-item">{{translate['head_list_number']}}</li>
+                          <li class="col-sm-3 col-xs-3 list-group-item">{{translate['head_list_username']}}</li>
+                          <li class="col-sm-3 col-xs-3 list-group-item">[{{parent.username}}] {{translate['head_list_status']}}</li>
+                          <li class="col-sm-3 col-xs-3 list-group-item">[{{translate['level_'~type|agentType]}}] {{translate['head_list_status']}}</li>
+                          <li class="col-sm-2 col-xs-3 list-group-item">{{translate['head_list_action']}}</li>
                         </ul>
                         {% set i = 1 %}
                         {% for agentData in agent_list %}
@@ -35,11 +35,11 @@
                                     {{agentData.username}}
                                 {% endif %}
                             </li>
-                            <li class="col-sm-3 col-xs-3 list-group-item"><strong class="text-{{agentData.parent_status|agentStatus|lower}}">{{agentData.parent_status|agentStatus}}</strong></li>
-                            <li class="col-sm-3 col-xs-3 list-group-item"><strong class="text-{{agentData.status|agentStatus|lower}}">{{agentData.status|agentStatus}}</strong></li>
+                            <li class="col-sm-3 col-xs-3 list-group-item"><strong class="text-{{agentData.parent_status|agentStatus|lower}}">{{translate[agentData.parent_status|agentStatus|lower]}}</strong></li>
+                            <li class="col-sm-3 col-xs-3 list-group-item"><strong class="text-{{agentData.status|agentStatus|lower}}">{{translate[agentData.status|agentStatus|lower]}}</strong></li>
                             <li class="col-sm-2 col-xs-3 list-group-item">
                                 <a href="{{url(module~'/detail/'~agentData.id)}}">
-                                    <span class="fa fa-search text-danger"></span>
+                                    <i class="fa fa-search text-danger" data-toggle="tooltip" data-placement="left" title="{{translate['text_detail']}}"></i>
                                 </a>
                             </li>
                         </ul>

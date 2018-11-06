@@ -13,9 +13,6 @@ class Main
 
     public function __construct()
     {
-//        $this->session = new SessionAdapter();
-//        $this->session->start();
-
         $request = new Request();
         $this->_config = require __DIR__ . '/../../config/config.php';
         $this->_language = language::getTranslation();
@@ -33,7 +30,9 @@ class Main
         ));
 
         // Send the request
-        $response = json_decode(curl_exec($ch));
+        $result = json_decode(curl_exec($ch),true);
+
+        $response = new \Phalcon\Config($result);
 
         return $response;
     }

@@ -12,7 +12,7 @@ class DetailController extends \Backoffice\Controllers\ProtectedController
 
         $globalVariable = new GlobalVariable();
 
-        $status = $globalVariable::$threeLayerStatus;
+        $status = $globalVariable::$threeLayerStatusTypes;
         $gmt = $globalVariable->getGmt();
 
         $currentId = $this->dispatcher->getParam("id");

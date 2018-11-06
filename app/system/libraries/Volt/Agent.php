@@ -17,10 +17,10 @@ class Agent
 
     public static function agentStatus($status)
     {
-        $agentStatus = GlobalVariable::$threeLayerStatus;
+        $agentStatus = GlobalVariable::$threeLayerStatusTypes;
         foreach ($agentStatus as $key => $value) {
-            if($status == $value) {
-                return $key;
+            if($status == $key) {
+                return $value;
             }
         }
     }
