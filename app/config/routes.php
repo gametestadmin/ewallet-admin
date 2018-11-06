@@ -77,6 +77,7 @@ $routes = array(
             'action' => 'index'
         )
     ),
+
 //    array(
 //        'url' => '/(currency|moduletwo)/:controller/([\w]{3})',
 //        'params' => array(
@@ -86,24 +87,27 @@ $routes = array(
 //            'code' => 3
 //        )
 //    ),
+
     array(
         'url' => '/:module/:controller/:action/([\w|]{5})',
         'params' => array(
             'module' => 1,
             'controller' => 2,
             'action' => 3,
-            'code' => 4
+            'id' => 4
         )
     ),
+
     array(
         'url' => '/:module/:controller/:action/([a-zA-Z0-9-]+)',
         'params' => array(
             'module' => 1,
             'controller' => 2,
             'action' => 3,
-            'code' => 4
+            'id' => 4
         )
     ),
+
     array(
         'url' => '/:module/:controller/:action/([0-9|]+)',
         'params' => array(

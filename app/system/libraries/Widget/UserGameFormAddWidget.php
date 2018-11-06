@@ -12,6 +12,7 @@ class UserGameFormAddWidget extends BaseWidget
 {
     public function getContent()
     {
+//        echo "<pre>";
         $parent = $this->params["loginId"];
         $agent = $this->params["agentId"];
 
@@ -27,12 +28,12 @@ class UserGameFormAddWidget extends BaseWidget
         $games = array();
 
         $agentCurrencies = array();
-        $agentCurrencyData = $dlUserCurrency->getAll($agent);
+        $agentCurrencyData = $dlUserCurrency->getUserCurrencies($agent);
         foreach ($agentCurrencyData as $agentCurrency) {
             $agentCurrencies[] = $agentCurrency->getCurrency();
         }
 
-        $parentGames = $dlUserGame->getParentGame($parent);
+        $parentGames = $dlUserGame->getParentGame($parent,2);
 
         if($parentData->getType() <> 9) {
             foreach ($parentGames as $parentGame) {
@@ -42,9 +43,10 @@ class UserGameFormAddWidget extends BaseWidget
                 foreach ($gameCurrencyData as $gameCurrency){
                     $gameCurrencies[] = $gameCurrency->getCurrency();
                 }
-
                 if(count(array_intersect($agentCurrencies, $gameCurrencies)) > 0){
-                    $games[] = $dlGame->getById($parentGame->getGame());
+                    $game = $dlGame->getById($parentGame->getGame());
+                    $games[$parentGame->getGame()] = $game;
+//                    $games[] = $dlGame->getById($parentGame->getGame());
                 }
             }
         }else{
@@ -58,10 +60,17 @@ class UserGameFormAddWidget extends BaseWidget
                 }
 
                 if(count(array_intersect($agentCurrencies, $gameCurrencies)) > 0){
-                    $games[] = $dlGame->getById($companyGame->getId());
+                    $game = $dlGame->getById($companyGame->getId());
+                    $games[$companyGame->getId()] = $game;
                 }
             }
+        }
 
+        $agentGames = $dlUserGame->getAgentGame($agent,2,0);
+        foreach ($agentGames as $agentGame){
+            if(isset($games[$agentGame->getGame()])) {
+                unset($games[$agentGame->getGame()]);
+            }
         }
 
         $categories = array();
