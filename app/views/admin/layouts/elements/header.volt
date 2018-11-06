@@ -13,7 +13,7 @@
                     {{ translate['subaccount']|upper }}
                 {% endif %}
                 </b>
-                <span class="header-info-cur cursor-pointer" data-toggle="modal" data-target="#header-currency-list"> <b> {{translate['currency']|upper }} </b> </span>
+                <span class="header-info-cur cursor-pointer" data-toggle="modal" data-target="#header-currency-list" onclick="myCurrency()"> <b> {{translate['currency']|upper }} </b> </span>
             </span>
         </div>
 
@@ -40,7 +40,7 @@
                 </label>
                 <label class="col-xs-6">
                     <span aria-hidden="true">
-                        <button type="button" class="close uppercase" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close uppercase" data-dismiss="modal" aria-label="Close" onclick="removeMyCurrency()">
                             &times;
                         </button>
                     </span>
@@ -49,36 +49,24 @@
             <div class="modal-body min-height-200 max-height-400">
                 <ul class="list-inline header-list text-center">
                     <li class="col-xs-2 list-group-item list">{{ translate['symbol']|upper }}</li>
-                    <li class="col-xs-4 list-group-item list">{{ translate['code']|upper }}</li>
-                    <li class="col-xs-4 list-group-item list">{{ translate['currency_name']|upper }}</li>
+                    <li class="col-xs-3 list-group-item list">{{ translate['code']|upper }}</li>
+                    <li class="col-xs-5 list-group-item list">{{ translate['currency_name']|upper }}</li>
                     <li class="col-xs-2 list-group-item list">{{ translate['default']|upper }}</li>
                 </ul>
-                {% set i = 1 %}
-                {% for currencylist in user_currency_list %}
-                    {% if i%2 == 0 %}
-                        {% set class = "content-even" %}
-                    {% else %}
-                        {% set class = "content-odd" %}
-                    {% endif %}
-                    <ul class="list-inline {{class}} text-center">
-                        <li class="col-xs-2 list-group-item">{{ currencylist.currency.symbol|upper }}</li>
-                        <li class="col-xs-4 list-group-item">{{ currencylist.currency.code|upper }}</li>
-                        <li class="col-xs-4 list-group-item">{{ currencylist.currency.name|upper }}</li>
-                        <li class="col-xs-2 list-group-item">
-                            {% if currencylist.default == 1 %}
-                                <i class="fa fa-check text-success" data-toggle="tooltip" data-placement="right" title="{{ translate['default']|upper }}"></i>
-                            {% else %}
-                                <a href="{{url('/user/currency/edit/'~currencylist.id)}}">
-                                    <i class="fa fa-times text-danger" data-toggle="tooltip" data-placement="right" title="{{ translate['not_default']|upper }}"></i>
-                                </a>
-                            {%endif%}
-                        </li>
-                    </ul>
-                    {% set i = i +1 %}
-                {% endfor %}
+                <ul id="CloneCurrency" class="list-inline text-center hidden">
+                    <li class="col-xs-2 list-group-item list currency-symbol"> </li>
+                    <li class="col-xs-3 list-group-item list currency-code"> </li>
+                    <li class="col-xs-5 list-group-item list currency-currency_name"> </li>
+                    <li class="col-xs-2 list-group-item list currency-default">
+                        <a href="#" class="setmycurrency" >
+                            <i class="fa" data-toggle="tooltip" data-placement="right" title="{{ translate['default']|upper }}"></i>
+                        </a>
+                    </li>
+                </ul>
+                <div id="CurrencyBelow"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="removeMyCurrency()">{{ translate['close']|upper }}</button>
             </div>
         </div>
     </div>

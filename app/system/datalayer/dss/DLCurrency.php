@@ -3,7 +3,7 @@ namespace System\Datalayer;
 
 use System\Model\Currency;
 
-class DLCurrency{
+class DLCurrency extends \System\Datalayers\Main{
 
     protected $_url = 'http://10.22.0.199:9090';
 
@@ -14,8 +14,8 @@ class DLCurrency{
             'lm' => $limit
         );
 
-        $url = $this->_url.'/currency';
-        $currency = $this->curl($url,$postData);
+        $url = '/currency';
+        $currency = $this->curlAppsJson($url,$postData);
 
         return $currency['currencies'];
     }
@@ -29,16 +29,16 @@ class DLCurrency{
             'st' => $data['status']
         );
 
-        $url = $this->_url.'/currency/insert';
-        $currency = $this->curl($url,$postData);
+        $url = '/currency/insert';
+        $currency = $this->curlAppsJson($url,$postData);
 
         return $currency['data']['currencies'][0]['id'];
     }
 
     public function update($postData)
     {
-        $url = $this->_url.'/currency/'.$postData['id'].'/update';
-        $currency = $this->curl($url,$postData);
+        $url = '/currency/'.$postData['id'].'/update';
+        $currency = $this->curlAppsJson($url,$postData);
 
         return $currency['data']['currencies'][0]['id'];
     }
@@ -49,30 +49,10 @@ class DLCurrency{
             'id' => $id,
         );
 
-        $url = $this->_url.'/currency/'.$postData['id'];
-        $currency = $this->curl($url,$postData);
+        $url = '/currency/'.$postData['id'];
+        $currency = $this->curlAppsJson($url,$postData);
 
         return $currency['currencies'];
-    }
-
-    public function curl($url,$postData){
-
-        $ch = curl_init($url);
-        curl_setopt_array($ch, array(
-            CURLOPT_POST => TRUE,
-            CURLOPT_RETURNTRANSFER => TRUE,
-            CURLOPT_HTTPHEADER => array('Content-Type: application/json'),
-            CURLOPT_POSTFIELDS => json_encode($postData),
-        ));
-
-        $result = json_decode(curl_exec($ch),true);
-
-        if(isset($result['ec']) && $result['ec'] != 0){
-            throw new \Exception($result['ec']);
-        }
-
-
-        return $result;
     }
 
     public function getById($id){
@@ -106,7 +86,7 @@ class DLCurrency{
         );
 
         $url = $this->_url.'/currency/code/'.$postData['cd'];
-        $currency = $this->curl($url,$postData);
+        $currency = $this->curlAppsJson($url,$postData);
 
         echo "<pre>";
         var_dump($currency);

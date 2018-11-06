@@ -1,11 +1,9 @@
 <?php
 namespace System\Datalayer;
 
-use System\Library\Security\User as SecurityUser ;
-use System\Model\User;
-
-class DLUser
+class DLUser extends \System\Datalayers\Main
 {
+
     public function getCompany()
     {
         $company = User::findByType(9);
@@ -40,8 +38,13 @@ class DLUser
 
     public function getByNickname($user)
     {
-        $user = User::findFirstByNickname($user);
-        return $user;
+        $postData = array(
+            'id' => 1 ,
+        );
+        $url = '/user/1';
+        $result = $this->curlAppsJson( $url , $postData);
+
+        return $result;
     }
 
     public function getById($user)
@@ -100,6 +103,7 @@ class DLUser
         return $user->save();
     }
 
+
     public function setResetPassword($user, $password)
     {
         $user->setPassword($password);
@@ -108,7 +112,6 @@ class DLUser
             throw new \Exception($user->getMessages());
         }
         return $user->save();
-
     }
 
     public function setNickname($user, $newNickname)
@@ -291,11 +294,6 @@ class DLUser
             //change all childs parent status
             $this->setChildParentStatus($child->getId(), $child->getStatus(), $childParentStatus);
         }
-
-        // get subaccount
-
-
-        // get agent game
 
         return true;
     }

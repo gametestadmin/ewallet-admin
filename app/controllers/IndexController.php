@@ -49,7 +49,9 @@ class IndexController extends \Backoffice\Controllers\BaseController
 
             $DLuser = new DLUser();
             $user = $DLuser->getByNickname($username);
-
+            echo "test <pre>";
+            var_dump($user);
+            die;
 
             if($user){
                 $securityLibrary = new SecurityUser();
@@ -58,6 +60,7 @@ class IndexController extends \Backoffice\Controllers\BaseController
                 // TODO :: change password manual
 //            $test = $DLuser->setUserPassword($user , $password);
 //            var_dump($test);
+
 
                 //check Captcha
                 $checkcaptcha = new Captcha();
