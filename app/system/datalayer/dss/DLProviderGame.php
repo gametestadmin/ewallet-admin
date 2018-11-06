@@ -1,9 +1,42 @@
 <?php
 namespace System\Datalayer;
 
+use System\Model\Game;
 use System\Model\ProviderGame;
 
 class DLProviderGame{
+    public function getAll($status = null){
+//        $providerGame = ProviderGame::find();
+//        $userId = $parent;
+//        $gameType = $type;
+//        $status = 1;
+//
+//        $postData = array(
+//            'st' => 0,
+//            'lm' => 1000
+//        );
+////
+////        // Setup cURL
+//        $ch = curl_init($this->_config->api->url.'user/game');
+//        curl_setopt_array($ch, array(
+//            CURLOPT_POST => TRUE,
+//            CURLOPT_RETURNTRANSFER => TRUE,
+//            CURLOPT_HTTPHEADER => array('Content-Type: application/json'),
+//            CURLOPT_POSTFIELDS => json_encode($postData),
+//        ));
+//
+//        $providerGame = json_decode(curl_exec($ch));
+////
+//        return $providerGame;
+
+        // Send the request
+        $parentGames = json_decode(curl_exec($ch));
+        if(isset($status)) {
+            $providerGame = ProviderGame::findByStatus($status);
+        }
+
+        return $providerGame;
+    }
 
     public function getById($id){
         $providerGame = ProviderGame::findFirstById($id);
@@ -39,9 +72,9 @@ class DLProviderGame{
 
     public function filterInput($data){
 
-        $data['timezone'] = \filter_var(\strip_tags(\addslashes($data['provider_timezone'])), FILTER_SANITIZE_STRING);
-        $data['name'] = \filter_var(\strip_tags(\addslashes($data['provider_name'])), FILTER_SANITIZE_STRING);
-        $data['status'] = \intval($data['status']);
+        if(isset($data["provider_timezone"])) $data['timezone'] = \filter_var(\strip_tags(\addslashes($data['provider_timezone'])), FILTER_SANITIZE_STRING);
+        if(isset($data["provider_name"])) $data['name'] = \filter_var(\strip_tags(\addslashes($data['provider_name'])), FILTER_SANITIZE_STRING);
+        if(isset($data["status"])) $data['status'] = \intval($data['status']);
         if(!isset($data['id'])) {
             $app_id = strtotime("now") . $data['name'];
             $app_secret = $data['name'] . strtotime("now");
@@ -56,27 +89,21 @@ class DLProviderGame{
     }
 
     public function validateAdd($data){
-        $data = $this->filterInput($data);
-
         if($this->checkByName($data['name'])){
             throw new \Exception('provider_name_exist');
-        }elseif(empty($data['timezone'])){
+        }elseif($data['timezone']==""){
             throw new \Exception('provider_timezone_empty');
         }elseif(empty($data['name'])){
             throw new \Exception('provider_name_empty');
-        }elseif($data['status']<0 || $data['status']>1){
-            throw new \Exception('undefined_provider_status');
         }
 
         return true;
     }
 
     public function validateEdit($data){
-        $data = $this->filterInput($data);
-
         if($this->checkByIdName($data['id'],$data['name'])){
             throw new \Exception('provider_name_exist');
-        }elseif(empty($data['timezone'])){
+        }elseif($data['timezone'] == ""){
             throw new \Exception('provider_timezone_empty');
         }elseif(empty($data['name'])){
             throw new \Exception('provider_name_empty');
@@ -88,25 +115,22 @@ class DLProviderGame{
     }
 
     public function create($data){
-        $this->validateAdd($data);
         $data = $this->filterInput($data);
+        $this->validateAdd($data);
         $providerGame = new ProviderGame();
 
         if(isset($data["timezone"]))$providerGame->setTimezone($data['timezone']);
         if(isset($data["name"]))$providerGame->setName($data['name']);
         if(isset($data["app_id"]))$providerGame->setAppId($data['app_id']);
         if(isset($data["app_secret"]))$providerGame->setAppSecret($data['app_secret']);
-        if(isset($data["status"]))$providerGame->setStatus($data['status']);
 
         if(!$providerGame->save()){
             throw new \Exception($providerGame->getMessages());
         }
-        return true;
+        return $providerGame->getId();
     }
 
     public function set($data){
-        $this->validateEdit($data);
-        $data = $this->filterInput($data);
         $providerGame = $this->getById($data['id']);
 
         if(isset($data["timezone"]))$providerGame->setTimezone($data['timezone']);
