@@ -68,22 +68,80 @@
     }, 2000);
 
     function myCurrency(){
+        var counter = 1 ;
         $.ajax({
           type: "POST",
           url: '{{url('ajax/currency/list')}}',
-          data: {},
+          data: {
+            "id" : null ,
+          },
           dataType : "json",
           success: function(result) {
-            console.log('success');
-            console.log(result);
+            $.each( result , function(index, item) {
+                var myCurrencies = $("#CloneCurrency").clone();
+                myCurrencies.removeAttr("id").removeClass("hidden").addClass("CurrencyClone") ;
+                if ( counter %2 == 0 ) {
+                    myCurrencies.addClass("content-even");
+                } else {
+                    myCurrencies.addClass("content-odd");
+                }
+                myCurrencies.find(".currency-symbol").html(item["symbol"]) ;
+                myCurrencies.find(".currency-code").html(item["code"]) ;
+                myCurrencies.find(".currency-currency_name").html(item["currency_name"]) ;
+                myCurrencies.find(".currency-default").children().attr('data-id' , item["id"]) ;
+
+                if( item["default"] == 1){
+                    myCurrencies.find(".currency-default").children().children().addClass("text-success").addClass("fa-check") ;
+                } else {
+                    myCurrencies.find(".currency-default").children().children().addClass("text-danger").addClass("fa-times") ;
+                }
+                myCurrencies.appendTo('#CurrencyBelow');
+                counter = counter + 1 ;
+                //console.log(item);
+            });
 
           },
-          error: function(result) {
-            console.log('error');
-            console.log(result);
+          error: function(jqXHR , textStatus , errorThrown) {
+                //console.log(jqXHR.responseJSON['messages']);
+                errorMessage(jqXHR.responseJSON['messages']);
 
           }
       });
+    }
+
+    $(document).on('click', ".setmycurrency", function() {
+        //console.log( $(this).data("id"));
+        $.ajax({
+              type: "POST",
+              url: '{{url('ajax/currency/default')}}',
+              data: {
+                "id" : $(this).data("id") ,
+              },
+              dataType : "json",
+              success: function(result) {
+                successMessage(result['messages']);
+                removeMyCurrency();
+                myCurrency();
+
+              },
+              error: function(jqXHR , textStatus , errorThrown) {
+                //console.log(jqXHR);
+                //console.log(textStatus);
+                //console.log(errorThrown);
+                //errorMessage(jqXHR.responseJSON['messages']);
+
+              }
+
+        });
+
+
+
+
+
+    });
+
+    function removeMyCurrency(){
+        $('.CurrencyClone').remove();
     }
 
     $('#myModal').on('shown.bs.modal', function () {

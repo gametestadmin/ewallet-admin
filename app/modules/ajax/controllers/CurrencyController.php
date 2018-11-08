@@ -18,15 +18,15 @@ class CurrencyController extends \Backoffice\Controllers\BaseController
         //response json
         if(!$this->_user){
             $response->setStatusCode(404);
+            $data['messages'] = $this->_translate['user_not_found'] ;
         } else {
             $DLUserCurrency = new DLUserCurrency();
             $currency = $DLUserCurrency->getByUser($this->_user->getId());
             $DlCurrency = new DLCurrency();
 
-
-            $data = array();
             foreach( $currency as $key => $value ){
                 $currencylisting = $DlCurrency->getById($value->getCurrency()) ;
+                $datalist['id'] = $value->getId();
                 $datalist['symbol'] = $currencylisting->getSymbol();
                 $datalist['code'] = $currencylisting->getCode();
                 $datalist['currency_name'] = $currencylisting->getName();
@@ -49,7 +49,6 @@ class CurrencyController extends \Backoffice\Controllers\BaseController
     {
 
         $this->view->disable();
-        $data = array();
         $response = new \Phalcon\Http\Response();
         $response->setContentType("application/json");
 
@@ -57,41 +56,22 @@ class CurrencyController extends \Backoffice\Controllers\BaseController
         //response json
         if(!$this->_user){
             $response->setStatusCode(404);
+            $data['messages'] = $this->_translate['user_not_found'] ;
         } else {
             if ($this->request->isPost()) {
+                $data = $this->request->getPost();
 
-
-                $currencyId = $this->dispatcher->getParam("id");
-                $previousPage = new GlobalVariable();
-
-                try {
-                    $this->db->begin();
-
-                    $DLUserCurrency = new DLUserCurrency();
-                    $DLUserCurrency->setCurrencyDefault($this->_realUser->getId() , $currencyId);
-
-                    $this->db->commit();
-                    $this->flash->success('user_currency_default');
-                } catch (\Exception $e) {
-                    $this->db->rollback();
-                    $this->flash->error($e->getMessage());
-                }
-
-
-
-
+                $DLUserCurrency = new DLUserCurrency();
+                $DLUserCurrency->setCurrencyDefault($this->_realUser->getId() , $data['id'] );
+                $data['messages'] = $this->_translate['user_currency_set_default_success'] ;
+                //response json
+                $response->setStatusCode(200);
             }
-            //response json
-            $response->setStatusCode(200);
         }
 
 
         $response->setContent(json_encode($data));
         return $response;
-
-
-
-
     }
 
 }
