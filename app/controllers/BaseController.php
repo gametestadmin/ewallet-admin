@@ -39,7 +39,7 @@ class BaseController extends Controller
         $this->_setNavigation();
         $this->_checkResetPassword();
 //        $this->_checkResetNickname();
-        $this->_checkACL();
+//        $this->_checkACL();
 
 //        $this->_language = $this->cookies->get('language')->getValue();
 //        $languageLibrary = new Language();
