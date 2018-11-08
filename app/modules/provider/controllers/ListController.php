@@ -25,7 +25,7 @@ class ListController extends \Backoffice\Controllers\ProtectedController
         }
 
         $providerGame = new DLProviderGame();
-        $status = GlobalVariable::$threeLayerStatus;
+        $status = GlobalVariable::$threeLayerStatusTypes;
         $provider = $providerGame->getAll($this->_type);
 
         $paginator = new \Phalcon\Paginator\Adapter\Model(

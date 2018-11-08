@@ -13,7 +13,7 @@
                         <div class="ibox-content row">
                             <form method="post" action="{{router.getRewriteUri()}}" class="form-horizontal col-sm-12">
                                 <div class="form-group">
-                                    <label class="col-sm-3 col-xs-12 control-label">{{translate['username']}}</label>
+                                    <label class="col-sm-3 col-xs-12 control-label">{{translate['form_username']}}</label>
                                     {% if agent.type != 0 and agent.type != 9 %}
                                     <div class="col-xs-2">
                                         <input type="text" class="form-control code" name="agent_code" id="agent-code" value="{{agent.username}}" readonly>
@@ -57,7 +57,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">{{translate['timezone']}}</label>
+                                    <label class="col-sm-3 control-label">{{translate['form_timezone']}}</label>
                                     <label class="col-sm-9">
                                         <select name="timezone" class="form-control">
                                             {% for gmtTime in gmt %}
@@ -73,21 +73,21 @@
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">{{translate['password']}}</label>
+                                    <label class="col-sm-3 control-label">{{translate['form_password']}}</label>
                                     <label class="col-sm-9">
-                                        <input type="password" class="form-control" name="password">
+                                        <input type="password" class="form-control" name="password" placeholder="{{translate['placeholder_password']}}">
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">{{translate['password_confirm']}}</label>
+                                    <label class="col-sm-3 control-label">{{translate['form_confirm_password']}}</label>
                                     <label class="col-sm-9">
-                                        <input type="password" class="form-control" name="confirm_password">
+                                        <input type="password" class="form-control" name="confirm_password" placeholder="{{translate['placeholder_confirm_password']}}">
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">{{translate['default_whitelist_ip']}}</label>
+                                    <label class="col-sm-3 control-label">{{translate['form_default_whitelist_ip']}}</label>
                                     <label class="col-sm-9">
-                                        <input type="text" class="form-control" name="ip">
+                                        <input type="text" class="form-control" name="ip" placeholder="{{translate['placeholder_whitelist_ip']}}">
                                         <small>
                                             <div>{{translate['for_wild_card_ip']}}</div>
                                             <div>{{translate['example_group_ip']}}</div>
@@ -96,7 +96,7 @@
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">{{translate['default_currency']}}</label>
+                                    <label class="col-sm-3 control-label">{{translate['form_default_currency']}}</label>
                                     <label class="col-sm-9">
                                         <select name="currency" class="form-control">
                                         {% if userCurrency is not null %}
@@ -111,7 +111,7 @@
                                 <div class="form-group pull-right">
                                     <div class="col-xs-12">
                                         <label>
-                                            <a href="{{url(module~"/"~controller)}}" class="btn btn-md btn-danger">{{translate['button_back']}}</a>
+                                            <a href="{{url(module~"/list")}}" class="btn btn-md btn-danger">{{translate['button_back']}}</a>
                                         </label>
                                         <label>
                                             <input type="submit" class="btn btn-primary" name="submit" value="{{translate['button_add']}}">

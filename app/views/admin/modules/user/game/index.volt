@@ -6,20 +6,17 @@
                     <div class="ibox-title row">
                         <div class="row">
                             <label class="col-xs-6">
-                                My Game List
-                            </label>
-                            <label class="col-xs-6 text-right">
-                                <a href="{{router.getRewriteUri()~'/add'}}" class="btn btn-sm btn-info">Add</a>
+                                [{{user.username}}] {{translate['title_text_game_list']}}
                             </label>
                         </div>
                     </div>
                     <div class="ibox-content row">
                         <ul class="list-inline header-list text-center">
-                          <li class="col-sm-1 hidden-xs list-group-item">No</li>
-                          <li class="col-sm-3 col-xs-3 list-group-item">Code</li>
-                          <li class="col-sm-4 col-xs-4 list-group-item">Name</li>
-                          <li class="col-sm-2 col-xs-3 list-group-item">Status</li>
-                          <li class="col-sm-2 col-xs-2 list-group-item">Action</li>
+                          <li class="col-sm-1 hidden-xs list-group-item">{{translate['head_list_number']}}</li>
+                          <li class="col-sm-5 col-xs-5 list-group-item">{{translate['head_list_name']}}</li>
+                          <li class="col-sm-2 col-xs-2 list-group-item">[{{translate['head_list_parent']}}] {{translate['head_list_status']}}</li>
+                          <li class="col-sm-2 col-xs-2 list-group-item">{{translate['head_list_status']}}</li>
+                          <li class="col-sm-2 col-xs-2 list-group-item">{{translate['head_list_action']}}</li>
                         </ul>
                         {% if page is not null %}
                         {% set i = 1 %}
@@ -31,21 +28,25 @@
                             {% endif %}
                             <ul class="list-inline {{class}} text-center">
                                 <li class="col-sm-1 hidden-xs list-group-item">{{i}}</li>
-                                <li class="col-sm-3 col-xs-3 list-group-item">{{myGame.game.code}}</li>
-                                <li class="col-sm-4 col-xs-4 list-group-item">{{myGame.game.name}}</li>
-                                <li class="col-sm-2 col-xs-3 list-group-item">
+                                <li class="col-sm-5 col-xs-5 list-group-item">{{myGame.game.name}}</li>
+                                <li class="col-sm-2 col-xs-2 list-group-item">
+                                    <strong class="text-{{myGame.parent_status|agentStatus|lower}}">
+                                        {{translate[myGame.parent_status|agentStatus|lower]}}
+                                    </strong>
+                                </li>
+                                <li class="col-sm-2 col-xs-2 list-group-item">
                                     <select class="status">
                                         {% for key, value in status %}
-                                            <option value="{{myGame.id~"|"~value}}" {% if myGame.status == value %}selected{% endif %}>{{key}}</option>
+                                            <option value="{{myGame.game.id~"|"~key}}" {% if myGame.status == key %}selected{% endif %}>{{translate[value]}}</option>
                                         {% endfor %}
                                     </select>
                                 </li>
                                 <li class="col-sm-2 col-xs-2 list-group-item">
-                                    <a href="{{router.getRewriteUri()~'/detail/'~myGame.game.id}}">
+                                    <a href="{{router.getRewriteUri()~'/detail/'~myGame.id}}">
                                         <span class="fa fa-search text-danger"></span>
                                     </a>
                                     |
-                                    <a href="{{router.getRewriteUri()~'/edit/'~myGame.game.id}}">
+                                    <a href="{{router.getRewriteUri()~'/edit/'~myGame.id}}">
                                         <span class="fa fa-edit text-primary"></span>
                                     </a>
                                 </li>
@@ -77,5 +78,20 @@
 {% endblock %}
 
 {% block action_js %}
-
+    <script>
+        jQuery(document).ready(function($){
+            var select = $('.status');
+            var previouslySelected;
+            select.focus(function(){
+                previouslySelected = this.value;
+            }).change(function(){
+                var conf = confirm('Are You Sure?');
+                if(!conf){
+                    this.value = previouslySelected;
+                    return;
+                }
+                location.href = '/{{module}}/{{controller}}/status/'+jQuery(this).val();
+            });
+        });
+    </script>
 {% endblock %}

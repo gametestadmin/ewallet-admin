@@ -5,7 +5,7 @@
             <form class="form-horizontal" action="{{url('agent/currency/add')}}" method="post" id="form">
                 <div class="modal-header">
                     <label class="col-xs-6">
-                        <h3 class="modal-title" id="form-user-currency-label">Add Currency</h3>
+                        <h3 class="modal-title" id="form-user-currency-label">{{translate['title_text_add_currency']}}</h3>
                     </label>
                     <label class="col-xs-6">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -15,11 +15,11 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label class="col-xs-3 control-label">Currency</label>
+                        <label class="col-xs-3 control-label">{{translate['form_currency']}}</label>
                         <label class="col-xs-9">
                             <input type="hidden" name="user" value="{{agent.id}}">
                             <select name="currency" class="form-control">
-                                <option value="">-Choose One-</option>
+                                <option value="">{{translate['form_choose_one']}}</option>
                                 {% for currencyData in currency %}
                                     <option value="{{currencyData.id}}">{{currencyData.name}}</option>
                                 {% endfor %}
@@ -29,8 +29,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="submit">Add</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{translate['button_close']}}</button>
+                    <button type="submit" class="btn btn-primary" id="submit">{{translate['button_add']}}</button>
                 </div>
             </form>
         </div>

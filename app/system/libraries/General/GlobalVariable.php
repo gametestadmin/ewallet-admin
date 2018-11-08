@@ -3,10 +3,22 @@ namespace System\Library\General;
 
 class GlobalVariable
 {
+    // TODO :: change to below
     public static $threeLayerStatus = array(
         'InActive' => 0,
         'Active' => 1,
         'Suspended' => 2,
+    );
+
+    public static $threeLayerStatusTypes = array(
+        0 => "inactive",
+        1 => "active",
+        2 => "suspended",
+    );
+
+    public static $twoLayerStatusTypes = array(
+        0 => "inactive",
+        1 => "active",
     );
 
     public static $twoLayerStatus = array(
@@ -125,7 +137,7 @@ class GlobalVariable
         }elseif($data == 2){
             $gameType = "Game";
         }elseif($data == 3){
-            $gameType = "Subgame";
+            $gameType = "Sub-Game";
         }
 
         return $gameType;

@@ -14,8 +14,14 @@ class UserSubGameWidget extends BaseWidget
         $dlGame = new DLGame();
         $dlUserGame = new DLUserGame();
         $games = $dlGame->getByGameParent($this->params['game']);
-        foreach ($games as $game){
-            $agentSubGames[] = $dlUserGame->getAgentSubGame($this->params["agentId"],$game->getId());
+
+        if(!empty($games)) {
+            foreach ($games as $game) {
+                $subGame = $dlUserGame->getAgentSubGame($this->params["agentId"], $game->getId());
+                if($subGame){
+                    $agentSubGames[] = $subGame;
+                }
+            }
         }
 
         return $this->setView('user/subgame/list', [

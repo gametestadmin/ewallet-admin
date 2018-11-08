@@ -3,8 +3,10 @@
 namespace Backoffice\Agent\Controllers;
 
 use System\Datalayer\DLGame;
+use System\Datalayer\DLUser;
 use System\Datalayer\DLUserGame;
 use System\Library\General\GlobalVariable;
+use System\Library\Security\Agent;
 
 class GameController extends \Backoffice\Controllers\ProtectedController
 {
@@ -53,7 +55,16 @@ class GameController extends \Backoffice\Controllers\ProtectedController
         $dlUserGame = new DLUserGame();
         $agentGame = $dlUserGame->getById($agentGameId);
 
+        $DLUser = new DLUser();
+
+        $parent = $this->_user;
+        $agent = $DLUser->getById($agentGame->getUser());
+
+        $agentSecurity = new Agent();
+        $security = $agentSecurity->checkAgentAction($parent->getUsername(),$agent->getUsername());
+
         $view->agentGame = $agentGame;
+        $view->realParent = $security;
 
         \Phalcon\Tag::setTitle("Agent System - ".$this->_website->title);
     }

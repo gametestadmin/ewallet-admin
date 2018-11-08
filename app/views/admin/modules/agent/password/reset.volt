@@ -4,31 +4,31 @@
         <div class="col-xs-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title row">
-                    <h5>[{{agent.username}}] Reset Password</h5>
+                    <h5>[{{agent.username}}] {{translate['title_text_reset_password']}}</h5>
                 </div>
                 <div class="ibox-content row">
                     <div class="panel-body">
                         <form class="form-horizontal col-xs-12" action="{{router.getRewriteUri()}}" method="post">
                             <div class="form-group">
-                                <label class="col-xs-3 control-label">Password</label>
+                                <label class="col-xs-3 control-label">{{translate['form_password']}}</label>
                                 <label class="col-xs-9">
-                                    <input type="password" placeholder="Password" class="form-control" name="password">
+                                    <input type="password" placeholder="{{translate['placeholder_password']}}" class="form-control" name="password">
                                 </label>
                             </div>
                             <div class="form-group">
-                                <label class="col-xs-3 control-label">Confirm Password</label>
+                                <label class="col-xs-3 control-label">{{translate['form_confirm_password']}}</label>
                                 <label class="col-xs-9">
-                                    <input type="password" placeholder="Password" class="form-control" name="confirm_password">
+                                    <input type="password" placeholder="{{translate['placeholder_confirm_password']}}" class="form-control" name="confirm_password">
                                 </label>
                             </div>
                             <div class="form-group"><div class="hr-line-dashed"></div></div>
                             <div class="form-group pull-right">
                                 <div class="col-xs-12">
                                   <label>
-                                      <a href="{{url('javascript:history.go(-1)')}}" class="btn btn-sm btn-danger">Back</a>
+                                      <a href="{{url('javascript:history.go(-1)')}}" class="btn btn-sm btn-danger">{{translate['button_back']}}</a>
                                   </label>
                                   <label>
-                                      <input type="submit" name="submit" class="btn btn-sm btn-primary" value="Edit">
+                                      <input type="submit" name="submit" class="btn btn-sm btn-primary" value="{{translate['button_edit']}}">
                                   </label>
                                 </div>
                             </div>

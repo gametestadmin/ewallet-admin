@@ -25,7 +25,7 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
         }
 
         $DLCurrency = new DLCurrency();
-        $status = GlobalVariable::$twoLayerStatus;
+        $status = GlobalVariable::$twoLayerStatusTypes;
         $currency = $DLCurrency->getAll();
 
         $paginator = new \Phalcon\Paginator\Adapter\Model(

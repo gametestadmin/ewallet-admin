@@ -5,7 +5,7 @@
             <form class="form-horizontal" action="{{url('agent/game/add')}}" method="post" id="form">
                 <div class="modal-header">
                     <label class="col-xs-6">
-                        <h3 class="modal-title" id="form-agent-add-subgame-label">Add Agent Games</h3>
+                        <h3 class="modal-title" id="form-agent-add-subgame-label">{{translate['title_text_add_agent_sub_games']}}</h3>
                     </label>
                     <label class="col-xs-6">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -15,7 +15,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label class="col-xs-3 control-label">Game</label>
+                        <label class="col-xs-3 control-label">{{translate['form_game']}}</label>
                         <label class="col-xs-9">
                             <input type="hidden" name="agent" value="{{agentGame.user.id}}">
                             <input type="text" class="form-control" name="category" value="{{agentGame.game.name}}" readonly>
@@ -24,13 +24,13 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-xs-3 control-label">SubGame</label>
+                        <label class="col-xs-3 control-label">{{translate['form_sub_game']}}</label>
                         <label class="col-xs-9">
                             <select name="game" class="form-control" id="game">
-                                <option value="">-Choose One-</option>
-                                {% if games != false %}
-                                    {% for game in games %}
-                                        <option value="{{game.id}}">{{game.name}}</option>
+                                <option value="">{{translate['form_choose_one']}}</option>
+                                {% if subGames != false %}
+                                    {% for subGame in subGames %}
+                                        <option value="{{subGame.id}}">{{subGame.name}}</option>
                                     {% endfor %}
                                 {% endif %}
                             </select>
@@ -38,8 +38,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="submit">Add</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{translate['button_close']}}</button>
+                    <button type="submit" class="btn btn-primary" id="submit">{{translate['button_add']}}</button>
                 </div>
             </form>
         </div>

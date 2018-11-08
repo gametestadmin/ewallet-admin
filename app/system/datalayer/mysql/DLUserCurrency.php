@@ -12,6 +12,34 @@ class DLUserCurrency {
         return $userCurrency;
     }
 
+    public function getAgentCurrencies($user,$status = 1){
+        $userCurrency = UserCurrency::find(
+            array(
+                "conditions" => "user = :user: AND status >= :status:",
+                "bind" => array(
+                    "user" => $user,
+                    "status" => $status
+                )
+            )
+        );
+
+        return $userCurrency;
+    }
+
+    public function getUserCurrencies($user,$status = 1){
+        $userCurrency = UserCurrency::find(
+            array(
+                "conditions" => "user = :user: AND status = :status:",
+                "bind" => array(
+                    "user" => $user,
+                    "status" => $status
+                )
+            )
+        );
+
+        return $userCurrency;
+    }
+
     public function getAllByUser($user){
         $userCurrency = UserCurrency::find(
             array(

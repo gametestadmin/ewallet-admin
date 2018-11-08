@@ -7,20 +7,20 @@
                         <div class="row">
                             <label class="col-sm-6 col-xs-12 text-left">
                             {% set type = user.type - 1 %}
-                            [{{user.username}}] {{type|agentType}} List
+                            [{{user.username}}] {{translate['level_'~type|agentType]}} {{translate['title_text_list']}}
                             </label>
                             <label class="col-sm-6 col-xs-12 text-right">
-                                <a href="{{url(module~'/add/')}}" class="btn btn-sm btn-info">Add</a>
+                                <a href="{{url(module~'/add/')}}" class="btn btn-sm btn-info">{{translate['button_add']}}</a>
                             </label>
                         </div>
                     </div>
                     <div class="ibox-content row">
                         <ul class="list-inline header-list text-center">
-                          <li class="col-sm-1 hidden-xs list-group-item">No</li>
-                          <li class="col-sm-3 col-xs-3 list-group-item">Username</li>
-                          <li class="col-sm-3 col-xs-3 list-group-item">[{{user.type|agentType}}] Status</li>
-                          <li class="col-sm-3 col-xs-3 list-group-item">[{{type|agentType}}] Status</li>
-                          <li class="col-sm-2 col-xs-3 list-group-item">Action</li>
+                          <li class="col-sm-1 hidden-xs list-group-item">{{translate['head_list_number']}}</li>
+                          <li class="col-sm-3 col-xs-3 list-group-item">{{translate['head_list_username']}}</li>
+                          <li class="col-sm-3 col-xs-3 list-group-item">[{{translate[user.username]}}] {{translate['head_list_status']}}</li>
+                          <li class="col-sm-3 col-xs-3 list-group-item">[{{translate['level_'~type|agentType]}}] {{translate['head_list_status']}}</li>
+                          <li class="col-sm-2 col-xs-3 list-group-item">{{translate['head_list_action']}}</li>
                         </ul>
                         {% set i = 1 %}
                         {% for agentData in agent_list %}
@@ -38,21 +38,21 @@
                                     {{agentData.username}}
                                 {% endif %}
                             </li>
-                            <li class="col-sm-3 col-xs-3 list-group-item text-center"><strong class="text-{{agentData.parent_status|agentStatus|lower}}">{{agentData.parent_status|agentStatus}}</strong></li>
+                            <li class="col-sm-3 col-xs-3 list-group-item text-center"><strong class="text-{{agentData.parent_status|agentStatus|lower}}">{{translate[agentData.parent_status|agentStatus|lower]}}</strong></li>
                             <li class="col-sm-3 col-xs-3 list-group-item text-center">
                                  <select class="status">
                                      {% for key, value in status %}
-                                         <option value="{{agentData.id~"|"~value}}" {% if agentData.status == value %}selected{% endif %}>{{key}}</option>
+                                         <option value="{{agentData.id~"|"~key}}" {% if agentData.status == key %}selected{% endif %}>{{translate[value]}}</option>
                                      {% endfor %}
                                  </select>
                              </li>
                             <li class="col-sm-2 col-xs-3 list-group-item text-center">
                                 <a href="{{url(module~'/detail/'~agentData.id)}}">
-                                    <span class="fa fa-search text-danger"></span>
+                                    <i class="fa fa-search text-danger" data-toggle="tooltip" data-placement="left" title="{{translate['text_detail']}}"></i>
                                 </a>
                                 |
                                 <a href="{{url(module~'/edit/'~agentData.id)}}">
-                                    <span class="fa fa-edit text-primary"></span>
+                                    <i class="fa fa-edit text-primary" data-toggle="tooltip" data-placement="right" title="{{translate['text_edit']}}"></i>
                                 </a>
                             </li>
                         </ul>

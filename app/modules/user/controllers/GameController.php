@@ -4,6 +4,7 @@ namespace Backoffice\User\Controllers;
 use \System\Datalayer\DLUser;
 use System\Datalayer\DLUserGame;
 use System\Library\General\GlobalVariable;
+use System\Library\Security\Agent;
 
 class GameController extends \Backoffice\Controllers\ProtectedController
 {
@@ -26,9 +27,9 @@ class GameController extends \Backoffice\Controllers\ProtectedController
 
         $user = $this->_user;
         $dlUserGame = new DLUserGame();
-        $myGames = $dlUserGame->getAgentGame($user->getId(),2);
+        $myGames = $dlUserGame->getAgentGame($user->getId(),2,0);
 
-        $status = GlobalVariable::$twoLayerStatus;
+        $status = GlobalVariable::$threeLayerStatusTypes;
 
         $paginator = new \Phalcon\Paginator\Adapter\Model(
             array(
@@ -48,5 +49,65 @@ class GameController extends \Backoffice\Controllers\ProtectedController
 
         $view->status = $status;
         \Phalcon\Tag::setTitle("My Game - ".$this->_website->title);
+    }
+
+    public function detailAction()
+    {
+        $view = $this->view;
+
+        $agentGameId = $this->dispatcher->getParam("id");
+
+        $dlUserGame = new DLUserGame();
+        $agentGame = $dlUserGame->getById($agentGameId);
+        $status = GlobalVariable::$threeLayerStatusTypes;
+
+        $DLUser = new DLUser();
+
+        $parent = $this->_user;
+        $agent = $DLUser->getById($agentGame->getUser());
+
+        $agentSecurity = new Agent();
+        $security = $agentSecurity->checkAgentAction($parent->getUsername(),$agent->getUsername());
+
+        $view->agentGame = $agentGame;
+        $view->realParent = $security;
+        $view->status = $status;
+    }
+
+    public function statusAction()
+    {
+        $getParam = $this->dispatcher->getParam("id");
+
+        $previousPage = new GlobalVariable();
+
+        $param = explode("|", $getParam);
+        $gameId = $param[0];
+        $status = $param[1];
+        $agent = $this->_user;
+
+        if (!isset($gameId)) {
+            $this->flash->error("undefined_game_id");
+            $this->response->redirect($previousPage->previousPage())->send();
+        }
+
+        try {
+            $this->db->begin();
+
+            $dlUserGame = new DLUserGame();
+            $userGame = $dlUserGame->getByAgentIdAndGameId($agent->getId(),$gameId);
+
+            $data['status'] = $status;
+            $data['user_game_id'] = $userGame->getId();
+            $data['agent_id'] = $agent->getId();
+
+            $dlUserGame->setAgentGameStatus($data['agent_id'],$data['user_game_id'],$data['status']);
+
+            $this->db->commit();
+            $this->flash->success("status_changed");
+            $this->response->redirect($previousPage->previousPage())->send();
+        } catch (\Exception $e) {
+            $this->db->rollback();
+            $this->flash->error($e->getMessage());
+        }
     }
 }

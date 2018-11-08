@@ -7,7 +7,6 @@ use System\Datalayer\DLGameCurrency;
 use System\Datalayer\DLUser;
 use System\Datalayer\DLUserCurrency;
 use System\Datalayer\DLUserGame;
-use System\Model\Game;
 
 class UserSubGameFormAddWidget extends BaseWidget
 {
@@ -26,46 +25,58 @@ class UserSubGameFormAddWidget extends BaseWidget
         $dlGame = new DLGame();
         $dlGameCurrency = new DLGameCurrency();
 
-        $games = array();
+        $subGames = array();
 
         $agentCurrencies = array();
-        $agentCurrencyData = $dlUserCurrency->getAll($agent);
+        $agentCurrencyData = $dlUserCurrency->getAgentCurrencies($agent,1);
+
         foreach ($agentCurrencyData as $agentCurrency) {
             $agentCurrencies[] = $agentCurrency->getCurrency();
         }
 
         if($parentData->getType() <> 9) {
-            $parentGames = $dlGame->getByGameParent($gameId);
-            foreach ($parentGames as $parentGame) {
-                $gameCurrencies = array();
-                $gameCurrencyData = $dlGameCurrency->getByGameAndStatus($parentGame->getId());
+            $subGameLists = $dlGame->getByGameParent($gameId);
+            foreach ($subGameLists as $subGameList) {
+                $parentSubGame = $dlUserGame->getAgentGameAndGameId($parent,$subGameList->getId(),3);
+                if($parentSubGame) {
+                    $subGameCurrencies = array();
+                    $subGameCurrencyData = $dlGameCurrency->getByGameAndStatus($parentSubGame->getGame());
 
-                foreach ($gameCurrencyData as $gameCurrency){
-                    $gameCurrencies[] = $gameCurrency->getCurrency();
-                }
+                    foreach ($subGameCurrencyData as $subGameCurrency) {
+                        $subGameCurrencies[] = $subGameCurrency->getCurrency();
+                    }
 
-                if(count(array_intersect($agentCurrencies, $gameCurrencies)) > 0){
-                    $games[] = $dlGame->getById($parentGame->getId());
+                    if (count(array_intersect($agentCurrencies, $subGameCurrencies)) > 0) {
+                        $subGame = $dlGame->getById($parentSubGame->getGame());
+                        $subGames[$parentSubGame->getGame()] = $subGame;
+                    }
                 }
             }
         }else{
-            $companyGames = $dlGame->getByGameParent($gameId);
-            foreach ($companyGames as $companyGame){
-                $gameCurrencies = array();
-                $gameCurrencyData = $dlGameCurrency->getByGameAndStatus($companyGame->getId());
+            $companySubGames = $dlGame->getByGameParent($gameId);
+            foreach ($companySubGames as $companySubGame){
+                $subGameCurrencies = array();
+                $subGameCurrencyData = $dlGameCurrency->getByGameAndStatus($companySubGame->getId());
 
-                foreach ($gameCurrencyData as $gameCurrency){
-                    $gameCurrencies[] = $gameCurrency->getCurrency();
+                foreach ($subGameCurrencyData as $subGameCurrency){
+                    $subGameCurrencies[] = $subGameCurrency->getCurrency();
                 }
 
-                if(count(array_intersect($agentCurrencies, $gameCurrencies)) > 0){
-                    $games[] = $dlGame->getById($companyGame->getId());
+                if(count(array_intersect($agentCurrencies, $subGameCurrencies)) > 0){
+                    $subGame = $dlGame->getById($companySubGame->getId());
+                    $subGames[$companySubGame->getId()] = $subGame;
                 }
             }
         }
 
+        $agentSubGames = $dlUserGame->getAgentGame($agent,3,0);
+        foreach ($agentSubGames as $agentSubGame){
+            if(isset($subGames[$agentSubGame->getGame()]))
+                unset($subGames[$agentSubGame->getGame()]);
+        }
+
         return $this->setView('user/subgame/add', [
-            'games' => $games,
+            'subGames' => $subGames,
         ]);
     }
 }
