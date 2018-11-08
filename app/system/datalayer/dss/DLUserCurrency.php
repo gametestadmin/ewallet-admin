@@ -5,7 +5,93 @@ use System\Model\Currency;
 use System\Model\User;
 use System\Model\UserCurrency;
 
-class DLUserCurrency {
+class DLUserCurrency extends \System\Datalayers\Main {
+    // DSS
+
+    public function findAgentCurrency($agent,$currency){
+        // get user currency by user(us) and currency(cr) return all user currency data
+        $postData = array(
+            'user' => $agent,
+            'currency' => $currency
+        );
+
+        $url = '/usercurr/find';
+        $userCurrency = $this->curlAppsJson($url,$postData);
+
+        return $userCurrency;
+    }
+
+    public function findAllByAgent($agent,$status){
+        // find user currency by user and status return all user currency data
+        $postData = array(
+            'user' => $agent,
+            'status' => $status
+        );
+
+        $url = '/usercurr/find';
+        $userCurrency = $this->curlAppsJson($url,$postData);
+
+        return $userCurrency;
+    }
+
+    public function listUserCurrency($start,$limit){
+        $postData = array(
+            'st' => $start,
+            'lm' => $limit
+        );
+
+        $url = '/usercurr';
+        $userCurrencies = $this->curlAppsJson($url,$postData);
+
+//        echo "<pre>";
+////        var_dump($userCurrencies['uscu']);
+//        foreach ($userCurrencies['uscu'] as $userCurrency){
+//            var_dump($userCurrency);
+//            var_dump($userCurrency['df']);
+//        }
+//        die;
+        return $userCurrencies['uscu'];
+    }
+
+    public function create($agent,$currency){
+        $userCurrency = $this->findAgentCurrency($agent,$currency);
+
+        // check result ada atau tidak
+        if($userCurrency){
+            $postData = array(
+                'us' => $agent,
+                'cr' => $currency,
+                'st' => 1
+            );
+
+            $url = '/usercurr/update';
+            $createUserCurrency = $this->curlAppsJson($url,$postData);
+        }else {
+            $userCurrency = $this->findAllByAgent($agent,1);
+
+            $default = 0;
+            if(empty($userCurrency)){
+                $default = 1;
+            }
+            // insert user currency by user(us), currency(cr), status(st), and default(df)
+            $postData = array(
+                'us' => $agent,
+                'cr' => $currency,
+                'st' => 1,
+                'df' => $default
+            );
+            $url = '/usercurr/insert';
+            $createUserCurrency = $this->curlAppsJson($url,$postData);
+        }
+
+        if(!$createUserCurrency){
+            throw new \Exception('error_add_user_currency');
+        }
+
+        return $userCurrency['user_currencies'];
+    }
+    // END DSS
+
     public function getAll($user){
         $userCurrency = UserCurrency::findByUser($user);
 
@@ -79,7 +165,7 @@ class DLUserCurrency {
         return $userCurrency;
     }
 
-    public function getAllByAgent($agent){
+    public function getAllByAgents($agent){
 //        $agentCurrency = UserCurrency::findByUser($agent);
 //        $userCurrency = array();
 //        foreach ($agentCurrency as $key) {
@@ -197,7 +283,7 @@ class DLUserCurrency {
         return true;
     }
 
-    public function create($user,$currency){
+    public function creates($user,$currency){
         $userCurrency = $this->getUserCurrency($user,$currency);
 
         if($userCurrency){

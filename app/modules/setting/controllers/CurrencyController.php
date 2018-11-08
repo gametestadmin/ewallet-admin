@@ -2,6 +2,7 @@
 namespace Backoffice\Setting\Controllers;
 
 use System\Datalayer\DLCurrency;
+use System\Datalayer\DLUserCurrency;
 use System\Library\General\GlobalVariable;
 
 class CurrencyController extends \Backoffice\Controllers\ProtectedController
@@ -24,9 +25,12 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
 
         }
 
-        $DLCurrency = new DLCurrency();
+        $dlCurrency = new DLCurrency();
+
         $status = GlobalVariable::$twoLayerStatusTypes;
-        $currencies = $DLCurrency->lists(0,$limit);
+        $currencies = $dlCurrency->listCurrency(0,$limit);
+//        $dlUserCurrency = new DLUserCurrency();
+//        $currencies = $dlUserCurrency->listUserCurrency(0,$limit);
 
 //        $paginator = new \Phalcon\Paginator\Adapter\Model(
 //            array(
@@ -61,9 +65,9 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
                 $data['user'] = $this->_user->getId();
 
                 $DLCurrency = new DLCurrency();
-                $filterData = $DLCurrency->filterInput($data);
-                $DLCurrency->validateAdd($filterData);
-                $currency = $DLCurrency->insert($filterData);
+                $filterData = $DLCurrency->filterData($data);
+                $DLCurrency->validateAddData($filterData);
+                $currency = $DLCurrency->create($filterData);
 
                 $this->db->commit();
                 return $this->response->redirect($this->_module . '/' . $this->_controller . '/detail/' . strtolower($currency))->send();
@@ -97,12 +101,12 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
                 $data = $this->request->getPost();
                 $data['id'] = $getCurrency['id'];
 
-                $data = $DLCurrency->filterInput($data);
-                $DLCurrency->validateEdit($data);
-                $getCurrency = $DLCurrency->update($data);
+                $filterInput = $DLCurrency->filterInput($data);
+                $DLCurrency->validateEdit($filterInput);
+                $currency = $DLCurrency->set($filterInput);
 
                 $this->db->commit();
-                return $this->response->redirect($this->_module . '/' . $this->_controller . '/detail/' . $currentCode)->send();
+                return $this->response->redirect($this->_module . '/' . $this->_controller . '/detail/' . $currency)->send();
             } catch (\Exception $e) {
                 $this->db->rollback();
                 $this->flash->error($e->getMessage());
@@ -134,9 +138,35 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
             $this->response->redirect($this->_module . "/" . $this->_controller)->send();
         }
 
-        $view->currency = $getCurrency[0];
+        $view->currency = $getCurrency;
 
         \Phalcon\Tag::setTitle("Edit Currency - " . $this->_website->title);
+    }
+
+    public function deleteAction()
+    {
+//        $view = $this->view;
+
+        $currencyId = $this->dispatcher->getParam("id");
+        $previousPage = new GlobalVariable();
+
+        if (!isset($currencyId)) {
+            $this->flash->error("undefined_currency_code");
+            $this->response->redirect($previousPage->previousPage())->send();
+        }
+
+        $getCurrency = array();
+        try {
+            $DLCurrency = new DLCurrency();
+            $getCurrency = $DLCurrency->delete($currencyId);
+        } catch (\Exception $e) {
+            $this->flash->error($e->getMessage());
+            $this->response->redirect($previousPage->previousPage())->send();
+        }
+
+//        $view->currency = $getCurrency;
+
+//        \Phalcon\Tag::setTitle("Delete Currency - " . $this->_website->title);
     }
 
     public function statusAction()
@@ -164,7 +194,7 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
             $data['st'] = $status;
             $data['id'] = $currentId;
 
-            $DLCurrency->update($data);
+            $DLCurrency->set($data);
 
             $this->db->commit();
             $this->flash->success("status_changed");

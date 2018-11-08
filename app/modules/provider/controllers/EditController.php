@@ -31,14 +31,14 @@ class EditController extends \Backoffice\Controllers\ProtectedController
 
                 $data['id'] = $providerGame->getId();
 
-                $data = $DLProviderGame->filterInput($data);
-                $DLProviderGame->validateEdit($data);
-                $DLProviderGame->set($data);
+                $filterData = $DLProviderGame->filterData($data);
+                $DLProviderGame->validateEditData($filterData);
+                $setProviderGame = $DLProviderGame->set($filterData);
 
                 $this->db->commit();
 
                 $this->flash->success('provider_game_update_success');
-                return $this->response->redirect($this->_module.'/detail/'.$providerGame->getId())->send();
+                return $this->response->redirect($this->_module.'/detail/'.$setProviderGame)->send();
             } catch (\Exception $e) {
                 $this->db->rollback();
                 $this->flash->error($e->getMessage());

@@ -4,33 +4,112 @@ namespace System\Datalayer;
 use System\Model\Game;
 use System\Model\ProviderGame;
 
-class DLProviderGame{
-    public function getAll($status = null){
-//        $providerGame = ProviderGame::find();
-//        $userId = $parent;
-//        $gameType = $type;
-//        $status = 1;
-//
-//        $postData = array(
-//            'st' => 0,
-//            'lm' => 1000
-//        );
-////
-////        // Setup cURL
-//        $ch = curl_init($this->_config->api->url.'user/game');
-//        curl_setopt_array($ch, array(
-//            CURLOPT_POST => TRUE,
-//            CURLOPT_RETURNTRANSFER => TRUE,
-//            CURLOPT_HTTPHEADER => array('Content-Type: application/json'),
-//            CURLOPT_POSTFIELDS => json_encode($postData),
-//        ));
-//
-//        $providerGame = json_decode(curl_exec($ch));
-////
-//        return $providerGame;
+class DLProviderGame extends \System\Datalayers\Main{
+    // DSS
+    public function findByName($id = null,$name){
+        if($id <> null){
+            $postData = array(
+                'id' => $id,
+                'nm' => $name,
+            );
+        }else {
+            $postData = array(
+                'nm' => $name,
+            );
+        }
 
-        // Send the request
-        $parentGames = json_decode(curl_exec($ch));
+        $url = '/provider-game/find';
+        $providerName = $this->curlAppsJson($url,$postData);
+
+        return $providerName;
+    }
+
+    public function filterData($data){
+        if(isset($data["provider_timezone"])) $data['tz'] = \filter_var(\strip_tags(\addslashes($data['provider_timezone'])), FILTER_SANITIZE_STRING);
+        if(isset($data["provider_name"])) $data['nm'] = \filter_var(\strip_tags(\addslashes($data['provider_name'])), FILTER_SANITIZE_STRING);
+        if(isset($data["status"])) $data['st'] = \intval($data['status']);
+        if(isset($data["id"])) $data['id'] = \intval($data['id']);
+        if(!isset($data['id'])) {
+            $app_id = \base64_encode(\md5(strtotime("now") . $data['nm']));
+            $app_secret = \base64_encode(\md5($data['nm'] . strtotime("now")));
+
+            $data['aid'] = \filter_var(\strip_tags(\addslashes($app_id)), FILTER_SANITIZE_STRING);
+            $data['asc'] = \filter_var(\strip_tags(\addslashes($app_secret)), FILTER_SANITIZE_STRING);
+        }
+
+        return $data;
+    }
+
+    public function validateAddData($data){
+        if($this->findByName($data['name'])){
+            throw new \Exception('provider_name_exist');
+        }elseif($data['timezone']==""){
+            throw new \Exception('provider_timezone_empty');
+        }elseif(empty($data['name'])){
+            throw new \Exception('provider_name_empty');
+        }
+
+        return true;
+    }
+
+    public function validateEditData($data){
+        if($this->findByName($data['id'],$data['name'])){
+            throw new \Exception('provider_name_exist');
+        }elseif($data['timezone'] == ""){
+            throw new \Exception('provider_timezone_empty');
+        }elseif(empty($data['name'])){
+            throw new \Exception('provider_name_empty');
+        }elseif($data['status']<0 || $data['status']>1){
+            throw new \Exception('undefined_provider_status');
+        }
+
+        return true;
+    }
+
+    public function listProviderGame($start,$limit){
+        $postData = array(
+            'st' => $start,
+            'lm' => $limit
+        );
+
+        $url = '/provider-game';
+        $providerGame = $this->curlAppsJson($url,$postData);
+
+        echo "<pre>";
+        var_dump($providerGame);
+        die;
+
+        return $providerGame;
+    }
+
+    public function detail($id){
+        $postData = array(
+            "id" => $id
+        );
+        $url = '/provider-game/'.$postData['id'];
+        $setProviderGame = $this->curlAppsJson($url,$postData);
+
+        return $setProviderGame['data']['provider_games'][0]['id'];
+    }
+
+    public function create($postData){
+        $url = '/provider-game/insert';
+        $createProviderGame = $this->curlAppsJson($url,$postData);
+
+        return $createProviderGame['data']['provider_games'][0]['id'];
+    }
+
+    public function set($postData){
+        $url = '/provider-game/update';
+        $setProviderGame = $this->curlAppsJson($url,$postData);
+
+        return $setProviderGame['data']['provider_games'][0]['id'];
+    }
+
+    // END DSS
+
+    public function getAll($status = null){
+        $providerGame = ProviderGame::find();
         if(isset($status)) {
             $providerGame = ProviderGame::findByStatus($status);
         }
@@ -114,7 +193,7 @@ class DLProviderGame{
         return true;
     }
 
-    public function create($data){
+    public function creates($data){
         $data = $this->filterInput($data);
         $this->validateAdd($data);
         $providerGame = new ProviderGame();
@@ -130,7 +209,7 @@ class DLProviderGame{
         return $providerGame->getId();
     }
 
-    public function set($data){
+    public function sets($data){
         $providerGame = $this->getById($data['id']);
 
         if(isset($data["timezone"]))$providerGame->setTimezone($data['timezone']);

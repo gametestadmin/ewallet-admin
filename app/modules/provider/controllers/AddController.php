@@ -20,7 +20,9 @@ class AddController extends \Backoffice\Controllers\ProtectedController
                 $data = $this->request->getPost();
 
                 $DLProviderGame = new DLProviderGame();
-                $providerGameId = $DLProviderGame->create($data);
+                $filterData = $DLProviderGame->filterInput($data);
+                $DLProviderGame->validateAdd($filterData);
+                $providerGameId = $DLProviderGame->create($filterData);
 
                 $this->db->commit();
 

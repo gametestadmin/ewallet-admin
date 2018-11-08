@@ -20,6 +20,7 @@
                           <li class="col-sm-2 col-xs-2 list-group-item">{{translate['head_list_action']}}</li>
                         </ul>
                         {% set i = 1 %}
+                        {% if currencies is not null %}
                         {% for currencyData in currencies %}
                         {% if i%2 == 0 %}
                         {% set class = "content-even" %}
@@ -45,11 +46,17 @@
                                 <a href="{{router.getRewriteUri()~'/edit/'~currencyData.id}}">
                                     <i class="fa fa-edit text-primary" data-toggle="tooltip" data-placement="right" title="{{translate['text_edit']}}"></i>
                                 </a>
+                                <!--|
+                                <a href="{{router.getRewriteUri()~'/delete/'~currencyData.id}}">
+                                    <i class="fa fa-close text-primary" data-toggle="tooltip" data-placement="right" title="{{translate['text_delete']}}"></i>
+                                </a>-->
                             </li>
                         </ul>
                         {% set i = i +1 %}
                         {% endfor %}
-
+                        {% else %}
+                        <h4 class="text-center">{{translate['text_no_data']}}</h4>
+                        {% endif %}
                         <!--<div class="row text-center">
                             <div class="col-xs-12">
                                 <ul class="pagination">

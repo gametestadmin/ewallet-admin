@@ -2,26 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cbc368e4-6403-41e1-89b9-1fe1d3b98ff3" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/modules/ajax/controllers/CurrencyController.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/modules/user/controllers/PlayerController.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/admin/modules/user/player/index.volt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/config/config_app.ini" afterPath="$PROJECT_DIR$/app/config/config_app.ini" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/config/loader.php" afterPath="$PROJECT_DIR$/app/config/loader.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/config/services.php" afterPath="$PROJECT_DIR$/app/config/services.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/config/config_app.php" afterPath="$PROJECT_DIR$/app/config/config_app.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/IndexController.php" afterPath="$PROJECT_DIR$/app/controllers/IndexController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/modules/subaccount/controllers/SubaccountController.php" afterPath="$PROJECT_DIR$/app/modules/subaccount/controllers/SubaccountController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/modules/user/controllers/CurrencyController.php" afterPath="$PROJECT_DIR$/app/modules/user/controllers/CurrencyController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/modules/user/controllers/ProfileController.php" afterPath="$PROJECT_DIR$/app/modules/user/controllers/ProfileController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/modules/game/controllers/CategoryController.php" afterPath="$PROJECT_DIR$/app/modules/game/controllers/CategoryController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/modules/provider/controllers/AddController.php" afterPath="$PROJECT_DIR$/app/modules/provider/controllers/AddController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/modules/provider/controllers/EditController.php" afterPath="$PROJECT_DIR$/app/modules/provider/controllers/EditController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/modules/provider/controllers/ListController.php" afterPath="$PROJECT_DIR$/app/modules/provider/controllers/ListController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/modules/setting/controllers/CurrencyController.php" afterPath="$PROJECT_DIR$/app/modules/setting/controllers/CurrencyController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/system/datalayer/Main.php" afterPath="$PROJECT_DIR$/app/system/datalayer/Main.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/system/datalayer/dss/DLCurrency.php" afterPath="$PROJECT_DIR$/app/system/datalayer/dss/DLCurrency.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/system/datalayer/dss/DLGame.php" afterPath="$PROJECT_DIR$/app/system/datalayer/dss/DLGame.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/system/datalayer/dss/DLProviderGame.php" afterPath="$PROJECT_DIR$/app/system/datalayer/dss/DLProviderGame.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/system/datalayer/dss/DLUser.php" afterPath="$PROJECT_DIR$/app/system/datalayer/dss/DLUser.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/system/language/en.php" afterPath="$PROJECT_DIR$/app/system/language/en.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/admin/layouts/elements/header.volt" afterPath="$PROJECT_DIR$/app/views/admin/layouts/elements/header.volt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/admin/layouts/elements/js_footer.volt" afterPath="$PROJECT_DIR$/app/views/admin/layouts/elements/js_footer.volt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/system/datalayer/dss/DLUserCurrency.php" afterPath="$PROJECT_DIR$/app/system/datalayer/dss/DLUserCurrency.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/admin/modules/setting/currency/detail.volt" afterPath="$PROJECT_DIR$/app/views/admin/modules/setting/currency/detail.volt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/admin/modules/setting/currency/edit.volt" afterPath="$PROJECT_DIR$/app/views/admin/modules/setting/currency/edit.volt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/admin/modules/setting/currency/index.volt" afterPath="$PROJECT_DIR$/app/views/admin/modules/setting/currency/index.volt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/admin/modules/subaccount/subaccount/add.volt" afterPath="$PROJECT_DIR$/app/views/admin/modules/subaccount/subaccount/add.volt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/admin/modules/user/whitelist/index.volt" afterPath="$PROJECT_DIR$/app/views/admin/modules/user/whitelist/index.volt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/admin/less/header.less" afterPath="$PROJECT_DIR$/public/assets/admin/less/header.less" />
     </list>
     <ignored path="admin.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -45,54 +42,45 @@
       <file leaf-file-name="DLCurrency.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/system/datalayer/dss/DLCurrency.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="48">
-              <caret line="5" column="46" selection-start-line="5" selection-start-column="46" selection-end-line="5" selection-end-column="46" />
+            <state relative-caret-position="297">
+              <caret line="195" column="56" selection-start-line="195" selection-start-column="56" selection-end-line="195" selection-end-column="56" />
               <folding>
-                <marker date="1541502194000" expanded="true" signature="1236:1261" ph="..." />
+                <marker date="1541585815000" expanded="true" signature="2748:2773" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Main.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/system/datalayer/Main.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="55" selection-start-line="3" selection-start-column="55" selection-end-line="3" selection-end-column="55" />
-              <folding>
-                <element signature="e#92#119#0#PHP" expanded="true" />
-                <marker date="1541502594000" expanded="true" signature="1026:1061" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.volt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/admin/modules/setting/currency/index.volt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="43" column="33" selection-start-line="43" selection-start-column="33" selection-end-line="43" selection-end-column="33" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="config.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/config/config.php">
+      <file leaf-file-name="config_app.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/config/config_app.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="330">
-              <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="36" />
+              <caret line="58" column="0" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="edit.volt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/admin/modules/setting/currency/edit.volt">
+      <file leaf-file-name="IndexController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controllers/IndexController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="21" column="38" selection-start-line="21" selection-start-column="38" selection-end-line="21" selection-end-column="38" />
-              <folding />
+            <state relative-caret-position="-33">
+              <caret line="49" column="35" selection-start-line="49" selection-start-column="35" selection-end-line="50" selection-end-column="37" />
+              <folding>
+                <element signature="e#42#71#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DLUser.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/system/datalayer/dss/DLUser.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="14" column="24" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
+              <folding>
+                <element signature="e#36#86#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -100,8 +88,48 @@
       <file leaf-file-name="CurrencyController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/modules/setting/controllers/CurrencyController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="64" column="36" selection-start-line="64" selection-start-column="36" selection-end-line="64" selection-end-column="36" />
+            <state relative-caret-position="255">
+              <caret line="38" column="34" selection-start-line="38" selection-start-column="34" selection-end-line="38" selection-end-column="34" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DLGame.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/system/datalayer/dss/DLGame.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="159">
+              <caret line="186" column="32" selection-start-line="186" selection-start-column="32" selection-end-line="186" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CategoryController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/modules/game/controllers/CategoryController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="30" column="27" selection-start-line="30" selection-start-column="27" selection-end-line="30" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DLUserCurrency.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/system/datalayer/dss/DLUserCurrency.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="369">
+              <caret line="75" column="56" selection-start-line="75" selection-start-column="56" selection-end-line="75" selection-end-column="56" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DLProviderGame.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/system/datalayer/dss/DLProviderGame.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -122,12 +150,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/modules/agent/controllers/ListController.php" />
-        <option value="$PROJECT_DIR$/app/modules/agent/controllers/DetailController.php" />
-        <option value="$PROJECT_DIR$/app/views/admin/widgets/currency/user/add.volt" />
-        <option value="$PROJECT_DIR$/app/views/admin/modules/agent/list/child.volt" />
-        <option value="$PROJECT_DIR$/app/views/admin/widgets/user/game/add.volt" />
-        <option value="$PROJECT_DIR$/app/views/admin/widgets/user/ip.volt" />
         <option value="$PROJECT_DIR$/app/views/admin/widgets/ip/user/add.volt" />
         <option value="$PROJECT_DIR$/app/views/admin/modules/agent/edit/index.volt" />
         <option value="$PROJECT_DIR$/app/views/admin/modules/agent/list/index.volt" />
@@ -136,13 +158,11 @@
         <option value="$PROJECT_DIR$/app/views/admin/modules/agent/password/reset.volt" />
         <option value="$PROJECT_DIR$/app/views/admin/modules/agent/add/index.volt" />
         <option value="$PROJECT_DIR$/app/views/admin/modules/provider/add/index.volt" />
-        <option value="$PROJECT_DIR$/app/modules/provider/controllers/ListController.php" />
         <option value="$PROJECT_DIR$/app/views/admin/modules/provider/list/index.volt" />
         <option value="$PROJECT_DIR$/app/modules/provider/controllers/DetailController.php" />
         <option value="$PROJECT_DIR$/app/views/admin/modules/provider/detail/index.volt" />
         <option value="$PROJECT_DIR$/app/views/admin/modules/provider/edit/index.volt" />
         <option value="$PROJECT_DIR$/app/views/admin/modules/setting/currency/add.volt" />
-        <option value="$PROJECT_DIR$/app/views/admin/modules/setting/currency/edit.volt" />
         <option value="$PROJECT_DIR$/app/system/libraries/General/GlobalVariable.php" />
         <option value="$PROJECT_DIR$/app/system/datalayer/mysql/DLUser.php" />
         <option value="$PROJECT_DIR$/app/views/admin/widgets/user/game/list.volt" />
@@ -164,15 +184,23 @@
         <option value="$PROJECT_DIR$/app/system/libraries/Widget/UserGameFormAddWidget.php" />
         <option value="$PROJECT_DIR$/app/system/datalayer/mysql/DLUserGame.php" />
         <option value="$PROJECT_DIR$/app/system/language/en.php" />
-        <option value="$PROJECT_DIR$/app/system/datalayer/dss/DLProviderGame.php" />
-        <option value="$PROJECT_DIR$/app/views/admin/modules/setting/currency/detail.volt" />
         <option value="$PROJECT_DIR$/app/config/routes.php" />
+        <option value="$PROJECT_DIR$/app/views/admin/modules/setting/currency/edit.volt" />
+        <option value="$PROJECT_DIR$/app/views/admin/modules/setting/currency/detail.volt" />
+        <option value="$PROJECT_DIR$/app/modules/provider/controllers/AddController.php" />
+        <option value="$PROJECT_DIR$/app/modules/provider/controllers/EditController.php" />
+        <option value="$PROJECT_DIR$/app/system/datalayer/Main.php" />
+        <option value="$PROJECT_DIR$/app/modules/provider/controllers/ListController.php" />
+        <option value="$PROJECT_DIR$/app/views/admin/modules/setting/currency/index.volt" />
+        <option value="$PROJECT_DIR$/app/system/datalayer/dss/DLUserCurrency.php" />
         <option value="$PROJECT_DIR$/app/modules/setting/controllers/CurrencyController.php" />
+        <option value="$PROJECT_DIR$/app/system/datalayer/dss/DLProviderGame.php" />
+        <option value="$PROJECT_DIR$/app/modules/game/controllers/CategoryController.php" />
+        <option value="$PROJECT_DIR$/app/system/datalayer/dss/DLGame.php" />
         <option value="$PROJECT_DIR$/app/config/config_app.php" />
+        <option value="$PROJECT_DIR$/app/controllers/IndexController.php" />
         <option value="$PROJECT_DIR$/app/system/datalayer/dss/DLUser.php" />
         <option value="$PROJECT_DIR$/app/system/datalayer/dss/DLCurrency.php" />
-        <option value="$PROJECT_DIR$/app/views/admin/modules/setting/currency/index.volt" />
-        <option value="$PROJECT_DIR$/app/system/datalayer/Main.php" />
       </list>
     </option>
   </component>
@@ -404,32 +432,6 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="system" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="datalayer" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dss" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="softco-admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="modules" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
@@ -452,7 +454,7 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="setting" />
+              <option name="myItemId" value="game" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -467,32 +469,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="setting" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="controllers" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="softco-admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -609,12 +589,12 @@
       <workItem from="1537262780406" duration="2856000" />
       <workItem from="1537341729492" duration="23390000" />
       <workItem from="1537468918834" duration="201399000" />
-      <workItem from="1539842677531" duration="130288000" />
+      <workItem from="1539842677531" duration="144667000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="534033000" />
+    <option name="totallyTimeSpent" value="548412000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="738" extended-state="6" />
@@ -658,56 +638,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/controllers/ProtectedController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="54" selection-start-line="13" selection-start-column="54" selection-end-line="13" selection-end-column="62" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/system/datalayer/mysql/DLGameCurrency.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="14" column="20" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/modules/ajax/controllers/AgentController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="24">
-          <caret line="82" column="36" selection-start-line="82" selection-start-column="36" selection-end-line="82" selection-end-column="36" />
-          <folding>
-            <element signature="e#46#68#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/admin/widgets/user/game/list.volt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
-          <caret line="41" column="57" selection-start-line="41" selection-start-column="57" selection-end-line="41" selection-end-column="57" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/admin/modules/agent/detail/index.volt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="148" column="6" selection-start-line="148" selection-start-column="6" selection-end-line="148" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/system/libraries/Widget/ProviderGameEndpointAuthWidget.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-156">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/system/libraries/Widget/EndpointFormAddWidget.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
@@ -927,7 +857,7 @@
         <state relative-caret-position="-261">
           <caret line="30" column="46" selection-start-line="30" selection-start-column="46" selection-end-line="30" selection-end-column="46" />
           <folding>
-            <element signature="e#34#62#0#PHP" expanded="true" />
+            <element signature="e#34#62#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -956,14 +886,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/modules/provider/controllers/ListController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="28" column="38" selection-start-line="28" selection-start-column="38" selection-end-line="28" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/system/datalayer/dss/DLUserGame.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="495">
@@ -972,34 +894,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/system/datalayer/dss/DLProviderGame.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/config/loader.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="8" column="21" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/admin/modules/setting/currency/detail.volt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="348">
-          <caret line="51" column="67" selection-start-line="51" selection-start-column="67" selection-end-line="51" selection-end-column="67" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/admin/modules/setting/currency/edit.volt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="38" selection-start-line="21" selection-start-column="38" selection-end-line="21" selection-end-column="38" />
           <folding />
         </state>
       </provider>
@@ -1020,64 +918,147 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/system/datalayer/dss/DLUser.php">
+    <entry file="file://$PROJECT_DIR$/app/config/config.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="21" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
+        <state relative-caret-position="270">
+          <caret line="18" column="2" selection-start-line="18" selection-start-column="2" selection-end-line="18" selection-end-column="2" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/config_app.php">
+    <entry file="file://$PROJECT_DIR$/app/views/admin/modules/setting/currency/edit.volt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="21" column="51" selection-start-line="21" selection-start-column="51" selection-end-line="21" selection-end-column="51" />
+        <state relative-caret-position="375">
+          <caret line="25" column="114" selection-start-line="25" selection-start-column="114" selection-end-line="25" selection-end-column="114" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/admin/modules/setting/currency/detail.volt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="468">
+          <caret line="66" column="101" selection-start-line="66" selection-start-column="101" selection-end-line="66" selection-end-column="101" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/modules/provider/controllers/AddController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="22" column="50" selection-start-line="22" selection-start-column="50" selection-end-line="22" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/modules/provider/controllers/EditController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="40" column="91" selection-start-line="40" selection-start-column="91" selection-end-line="40" selection-end-column="91" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/modules/provider/controllers/ListController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="31" column="20" selection-start-line="31" selection-start-column="20" selection-end-line="31" selection-end-column="20" />
+          <folding>
+            <element signature="e#50#86#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/admin/modules/setting/currency/index.volt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="48" column="36" selection-start-line="48" selection-start-column="36" selection-end-line="48" selection-end-column="36" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/modules/setting/controllers/CurrencyController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="64" column="36" selection-start-line="64" selection-start-column="36" selection-end-line="64" selection-end-column="36" />
+        <state relative-caret-position="255">
+          <caret line="38" column="34" selection-start-line="38" selection-start-column="34" selection-end-line="38" selection-end-column="34" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/system/datalayer/dss/DLCurrency.php">
+    <entry file="file://$PROJECT_DIR$/app/system/datalayer/dss/DLProviderGame.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="48">
-          <caret line="5" column="46" selection-start-line="5" selection-start-column="46" selection-end-line="5" selection-end-column="46" />
+        <state relative-caret-position="120">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/modules/game/controllers/CategoryController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="30" column="27" selection-start-line="30" selection-start-column="27" selection-end-line="30" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/system/datalayer/dss/DLGame.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="159">
+          <caret line="186" column="32" selection-start-line="186" selection-start-column="32" selection-end-line="186" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/IndexController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-33">
+          <caret line="49" column="35" selection-start-line="49" selection-start-column="35" selection-end-line="50" selection-end-column="37" />
           <folding>
-            <marker date="1541502194000" expanded="true" signature="1236:1261" ph="..." />
+            <element signature="e#42#71#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/config.php">
+    <entry file="file://$PROJECT_DIR$/app/system/datalayer/dss/DLUser.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="36" />
-          <folding />
+        <state relative-caret-position="210">
+          <caret line="14" column="24" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
+          <folding>
+            <element signature="e#36#86#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/admin/modules/setting/currency/index.volt">
+    <entry file="file://$PROJECT_DIR$/app/config/config_app.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="43" column="33" selection-start-line="43" selection-start-column="33" selection-end-line="43" selection-end-column="33" />
+        <state relative-caret-position="330">
+          <caret line="58" column="0" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/system/datalayer/Main.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="55" selection-start-line="3" selection-start-column="55" selection-end-line="3" selection-end-column="55" />
+        <state relative-caret-position="90">
+          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/system/datalayer/dss/DLCurrency.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="195" column="56" selection-start-line="195" selection-start-column="56" selection-end-line="195" selection-end-column="56" />
           <folding>
-            <element signature="e#92#119#0#PHP" expanded="true" />
-            <marker date="1541502594000" expanded="true" signature="1026:1061" ph="..." />
+            <marker date="1541585815000" expanded="true" signature="2748:2773" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/system/datalayer/dss/DLUserCurrency.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="369">
+          <caret line="75" column="56" selection-start-line="75" selection-start-column="56" selection-end-line="75" selection-end-column="56" />
+          <folding />
         </state>
       </provider>
     </entry>

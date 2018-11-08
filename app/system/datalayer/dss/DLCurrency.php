@@ -4,13 +4,50 @@ namespace System\Datalayer;
 use System\Model\Currency;
 
 class DLCurrency extends \System\Datalayers\Main{
-
-    protected $_url = 'http://10.22.0.199:9090';
-
-    public function lists($st,$limit)
-    {
+    // DSS
+    public function findByCode($code){
         $postData = array(
-            'st' => $st,
+            "cd" => $code
+        );
+
+        $url = '/currency/code/'.$postData['cd'];
+        $currency = $this->curlAppsJson($url,$postData);
+
+        if($code != $currency['currencies'][0]['cd']){
+            return false;
+        }
+
+        return true;
+    }
+
+    public function filterData($data){
+        if(isset($data["id"])) $filterData['id'] = \filter_var(\strip_tags(\addslashes($data['id'])), FILTER_SANITIZE_STRING);
+        if(isset($data["code"])) $filterData['cd'] = \filter_var(\strip_tags(\addslashes($data['code'])), FILTER_SANITIZE_STRING);
+        if(isset($data["name"])) $filterData['nm'] = \filter_var(\strip_tags(\addslashes($data['name'])), FILTER_SANITIZE_STRING);
+        if(isset($data["symbol"])) $filterData['sy'] = \filter_var(\strip_tags(\addslashes($data['symbol'])), FILTER_SANITIZE_STRING);
+//        if(isset($data["status"])) $data['status'] = \intval(($data['status']));
+        $filterData['st'] = (isset($data["status"])?\intval($data['status']):1);
+
+        return $filterData;
+    }
+
+    public function validateAddData($data){
+        if($this->findByCode(strtoupper($data['cd']))){
+            throw new \Exception('currency_code_exist');
+        }elseif(empty($data['nm'])){
+            throw new \Exception('currency_name_empty');
+        }elseif(empty($data['sy'])){
+            throw new \Exception('currency_symbol_empty');
+        }elseif($data['st']<0 || $data['st']>1){
+            throw new \Exception('undefined_currency_status');
+        }
+
+        return true;
+    }
+
+    public function listCurrency($start,$limit){
+        $postData = array(
+            'st' => $start,
             'lm' => $limit
         );
 
@@ -20,31 +57,25 @@ class DLCurrency extends \System\Datalayers\Main{
         return $currency['currencies'];
     }
 
-    public function insert($data)
-    {
-        $postData = array(
-            'cd' => $data['code'],
-            'nm' => $data['name'],
-            'sy' => $data['symbol'],
-            'st' => $data['status']
-        );
-
+    public function create($postData){
         $url = '/currency/insert';
         $currency = $this->curlAppsJson($url,$postData);
+
+        //TODO: Insert to company currency
+//        $dlUserCurrency = new DLUserCurrency();
+//        $dlUserCurrency->create($agent,$currency);
 
         return $currency['data']['currencies'][0]['id'];
     }
 
-    public function update($postData)
-    {
+    public function set($postData){
         $url = '/currency/'.$postData['id'].'/update';
         $currency = $this->curlAppsJson($url,$postData);
 
         return $currency['data']['currencies'][0]['id'];
     }
 
-    public function detail($id)
-    {
+    public function detail($id){
         $postData = array(
             'id' => $id,
         );
@@ -52,8 +83,21 @@ class DLCurrency extends \System\Datalayers\Main{
         $url = '/currency/'.$postData['id'];
         $currency = $this->curlAppsJson($url,$postData);
 
-        return $currency['currencies'];
+        return $currency['currencies'][0];
     }
+
+    public function delete($id){
+        $postData = array(
+            'id' => $id,
+        );
+
+        $url = '/currency/'.$postData['id'].'/delete';
+        $currency = $this->curlAppsJson($url,$postData);
+
+        return true;
+    }
+
+    // END DSS
 
     public function getById($id){
         $currency = Currency::findFirst($id);
@@ -80,41 +124,40 @@ class DLCurrency extends \System\Datalayers\Main{
     }
 
     public function checkByCode($code){
-
         $postData = array(
             "cd" => $code
         );
 
-        $url = $this->_url.'/currency/code/'.$postData['cd'];
+        $url = '/currency/code/'.$postData['cd'];
         $currency = $this->curlAppsJson($url,$postData);
 
-        echo "<pre>";
-        var_dump($currency);
-        die;
-
-        $currency = Currency::findFirstByCode($code);
-        if(!$currency){
+        if($code != $currency['currencies'][0]['cd']){
             return false;
         }
+
         return true;
     }
 
     public function filterInput($data){
-        if(isset($data["code"])) $data['code'] = \filter_var(\strip_tags(\addslashes($data['code'])), FILTER_SANITIZE_STRING);
-        if(isset($data["name"])) $data['name'] = \filter_var(\strip_tags(\addslashes($data['name'])), FILTER_SANITIZE_STRING);
-        if(isset($data["symbol"])) $data['symbol'] = \filter_var(\strip_tags(\addslashes($data['symbol'])), FILTER_SANITIZE_STRING);
+        if(isset($data["id"])) $filterData['id'] = \filter_var(\strip_tags(\addslashes($data['id'])), FILTER_SANITIZE_STRING);
+        if(isset($data["code"])) $filterData['cd'] = \filter_var(\strip_tags(\addslashes($data['code'])), FILTER_SANITIZE_STRING);
+        if(isset($data["name"])) $filterData['nm'] = \filter_var(\strip_tags(\addslashes($data['name'])), FILTER_SANITIZE_STRING);
+        if(isset($data["symbol"])) $filterData['sy'] = \filter_var(\strip_tags(\addslashes($data['symbol'])), FILTER_SANITIZE_STRING);
 //        if(isset($data["status"])) $data['status'] = \intval(($data['status']));
-        $data['status'] = (isset($data["status"])?\intval($data['status']):1);
+        $filterData['st'] = (isset($data["status"])?\intval($data['status']):1);
 
-        return $data;
+        return $filterData;
     }
 
     public function validateEdit($data){
-        if(empty($data['name'])){
+        // change validate to DSS data
+        if(empty($data['nm'])){
             throw new \Exception('currency_name_empty');
-        }elseif(empty($data['symbol'])){
+        }elseif(empty($data['sy'])){
             throw new \Exception('currency_symbol_empty');
-        }elseif($data['status']<0 || $data['status']>1){
+        }elseif(strlen($data['sy']) > 3){
+            throw new \Exception('currency_symbol_maximum');
+        }elseif($data['st']<0 || $data['st']>1){
             throw new \Exception('undefined_currency_status');
         }
 
@@ -122,20 +165,21 @@ class DLCurrency extends \System\Datalayers\Main{
     }
 
     public function validateAdd($data){
-        if($this->checkByCode(strtoupper($data['code']))){
+        // change validate to DSS data
+        if($this->checkByCode(strtoupper($data['cd']))){
             throw new \Exception('currency_code_exist');
-        }elseif(empty($data['name'])){
+        }elseif(empty($data['nm'])){
             throw new \Exception('currency_name_empty');
-        }elseif(empty($data['symbol'])){
+        }elseif(empty($data['sy'])){
             throw new \Exception('currency_symbol_empty');
-        }elseif($data['status']<0 || $data['status']>1){
+        }elseif($data['st']<0 || $data['st']>1){
             throw new \Exception('undefined_currency_status');
         }
 
         return true;
     }
 
-    public function create($data){
+    public function creates($data){
         $newCurrency = new Currency();
 
         if(isset($data["code"]))$newCurrency->setCode($data['code']);
@@ -164,7 +208,7 @@ class DLCurrency extends \System\Datalayers\Main{
         return $newCurrency->getCode();
     }
 
-    public function set($data){
+    public function sets($data){
         $currency = $this->getByCode($data['code']);
 
         if(isset($data["name"]))$currency->setName($data['name']);

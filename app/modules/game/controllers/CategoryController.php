@@ -25,24 +25,25 @@ class CategoryController extends \Backoffice\Controllers\ProtectedController
 
         }
 
-        $categoryGame = new DLGame();
+        $dlGame = new DLGame();
         $status = GlobalVariable::$threeLayerStatus;
-        $category = $categoryGame->getAll($this->_type);
+//        $category = $categoryGame->getAll($this->_type);
+        $category = $dlGame->findGameType($this->_type);
 
-        $paginator = new \Phalcon\Paginator\Adapter\Model(
-            array(
-                "data" => $category,
-                "limit"=> $limit,
-                "page" => $pages
-            )
-        );
-        $page = $paginator->getPaginate();
-
-        $pagination = ceil($category->count()/$limit);
-        $view->page = $page->items;
-        $view->pagination = $pagination;
-        $view->pages = $pages;
-        $view->limit = $limit;
+//        $paginator = new \Phalcon\Paginator\Adapter\Model(
+//            array(
+//                "data" => $category,
+//                "limit"=> $limit,
+//                "page" => $pages
+//            )
+//        );
+//        $page = $paginator->getPaginate();
+//
+//        $pagination = ceil($category->count()/$limit);
+//        $view->page = $page->items;
+//        $view->pagination = $pagination;
+//        $view->pages = $pages;
+//        $view->limit = $limit;
 
         $view->category = $category;
         $view->status = $status;
@@ -54,9 +55,6 @@ class CategoryController extends \Backoffice\Controllers\ProtectedController
     {
         $view = $this->view;
 
-        $module = $this->router->getModuleName();
-        $controller = $this->router->getControllerName();
-
         if ($this->request->getPost()) {
             $data = $this->request->getPost();
             $data['type'] = $this->_type;
@@ -64,20 +62,20 @@ class CategoryController extends \Backoffice\Controllers\ProtectedController
             try {
                 $this->db->begin();
 
-                $DLGame = new DLGame();
-                $filterData = $DLGame->filterCategoryInput($data);
-                $DLGame->validateCategoryAdd($filterData);
-                $create = $DLGame->createCategory($filterData);
+                $dlGame = new DLGame();
+                $filterData = $dlGame->filterCategoryData($data);
+                $dlGame->validateCategoryAddData($filterData);
+                $create = $dlGame->createCategoryData($filterData);
 
                 $this->db->commit();
 
                 $this->flash->success('game_category_create_success');
-                return $this->response->redirect($module."/".$controller."/detail/".$create->getCode())->send();
+                return $this->response->redirect($this->_module."/".$this->_controller."/detail/".$create->getCode())->send();
             } catch (\Exception $e) {
                 $this->db->rollback();
                 $this->flash->error($e->getMessage());
                 if(isset($data['url'])){
-                    return $this->response->redirect($module."/main/add")->send();
+                    return $this->response->redirect($this->_module."/main/add")->send();
                 }
             }
         }
@@ -93,8 +91,8 @@ class CategoryController extends \Backoffice\Controllers\ProtectedController
         $module = $this->router->getModuleName();
         $controller = $this->router->getControllerName();
 
-        $DLGame = new DLGame();
-        $game = $DLGame->getByCode($currentCode, $this->_type);
+        $dlGame = new DLGame();
+        $game = $dlGame->getByCode($currentCode, $this->_type);
 
         if(!$game){
             $this->flash->error("undefined_game_category_code");
@@ -110,9 +108,9 @@ class CategoryController extends \Backoffice\Controllers\ProtectedController
                 $data['type'] = $this->_type;
                 $data['id'] = $game->getId();
 
-                $filterData = $DLGame->filterCategoryInput($data);
-                $DLGame->validateCategoryEdit($filterData);
-                $DLGame->setCategory($filterData);
+                $filterData = $dlGame->filterCategoryData($data);
+                $dlGame->validateCategoryEditData($filterData);
+                $dlGame->setCategoryData($filterData);
 
                 $this->db->commit();
 
@@ -134,17 +132,15 @@ class CategoryController extends \Backoffice\Controllers\ProtectedController
         $view = $this->view;
 
         $currentCode = $this->dispatcher->getParam("code");
-        $module = $this->router->getModuleName();
-        $controller = $this->router->getControllerName();
-        $action = $this->router->getActionName();
 
         $status = GlobalVariable::$threeLayerStatus;
 
-        $DLGame = new DLGame();
-        $gameCategory = $DLGame->getByCode($currentCode, $this->_type);
+        $dlGame = new DLGame();
+        $gameCategory = $dlGame->findByCode($currentCode, $this->_type);
+
         if(!$gameCategory){
             $this->flash->error("undefined_game_category_code");
-            return $this->response->redirect("/".$module."/".$controller)->send();
+            return $this->response->redirect("/".$this->_module."/".$this->_controller)->send();
         }
 
         $view->category = $gameCategory;

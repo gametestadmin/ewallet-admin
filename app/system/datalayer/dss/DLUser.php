@@ -1,5 +1,9 @@
 <?php
+
 namespace System\Datalayer;
+
+use System\Library\Security\User as SecurityUser ;
+use System\Model\User;
 
 class DLUser extends \System\Datalayers\Main
 {
@@ -36,15 +40,21 @@ class DLUser extends \System\Datalayers\Main
         return $user;
     }
 
+//    public function getByNickname($user)
+//    {
+//        $postData = array(
+//            'id' => 1 ,
+//        );
+//        $url = '/user/1';
+//        $result = $this->curlAppsJson( $url , $postData);
+//
+//        return $result;
+//    }
+
     public function getByNickname($user)
     {
-        $postData = array(
-            'id' => 1 ,
-        );
-        $url = '/user/1';
-        $result = $this->curlAppsJson( $url , $postData);
-
-        return $result;
+        $user = User::findFirstByNickname($user);
+        return $user;
     }
 
     public function getById($user)
