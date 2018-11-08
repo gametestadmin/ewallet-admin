@@ -135,12 +135,6 @@ class BaseController extends Controller
             $currency = $this->session->get('currency');
         }
 
-        if (isset($this->_user)){
-            $DL = new DLUserCurrency();
-            $currency = $DL->getAll($this->_user->getId());
-            $this->view->user_currency_list = $currency ;
-        }
-
         $this->view->user = $this->_user ;
         $this->view->real_user = $this->_realUser ;
     }

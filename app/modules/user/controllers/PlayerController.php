@@ -6,11 +6,23 @@ class PlayerController extends \Backoffice\Controllers\ProtectedController
 
     public function indexAction()
     {
-        $sql = 'SELECT * FROM api.user_player WHERE agent_id = '.$this->_user->getId().' AND status = 1 ';
-//        $sql = 'SELECT * FROM api.user_player WHERE status = 1 ';
-        $user_player = $this->postgre->query(
-            $sql
+        if($this->_realUser->getType() == 9) {
+            $sql = 'SELECT * FROM api.user_player WHERE company_id = '.$this->_realUser->getId().' AND status = 1 ';
+            $user_player = $this->postgre->query(
+                $sql
             )->fetchAll();
+        } else {
+            $sql = 'SELECT * FROM api.user_player WHERE agent_id = '.$this->_realUser->getId().' AND status = 1 ';
+            $user_player = $this->postgre->query(
+                $sql
+            )->fetchAll();
+        }
+
+
+
+
+
+
 //        echo "something <pre>";
 //        var_dump($user_player);
 //        die;
