@@ -8,6 +8,7 @@ use \Phalcon\Http\Response\Cookies;
 use \Phalcon\Flash\Session as Flash;
 use \Phalcon\Mvc\Model\Manager as ModelManager;
 use \Phalcon\Mvc\Dispatcher as Dispatcher;
+use System\Library\Security\AccessControlList;
 
 
 /**
@@ -166,17 +167,17 @@ $di->setShared('view', function () use ($config) {
 /**
  * new setting dispatcher
  */
-$di->set('dispatcher', function() use ($di){
+$di->set('dispatcher', function () use ($di) {
     $evManager = $di->getShared('eventsManager');
 
-//    $evManager->attach('dispatch:beforeExecuteRoute', new ControlList());
+    $evManager->attach('dispatch:beforeExecuteRoute', new AccessControlList());
 
     $dispatcher = new Dispatcher();
     $dispatcher->setDefaultNamespace('Backoffice\Controllers');
     $dispatcher->setEventsManager($evManager);
 
     return $dispatcher;
-},true);
+}, true);
 
 
 /**
