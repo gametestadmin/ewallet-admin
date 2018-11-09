@@ -153,6 +153,8 @@ $messages = array(
 
 
     //sidebar
+    "user_player_list" => "player list",
+
     "subaccount" => "subaccount",
     "subaccount_list" => "list",
     "subaccount_add" => "add",

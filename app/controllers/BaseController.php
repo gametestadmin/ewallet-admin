@@ -39,7 +39,7 @@ class BaseController extends Controller
         $this->_setNavigation();
         $this->_checkResetPassword();
 //        $this->_checkResetNickname();
-        $this->_checkACL();
+//        $this->_checkACL();
 
 //        $this->_language = $this->cookies->get('language')->getValue();
 //        $languageLibrary = new Language();
@@ -133,12 +133,6 @@ class BaseController extends Controller
         }
         if($this->session->has('currency')) {
             $currency = $this->session->get('currency');
-        }
-
-        if (isset($this->_user)){
-            $DL = new DLUserCurrency();
-            $currency = $DL->getAll($this->_user->getId());
-            $this->view->user_currency_list = $currency ;
         }
 
         $this->view->user = $this->_user ;

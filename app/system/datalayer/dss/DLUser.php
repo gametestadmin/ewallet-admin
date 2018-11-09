@@ -39,9 +39,9 @@ class DLUser extends \System\Datalayers\Main
     public function getByNickname($user)
     {
         $postData = array(
-            'id' => 1 ,
+            'username' => $user ,
         );
-        $url = '/user/1';
+        $url = '/user/find';
         $result = $this->curlAppsJson( $url , $postData);
 
         return $result;
