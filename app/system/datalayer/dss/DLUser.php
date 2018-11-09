@@ -4,6 +4,43 @@ namespace System\Datalayer;
 class DLUser extends \System\Datalayers\Main
 {
 
+    public function getFirstByNickname($user)
+    {
+        $postData = array(
+            'nickname' => $user ,
+            'status' => 1 ,
+        );
+        $url = '/user/find';
+        $result = $this->curlAppsJson( $url , $postData);
+
+        if(isset($result->user) && !empty($result->user) && isset($result->user->{0})){
+            return $result->user->{0};
+        }
+
+        return false;
+    }
+
+    public function setUserPassword($user, $password)
+    {
+        $postData = array(
+            'password' => $password ,
+        );
+        $url = '/'.$user.'/update';
+        $result = $this->curlAppsJson( $url , $postData);
+
+        return $result;
+
+    }
+
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     public function getCompany()
     {
         $company = User::findByType(9);
@@ -36,16 +73,6 @@ class DLUser extends \System\Datalayers\Main
         return $user;
     }
 
-    public function getByNickname($user)
-    {
-        $postData = array(
-            'username' => $user ,
-        );
-        $url = '/user/find';
-        $result = $this->curlAppsJson( $url , $postData);
-
-        return $result;
-    }
 
     public function getById($user)
     {
@@ -93,15 +120,6 @@ class DLUser extends \System\Datalayers\Main
         return $user;
     }
 
-    public function setUserPassword($user, $password)
-    {
-        $user->setPassword($password);
-        $user->setResetPassword(0);
-        if (!$user->save()) {
-            throw new \Exception($user->getMessages());
-        }
-        return $user->save();
-    }
 
 
     public function setResetPassword($user, $password)

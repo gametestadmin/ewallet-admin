@@ -48,10 +48,11 @@ class IndexController extends \Backoffice\Controllers\BaseController
             $password = $data['password'];
 
             $DLuser = new DLUser();
-            $user = $DLuser->getByNickname($username);
-//            echo "test <pre>";
-//            var_dump($user);
-//            die;
+            $user = $DLuser->getFirstByNickname($username);
+            echo "test <pre>";
+            var_dump($user);
+            var_dump("something");
+            die;
 
             if($user){
                 $securityLibrary = new SecurityUser();
