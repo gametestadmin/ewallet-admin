@@ -39,11 +39,11 @@
                                 {% endif %}
                                 GMT {{gmtDisplay}}
                             </li>
-                            <li class="col-sm-4 col-xs-4 list-group-item">{{providerData.name}}</li>
+                            <li class="col-sm-4 col-xs-4 list-group-item">{{providerData.nm}}</li>
                             <li class="col-sm-2 col-xs-3 list-group-item">
                                 <select class="status">
                                     {% for key, value in status %}
-                                        <option value="{{providerData.id~"|"~key}}" {% if providerData.status == key %}selected{% endif %}>{{translate[value]}}</option>
+                                        <option value="{{providerData.id~"|"~key}}" {% if providerData.st == key %}selected{% endif %}>{{translate[value]}}</option>
                                     {% endfor %}
                                 </select>
                             </li>

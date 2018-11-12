@@ -29,12 +29,11 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
 
         $status = GlobalVariable::$twoLayerStatusTypes;
         $currencies = $dlCurrency->listCurrency(0,$limit);
-//        $dlUserCurrency = new DLUserCurrency();
-//        $currencies = $dlUserCurrency->listUserCurrency(0,$limit);
+//        $currencies = $dlCurrency->getAll();
 
 //        $paginator = new \Phalcon\Paginator\Adapter\Model(
 //            array(
-//                "data" => $currency,
+//                "data" => $currencies,
 //                "limit" => $limit,
 //                "page" => $pages
 //            )
@@ -42,8 +41,8 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
 //
 //        $page = $paginator->getPaginate();
 //
-//        $pagination = ceil($currency->count() / $limit);
-//
+//        $pagination = ceil($currencies->count() / $limit);
+
 //        $view->page = $page->items;
 //        $view->pagination = $pagination;
 //        $view->pages = $pages;
@@ -67,7 +66,7 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
                 $DLCurrency = new DLCurrency();
                 $filterData = $DLCurrency->filterData($data);
                 $DLCurrency->validateAddData($filterData);
-                $currency = $DLCurrency->create($filterData);
+                $currency = $DLCurrency->create($filterData,$data['user']);
 
                 $this->db->commit();
                 return $this->response->redirect($this->_module . '/' . $this->_controller . '/detail/' . strtolower($currency))->send();
@@ -101,9 +100,9 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
                 $data = $this->request->getPost();
                 $data['id'] = $getCurrency['id'];
 
-                $filterInput = $DLCurrency->filterInput($data);
-                $DLCurrency->validateEdit($filterInput);
-                $currency = $DLCurrency->set($filterInput);
+                $filterData = $DLCurrency->filterInput($data);
+                $DLCurrency->validateEditData($filterData);
+                $currency = $DLCurrency->set($filterData);
 
                 $this->db->commit();
                 return $this->response->redirect($this->_module . '/' . $this->_controller . '/detail/' . $currency)->send();

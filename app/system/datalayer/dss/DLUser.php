@@ -8,6 +8,16 @@ use System\Model\User;
 class DLUser extends \System\Datalayers\Main
 {
 
+    public function findById($id)
+    {
+        $postData = array(
+            "id" => $id
+        );
+        $url = '/user/'.$id;
+        $user = $this->curlAppsJson($url,$postData);
+
+        return $user['user'][0];
+    }
     public function getCompany()
     {
         $company = User::findByType(9);

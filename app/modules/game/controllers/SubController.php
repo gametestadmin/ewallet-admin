@@ -29,26 +29,27 @@ class SubController extends \Backoffice\Controllers\ProtectedController
             $pages = $this->session->get("pages");
 
         }
-        $subGame = new DLGame();
-        $status = GlobalVariable::$threeLayerStatus;
-        $sub = $subGame->getAll($this->_type);
+        $dlGame = new DLGame();
+        $status = GlobalVariable::$threeLayerStatusTypes;
+//        $sub = $subGame->getAll($this->_type);
+        $subGames = $dlGame->findGameType(0,$limit,$this->_type);
 
-        $paginator = new \Phalcon\Paginator\Adapter\Model(
-            array(
-                "data" => $sub,
-                "limit"=> $limit,
-                "page" => $pages
-            )
-        );
-        $page = $paginator->getPaginate();
+//        $paginator = new \Phalcon\Paginator\Adapter\Model(
+//            array(
+//                "data" => $sub,
+//                "limit"=> $limit,
+//                "page" => $pages
+//            )
+//        );
+//        $page = $paginator->getPaginate();
+//
+//        $pagination = ceil($sub->count()/$limit);
+//        $view->page = $page->items;
+//        $view->pagination = $pagination;
+//        $view->pages = $pages;
+//        $view->limit = $limit;
 
-        $pagination = ceil($sub->count()/$limit);
-        $view->page = $page->items;
-        $view->pagination = $pagination;
-        $view->pages = $pages;
-        $view->limit = $limit;
-
-        $view->sub = $sub;
+        $view->subGames = $subGames;
         $view->status = $status;
 
         \Phalcon\Tag::setTitle("Game Category - ".$this->_website->title);

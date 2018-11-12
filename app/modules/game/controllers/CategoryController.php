@@ -28,7 +28,13 @@ class CategoryController extends \Backoffice\Controllers\ProtectedController
         $dlGame = new DLGame();
         $status = GlobalVariable::$threeLayerStatus;
 //        $category = $categoryGame->getAll($this->_type);
-        $category = $dlGame->findGameType($this->_type);
+        $categories = $dlGame->findGameType(0,$limit,$this->_type);
+
+//        echo "<pre>";
+//        foreach ($categories as $category){
+//            var_dump($category);
+//        }
+//        die;
 
 //        $paginator = new \Phalcon\Paginator\Adapter\Model(
 //            array(
@@ -45,7 +51,7 @@ class CategoryController extends \Backoffice\Controllers\ProtectedController
 //        $view->pages = $pages;
 //        $view->limit = $limit;
 
-        $view->category = $category;
+        $view->categories = $categories;
         $view->status = $status;
 
         \Phalcon\Tag::setTitle("Game Category - ".$this->_website->title);
@@ -131,10 +137,12 @@ class CategoryController extends \Backoffice\Controllers\ProtectedController
     {
         $view = $this->view;
 
-        $currentCode = $this->dispatcher->getParam("code");
+        $currentCode = $this->dispatcher->getParam("id");
 
-        $status = GlobalVariable::$threeLayerStatus;
-
+        $status = GlobalVariable::$threeLayerStatusTypes;
+//        var_dump($currentCode);
+//        var_dump($this->_type);
+//        die;
         $dlGame = new DLGame();
         $gameCategory = $dlGame->findByCode($currentCode, $this->_type);
 

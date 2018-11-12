@@ -5,7 +5,15 @@ use System\Model\Game;
 
 class DLGame extends \System\Datalayers\Main{
     // DSS
-    public function findGameType($type,$status = null){
+    public function findGameType($start,$limit,$type,$status = null){
+        if($type == 1){
+            $gameType = 'category';
+        }elseif($type == 2){
+            $gameType = 'game';
+        }else{
+            $gameType = 'subgame';
+        }
+
         if ($status <> null){
             $postData = array(
                 'ty' => $type,
@@ -13,24 +21,40 @@ class DLGame extends \System\Datalayers\Main{
             );
         }else{
             $postData = array(
-                'ty' => $type
+                'st' => $start,
+                'lm' => $limit
             );
         }
 
-        $url = '/game/find';
+        $url = '/game/'.$gameType;
         $game = $this->curlAppsJson($url, $postData);
 
-        return $game;
+//        echo "<pre>";
+//        var_dump($game);
+//        die;
+
+        return $game['game'];
     }
 
     public function findByCode($code, $type){
+//        $postData = array(
+//            'id' => intval($code),
+//        );
+
         $postData = array(
-            'cd' => $code,
-            'ty' => $type
+            'code' => $code,
+            'type' => $type,
         );
 
+        echo "<pre>";
+        var_dump($postData);
+
+//        $url = '/game/'.intval($code);
         $url = '/game/find';
         $game = $this->curlAppsJson($url, $postData);
+
+        var_dump($game);
+        die;
 
         return $game;
 //        $gameCategory = Game::findFirst(

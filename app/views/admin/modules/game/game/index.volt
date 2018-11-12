@@ -21,38 +21,41 @@
                           <li class="col-sm-2 col-xs-3 list-group-item">Status</li>
                           <li class="col-sm-2 col-xs-2 list-group-item">Action</li>
                         </ul>
-                        {% set i = 1 %}
-                        {% for mainData in page %}
-                            {% if i%2 == 0 %}
-                                {% set class = "content-even" %}
-                            {% else %}
-                                {% set class = "content-odd" %}
-                            {% endif %}
-                            <ul class="list-inline {{class}} text-center">
-                                <li class="col-sm-1 hidden-xs list-group-item">{{i}}</li>
-                                <li class="col-sm-3 col-xs-3 list-group-item">{{mainData.code}}</li>
-                                <li class="col-sm-4 col-xs-4 list-group-item">{{mainData.name}}</li>
-                                <li class="col-sm-2 col-xs-3 list-group-item">
-                                    <select class="status">
-                                        {% for key, value in status %}
-                                            <option value="{{mainData.id~"|"~value}}" {% if mainData.status == value %}selected{% endif %}>{{key}}</option>
-                                        {% endfor %}
-                                    </select>
-                                </li>
-                                <li class="col-sm-2 col-xs-2 list-group-item">
-                                    <a href="{{router.getRewriteUri()~'/detail/'~mainData.code|lowercase}}">
-                                        <span class="fa fa-search text-danger"></span>
-                                    </a>
-                                    |
-                                    <a href="{{router.getRewriteUri()~'/edit/'~mainData.code|lowercase}}">
-                                        <span class="fa fa-edit text-primary"></span>
-                                    </a>
-                                </li>
-                            </ul>
-                            {% set i = i +1 %}
-                        {% endfor %}
-
-                        <div class="row text-center">
+                        {% if games is not null %}
+                            {% set i = 1 %}
+                            {% for gameData in games %}
+                                {% if i%2 == 0 %}
+                                    {% set class = "content-even" %}
+                                {% else %}
+                                    {% set class = "content-odd" %}
+                                {% endif %}
+                                <ul class="list-inline {{class}} text-center">
+                                    <li class="col-sm-1 hidden-xs list-group-item">{{i}}</li>
+                                    <li class="col-sm-3 col-xs-3 list-group-item">{{gameData.cd}}</li>
+                                    <li class="col-sm-4 col-xs-4 list-group-item">{{gameData.nm}}</li>
+                                    <li class="col-sm-2 col-xs-3 list-group-item">
+                                        <select class="status">
+                                            {% for key, value in status %}
+                                                <option value="{{gameData.id~"|"~key}}" {% if gameData.st == key %}selected{% endif %}>{{translate[value]}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </li>
+                                    <li class="col-sm-2 col-xs-2 list-group-item">
+                                        <a href="{{router.getRewriteUri()~'/detail/'~gameData.id}}">
+                                            <span class="fa fa-search text-danger"></span>
+                                        </a>
+                                        |
+                                        <a href="{{router.getRewriteUri()~'/edit/'~gameData.id}}">
+                                            <span class="fa fa-edit text-primary"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                {% set i = i +1 %}
+                            {% endfor %}
+                        {% else %}
+                            <h4 class="text-center">{{translate['text_no_data']}}</h4>
+                        {% endif %}
+                        <!--<div class="row text-center">
                             <div class="col-xs-12">
                                 <ul class="pagination">
                                 {% set page = pagination %}
@@ -65,7 +68,7 @@
                                 {% endif %}
                                 </ul>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>

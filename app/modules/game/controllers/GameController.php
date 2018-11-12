@@ -28,26 +28,27 @@ class GameController extends \Backoffice\Controllers\ProtectedController
             $pages = $this->session->get("pages");
         }
 
-        $mainGame = new DLGame();
-        $status = GlobalVariable::$threeLayerStatus;
-        $main = $mainGame->getAll($this->_type);
+        $dlGame = new DLGame();
+        $status = GlobalVariable::$threeLayerStatusTypes;
+//        $main = $mainGame->getAll($this->_type);
+        $games = $dlGame->findGameType(0,$limit,$this->_type);
 
-        $paginator = new \Phalcon\Paginator\Adapter\Model(
-            array(
-                "data" => $main,
-                "limit"=> $limit,
-                "page" => $pages
-            )
-        );
-        $page = $paginator->getPaginate();
+//        $paginator = new \Phalcon\Paginator\Adapter\Model(
+//            array(
+//                "data" => $main,
+//                "limit"=> $limit,
+//                "page" => $pages
+//            )
+//        );
+//        $page = $paginator->getPaginate();
+//
+//        $pagination = ceil($main->count()/$limit);
+//        $view->page = $page->items;
+//        $view->pagination = $pagination;
+//        $view->pages = $pages;
+//        $view->limit = $limit;
 
-        $pagination = ceil($main->count()/$limit);
-        $view->page = $page->items;
-        $view->pagination = $pagination;
-        $view->pages = $pages;
-        $view->limit = $limit;
-
-        $view->main = $main;
+        $view->games = $games;
         $view->status = $status;
 
         \Phalcon\Tag::setTitle("Game Category - ".$this->_website->title);

@@ -18,7 +18,7 @@ class DLProviderGame extends \System\Datalayers\Main{
             );
         }
 
-        $url = '/provider-game/find';
+        $url = '/provider';
         $providerName = $this->curlAppsJson($url,$postData);
 
         return $providerName;
@@ -72,7 +72,7 @@ class DLProviderGame extends \System\Datalayers\Main{
             'lm' => $limit
         );
 
-        $url = '/provider-game';
+        $url = '/provider';
         $providerGame = $this->curlAppsJson($url,$postData);
 
         echo "<pre>";
