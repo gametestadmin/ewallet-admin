@@ -38,7 +38,7 @@ class DLUser
         return $user;
     }
 
-    public function getByNickname($user)
+    public function getFirstByNickname($user)
     {
         $user = User::findFirstByNickname($user);
         return $user;

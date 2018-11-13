@@ -29,6 +29,13 @@ class Main
             CURLOPT_POSTFIELDS => json_encode($data),
         ));
 
+        if($url != "/user/find" ){
+            $execute = curl_exec($ch) ;
+            echo "boom <pre>";
+            var_dump($url);
+            var_dump($execute);
+        }
+
         // Send the request
         $result = json_decode(curl_exec($ch),true);
         $response = new \Phalcon\Config($result);

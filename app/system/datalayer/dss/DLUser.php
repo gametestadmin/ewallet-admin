@@ -25,11 +25,15 @@ class DLUser extends \System\Datalayers\Main
         $postData = array(
             'password' => $password ,
         );
-        $url = '/'.$user.'/update';
+        $url = '/user/'.$user.'/update';
         $result = $this->curlAppsJson( $url , $postData);
 
-        return $result;
 
+        var_dump($url);
+        var_dump($result);
+        die;
+
+        return $result;
     }
 
 
