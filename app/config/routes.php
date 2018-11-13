@@ -88,8 +88,10 @@ $routes = array(
 //        )
 //    ),
 
+// currency status
+// USD|0
     array(
-        'url' => '/:module/:controller/:action/([\w|]{5})',
+        'url' => '/(setting)/(currency)/:action/([\w|]{5})',
         'params' => array(
             'module' => 1,
             'controller' => 2,

@@ -7,7 +7,7 @@ use System\Library\General\GlobalVariable;
 
 class CurrencyController extends \Backoffice\Controllers\ProtectedController
 {
-    protected $_limit = 10;
+    protected $_limit = 100;
     protected $_pages = 1;
 
     public function indexAction()
@@ -100,7 +100,7 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
                 $data = $this->request->getPost();
                 $data['id'] = $getCurrency['id'];
 
-                $filterData = $DLCurrency->filterInput($data);
+                $filterData = $DLCurrency->filterData($data);
                 $DLCurrency->validateEditData($filterData);
                 $currency = $DLCurrency->set($filterData);
 
