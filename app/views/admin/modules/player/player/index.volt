@@ -18,10 +18,10 @@
                             </div>
                             <div class="ibox-content row">
                                 <ul class="list-inline header-list text-center">
-                                  <li class="col-sm-1 col-xs-1 list-group-item">No</li>
-                                  <li class="col-sm-4 col-xs-4 list-group-item">{{translate['code']|upper}}</li>
-                                  <li class="col-sm-4 col-xs-4 list-group-item">{{translate['username']|upper}}</li>
-                                  <li class="col-sm-3 col-xs-3 list-group-item">{{translate['status']|upper}}</li>
+                                  <li class="col-sm-1 col-xs-1 list-group-item">{{ translate['no']|upper }}</li>
+                                  <li class="col-sm-4 col-xs-4 list-group-item">{{ translate['code']|upper }}</li>
+                                  <li class="col-sm-4 col-xs-4 list-group-item">{{ translate['username']|upper }}</li>
+                                  <li class="col-sm-3 col-xs-3 list-group-item">{{ translate['status']|upper }}</li>
                                 </ul>
                                 {% set i = 1 %}
                                 {% for player in user_player %}
@@ -34,7 +34,11 @@
                                         <li class="col-sm-1 col-xs-1 list-group-item">{{i}}</li>
                                         <li class="col-sm-4 col-xs-4 list-group-item"> {{player['username']}} </li>
                                         <li class="col-sm-4 col-xs-4 list-group-item"> {{player['code']}} </li>
-                                        <li class="col-sm-3 col-xs-3 list-group-item"> {{player['status']}} </li>
+                                        <li class="col-sm-3 col-xs-3 list-group-item">
+                                            <a href="{{url(module~'/'~controller~'/detail/'~player['id'])}}">
+                                                <span class="fa fa-search text-danger"></span>
+                                            </a>
+                                        </li>
                                     </ul>
                                     {% set i = i +1 %}
                                 {% endfor %}

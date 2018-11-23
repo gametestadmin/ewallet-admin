@@ -160,12 +160,10 @@ $messages = array(
     "subaccount_detail" => "detail",
     "subaccount_status" => "status",
 
-
     "player_player_list" => "player list",
-    "player_game_list" => "player game list",
-    "player_transaction_list" => "player transaction list",
-    "player_statement_list" => "player statement list",
-
+    "player_game_log" => "game access log",
+    "player_transaction_log" => "transaction log",
+    "player_statement_log" => "statement log",
 
     "currency_list" => "currency",
     "currency_add" => "add",

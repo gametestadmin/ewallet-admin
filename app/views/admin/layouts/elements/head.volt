@@ -10,7 +10,6 @@
     <meta name="keywords" content="xxx" />
     <meta name="author" content="xxx" />
 
-
     <!-- Main scripts -->
     <!--<script src="{{assets_url}}thirdparty/js/jquery-3.3.1.min.js"></script>-->
     <script src="{{assets_url}}thirdparty/js/jquery-2.2.1.js"></script>
@@ -18,6 +17,10 @@
 
     <script src="{{assets_url}}thirdparty/js/bootstrap.min.js"></script>
     <script src="{{assets_url}}thirdparty/js/popper.min.js"></script>
+
+
+    <script src="{{assets_url}}thirdparty/js/jquery-ui-1.12.1/jquery-ui.js"></script>
+    <link href="{{assets_url}}thirdparty/js/jquery-ui-1.12.1/jquery-ui.css" rel="stylesheet">
 
     <!-- Inspinia Template -->
     <link href="{{assets_url}}thirdparty/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet">
@@ -34,4 +37,5 @@
     {% else %}
         <link href="{{assets_url}}{{template}}/css/style.min.css" rel="stylesheet">
     {% endif %}
+
 </head>
