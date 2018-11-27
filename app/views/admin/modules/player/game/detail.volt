@@ -17,38 +17,44 @@
                                 <div class="tab-content padding-0">
                                     <div id="tab-general" class="tab-pane active">
                                         <div class="panel-body">
-                                            <form class="form-horizontal col-xs-12" action="#" method="post">
-                                            <div class="form-group">
-                                                <label class="col-xs-2 control-label"> {{ translate['game']|upper }} </label>
-                                                <label class="col-xs-10">
-                                                    <select class="status submit_input" name="game" >
-                                                        <option value="0" {% if post['game'] == key %}selected{% endif %}> {{ translate['all']|upper }} </option>
-                                                        {% for key, value in gamelist %}
-                                                            <option value="{{ value['id'] }}" {% if post['game'] == value['id'] %}selected{% endif %}> {{ value['name']|upper }} </option>
-                                                        {% endfor %}
-                                                    </select>
-                                                </label>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-xs-2 control-label"> {{ translate['start_date']|upper }} </label>
-                                                <label class="col-xs-10">
-                                                    <input type="text" id="datepicker" placeholder="{{ translate['start_date']|upper }}" name="date_start" class="form-control" class="form-control" value="{{ post['date_start'] }}">
-                                                </label>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-xs-2 control-label"> {{ translate['end_date']|upper }} </label>
-                                                <label class="col-xs-10">
-                                                    <input type="text" id="datepicker1" placeholder="{{ translate['end_date']|upper }}" name="date_end" class="form-control submit_input" class="form-control" value="{{ post['date_end'] }}" disabled>
-                                                </label>
-                                                <label class="col-xs-push-2 col-xs-1">
-                                                    <input type="submit" name="submit" class="btn btn-sm btn-info" value="{{ translate['search']|upper }}">
-                                                </label>
-                                            </div>
-                                            {{ widget('ReportGameAccessLogWidget', ["data": post , "realuser" : real_user , "player_id" : id  ]) }}
+                                            <form class="form-horizontal" action="#" method="post">
+                                                <div class="form-group row">
+                                                    <div class="col-xs-6">
+                                                        <label class="col-xs-5 control-label"> {{ translate['start_date']|upper }} </label>
+                                                        <label class="col-xs-7">
+                                                            <input type="text" id="datepicker" placeholder="{{ translate['start_date']|upper }}" name="date_start" class="form-control" class="form-control" value="{{ post['date_start'] }}">
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-xs-6">
+                                                        <label class="col-xs-2 control-label"> {{ translate['game']|upper }} </label>
+                                                        <label class="col-xs-10">
+                                                            <select class="status submit_input" name="game" >
+                                                                <option value="0" {% if post['game'] == key %}selected{% endif %}> {{ translate['all']|upper }} </option>
+                                                                {% for key, value in gamelist %}
+                                                                    <option value="{{ value['id'] }}" {% if post['game'] == value['id'] %}selected{% endif %}> {{ value['name']|upper }} </option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-xs-6">
+                                                        <label class="col-xs-5 control-label"> {{ translate['end_date']|upper }} </label>
+                                                        <label class="col-xs-7">
+                                                            <input type="text" id="datepicker1" placeholder="{{ translate['end_date']|upper }}" name="date_end" class="form-control submit_input" class="form-control" value="{{ post['date_end'] }}" disabled>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-xs-6">
+                                                        <label class="col-xs-push-2 col-xs-1">
+                                                            <input type="submit" name="submit" class="btn btn-sm btn-info" value="{{ translate['search']|upper }}">
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                {{ widget('ReportGameAccessLogWidget', ["data": post , "realuser" : real_user , "player_id" : id  ]) }}
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
-
 
                             </div>
                         </div>

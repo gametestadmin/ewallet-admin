@@ -140,6 +140,12 @@ $di->setShared('view', function () use ($config) {
             $compiler->addFilter('providerName', function ($resolvedArgs) {
                 return 'Volt\Libraries\Game::gameProvider(' . $resolvedArgs . ')';
             });
+            $compiler->addFilter('number', function ($resolvedArgs) {
+                return 'Volt\Libraries\Format::number(' . $resolvedArgs . ')';
+            });
+            $compiler->addFilter('number2dec', function ($resolvedArgs) {
+                return 'Volt\Libraries\Format::number2dec(' . $resolvedArgs . ')';
+            });
 
 //            $compiler->addFilter('currencyCode', function ($resolvedArgs) {
 //                return 'Volt\Libraries\Currency::CurrencyCode(' . $resolvedArgs . ')';
