@@ -17,12 +17,41 @@
 
                                 <div class="tab-content padding-0">
                                     <div id="tab-general" class="tab-pane active">
+
+
                                         <div class="panel-body">
-
-                                            This is inside transaction detail
-
-
+                                            <form class="form-horizontal col-xs-12" action="#" method="post">
+                                            <div class="form-group">
+                                                <label class="col-xs-2 control-label"> {{ translate['game']|upper }} </label>
+                                                <label class="col-xs-10">
+                                                    <select class="status submit_input" name="game" >
+                                                        <option value="0" {% if post['game'] == key %}selected{% endif %}> {{ translate['all']|upper }} </option>
+                                                        {% for key, value in gamelist %}
+                                                            <option value="{{ value['id'] }}" {% if post['game'] == value['id'] %}selected{% endif %}> {{ value['name']|upper }} </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-xs-2 control-label"> {{ translate['start_date']|upper }} </label>
+                                                <label class="col-xs-10">
+                                                    <input type="text" id="datepicker" placeholder="{{ translate['start_date']|upper }}" name="date_start" class="form-control" class="form-control" value="{{ post['date_start'] }}">
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-xs-2 control-label"> {{ translate['end_date']|upper }} </label>
+                                                <label class="col-xs-10">
+                                                    <input type="text" id="datepicker1" placeholder="{{ translate['end_date']|upper }}" name="date_end" class="form-control submit_input" class="form-control" value="{{ post['date_end'] }}" disabled>
+                                                </label>
+                                                <label class="col-xs-push-2 col-xs-1">
+                                                    <input type="submit" name="submit" class="btn btn-sm btn-info" value="{{ translate['search']|upper }}">
+                                                </label>
+                                            </div>
+                                            {{ widget('ReportTransactionHistoryWidget', ["data": post , "realuser" : real_user , "player_id" : id  ]) }}
                                         </div>
+
+
+
                                     </div>
                                 </div>
 
@@ -36,4 +65,49 @@
 {% endblock %}
 
 {% block action_js %}
+  <script>
+      $( function() {
+        $('#datepicker').datepicker({
+              dateFormat: 'dd-mm-yy',
+              setDate: new Date( "{{ post['date_start'] }}" ),
+              minDate: -60 ,
+              maxDate: 0 ,
+              onClose : function() {
+                var days = datePickerDifference( $(this).val() , Date() );
+                $( "#datepicker1" ).datepicker( "option", "minDate", -days );
+                $('#datepicker1').removeAttr("disabled");
+              }
+          });
+      } );
+
+      $( function() {
+           $('#datepicker1').datepicker({
+                 dateFormat: 'dd-mm-yy',
+                 setDate: new Date( "{{ post['date_end'] }}" ),
+                 minDate: -60 ,
+                 maxDate: 0 ,
+                 onClose : function() {
+                    var days = datePickerDifference( $(this).val() , Date() );
+                    $( "#datepicker" ).datepicker( "option", "maxDate", -days );
+                 }
+
+             });
+      } );
+
+      function datePickerDifference( dateStart , dateEnd ){
+          var dateStart = toDate(dateStart);
+          var days = ( Date.parse(dateEnd) - Date.parse(dateStart) ) / (1000 * 60 * 60 * 24);
+          console.log(Math.floor(days));
+          return Math.floor(days);
+      }
+
+       function toDate(dateStr) {
+         const [day, month, year] = dateStr.split("-")
+         return new Date(year, month - 1, day)
+       }
+
+       $("form").submit(function() {
+           $("input").removeAttr("disabled");
+       });
+  </script>
 {% endblock %}

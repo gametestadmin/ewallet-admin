@@ -1,21 +1,16 @@
 <?php
 namespace Backoffice\Player\Controllers;
 
-use System\Library\General\GlobalVariable;
+use System\Datalayer\DLUserPlayer ;
 
 class PlayerController extends \Backoffice\Controllers\ProtectedController
 {
 
     public function indexAction()
     {
-        if($this->_realUser->getType() == 9) {
-            $sql = 'SELECT * FROM api.user_player WHERE company_id = '.$this->_realUser->getId().' AND status = 1 ';
-        } else {
-            $sql = 'SELECT * FROM api.user_player WHERE agent_id = '.$this->_realUser->getId().' AND status = 1 ';
-        }
-        $user_player = $this->postgre->query( $sql )->fetchAll();
-
-        $this->view->user_player = $user_player ;
+        $DLUserPlayer= new DLUserPlayer();
+        $user_player = $DLUserPlayer->getUserPlayerList($this->_realUser->getType() , $this->_realUser->getId() );
+        $this->view->user_player =  new \Phalcon\Config($user_player) ;
         \Phalcon\Tag::setTitle("Player List - ".$this->_website->title);
     }
 
@@ -25,13 +20,8 @@ class PlayerController extends \Backoffice\Controllers\ProtectedController
         $id = \intval($id);
         if(!isset($id)) $this->errorUserPlayerNotFound();
 
-
-        if($this->_realUser->getType() == 9) {
-            $sql = 'SELECT * FROM api.user_player WHERE company_id = '.$this->_realUser->getId().' AND id = '.$id.' AND status = 1 ';
-        } else {
-            $sql = 'SELECT * FROM api.user_player WHERE agent_id = '.$this->_realUser->getId().' AND id = '.$id.'  AND status = 1 ';
-        }
-        $user_player = $this->postgre->query( $sql )->fetchArray();
+        $DLUserPlayer= new DLUserPlayer();
+        $user_player = $DLUserPlayer->getUserPlayer($this->_realUser->getType() , $this->_realUser->getId() , $id );
 
         if( empty($user_player) ) $this->errorUserPlayerNotFound();
         if($this->_realUser->getType() == 9) {

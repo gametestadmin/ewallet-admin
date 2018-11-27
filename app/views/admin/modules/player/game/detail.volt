@@ -4,7 +4,7 @@
                 <div class="col-xs-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title row">
-                            <h5>{{childuser.username}} </h5>
+                            <h5>{{ user_player.username }} </h5>
                         </div>
                         <div class="ibox-content row">
                             <div class="tabs-container">
@@ -21,13 +21,18 @@
                                             <div class="form-group">
                                                 <label class="col-xs-2 control-label"> {{ translate['game']|upper }} </label>
                                                 <label class="col-xs-10">
-                                                    <input type="text" placeholder="{{ translate['game']|upper }}" name="game" class="form-control" class="form-control submit_input" value="{{ post['game'] }}">
+                                                    <select class="status submit_input" name="game" >
+                                                        <option value="0" {% if post['game'] == key %}selected{% endif %}> {{ translate['all']|upper }} </option>
+                                                        {% for key, value in gamelist %}
+                                                            <option value="{{ value['id'] }}" {% if post['game'] == value['id'] %}selected{% endif %}> {{ value['name']|upper }} </option>
+                                                        {% endfor %}
+                                                    </select>
                                                 </label>
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-xs-2 control-label"> {{ translate['start_date']|upper }} </label>
                                                 <label class="col-xs-10">
-                                                    <input type="text" id="datepicker" placeholder="{{ translate['start_date']|upper }}" name="date_start" class="form-control submit_input" class="form-control" value="{{ post['date_start'] }}">
+                                                    <input type="text" id="datepicker" placeholder="{{ translate['start_date']|upper }}" name="date_start" class="form-control" class="form-control" value="{{ post['date_start'] }}">
                                                 </label>
                                             </div>
                                             <div class="form-group">
@@ -35,12 +40,11 @@
                                                 <label class="col-xs-10">
                                                     <input type="text" id="datepicker1" placeholder="{{ translate['end_date']|upper }}" name="date_end" class="form-control submit_input" class="form-control" value="{{ post['date_end'] }}" disabled>
                                                 </label>
+                                                <label class="col-xs-push-2 col-xs-1">
+                                                    <input type="submit" name="submit" class="btn btn-sm btn-info" value="{{ translate['search']|upper }}">
+                                                </label>
                                             </div>
-
-
-                                            {{ widget('ReportGameAccessLogWidget', ["data": post , "realuser" : real_user ]) }}
-
-
+                                            {{ widget('ReportGameAccessLogWidget', ["data": post , "realuser" : real_user , "player_id" : id  ]) }}
                                         </div>
                                     </div>
                                 </div>
@@ -91,16 +95,13 @@
           return Math.floor(days);
       }
 
-
-      $(function() {
-         $(".submit_input").change(function() {
-           //$("form").submit();
-         });
-       });
-
        function toDate(dateStr) {
          const [day, month, year] = dateStr.split("-")
          return new Date(year, month - 1, day)
        }
+
+       $("form").submit(function() {
+           $("input").removeAttr("disabled");
+       });
   </script>
 {% endblock %}

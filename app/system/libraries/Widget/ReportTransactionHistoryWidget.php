@@ -4,7 +4,7 @@ namespace System\Widgets;
 use System\Datalayer\DLUserPlayerGameAccessLog ;
 use System\Datalayer\DLGame ;
 
-class ReportGameAccessLogWidget extends BaseWidget
+class ReportTransactionHistoryWidget extends BaseWidget
 {
     public function getContent()
     {
@@ -21,10 +21,8 @@ class ReportGameAccessLogWidget extends BaseWidget
         $DLGame = new DLGame();
         $gamelist = $DLGame->getAllinArray();
 
-//        echo "<pre>";
-//        var_dump($game_access_log);
 
-        return $this->setView('report/gamesaccesslog', [
+        return $this->setView('report/transactionhistory', [
             'game_access_log' => $game_access_log,
             'game_list' => $gamelist
         ]);
