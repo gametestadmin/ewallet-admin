@@ -1,5 +1,5 @@
 <?php
-namespace Backoffice\Player\Controllers;
+namespace Backoffice\Report\Controllers;
 
 class StatementController extends \Backoffice\Controllers\ProtectedController
 {

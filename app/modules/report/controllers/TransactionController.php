@@ -1,5 +1,5 @@
 <?php
-namespace Backoffice\Player\Controllers;
+namespace Backoffice\Report\Controllers;
 
 use System\Datalayer\DLUserPlayer ;
 use System\Library\General\GlobalVariable ;
@@ -7,17 +7,14 @@ use System\Library\General\GlobalVariable ;
 class TransactionController extends \Backoffice\Controllers\ProtectedController
 {
 
-    public function detailAction()
+    public function indexAction()
     {
-        $id = $this->dispatcher->getParam("id");
-        $id = \intval($id);
-        if(!isset($id)) $this->errorUserPlayerNotFound();
         $data['type'] = 0 ;
         $data['date_start'] = date("d-m-Y");
         $data['date_end'] = date("d-m-Y");
 
         $DLUserPlayer= new DLUserPlayer();
-        $user_player = $DLUserPlayer->getUserPlayer($this->_realUser->getType() , $this->_realUser->getId() , $id );
+        $user_player = $DLUserPlayer->getUserPlayer($this->_realUser->getType() , $this->_realUser->getId() , null );
 
         $TransactionType = GlobalVariable::$TransactionType;
         if ($this->request->isPost()) $data = $this->request->getPost();
@@ -26,7 +23,6 @@ class TransactionController extends \Backoffice\Controllers\ProtectedController
         $this->view->post = $data ;
         $this->view->user_player = new \Phalcon\Config($user_player) ;
         $this->view->transactiontype = $TransactionType ;
-        $this->view->id = $id ;
         \Phalcon\Tag::setTitle("Transaction History List - ".$this->_website->title);
     }
 

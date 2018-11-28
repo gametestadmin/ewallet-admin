@@ -165,6 +165,10 @@ $messages = array(
     "player_transaction_log" => "transaction log",
     "player_statement_log" => "statement log",
 
+    "report_statement_log" => "statement log",
+    "report_game_access_log_list" => "game access",
+    "report_transaction_history_list" => "transaction log",
+
     "currency_list" => "currency",
     "currency_add" => "add",
     "currency_edit" => "edit",

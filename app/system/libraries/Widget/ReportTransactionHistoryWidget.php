@@ -1,6 +1,7 @@
 <?php
 namespace System\Widgets;
 
+use System\Datalayer\DLUserPlayer ;
 use System\Datalayer\DLUserPlayerGameTransactionHistory ;
 use System\Datalayer\DLGame ;
 use System\Library\General\GlobalVariable ;
@@ -23,12 +24,15 @@ class ReportTransactionHistoryWidget extends BaseWidget
         $gamelist = $DLGame->getAllinArray();
         $TransactionType = GlobalVariable::$TransactionType;
 
-
+        $DLUserPlayer= new DLUserPlayer();
+        $user_player = $DLUserPlayer->getUserPlayerArrayIdUsername($realuser->getType() , $realuser->getId() , null);
 
         return $this->setView('report/transactionhistory', [
             'transactionhistory' => $transactionhistory,
             'transactiontype' => $TransactionType,
-            'game_list' => $gamelist
+            'game_list' => $gamelist,
+            'playerside' => $player_id,
+            'user_player' => $user_player,
         ]);
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace System\Widgets;
 
+use System\Datalayer\DLUserPlayer ;
 use System\Datalayer\DLUserPlayerGameAccessLog ;
 use System\Datalayer\DLGame ;
 
@@ -18,15 +19,17 @@ class ReportGameAccessLogWidget extends BaseWidget
         $DLUserPlayerGameAccessLog = new DLUserPlayerGameAccessLog();
         $game_access_log = $DLUserPlayerGameAccessLog->getUserPlayerGamesAccessList($data , $realuser->getType() , $player_id , $realuser->getId() );
 
+        $DLUserPlayer= new DLUserPlayer();
+        $user_player = $DLUserPlayer->getUserPlayerArrayIdUsername($realuser->getType() , $realuser->getId() , null);
+
         $DLGame = new DLGame();
         $gamelist = $DLGame->getAllinArray();
 
-//        echo "<pre>";
-//        var_dump($game_access_log);
-
         return $this->setView('report/gamesaccesslog', [
             'game_access_log' => $game_access_log,
-            'game_list' => $gamelist
+            'game_list' => $gamelist,
+            'playerside' => $player_id,
+            'user_player' => $user_player,
         ]);
     }
 }

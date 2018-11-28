@@ -28,7 +28,7 @@
                                                         </label>
                                                     </div>
                                                     <div class="col-xs-6">
-                                                        <label class="col-xs-2 control-label"> {{ translate['game']|upper }} </label>
+                                                        <label class="col-xs-2 control-label"> {{ translate['type']|upper }} </label>
                                                         <label class="col-xs-10">
                                                             <select class="status submit_input" name="type" >
                                                                 {% for key , value in transactiontype %}
