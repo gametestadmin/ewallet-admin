@@ -5,10 +5,10 @@
                 <b class="fa fa-bars header-menu-minimalize"></b>
             </a>
             <span class="header-menu-information">
-                <b class="header-info-user"> {{ real_user.username|upper }} </b>
+                <b class="header-info-user"> {{ real_user.sn|upper }} </b>
                 <b class="header-info-code">
                 {% if real_user.id == user.id %}
-                    {{ translate[real_user.type|agentType]|upper }}
+                    {{ translate[real_user.tp|agentType]|upper }}
                 {% else %}
                     {{ translate['subaccount']|upper }}
                 {% endif %}

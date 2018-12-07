@@ -69,17 +69,77 @@ class General
         return true ;
     }
 
+    // MYSQL FORMAT
+//    public function filterACLlist($aclObject){
+//        $aclList = array();
+//        foreach ($aclObject as $key){
+//            var_dump($key);
+//            if(!is_null($key->module) && !is_null($key->controller) && !is_null($key->action))
+//            $aclList[$key->module][$key->controller][$key->action] = $key->status ;
+//        }
+//        return $aclList;
+//    }
 
+    // DSS FORMAT
     public function filterACLlist($aclObject){
         $aclList = array();
         foreach ($aclObject as $key){
-            if(!is_null($key->module) && !is_null($key->controller) && !is_null($key->action))
-            $aclList[$key->module][$key->controller][$key->action] = $key->status ;
+            if(!is_null($key->mod) && !is_null($key->con) && !is_null($key->act))
+                $aclList[$key->mod][$key->con][$key->act] = $key->st ;
         }
-
         return $aclList;
     }
 
+    // MYSQL FORMAT
+//    public function filterACLlistSubaccount($aclObject){
+//        $aclList = array();
+//        foreach ($aclObject as $key){
+//            if(!isset($aclList[$key->getModule()])) {
+//                $aclList[$key->getModule()] = array();
+//                $aclList[$key->getModule()]["child"] = array();
+//            }
+//            //get module level list
+//            if(is_null($key->getController()) && is_null($key->getAction())) {
+//                $aclList[$key->getModule()]["name"] = $key->getSidebarName();
+//                $aclList[$key->getModule()]["id"] = $key->getId();
+//            }
+//            //get controller level list
+//            if(!is_null($key->getController()) && $key->getAction() == null ) {
+//                if(!isset($aclList[$key->getModule()]["child"][$key->getController()])) {
+//                    $controllerAcl = array();
+//                    $controllerAcl["child"] = array();
+//                }else{
+//                    $controllerAcl = $aclList[$key->getModule()]["child"][$key->getController()];
+//                }
+//
+//                if($key->getAction() == null ) {
+//                    $controllerAcl["name"] = $key->getSidebarName();
+//                    $controllerAcl["id"] = $key->getId();
+//                }
+//
+//                $aclList[$key->getModule()]["child"][$key->getController()] = $controllerAcl;
+//            }
+//            //get child of the controller
+//            if(!is_null($key->getController()) && !is_null($key->getAction()) ) {
+//                if(!isset($aclList[$key->getModule()]["child"][$key->getController()])) {
+//                    $controllerAcl = array();
+//                    $controllerAcl["child"] = array();
+//                }else{
+//                    $controllerAcl = $aclList[$key->getModule()]["child"][$key->getController()];
+//                }
+//
+//                $actionAcl = array();
+//                $actionAcl["name"] = $key->getSidebarName();
+//                $actionAcl["id"] = $key->getId();
+//                $controllerAcl["child"][$key->getAction()] = $actionAcl;
+//
+//                $aclList[$key->getModule()]["child"][$key->getController()] = $controllerAcl;
+//            }
+//        }
+//        return $aclList;
+//    }
+
+    // DSS FORMAT
     public function filterACLlistSubaccount($aclObject){
         $aclList = array();
         foreach ($aclObject as $key){
@@ -122,24 +182,35 @@ class General
                 $actionAcl["id"] = $key->getId();
                 $controllerAcl["child"][$key->getAction()] = $actionAcl;
 
-
                 $aclList[$key->getModule()]["child"][$key->getController()] = $controllerAcl;
             }
         }
-
         return $aclList;
     }
 
+    // MYSQL FORMAT
+//    public function filterACLlistwithId($aclObject){
+//        $aclList = array();
+//        foreach ($aclObject as $key){
+//            $aclList[$key->module][$key->controller][$key->action]['id'] = $key->id ;
+//            $aclList[$key->module][$key->controller][$key->action]['parent'] = $key->parent ;
+//            $aclList[$key->module][$key->controller][$key->action]['status'] = $key->status ;
+//        }
+//        return $aclList;
+//    }
+
+    // DSS FORMAT
     public function filterACLlistwithId($aclObject){
         $aclList = array();
         foreach ($aclObject as $key){
-            $aclList[$key->module][$key->controller][$key->action]['id'] = $key->id ;
-            $aclList[$key->module][$key->controller][$key->action]['parent'] = $key->parent ;
-            $aclList[$key->module][$key->controller][$key->action]['status'] = $key->status ;
+            $aclList[$key->mod][$key->con][$key->act]['id'] = $key->id ;
+            $aclList[$key->mod][$key->con][$key->act]['parent'] = $key->parent ;
+            $aclList[$key->mod][$key->con][$key->act]['status'] = $key->status ;
         }
-
         return $aclList;
     }
+
+
     public function filterACLsubaccountParentId($aclObject){
 
         $aclList = array();
@@ -150,7 +221,8 @@ class General
         return $aclList;
     }
 
-
+    // MYSQL FORMAT
+    /*
     public function getSidebar($aclObject){
         $aclList = array();
         foreach ($aclObject as $key){
@@ -197,15 +269,69 @@ class General
                     $actionAcl["icon"] = $key->getSidebarIcon();
                     $controllerAcl["child"][$key->getAction()] = $actionAcl;
 
-
-
                     $aclList[$key->getModule()]["child"][$key->getController()] = $controllerAcl;
                 }
             }
         }
-
         return $aclList;
     }
+    */
+
+
+    // DSS FORMAT
+    public function getSidebar($aclObject){
+        $aclList = array();
+        foreach ($aclObject as $key){
+            if($key->sb == 1 && $key->st == 1){
+                if(!isset($aclList[$key->mod])) {
+                    $aclList[$key->mod] = array();
+                    $aclList[$key->mod]["child"] = array();
+                }
+                //get module level list
+                if(is_null($key->con) && is_null($key->act)) {
+                    $aclList[$key->mod]["name"] = $key->sbn;
+                    if (!is_null($key->sbc) && !empty($key->sbc)) $aclList[$key->mod]["icon"] = $key->sbc;
+                }
+                //get controller level list
+                if(!is_null($key->con) && $key->act == null ) {
+                    if(!isset($aclList[$key->mod]["child"][$key->con])) {
+                        $controllerAcl = array();
+                        $controllerAcl["child"] = array();
+                    }else{
+                        $controllerAcl = $aclList[$key->mod]["child"][$key->con];
+                    }
+
+                    if($key->act == null ) {
+                        $controllerAcl["name"] = $key->sbn;
+                        if (!is_null($key->sbc) && !empty($key->sbc)) $controllerAcl["icon"] = $key->sbc;
+                    }
+
+                    $aclList[$key->mod]["child"][$key->con] = $controllerAcl;
+                }
+                //get child of the controller
+                if(!is_null($key->con) && !is_null($key->act) ) {
+                    if(!isset($aclList[$key->mod]["child"][$key->con])) {
+                        $controllerAcl = array();
+                        $controllerAcl["child"] = array();
+                    }else{
+                        $controllerAcl = $aclList[$key->mod]["child"][$key->con];
+                    }
+
+                    //TODO :: use if action only need to have name
+//                    $controllerAcl["child"][$key->act] = $key->sbn;
+                    //TODO :: use if action need to have icon
+                    $actionAcl = array();
+                    $actionAcl["name"] = $key->sbn;
+                    $actionAcl["icon"] = $key->sbc;
+                    $controllerAcl["child"][$key->act] = $actionAcl;
+
+                    $aclList[$key->mod]["child"][$key->con] = $controllerAcl;
+                }
+            }
+        }
+        return $aclList;
+    }
+
 
 
 

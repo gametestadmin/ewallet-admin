@@ -24,17 +24,12 @@ class Main
         $ch = curl_init($this->_config->dss->url.$url);
         curl_setopt_array($ch, array(
             CURLOPT_POST => TRUE,
+//            CURLOPT_PORT => "9090",
+//            CURLOPT_ENCODING => "" ,
             CURLOPT_RETURNTRANSFER => TRUE,
             CURLOPT_HTTPHEADER => array('Content-Type: application/json'),
             CURLOPT_POSTFIELDS => json_encode($data),
         ));
-
-        if($url != "/user/find" ){
-            $execute = curl_exec($ch) ;
-            echo "boom <pre>";
-            var_dump($url);
-            var_dump($execute);
-        }
 
         // Send the request
         $result = json_decode(curl_exec($ch),true);

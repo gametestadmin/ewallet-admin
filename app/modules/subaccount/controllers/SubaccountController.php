@@ -31,18 +31,21 @@ class SubaccountController extends \Backoffice\Controllers\ProtectedController
         $status = GlobalVariable::$threeLayerStatus;
 
         $DLuser = new DLUser();
-        $user = $DLuser->getSubaccountById($this->_user->getId());
+        $user = $DLuser->getSubaccountById($this->_user->id);
 
-        $paginator = new \Phalcon\Paginator\Adapter\Model(
+//        $paginator = new \Phalcon\Paginator\Adapter\Model(
+        $paginator = new \Phalcon\Paginator\Adapter\NativeArray(
             array(
-                "data" => $user,
+                "data" => (array) $user ,
                 "limit"=> $limit,
                 "page" => $pages
             )
         );
         $page = $paginator->getPaginate();
+
         $pagination = ceil($user->count()/$limit);
-        $view->page = $page->items;
+//        $view->page = $page->items;
+        $view->page = $page->items['user'];
         $view->pagination = $pagination;
         $view->pages = $pages;
         $view->limit = $limit;

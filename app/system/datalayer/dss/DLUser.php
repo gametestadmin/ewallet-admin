@@ -23,18 +23,27 @@ class DLUser extends \System\Datalayers\Main
     public function setUserPassword($user, $password)
     {
         $postData = array(
-            'password' => $password ,
+            'ps' => $password ,
         );
         $url = '/user/'.$user.'/update';
         $result = $this->curlAppsJson( $url , $postData);
 
+        return $result;
+    }
 
-        var_dump($url);
-        var_dump($result);
-        die;
+
+    public function getSubaccountById($user)
+    {
+        $postData = array(
+            'type' => 10 ,
+            'parent' => $user ,
+        );
+        $url = '/user/find';
+        $result = $this->curlAppsJson( $url , $postData );
 
         return $result;
     }
+
 
 
 
@@ -97,18 +106,7 @@ class DLUser extends \System\Datalayers\Main
         return $user;
     }
 
-    public function getSubaccountById($user)
-    {
-        $user = User::find(
-            array(
-                "conditions" => "type = 10 and parent = :user:",
-                "bind" => array(
-                    "user" => $user,
-                )
-            )
-        );
-        return $user;
-    }
+
 
     public function getByParent($parent)
     {

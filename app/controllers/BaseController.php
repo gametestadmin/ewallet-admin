@@ -4,7 +4,6 @@ namespace Backoffice\Controllers;
 defined('APP_PATH') || define('APP_PATH', realpath('.'));
 
 use System\Language\Language;
-use \System\Datalayer\DLUserCurrency;
 use Phalcon\Mvc\Controller;
 use Phalcon\Translate\Adapter\NativeArray;
 use System\Library\Security\General ;
@@ -46,6 +45,11 @@ class BaseController extends Controller
 //        $this->view->translate = $languageLibrary->getTranslation($this->_language);
 
 //        $this->_setWebsite();
+
+//        echo "123 <pre>";
+//        var_dump($this->session->get('user'));
+//        var_dump($this->session->get('real_user'));
+//        die;
 
     }
 
@@ -173,7 +177,7 @@ class BaseController extends Controller
 
     protected function _checkResetPassword(){
         if( $this->_realUser ){
-            if ($this->_realUser->getResetPassword() == 1){
+            if ($this->_realUser->rp == 1){
                 if (!($this->_module == 'user' && $this->_controller == 'password' && $this->_action == 'change')){
                     $this->errorFlash('please_change_password');
 
