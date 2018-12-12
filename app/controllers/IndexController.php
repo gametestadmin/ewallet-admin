@@ -58,7 +58,7 @@ class IndexController extends \Backoffice\Controllers\BaseController
                 $password = $securityLibrary->enc_str($password);
 
                 // TODO :: change password manual
-//            $test = $DLuser->setUserPassword($user , $password);
+            $test = $DLuser->setUserPassword($user , $password);
 //            var_dump($test);
 
 

@@ -20,27 +20,31 @@ class UserWhitelistIpWidget extends BaseWidget
             $pages = $this->session->get("pages");
         }
 
-        $DLUserWhitelistIp = new DLUserWhitelistIp();
-        $userWhitelistIp = $DLUserWhitelistIp->getByUser($this->params["id"]);
+        $agentId = $this->params["id"];
 
-        $paginator = new \Phalcon\Paginator\Adapter\Model(
-            array(
-                "data" => $userWhitelistIp,
-                "limit"=> $limit,
-                "page" => $pages
-            )
-        );
-        $records = $paginator->getPaginate();
+        $dlUserWhitelistIp = new DLUserWhitelistIp();
+//        $userWhitelistIp = $dlUserWhitelistIp->getByUser($this->params["id"]);
+        $userWhitelistIp = $dlUserWhitelistIp->findByUser($agentId);
 
-        $totalPage = ceil($userWhitelistIp->count()/$limit);
+//        $paginator = new \Phalcon\Paginator\Adapter\Model(
+//            array(
+//                "data" => $userWhitelistIp,
+//                "limit"=> $limit,
+//                "page" => $pages
+//            )
+//        );
+//        $records = $paginator->getPaginate();
+//
+//        $totalPage = ceil($userWhitelistIp->count()/$limit);
 
         return $this->setView('user/ip', [
-            'user_ip' => $records->items,
-            'total_page' => $totalPage,
-            'pages' => $pages,
-            'limit' => $limit,
+//            'user_ip' => $records->items,
+//            'total_page' => $totalPage,
+//            'pages' => $pages,
+//            'limit' => $limit,
             'loginId' => $this->params["loginId"],
-            'agentParent' => $this->params["agentParent"]
+            'agentParent' => $this->params["agentParent"],
+            'user_ip' => $userWhitelistIp
         ]);
     }
 }

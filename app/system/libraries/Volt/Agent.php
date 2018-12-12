@@ -9,8 +9,8 @@ class Agent
     {
         $agentType = GlobalVariable::$agentType;
         foreach ($agentType as $key => $value) {
-            if($type == $value) {
-                return $key;
+            if($type == $key) {
+                return $value;
             }
         }
     }

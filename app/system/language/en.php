@@ -48,6 +48,8 @@ $messages = array(
     "text_no_data" => "-No Data-",
     "text_game" => "Game",
     "text_subgame" => "Sub-Game",
+    "text_select_option_transfer" => "Transfer",
+    "text_select_option_seamless" => "Seamless",
 
     "head_list_number" => "No.",
     "head_list_username" => "Username",
@@ -68,8 +70,8 @@ $messages = array(
     "title_text_detail" => "Detail",
     "title_text_edit" => "Edit",
     "title_text_add_currency" => "Add Currency",
-    "title_text_add_agent_games" => "Add Agent Game",
-    "title_text_add_agent_sub_games" => "Add Agent Sub-Game",
+    "title_text_add_downline_games" => "Add Downline Game",
+    "title_text_add_downline_sub_games" => "Add Downline Sub-Game",
     "title_text_add_whitelist_ip" => "Add Whitelist IP",
     "title_text_reset_password" => "Reset Password",
     "title_text_add_game_provider" => "Add Game Provider",
@@ -147,8 +149,22 @@ $messages = array(
     "check" => "Check Available",
     "button_check_available" => "Check Available",
 
-
-
+    //notification error/success
+    "notification_downline_create_success" => "Success Add Downline",
+    "notification_downline_set_success" => "Success Update Downline",
+    "notification_downline_set_status" => "Status Changed",
+    "notification_downline_reset_nickname_success" => "Success Reset Downline Nickname",
+    "notification_downline_reset_password_success" => "Success Reset Downline Password",
+    "notification_downline_create_currency_success" => "Success Add Downline Currency",
+    "notification_downline_set_currency_success" => "Success Update Downline Currency",
+    "notification_downline_remove_currency_success"  => "Success Delete Downline Currency",
+    "notification_downline_create_game_success" => "Success Add Downline Game",
+    "notification_downline_create_subgame_success" => "Success Add Downline Sub-Game",
+    "notification_downline_create_whitelist_ip_success" => "Success Add Downline Whitelist IP",
+    "notification_downline_set_whitelist_ip_success" => "Success Update Downline Whitelist IP",
+    "notification_downline_remove_whitelist_ip_success" => "Success Remove Downline Whitelist IP",
+    "notification_undefined_downline" => "Undefined Downline",
+    "cannot_access_security" => "Cannot Access",
 
 
 
@@ -185,11 +201,11 @@ $messages = array(
     "sub_detail" => "detail",
     "sub_status" => "status",
 
-    "agent_list" => "list",
-    "agent_add" => "add",
-    "agent_edit" => "edit",
-    "agent_detail" => "detail",
-    "agent_child" => "child",
+    "downline_list" => "list",
+    "downline_add" => "add",
+    "downline_edit" => "edit",
+    "downline_detail" => "detail",
+    "downline_child" => "child",
 
     "whitelist_list" => "list",
     "whitelist_add" => "add",

@@ -54,22 +54,7 @@ $routes = array(
             'action' => 'logout'
         )
     ),
-//    array(
-//        'url' => '/(login|LOGIN)',
-//        'params' => array(
-//            'module' => 'user',
-//            'controller' => 'login',
-//            'action' => 'login'
-//        )
-//    ),
-//    array(
-//        'url' => '/(logout|LOGOUT)',
-//        'params' => array(
-//            'module' => 'user',
-//            'controller' => 'login',
-//            'action' => 'logout'
-//        )
-//    ),
+
     array(
         'url' => '/(captcha|CAPTCHA)',
         'params' => array(
@@ -78,18 +63,6 @@ $routes = array(
         )
     ),
 
-//    array(
-//        'url' => '/(currency|moduletwo)/:controller/([\w]{3})',
-//        'params' => array(
-//            'module' => 1,
-//            'controller' => 2,
-//            'action' => 'index',
-//            'code' => 3
-//        )
-//    ),
-
-// currency status
-// USD|0
     array(
         'url' => '/(setting)/(currency)/:action/([\w|]{5})',
         'params' => array(
@@ -129,33 +102,43 @@ $routes = array(
 //        )
 //    ),
 
+//    array(
+//        'url' => '/agent/(detail|edit|status)/([a-zA-Z0-9|]+)',
+//        'params' => array(
+//            'module' => 'agent',
+//            'controller' => 1,
+//            'action' => 'index',
+//            'id' => 2
+//        )
+//    ),
+//
+//    array(
+//        'url' => '/provider/(detail|edit|status)/([a-zA-Z0-9|]+)',
+//        'params' => array(
+//            'module' => 'provider',
+//            'controller' => 1,
+//            'action' => 'index',
+//            'id' => 2
+//        )
+//    ),
+
     array(
-        'url' => '/agent/(detail|edit|status)/([a-zA-Z0-9|]+)',
+        'url' => '/(provider|agent|downline)/(detail|edit|status)/([a-zA-Z0-9|]+)',
         'params' => array(
-            'module' => 'agent',
-            'controller' => 1,
+            'module' => 1,
+            'controller' => 2,
             'action' => 'index',
-            'id' => 2
+            'id' => 3
         )
     ),
 
-    array(
-        'url' => '/provider/(detail|edit|status)/([a-zA-Z0-9|]+)',
-        'params' => array(
-            'module' => 'provider',
-            'controller' => 1,
-            'action' => 'index',
-            'id' => 2
-        )
-    ),
-
-    array(
-        'url' => '/agent',
-        'params' => array(
-            'module' => 'agent',
-            'controller' => 'index',
-        )
-    ),
+//    array(
+//        'url' => '/agent',
+//        'params' => array(
+//            'module' => 'agent',
+//            'controller' => 'index',
+//        )
+//    ),
 
     array(
         'url' => '/language',

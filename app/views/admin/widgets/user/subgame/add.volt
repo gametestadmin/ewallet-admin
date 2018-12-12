@@ -2,10 +2,10 @@
 <div class="modal fade" id="form-agent-add-subgame" tabindex="-1" role="dialog" aria-labelledby="form-agent-add-subgame-label" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form class="form-horizontal" action="{{url('agent/game/add')}}" method="post" id="form">
+            <form class="form-horizontal" action="{{url('downline/game/add')}}" method="post" id="form">
                 <div class="modal-header">
                     <label class="col-xs-6">
-                        <h3 class="modal-title" id="form-agent-add-subgame-label">{{translate['title_text_add_agent_sub_games']}}</h3>
+                        <h3 class="modal-title" id="form-agent-add-subgame-label">{{translate['title_text_add_downline_sub_games']}}</h3>
                     </label>
                     <label class="col-xs-6">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">

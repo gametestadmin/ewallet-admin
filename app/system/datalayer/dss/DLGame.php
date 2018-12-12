@@ -1,11 +1,11 @@
 <?php
 namespace System\Datalayer;
 
-use System\Model\Game;
+use System\Datalayers\Main;
 
-class DLGame extends \System\Datalayers\Main{
+class DLGame extends Main{
     // DSS
-    public function findGameType($start,$limit,$type,$status = null){
+    public function findGameType($start,$limit,$type){
         if($type == 1){
             $gameType = 'category';
         }elseif($type == 2){
@@ -14,135 +14,165 @@ class DLGame extends \System\Datalayers\Main{
             $gameType = 'subgame';
         }
 
-        if ($status <> null){
-            $postData = array(
-                'ty' => $type,
-                'st' => $status
-            );
-        }else{
-            $postData = array(
-                'st' => $start,
-                'lm' => $limit
-            );
-        }
+        $postData = array(
+            'st' => $start,
+            'lm' => $limit
+        );
 
         $url = '/game/'.$gameType;
-        $game = $this->curlAppsJson($url, $postData);
+        $games = $this->curlAppsJson($url, $postData);
 
-//        echo "<pre>";
-//        var_dump($game);
-//        die;
+        return $games['game'];
+    }
+
+    public function findFirstById($id){
+        $game = false;
+
+        $postData = array(
+            'id' => $id,
+        );
+
+        $url = '/game/'.$postData['id'];
+        $gameRecords = $this->curlAppsJson($url,$postData);
+        foreach($gameRecords['game'] as $gameRecord){
+            $game = $gameRecord;
+        }
+
+        return $game;
+    }
+
+    public function findByProvider($id){
+        $postData = array(
+            'provider' => $id,
+        );
+
+        $url = '/game/find';
+        $game = $this->curlAppsJson($url, $postData);
 
         return $game['game'];
     }
 
-    public function findByCode($code, $type){
-//        $postData = array(
-//            'id' => intval($code),
-//        );
-
+    public function findByGameParentAndStatus($id){
         $postData = array(
-            'code' => $code,
-            'type' => $type,
+            'game_parent' => $id,
+//            'parent_status' => 1,
+            'status' => 1,
+            'provider_status' => 1
         );
 
-        echo "<pre>";
-        var_dump($postData);
-
-//        $url = '/game/'.intval($code);
         $url = '/game/find';
         $game = $this->curlAppsJson($url, $postData);
 
-        var_dump($game);
-        die;
-
-        return $game;
-//        $gameCategory = Game::findFirst(
-//            array(
-//                "conditions" => "code = :code: AND type = :type:",
-//                "bind" => array(
-//                    "code" => $code,
-//                    "type" => $type
-//                )
-//            )
-//        );
-//        return $gameCategory;
+        return $game['game'];
     }
 
-    public function findByNameAndType($name,$type){
+    public function findByGameParent($id){
         $postData = array(
-            'nm' => $name,
-            'ty' => $type
+            'game_parent' => $id,
         );
 
         $url = '/game/find';
         $game = $this->curlAppsJson($url, $postData);
 
-        return $game;
+        return $game['game'];
+    }
 
-//        $game = Game::findFirst(
-//            array(
-//                "conditions" => "name = :name: AND type = :type:",
-//                "bind" => array(
-//                    "name" => $name,
-//                    "type" => $type
-//                )
-//            )
-//        );
-//
-//        if(!$game){
-//            return false;
-//        }
-//
-//        return true;
+    protected function findByNameAndType($name,$type){
+        $postData = array(
+            'name' => $name,
+            'type' => $type
+        );
+
+        $url = '/game/find';
+        $game = $this->curlAppsJson($url, $postData);
+
+        if(isset($game['game'][0]) == 1){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     protected function findByIdAndName($id,$name){
         $postData = array(
-            'id' => $id,
-            'nm' => $name
+            'id !=' => $id,
+            'name' => $name
         );
 
         $url = '/game/find';
         $game = $this->curlAppsJson($url, $postData);
 
-        return $game;
-//        $game = Game::findFirst(
-//            array(
-//                "conditions" => "id != :id: AND name = :name:",
-//                "bind" => array(
-//                    "id" => $id,
-//                    "name" => $name,
-//                )
-//            )
-//        );
-//        if(!$game){
-//            return false;
-//        }
-//
-//        return true;
+        if(isset($game['game'][0]) == 1){
+            return true;
+        }else{
+            return false;
+        }
     }
 
-    public function filterCategoryData($data){
-        if(isset($data["id"]))$data['id'] = \intval($data['id']);
-        if(isset($data["type"]))$data['ty'] = \intval($data['type']);
-        $data['nm'] = \filter_var(\strip_tags(\addslashes($data['category_name'])), FILTER_SANITIZE_STRING);
-        if(isset($data["category_code"]))$data['cd'] = \filter_var(\strip_tags(\addslashes($data['category_code'])), FILTER_SANITIZE_STRING);
+    public function findByTypeAndStatus($type,$status)
+    {
+        $postData = array(
+            'type' => $type,
+            'status' => $status,
+        );
 
-        return $data;
+        $url = '/game/find';
+        $game = $this->curlAppsJson($url, $postData);
+
+        return $game['game'];
     }
 
-    public function validateCategoryAddData($data){
-        if($this->findByNameAndType($data['nm'],$data['ty'])){
+    public function findByCode($type,$code)
+    {
+        $postData = array(
+            'type' => $type,
+            'code' => $code,
+        );
+
+        $url = '/game/find';
+        $game = $this->curlAppsJson($url, $postData);
+
+        return $game['game'][0];
+    }
+
+    public function filterData($data){
+        $filterData = array();
+
+        if(isset($data["id"]))$filterData['id'] = \intval($data['id']);
+        if(isset($data["provider"]))$filterData['idpv'] = \intval($data['provider']);
+        if(isset($data["category_code"]))$filterData['cd'] = \filter_var(\strip_tags(\addslashes($data['category_code'])), FILTER_SANITIZE_STRING);
+        if(isset($data["category"]))$filterData['ct'] = \filter_var(\strip_tags(\addslashes($data['category'])), FILTER_SANITIZE_STRING);
+        if(isset($data["game_code"]))$filterData['g'] = \filter_var(\strip_tags(\addslashes($data['game_code'])), FILTER_SANITIZE_STRING);
+        if(isset($data["parent"]))$filterData['idp'] = intval($data['parent']);
+        if(isset($data["type"]))$filterData['tp'] = \intval($data['type']);
+        if(isset($data["code"])){
+            $data['code'] = \filter_var(\strip_tags(\addslashes($data['code'])), FILTER_SANITIZE_STRING);
+            $filterData['cd'] = $filterData['ct']."-".$data['code'];
+        }
+        if(isset($data["sub_code"])){
+            $data['sub_code'] = \filter_var(\strip_tags(\addslashes($data['sub_code'])), FILTER_SANITIZE_STRING);
+            $filterData['cd'] = $filterData['g']."-".$data['sub_code'];
+        }
+
+        $filterData['nm'] = \filter_var(\strip_tags(\addslashes($data['name'])), FILTER_SANITIZE_STRING);
+        $filterData['st'] = (isset($data["status"])?\intval($data['status']):1);
+        $filterData['pst'] = (isset($data["parent_status"])?\intval($data['parent_status']):1);
+        $filterData['pvst'] = (isset($data["provider_status"])?\intval($data['provider_status']):1);
+
+        return $filterData;
+    }
+
+    public function validateCategoryCreateData($data){
+        if($this->findByNameAndType($data['nm'],$data['tp'])){
             throw new \Exception('category_name_exist');
-        }elseif(empty($data['nm'])){
+        }else if(empty($data['nm'])){
             throw new \Exception('category_name_empty');
         }
 
         return true;
     }
 
-    public function validateCategoryEditData($data){
+    public function validateCategorySetData($data){
         if($this->findByIdAndName($data['id'],$data['nm'])){
             throw new \Exception('category_name_exist');
         }elseif(empty($data['nm'])){
@@ -151,420 +181,70 @@ class DLGame extends \System\Datalayers\Main{
         return true;
     }
 
-    public function createCategoryData($postData){
-        $url = '/game/insert';
-        $category = $this->curlAppsJson($url, $postData);
-
-        return $category;
-
-//        $gameCategory = new Game();
-//
-//        $gameCategory->setType($data['type']);
-//        if(isset($data["code"]))$gameCategory->setCode(strtolower($data['code']));
-//        if(isset($data["name"]))$gameCategory->setName(ucfirst($data['name']));
-//
-//        if(!$gameCategory->save()){
-//            throw new \Exception($gameCategory->getMessages());
-//        }
-//        return $gameCategory;
-    }
-
-    public function setCategoryData($postData){
-        $url = '/game/'.$postData['id'].'/update';
-        $category = $this->curlAppsJson($url, $postData);
-
-        return $category;
-//        $gameCategory = $this->getById($data['id']);
-//
-//        if(isset($data["name"]))$gameCategory->setName(ucfirst($data['name']));
-//
-//        if(!$gameCategory->save()){
-//            throw new \Exception($gameCategory->getMessages());
-//        }
-//        return $gameCategory;
-    }
-
-    public function filterMainData($data){
-        $data['type'] = \intval($data['type']);
-        $data['name'] = \filter_var(\strip_tags(\addslashes($data['main_name'])), FILTER_SANITIZE_STRING);
-        if(isset($data["main_code"]))$data['code'] = \filter_var(\strip_tags(\addslashes($data['main_code'])), FILTER_SANITIZE_STRING);
-        if(isset($data["provider"]))$data['provider'] = \filter_var(\strip_tags(\addslashes($data['provider'])), FILTER_SANITIZE_STRING);
-        if(isset($data["category"]))$data['category'] = \filter_var(\strip_tags(\addslashes($data['category'])), FILTER_SANITIZE_STRING);
-
-        return $data;
-    }
-
-    public function validateMainAddData($data){
-        if(empty($data['provider'])){
+    public function validateGameCreateData($data){
+        if(empty($data['idpv'])){
             throw new \Exception('provider_name_empty');
-        }elseif(empty($data['category'])){
+        }elseif(empty($data['ct'])){
             throw new \Exception('category_name_empty');
-        }elseif($this->checkByName($data['name'],$data['type'])){
-            throw new \Exception('main_name_exist');
-        }elseif(empty($data['name'])){
-            throw new \Exception('main_name_empty');
+        }elseif($this->findByNameAndType($data['nm'],$data['ty'])){
+            throw new \Exception('game_name_exist');
+        }elseif(empty($data['nm'])){
+            throw new \Exception('game_name_empty');
         }
 
         return true;
     }
 
-    public function validateGameEditData($data){
-        if($this->checkByIdName($data['id'],$data['name'])){
-            throw new \Exception('main_name_exist');
-        }elseif(empty($data['name'])){
-            throw new \Exception('main_name_empty');
-        }
-        return true;
-    }
-
-    public function createGameData($data){
-        $game = new Game();
-        $category = $this->getByCodeOnly($data['category']);
-
-        $game->setType($data['type']);
-        if(isset($data["provider"]))$game->setProvider($data['provider']);
-        if(isset($data["category"]))$game->setGameParent($category->getId());
-        if(isset($data["code"]))$game->setCode(strtolower($data["category"]."-".$data['code']));
-        if(isset($data["name"]))$game->setName(ucfirst($data['name']));
-
-        if(!$game->save()){
-            throw new \Exception($game->getMessages());
-        }
-
-        return $game;
-    }
-
-    public function setGameData($data){
-        $mainGame = $this->getById($data['id']);
-
-        if(isset($data["name"]))$mainGame->setName(ucfirst($data['name']));
-
-        if(!$mainGame->save()){
-            throw new \Exception($mainGame->getMessages());
-        }
-        return $mainGame;
-    }
-
-    // END DSS
-
-    public function getAll($type){
-        $game = Game::find(
-            array(
-                "conditions" => "type = :type:",
-                "bind" => array(
-                    "type" => $type,
-                )
-            )
-        );
-        return $game;
-    }
-
-    public function getById($id){
-        $game = Game::findFirstById($id);
-
-        return $game;
-    }
-
-    public function getByGameParent($id){
-        $game = Game::findByGameParent($id);
-
-        return $game;
-    }
-
-    public function getByGameParentAndGame($category,$id){
-        $game = Game::findFirst(
-            array(
-                "conditions" => "game_parent = :category: AND id = :id:",
-                "bind" => array(
-                    "category" => $category,
-                    "id" => $id
-                )
-            )
-        );
-
-        return $game;
-    }
-
-    public function getByCode($code, $type){
-        $gameCategory = Game::findFirst(
-            array(
-                "conditions" => "code = :code: AND type = :type:",
-                "bind" => array(
-                    "code" => $code,
-                    "type" => $type
-                )
-            )
-        );
-        return $gameCategory;
-    }
-
-    public function getByCodeOnly($code){
-        $gameCategory = Game::findFirst(
-            array(
-                "conditions" => "code = :code:",
-                "bind" => array(
-                    "code" => $code,
-                )
-            )
-        );
-        return $gameCategory;
-    }
-
-    protected function checkByName($name,$type){
-        $game = Game::findFirst(
-            array(
-                "conditions" => "name = :name: AND type = :type:",
-                "bind" => array(
-                    "name" => $name,
-                    "type" => $type
-                )
-            )
-        );
-
-        if(!$game){
-            return false;
+    public function validateGameSetData($data){
+        if($this->findByIdAndName($data['id'],$data['nm'])){
+            throw new \Exception('game_name_exist');
+        }elseif(empty($data['nm'])){
+            throw new \Exception('game_name_empty');
         }
 
         return true;
     }
 
-    protected function checkByIdName($id,$name){
-        $game = Game::findFirst(
-            array(
-                "conditions" => "id != :id: AND name = :name:",
-                "bind" => array(
-                    "id" => $id,
-                    "name" => $name,
-                )
-            )
-        );
-        if(!$game){
-            return false;
-        }
-
-        return true;
-    }
-
-    public function filterCategoryInput($data){
-        $data['type'] = \intval($data['type']);
-        $data['name'] = \filter_var(\strip_tags(\addslashes($data['category_name'])), FILTER_SANITIZE_STRING);
-        if(isset($data["category_code"]))$data['code'] = \filter_var(\strip_tags(\addslashes($data['category_code'])), FILTER_SANITIZE_STRING);
-
-        return $data;
-    }
-
-    public function validateCategoryAdd($data){
-        if($this->checkByName($data['name'],$data['type'])){
-            throw new \Exception('category_name_exist');
-        }elseif(empty($data['name'])){
-            throw new \Exception('category_name_empty');
-        }
-
-        return true;
-    }
-
-    public function validateCategoryEdit($data){
-        if($this->checkByIdName($data['id'],$data['name'])){
-            throw new \Exception('category_name_exist');
-        }elseif(empty($data['name'])){
-            throw new \Exception('category_name_empty');
-        }
-        return true;
-    }
-
-    public function createCategory($data){
-        $gameCategory = new Game();
-
-        $gameCategory->setType($data['type']);
-        if(isset($data["code"]))$gameCategory->setCode(strtolower($data['code']));
-        if(isset($data["name"]))$gameCategory->setName(ucfirst($data['name']));
-
-        if(!$gameCategory->save()){
-            throw new \Exception($gameCategory->getMessages());
-        }
-//        return $gameCategory->getCode();
-        return $gameCategory;
-    }
-
-    public function setCategory($data){
-        $gameCategory = $this->getById($data['id']);
-
-        if(isset($data["name"]))$gameCategory->setName(ucfirst($data['name']));
-
-        if(!$gameCategory->save()){
-            throw new \Exception($gameCategory->getMessages());
-        }
-        return $gameCategory;
-    }
-
-    public function filterMainInput($data){
-        $data['type'] = \intval($data['type']);
-        $data['name'] = \filter_var(\strip_tags(\addslashes($data['main_name'])), FILTER_SANITIZE_STRING);
-        if(isset($data["main_code"]))$data['code'] = \filter_var(\strip_tags(\addslashes($data['main_code'])), FILTER_SANITIZE_STRING);
-        if(isset($data["provider"]))$data['provider'] = \filter_var(\strip_tags(\addslashes($data['provider'])), FILTER_SANITIZE_STRING);
-        if(isset($data["category"]))$data['category'] = \filter_var(\strip_tags(\addslashes($data['category'])), FILTER_SANITIZE_STRING);
-
-        return $data;
-    }
-
-    public function validateMainAdd($data){
-        if(empty($data['provider'])){
+    public function validateSubCreateData($data){
+        if(empty($data['idpv'])){
             throw new \Exception('provider_name_empty');
-        }elseif(empty($data['category'])){
+        }elseif(empty($data['ct'])){
             throw new \Exception('category_name_empty');
-        }elseif($this->checkByName($data['name'],$data['type'])){
-            throw new \Exception('main_name_exist');
-        }elseif(empty($data['name'])){
-            throw new \Exception('main_name_empty');
-        }
-
-        return true;
-    }
-
-    public function validateMainEdit($data){
-        if($this->checkByIdName($data['id'],$data['name'])){
-            throw new \Exception('main_name_exist');
-        }elseif(empty($data['name'])){
-            throw new \Exception('main_name_empty');
-        }
-        return true;
-    }
-
-    public function createMain($data){
-        $game = new Game();
-        $category = $this->getByCodeOnly($data['category']);
-
-        $game->setType($data['type']);
-        if(isset($data["provider"]))$game->setProvider($data['provider']);
-        if(isset($data["category"]))$game->setGameParent($category->getId());
-        if(isset($data["code"]))$game->setCode(strtolower($data["category"]."-".$data['code']));
-        if(isset($data["name"]))$game->setName(ucfirst($data['name']));
-
-        if(!$game->save()){
-            throw new \Exception($game->getMessages());
-        }
-
-        return $game;
-    }
-
-    public function setMain($data){
-        $mainGame = $this->getById($data['id']);
-
-        if(isset($data["name"]))$mainGame->setName(ucfirst($data['name']));
-
-        if(!$mainGame->save()){
-            throw new \Exception($mainGame->getMessages());
-        }
-        return $mainGame;
-    }
-
-    public function filterSubInput($data){
-        $data['type'] = \intval($data['type']);
-        $data['name'] = \filter_var(\strip_tags(\addslashes($data['sub_name'])), FILTER_SANITIZE_STRING);
-        if(isset($data["sub_code"]))$data['code'] = \filter_var(\strip_tags(\addslashes($data['sub_code'])), FILTER_SANITIZE_STRING);
-        if(isset($data["provider"]))$data['provider'] = \filter_var(\strip_tags(\addslashes($data['provider'])), FILTER_SANITIZE_STRING);
-        if(isset($data["category"]))$data['category'] = \filter_var(\strip_tags(\addslashes($data['category'])), FILTER_SANITIZE_STRING);
-        if(isset($data["main"]))$data['main'] = \filter_var(\strip_tags(\addslashes($data['main'])), FILTER_SANITIZE_STRING);
-        if(isset($data["sub_name"]))$data['sub_name'] = \filter_var(\strip_tags(\addslashes($data['sub_name'])), FILTER_SANITIZE_STRING);
-        $data['parent_currency'] = (isset($data['parent_currency'])?1:0);
-
-        return $data;
-    }
-
-    public function validateSubAdd($data){
-        if(empty($data['provider'])){
-            throw new \Exception('provider_name_empty');
-        }elseif(empty($data['category'])){
-            throw new \Exception('category_name_empty');
-        }elseif(empty($data['main'])){
+        }elseif(empty($data['g'])){
             throw new \Exception('main_game_empty');
-        }elseif(empty($data['sub_name'])){
+        }elseif(empty($data['nm'])){
             throw new \Exception('sub_game_empty');
-        }elseif(empty($data['code'])){
+        }elseif(empty($data['cd'])){
             throw new \Exception('sub_code_game_empty');
-        }elseif($this->checkByName($data['name'],$data['type'])){
+        }elseif($this->findByNameAndType($data['nm'],$data['tp'])){
             throw new \Exception('main_name_exist');
-        }elseif(empty($data['name'])){
-            throw new \Exception('main_name_empty');
         }
 
         return true;
     }
 
-    public function validateSubEdit($data){
-        if($this->checkByIdName($data['id'],$data['name'])){
-            throw new \Exception('main_name_exist');
-        }elseif(empty($data['name'])){
-            throw new \Exception('main_name_empty');
+    public function validateSubSetData($data){
+        if($this->findByIdAndName($data['id'],$data['nm'])){
+            throw new \Exception('name_exist');
+        }elseif(empty($data['nm'])){
+            throw new \Exception('name_empty');
         }
         return true;
     }
 
-    public function createSub($data){
-        $game = new Game();
-        $main = $this->getByCodeOnly($data['main']);
-
-        $game->setType($data['type']);
-        if(isset($data["provider"]))$game->setProvider($data['provider']);
-//        if(isset($data["category"]))$game->setGameParent($main->getId());
-        if(isset($data["main"]))$game->setGameParent($main->getId());
-        if(isset($data["code"]))$game->setCode(strtolower($data["main"]."-".$data['code']));
-        if(isset($data["name"]))$game->setName(ucfirst($data['name']));
-
-        if(!$game->save()){
-            throw new \Exception($game->getMessages());
-        }
+    public function create($postData){
+        $url = '/game/insert';
+        $game = $this->curlAppsJson($url, $postData);
 
         return $game;
     }
 
-    public function setSub($data){
-        $mainGame = $this->getById($data['id']);
+    public function set($postData){
+        $url = '/game/' . $postData['id'] . '/update';
+        $game = $this->curlAppsJson($url, $postData);
 
-        if(isset($data["name"]))$mainGame->setName(ucfirst($data['name']));
-
-        if(!$mainGame->save()){
-            throw new \Exception($mainGame->getMessages());
-        }
-        return $mainGame;
+        return $game;
     }
-
-//    public function setStatus($id, $status){
-//        $this->setParentStatus($id, $status);
-//        $this->setChildStatus($id, $status);
-//        return true;
-//    }
-//
-//    protected function setParentStatus($id, $status){
-//        $game = Game::findFirstById($id);
-//        $game->setStatus($status);
-//        $game->save();
-//
-//        return true;
-//    }
-//    protected function setChildStatus($id, $status){
-//        $game = Game::findFirstById($id);
-//
-//        if($game) {
-//            $gameParent = Game::findByGameParent($game->getId());
-//
-//            foreach ($gameParent as $key => $value) {
-//                if($status == 1 && ($value->getParentStatus() == 2 || $value->getParentStatus() == 0)){
-//                    $childStatus = 1;
-//                }elseif($status == 2 && ($value->getParentStatus() == 2 || $value->getParentStatus() == 1)){
-//                    $childStatus = 2;
-//                }else{
-//                    $childStatus = 0;
-//                }
-//                $value->setParentStatus($childStatus);
-//                $value->save();
-//
-//                self::setChildStatus($value->getId(), $childStatus);
-//            }
-//        }
-//        return true;
-//    }
-
 
     public function setStatus($id, $status){
         $this->setGameStatus($id, $status);
@@ -573,33 +253,40 @@ class DLGame extends \System\Datalayers\Main{
     }
 
     protected function setGameStatus($id, $status){
-        $game = $this->getById($id);
-        $game->setStatus($status);
-        $game->save();
+        $postData = array(
+            "id" => $id,
+            "st" => \intval($status)
+        );
 
-        $this->setChildParentStatus($id, $status, $game->getParentStatus());
+        $this->set($postData);
+        $game = $this->findFirstById($postData['id']);
+
+        $this->setChildParentStatus($id, $postData['st'], $game['pst']);
 
         return true;
     }
 
     protected function setChildParentStatus($parentId, $parentStatus, $grandParentStatus){
         $childParentStatus = 1;
-        if($grandParentStatus == 0 || $parentStatus == 0){
+        if ($grandParentStatus == 0 || $parentStatus == 0) {
             $childParentStatus = 0;
-        }else if($grandParentStatus == 2 || $parentStatus == 2){
+        } else if ($grandParentStatus == 2 || $parentStatus == 2) {
             $childParentStatus = 2;
         }
 
         //get childs
-        $childs = $this->getByGameParent($parentId);
-
+        $childs = $this->findByGameParent($parentId);
         foreach ($childs as $child){
-            $child->setParentStatus($childParentStatus);
-            $child->save();
+            $postData = array(
+                'id' => $child['id'],
+                'pst' => $childParentStatus
+            );
+            $this->set($postData);
 
             //change all childs parent status
-            $this->setChildParentStatus($child->getId(), $child->getStatus(), $childParentStatus);
+            $this->setChildParentStatus($child['id'], $child['st'], $postData['pst']);
         }
         return true;
     }
+    // END DSS
 }

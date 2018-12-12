@@ -2,12 +2,14 @@
 namespace Backoffice\Setting\Controllers;
 
 use System\Datalayer\DLCurrency;
+use System\Datalayer\DLGameCurrency;
 use System\Datalayer\DLUserCurrency;
+use System\Datalayer\DLUserGame;
 use System\Library\General\GlobalVariable;
 
 class CurrencyController extends \Backoffice\Controllers\ProtectedController
 {
-    protected $_limit = 100;
+    protected $_limit = 50;
     protected $_pages = 1;
 
     public function indexAction()
@@ -22,33 +24,21 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
 
         } elseif ($this->session->has("pages")) {
             $pages = $this->session->get("pages");
-
         }
 
+        $start = \ceil($pages-1)*$limit;
         $dlCurrency = new DLCurrency();
 
         $status = GlobalVariable::$twoLayerStatusTypes;
-        $currencies = $dlCurrency->listCurrency(0,$limit);
-//        $currencies = $dlCurrency->getAll();
+        $currencies = $dlCurrency->listCurrency($start,$limit);
 
-//        $paginator = new \Phalcon\Paginator\Adapter\Model(
-//            array(
-//                "data" => $currencies,
-//                "limit" => $limit,
-//                "page" => $pages
-//            )
-//        );
-//
-//        $page = $paginator->getPaginate();
-//
-//        $pagination = ceil($currencies->count() / $limit);
+        $totalPages = \ceil($currencies['total']/$limit);
 
-//        $view->page = $page->items;
-//        $view->pagination = $pagination;
-//        $view->pages = $pages;
-//        $view->limit = $limit;
+        $view->pages = $pages;
+        $view->limit = $limit;
 
-        $view->currencies = $currencies;
+        $view->currencies = $currencies['currencies'];
+        $view->total_pages = $totalPages;
         $view->status = $status;
 
         \Phalcon\Tag::setTitle("Currency - " . $this->_website->title);
@@ -65,11 +55,11 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
 
                 $DLCurrency = new DLCurrency();
                 $filterData = $DLCurrency->filterData($data);
-                $DLCurrency->validateAddData($filterData);
+                $DLCurrency->validateCreateData($filterData);
                 $currency = $DLCurrency->create($filterData,$data['user']);
 
                 $this->db->commit();
-                return $this->response->redirect($this->_module . '/' . $this->_controller . '/detail/' . strtolower($currency))->send();
+                return $this->response->redirect($this->_module . '/' . $this->_controller . '/detail/' . $currency['id'])->send();
             } catch (\Exception $e) {
                 $this->db->rollback();
                 $this->flash->error($e->getMessage());
@@ -101,7 +91,7 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
                 $data['id'] = $getCurrency['id'];
 
                 $filterData = $DLCurrency->filterData($data);
-                $DLCurrency->validateEditData($filterData);
+                $DLCurrency->validateSetData($filterData);
                 $currency = $DLCurrency->set($filterData);
 
                 $this->db->commit();
@@ -144,8 +134,6 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
 
     public function deleteAction()
     {
-//        $view = $this->view;
-
         $currencyId = $this->dispatcher->getParam("id");
         $previousPage = new GlobalVariable();
 
@@ -162,10 +150,6 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
             $this->flash->error($e->getMessage());
             $this->response->redirect($previousPage->previousPage())->send();
         }
-
-//        $view->currency = $getCurrency;
-
-//        \Phalcon\Tag::setTitle("Delete Currency - " . $this->_website->title);
     }
 
     public function statusAction()
@@ -177,23 +161,100 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
         $previousPage = new GlobalVariable();
 
         $param = explode("|", $getParam);
-        $currentId = $param[0];
+        $currencyId = $param[0];
         $status = $param[1];
 
-        if (!isset($currentId)) {
+        if (!isset($currencyId)) {
             $this->flash->error("undefined_currency_code");
             $this->response->redirect("/setting/currency")->send();
         }
 
-        $DLCurrency = new DLCurrency();
+        $dlCurrency = new DLCurrency();
 
         try {
             $this->db->begin();
 
             $data['st'] = $status;
-            $data['id'] = $currentId;
+            $data['id'] = $currencyId;
 
-            $DLCurrency->set($data);
+            $dlCurrency->set($data);
+
+            $games = $users = $currencies = $userCurrencyIdRecords = $gameCurrencyIdRecords = array();
+            $dlUserGame = new DLUserGame();
+
+            $dlGameCurrency = new DLGameCurrency();
+            $gameCurrencies = $dlGameCurrency->findByCurrency($data['id']);
+
+            // get all game based on selected currency id
+            foreach ($gameCurrencies as $gameCurrency) {
+                // set game_currency currency_status [0/1] based on game ID
+                $gameCurrencyId = $gameCurrency['id'];
+                $games[] = $gameCurrency['idgm'];
+
+                $postData = array(
+                    'id' => $gameCurrencyId,
+                    'cust' => $data['st']
+                );
+                $dlGameCurrency->set($postData);
+            }
+
+            $dlUserCurrency = new DLUserCurrency();
+            $userCurrencies = $dlUserCurrency->findByCurrency($data['id']);
+
+            // get all user based on selected currency id
+            foreach ($userCurrencies as $userCurrency) {
+                // set user_currency currency_status [0/1] based on user ID
+                $userCurrencyId = $userCurrency['id'];
+                $users[] = $userCurrency['idus'];
+
+                $postData = array(
+                    'id' => $userCurrencyId,
+                    'cust' => $data['st']
+                );
+
+                $dlUserCurrency->set($postData);
+            }
+
+            $userCurrencyId = $gameCurrencyId = $userCurrencyRecords = array();
+            foreach ($users as $user) {
+                $userGames = $dlUserGame->findByUser($user);
+                foreach ($userGames as $userGame){
+                    $userCurrencies = $dlUserCurrency->findByUser($userGame['idus']);
+                    $gameCurrencies = $dlGameCurrency->findByGame($userGame['gm']['id']);
+
+                    foreach ($userCurrencies as $userCurrency){
+                        $userCurrencyId[] = $userCurrency['cu']['id'];
+                    }
+
+                    foreach ($gameCurrencies as $gameCurrency){
+                        $gameCurrencyId[] = $gameCurrency['cu']['id'];
+                    }
+                }
+            }
+
+//            $a = array_unique($userCurrencyId);
+//            $b = array_unique($gameCurrencyId);
+//            var_dump($a);
+//            var_dump($b);
+//            $result = array_intersect($a, $b);
+//            var_dump($result);
+////            if(count(array_intersect($userCurrencyId, $gameCurrencyId)) > 0){
+////                var_dump(count(array_intersect($userCurrencyId, $gameCurrencyId)));
+////            }
+//            die;
+
+//            foreach ($games as $game){
+//                $userGames = $dlUserGame->findByGame($game);
+//                $gameCurrencies = $dlGameCurrency->findByGame($game);
+//
+//                foreach ($gameCurrencies as $gameCurrency){
+//
+//                }
+//                foreach ($userGames as $userGame){
+//                    var_dump($userGame);
+////                    $gameCurrencies = $dlGameCurrency->findByGame($userGame['gm']['id']);
+//                }
+//            }
 
             $this->db->commit();
             $this->flash->success("status_changed");

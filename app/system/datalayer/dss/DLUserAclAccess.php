@@ -1,10 +1,31 @@
 <?php
 namespace System\Datalayer;
 
+use System\Datalayers\Main;
 use System\Model\UserAclAccess;
 use System\Model\UserAclResource;
 
-class DLUserAclAccess{
+class DLUserAclAccess extends Main{
+    // DSS
+    public function setAclAccess($id, $records){
+        foreach ($records as $record){
+            $postData = array(
+                "idus" => $id,
+                "mod" => $record['mod'],
+                "con" => $record['con'],
+                "act" => $record['act'],
+                "sb" => $record['sb'],
+                "sbn" => $record['sbn'],
+                "sbc" => $record['sbc'],
+                "sbo" => $record['sbo'],
+                "st" => $record['st'],
+            );
+            $url = '/useraclacc/insert';
+            $this->curlAppsJson($url,$postData);
+        }
+        return true;
+    }
+    // END DSS
 
     public function getById($user , $subaccount = false ){
         if($subaccount){
@@ -178,24 +199,24 @@ class DLUserAclAccess{
         return true ;
     }
 
-    public function setAclAccess($id, $data){
-        $aclAccess = new UserAclAccess();
-
-        $aclAccess->setUser($id);
-        $aclAccess->setModule($data->getModule());
-        $aclAccess->setController($data->getController());
-        $aclAccess->setAction($data->getAction());
-        $aclAccess->setSidebar($data->getSidebar());
-        $aclAccess->setSidebarName($data->getSidebarName());
-        $aclAccess->setSidebarIcon($data->getSidebarIcon());
-        $aclAccess->setSidebarOrder($data->getSidebarOrder());
-        $aclAccess->setStatus(1);
-
-        if(!$aclAccess->save()){
-            throw new \Exception($aclAccess->getMessages());
-        }
-        return $aclAccess;
-    }
+//    public function setAclAccess($id, $data){
+//        $aclAccess = new UserAclAccess();
+//
+//        $aclAccess->setUser($id);
+//        $aclAccess->setModule($data->getModule());
+//        $aclAccess->setController($data->getController());
+//        $aclAccess->setAction($data->getAction());
+//        $aclAccess->setSidebar($data->getSidebar());
+//        $aclAccess->setSidebarName($data->getSidebarName());
+//        $aclAccess->setSidebarIcon($data->getSidebarIcon());
+//        $aclAccess->setSidebarOrder($data->getSidebarOrder());
+//        $aclAccess->setStatus(1);
+//
+//        if(!$aclAccess->save()){
+//            throw new \Exception($aclAccess->getMessages());
+//        }
+//        return $aclAccess;
+//    }
 
     public function setAclAccessWithStatus($id, $data , $status){
         $aclAccess = new UserAclAccess();

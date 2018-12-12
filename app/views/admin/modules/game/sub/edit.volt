@@ -4,32 +4,32 @@
                 <div class="col-xs-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title row">
-                            <h5>[{{game.name}}] Edit</h5>
+                            <h5>[{{subGame.nm}}] Edit</h5>
                         </div>
                         <div class="ibox-content row">
                             <form class="form-horizontal col-xs-12" action="{{url(router.getRewriteUri())}}" method="post">
                                 <div class="form-group">
                                     <label class="col-xs-3 control-label">Type</label>
                                     <label class="col-xs-9">
-                                        <input type="text" placeholder="Game Type" class="form-control" value="{{game.type|gameType}}" readonly>
+                                        <input type="text" placeholder="Game Type" class="form-control" value="{{subGame.tp|gameType}}" readonly>
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-xs-3 control-label">Game Category</label>
+                                    <label class="col-xs-3 control-label">Game</label>
                                     <label class="col-xs-9">
-                                        <input type="text" placeholder="Game Category" class="form-control" value="{{game.game_parent|gameName}}" readonly>
+                                        <input type="text" placeholder="Game Category" class="form-control" value="{{game.nm}}" readonly>
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-xs-3 control-label">Game Code</label>
+                                    <label class="col-xs-3 control-label">Sub-Game Code</label>
                                     <label class="col-xs-9">
-                                        <input type="text" placeholder="Name" class="form-control" value="{{game.code}}" readonly>
+                                        <input type="text" placeholder="Name" class="form-control" value="{{subGame.cd}}" readonly>
                                     </label>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-xs-3 control-label">Game Name</label>
+                                    <label class="col-xs-3 control-label">Sub-Game Name</label>
                                     <label class="col-xs-9">
-                                        <input type="text" name="main_name" class="form-control" placeholder="Name" value="{{game.name}}">
+                                        <input type="text" name="name" class="form-control" placeholder="Name" value="{{subGame.nm}}">
                                     </label>
                                 </div>
                                 <div class="form-group"><div class="hr-line-dashed"></div></div>

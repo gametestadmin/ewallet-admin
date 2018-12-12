@@ -39,11 +39,11 @@
                                     </select>
                                 </li>
                                 <li class="col-sm-2 col-xs-2 list-group-item text-center">
-                                    <a href="{{router.getRewriteUri()~'/detail/'~categoryData.cd|lowercase}}">
+                                    <a href="{{router.getRewriteUri()~'/detail/'~categoryData.id}}">
                                         <span class="fa fa-search text-danger"></span>
                                     </a>
                                     |
-                                    <a href="{{router.getRewriteUri()~'/edit/'~categoryData.cd|lowercase}}">
+                                    <a href="{{router.getRewriteUri()~'/edit/'~categoryData.id}}">
                                         <span class="fa fa-edit text-primary"></span>
                                     </a>
                                 </li>

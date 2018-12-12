@@ -9,15 +9,24 @@ class EndpointFormEditWidget extends BaseWidget
 {
     public function getContent()
     {
-        $DLProviderGameEndpointAuth = new DLProviderGameEndpointAuth();
-        $providerGameEndpointAuth = $DLProviderGameEndpointAuth->getAll($this->params["id"]);
+        $gameId = $this->params["gameId"];
 
-        $providerGameEndpointType = GlobalVariable::$providerGameEndpointType;
+        $dlProviderGameEndpointAuth = new DLProviderGameEndpointAuth();
+        $providerGameEndpointAuth = $dlProviderGameEndpointAuth->findByGame($gameId);
+
         $httpList = GlobalVariable::$httpList;
+//        $providerGameEndpointTypes = GlobalVariable::$transferProviderGameEndpointTypes;
+
+        $transferProviderGameEndpointTypes = GlobalVariable::$transferProviderGameEndpointTypes;
+        $seamlessProviderGameEndpointTypes = GlobalVariable::$seamlessProviderGameEndpointTypes;
+
+        $providerGameEndpointTypes = $transferProviderGameEndpointTypes+$seamlessProviderGameEndpointTypes;
 
         return $this->setView('endpoint/edit', [
             'providerGameEndpoint' => $providerGameEndpointAuth,
-            'providerGameEndpointType' => $providerGameEndpointType,
+            'providerGameEndpointTypes' => $providerGameEndpointTypes,
+            'transferProviderGameEndpointTypes' => $transferProviderGameEndpointTypes,
+            'seamlessProviderGameEndpointTypes' => $seamlessProviderGameEndpointTypes,
             'httpList' => $httpList,
         ]);
     }

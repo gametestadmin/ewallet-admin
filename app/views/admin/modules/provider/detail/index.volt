@@ -4,18 +4,18 @@
                 <div class="col-xs-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title row">
-                            <h5>[{{provider.name}}] {{translate['title_text_detail']}}</h5>
+                            <h5>[{{provider.nm}}] {{translate['title_text_detail']}}</h5>
                         </div>
                         <div class="ibox-content row">
                             <form class="form-horizontal col-xs-12" action="#" method="post">
                                 <div class="form-group">
                                     <label class="col-xs-3 control-label">{{translate['form_timezone']}}</label>
                                     <label class="col-xs-9">
-                                        {% set gmtDisplay = provider.timezone %}
-                                        {% if provider.timezone == 0%}
+                                        {% set gmtDisplay = provider.tz %}
+                                        {% if provider.tz == 0%}
                                         {% set gmtDisplay = '' %}
-                                        {% elseif provider.timezone > 0%}
-                                        {% set gmtDisplay = '+'~provider.timezone %}
+                                        {% elseif provider.tz > 0%}
+                                        {% set gmtDisplay = '+'~provider.tz %}
                                         {% endif %}
                                         <input type="text" placeholder="{{translate['placeholder_timezone']}}" class="form-control" value="GMT {{gmtDisplay}}" readonly>
                                     </label>
@@ -23,7 +23,7 @@
                                 <div class="form-group">
                                     <label class="col-xs-3 control-label">{{translate['form_provider_name']}}</label>
                                     <label class="col-xs-9">
-                                        <input type="text" placeholder="{{translate['placeholder_provider_name']}}" class="form-control" value="{{provider.name}}" readonly>
+                                        <input type="text" placeholder="{{translate['placeholder_provider_name']}}" class="form-control" value="{{provider.nm}}" readonly>
                                     </label>
                                 </div>
                                 <div class="form-group">
@@ -31,7 +31,7 @@
                                     <label class="col-xs-9">
                                         <select class="status form-control">
                                             {% for key, value in status %}
-                                                <option value="{{provider.id~"|"~key}}" {% if provider.status == key %}selected{% endif %}>{{translate[value]}}</option>
+                                                <option value="{{provider.id~"|"~key}}" {% if provider.st == key %}selected{% endif %}>{{translate[value]}}</option>
                                             {% endfor %}
                                         </select>
                                     </label>

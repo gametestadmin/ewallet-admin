@@ -31,11 +31,6 @@ class Main
 
         // Send the request
         $result = json_decode(curl_exec($ch),true);
-//        if(!$result){
-//            var_dump(curl_errno($result));
-//            die;
-//        }
-
         $response = new \Phalcon\Config($result);
 
         return $response;

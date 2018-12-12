@@ -18,9 +18,9 @@
                           <li class="col-sm-2 col-xs-2 list-group-item">{{translate['head_list_status']}}</li>
                           <li class="col-sm-2 col-xs-2 list-group-item">{{translate['head_list_action']}}</li>
                         </ul>
-                        {% if page is not null %}
+                        {% if my_games is not null %}
                         {% set i = 1 %}
-                        {% for myGame in page %}
+                        {% for myGame in my_games %}
                             {% if i%2 == 0 %}
                                 {% set class = "content-even" %}
                             {% else %}
@@ -28,16 +28,16 @@
                             {% endif %}
                             <ul class="list-inline {{class}} text-center">
                                 <li class="col-sm-1 hidden-xs list-group-item">{{i}}</li>
-                                <li class="col-sm-5 col-xs-5 list-group-item">{{myGame.game.name}}</li>
+                                <li class="col-sm-5 col-xs-5 list-group-item">{{myGame.gm.nm}}</li>
                                 <li class="col-sm-2 col-xs-2 list-group-item">
-                                    <strong class="text-{{myGame.parent_status|agentStatus|lower}}">
-                                        {{translate[myGame.parent_status|agentStatus|lower]}}
+                                    <strong class="text-{{myGame.pst|agentStatus|lower}}">
+                                        {{translate[myGame.pst|agentStatus|lower]}}
                                     </strong>
                                 </li>
                                 <li class="col-sm-2 col-xs-2 list-group-item">
                                     <select class="status">
                                         {% for key, value in status %}
-                                            <option value="{{myGame.game.id~"|"~key}}" {% if myGame.status == key %}selected{% endif %}>{{translate[value]}}</option>
+                                            <option value="{{myGame.id~"|"~key}}" {% if myGame.st== key %}selected{% endif %}>{{translate[value]}}</option>
                                         {% endfor %}
                                     </select>
                                 </li>
@@ -53,7 +53,7 @@
                             </ul>
                             {% set i = i +1 %}
                         {% endfor %}
-                        <div class="row text-center">
+                        <!--<div class="row text-center">
                             <div class="col-xs-12">
                                 <ul class="pagination">
                                 {% set page = pagination %}
@@ -66,7 +66,7 @@
                                 {% endif %}
                                 </ul>
                             </div>
-                        </div>
+                        </div>-->
                         {% else %}
                         <h4 class="text-center">No Data</h4>
                         {% endif %}

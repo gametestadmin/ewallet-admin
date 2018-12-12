@@ -24,9 +24,9 @@ class ListController extends \Backoffice\Controllers\ProtectedController
 
         }
 
-        $providerGame = new DLProviderGame();
+        $dlProviderGame = new DLProviderGame();
         $status = GlobalVariable::$threeLayerStatusTypes;
-        $provider = $providerGame->listProviderGame(0,$limit);
+        $provider = $dlProviderGame->listProviderGame(0,$limit);
 
 //        $paginator = new \Phalcon\Paginator\Adapter\Model(
 //            array(

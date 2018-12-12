@@ -5,12 +5,13 @@ use System\Datalayer\DLCurrency;
 use System\Datalayer\DLGame;
 use System\Datalayer\DLGameCurrency;
 use System\Datalayer\DLProviderGame;
+use System\Datalayer\DLUserGame;
 use System\Library\General\GlobalVariable;
 
 class SubController extends \Backoffice\Controllers\ProtectedController
 {
     protected $_categoryType = 1;
-    protected $_mainType = 2;
+    protected $_gameType = 2;
     protected $_type = 3;
     protected $_limit = 10;
     protected $_pages = 1;
@@ -31,7 +32,6 @@ class SubController extends \Backoffice\Controllers\ProtectedController
         }
         $dlGame = new DLGame();
         $status = GlobalVariable::$threeLayerStatusTypes;
-//        $sub = $subGame->getAll($this->_type);
         $subGames = $dlGame->findGameType(0,$limit,$this->_type);
 
 //        $paginator = new \Phalcon\Paginator\Adapter\Model(
@@ -59,35 +59,44 @@ class SubController extends \Backoffice\Controllers\ProtectedController
     {
         $view = $this->view;
 
-        $DLProviderGame = new DLProviderGame();
-        $providerGame = $DLProviderGame->getAll(1);
-        $DLGame = new DLGame();
-        $categoryGame = $DLGame->getAll($this->_categoryType);
-        $mainGame = $DLGame->getAll($this->_mainType);
+        $dlProviderGame = new DLProviderGame();
+        $providerGame = $dlProviderGame->findByStatus(1);
+
+        $dlGame = new DLGame();
+        $categoryGame = $dlGame->findByTypeAndStatus($this->_categoryType,1);
+        $game = $dlGame->findByTypeAndStatus($this->_gameType,1);
 
         if ($this->request->getPost()) {
             try {
                 $this->db->begin();
                 $data = $this->request->getPost();
 
+                $mainGame = $dlGame->findByCode($this->_gameType,$data['game_code']);
+
+                $data['parent'] = $mainGame['id'];
                 $data['type'] = $this->_type;
 
-                $module = $this->router->getModuleName();
-                $controller = $this->router->getControllerName();
+                $filterData = $dlGame->filterData($data);
+//                echo "<pre>";
+//                var_dump($data);
+//                echo "<br>";
+//                var_dump($filterData);
+//                die;
+                $dlGame->validateSubCreateData($filterData);
+                $subGame = $dlGame->create($filterData);
+//                var_dump($subGame);
+//                die;
 
-                $filterData = $DLGame->filterSubInput($data);
-                $DLGame->validateSubAdd($filterData);
-                $game = $DLGame->createSub($filterData);
-
-                if($game && $filterData['parent_currency'] == 1){
+                if($subGame && $data['parent_currency'] == 1){
+                    $subGameData = $dlGame->findFirstById($subGame['id']);
                     $gameCurrency = new DLGameCurrency();
-                    $gameCurrency->setFromParent($game->getGameParent(),$game->getId());
+                    $gameCurrency->setFromParent($subGameData['idp'],$subGame['id']);
                 }
 
                 $this->db->commit();
 
                 $this->flash->success('sub_game_create_success');
-                return $this->response->redirect("/".$module."/".$controller."/detail/".$game->getCode())->send();
+                return $this->response->redirect("/".$this->_module."/".$this->_controller."/detail/".$subGame['id'])->send();
             } catch (\Exception $e) {
                 $this->db->rollback();
                 $this->flash->error($e->getMessage());
@@ -96,106 +105,123 @@ class SubController extends \Backoffice\Controllers\ProtectedController
 
         $view->providerGame = $providerGame;
         $view->categoryGame = $categoryGame;
-        $view->mainGame = $mainGame;
-        \Phalcon\Tag::setTitle("Add New Main Game - ".$this->_website->title);
+        $view->game = $game;
+
+        \Phalcon\Tag::setTitle("Add New Sub-Game - ".$this->_website->title);
     }
 
     public function editAction()
     {
         $view = $this->view;
 
-        $currentCode = $this->dispatcher->getParam("code");
-        $module = $this->router->getModuleName();
-        $controller = $this->router->getControllerName();
+        $currentId = $this->dispatcher->getParam("id");
 
-        $DLGame = new DLGame();
-        $game = $DLGame->getByCode($currentCode, $this->_type);
+        $dlGame = new DLGame();
+        $subGame = $dlGame->findFirstById($currentId);
+        $game = $dlGame->findFirstById($subGame['idp']);
 
         if ($this->request->getPost()) {
             try {
                 $this->db->begin();
 
                 $data = $this->request->getPost();
-                $data['main_code'] = $currentCode;
+//                $data['main_code'] = $currentId;
                 $data['type'] = $this->_type;
-                $data['id'] = $game->getId();
+                $data['id'] = $subGame['id'];
 
-                $filterData = $DLGame->filterMainInput($data);
-                $DLGame->validateMainEdit($filterData);
-                $DLGame->setMain($filterData);
+                $filterData = $dlGame->filterData($data);
+                $dlGame->validateSubSetData($filterData);
+                $dlGame->set($filterData);
 
                 $this->db->commit();
 
                 $this->flash->success('main_game_update_success');
-                return $this->response->redirect("/".$module."/".$controller."/detail/".$game->getCode())->send();
+                return $this->response->redirect("/".$this->_module."/".$this->_controller."/detail/".$subGame['id'])->send();
             } catch (\Exception $e) {
                 $this->db->rollback();
                 $this->flash->error($e->getMessage());
             }
         }
+        $view->subGame = $subGame;
         $view->game = $game;
 
-        \Phalcon\Tag::setTitle("Update Game Provider - ".$this->_website->title);
+        \Phalcon\Tag::setTitle("Update Sub-Game - ".$this->_website->title);
     }
 
     public function detailAction()
     {
         $view = $this->view;
 
-        $currentCode = $this->dispatcher->getParam("code");
-        $module = $this->router->getModuleName();
-        $controller = $this->router->getControllerName();
+        $currentId = $this->dispatcher->getParam("id");
 
-        $status = GlobalVariable::$threeLayerStatus;
+        $status = GlobalVariable::$threeLayerStatusTypes;
 
         $DLCurrency = new DLCurrency();
-        $currency = $DLCurrency->getAllByStatus(1);
+        $currency = $DLCurrency->findAllByStatus(1);
 
-        $DLGame = new DLGame();
-        $game = $DLGame->getByCode($currentCode, $this->_type);
+        $dlGame = new DLGame();
+        $game = $dlGame->findFirstById($currentId);
+        $gameParent = $dlGame->findFirstById($game['idp']);
+
+        $dlProviderGame = new DLProviderGame();
+        $providerGame = $dlProviderGame->findFirstById($game['idpv']);
 
         $DLGameCurrency = new DLGameCurrency();
-        $gameCurrency = $DLGameCurrency->getAll($game->getId());
+        $gameCurrency = $DLGameCurrency->findByGame($game['id']);
         $gameCurrencyData = count($gameCurrency);
 
         if(!$game){
             $this->flash->error("undefined_game_code");
-            return $this->response->redirect("/".$module."/".$controller)->send();
+            return $this->response->redirect("/".$this->_module."/".$this->_controller)->send();
         }
 
+        $view->providerGame = $providerGame;
         $view->game = $game;
+        $view->gameParent = $gameParent;
         $view->status = $status;
         $view->gameCurrencyData = $gameCurrencyData;
         $view->gameCurrency = $gameCurrency;
 
-        \Phalcon\Tag::setTitle("Update Game Provider - ".$this->_website->title);
+        \Phalcon\Tag::setTitle("Update Sub-Game - ".$this->_website->title);
     }
 
     public function statusAction()
     {
-        $view = $this->view;
-
         $previousPage = new GlobalVariable();
-        $currentId = $this->dispatcher->getParam("id");
+        $data = $this->dispatcher->getParam("id");
 
-        $module = $this->router->getModuleName();
-        $controller = $this->router->getControllerName();
+        $data = explode("|",$data);
+        $id = $data[0];
+        $status = $data[1];
 
-        $currentId = explode("|",$currentId);
-        $id = $currentId[0];
-        $status = $currentId[1];
+        $dlGame = new dlGame();
+        $game = $dlGame->findFirstById($id);
 
-        $DLGame = new DLGame();
-        $game = $DLGame->getById($id);
-        if(!isset($currentId) || !$game){
+        if(!isset($data) || !$game){
             $this->flash->error("undefined_game");
-            $this->response->redirect($module."/".$controller."/")->send();
+            $this->response->redirect($this->_module."/".$this->_controller."/")->send();
         }
 
         try {
             $this->db->begin();
 
-            $DLGame->setStatus($id,$status);
+            $dlGame->setStatus($id,$status);
+
+            $gameStatus = 1;
+            if($status == 0 || $status == 2 || $game['pvst'] == 0){
+                $gameStatus = 0;
+            }
+
+            $dlUserGame = new DLUserGame();
+            $userGames = $dlUserGame->findByGame($id);
+
+            foreach ($userGames as $userGame){
+                $postData = array(
+                    'id' => $userGame['id'],
+                    'gmst' => $gameStatus
+                );
+                $dlUserGame->set($postData);
+            }
 
             $this->db->commit();
             $this->flash->success("status_changed");
@@ -205,6 +231,6 @@ class SubController extends \Backoffice\Controllers\ProtectedController
             $this->flash->error($e->getMessage());
         }
 
-        \Phalcon\Tag::setTitle("Edit Currency - ".$this->_website->title);
+        \Phalcon\Tag::setTitle("Update Sub-Game Status - ".$this->_website->title);
     }
 }

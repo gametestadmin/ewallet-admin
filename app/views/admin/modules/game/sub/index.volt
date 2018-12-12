@@ -17,7 +17,8 @@
                         <ul class="list-inline header-list text-center">
                           <li class="col-sm-1 col-xs-1 list-group-item">No</li>
                           <li class="col-sm-3 col-xs-3 list-group-item">Code</li>
-                          <li class="col-sm-4 col-xs-4 list-group-item">Name</li>
+                          <li class="col-sm-2 col-xs-2 list-group-item">Name</li>
+                          <li class="col-sm-2 col-xs-2 list-group-item">Parent Status</li>
                           <li class="col-sm-2 col-xs-3 list-group-item">Status</li>
                           <li class="col-sm-2 col-xs-2 list-group-item">Action</li>
                         </ul>
@@ -32,7 +33,40 @@
                         <ul class="list-inline {{class}} text-center">
                             <li class="col-sm-1 col-xs-1 list-group-item">{{i}}</li>
                             <li class="col-sm-3 col-xs-3 list-group-item">{{subGameData.cd}}</li>
-                            <li class="col-sm-4 col-xs-4 list-group-item">{{subGameData.nm}}</li>
+                            <li class="col-sm-2 col-xs-2 list-group-item">{{subGameData.nm}}</li>
+                            <li class="col-sm-2 col-xs-2 list-group-item">
+                                {% if subGameData.st != 1 or subGameData.pst != 1 or subGameData.pvst != 1 %}
+                                    {% set otherStatus = 'inactive' %}
+                                {% else %}
+                                    {% set otherStatus = 'active' %}
+                                {% endif %}
+                                {% if subGameData.pst == 0 %}
+                                    {% set parentStatus = 'inactive' %}
+                                {% elseif subGameData.pst == 2 %}
+                                    {% set parentStatus = 'suspended' %}
+                                {% else %}
+                                    {% set parentStatus = 'active' %}
+                                {% endif %}
+                                {% if subGameData.st == 0 %}
+                                    {% set selfStatus = 'inactive' %}
+                                {% elseif subGameData.st == 2 %}
+                                    {% set selfStatus = 'suspended' %}
+                                {% else %}
+                                    {% set selfStatus = 'active' %}
+                                {% endif %}
+                                {% if subGameData.pvst == 0 %}
+                                    {% set providerStatus = 'inactive' %}
+                                {% elseif subGameData.pvst == 2 %}
+                                    {% set providerStatus = 'suspended' %}
+                                {% else %}
+                                    {% set providerStatus = 'active' %}
+                                {% endif %}
+                                <span class="hidden pst_{{subGameData.id}}">{{translate[parentStatus]}}|{{parentStatus}}</span>
+                                <span class="hidden st_{{subGameData.id}}">{{translate[selfStatus]}}|{{selfStatus}}</span>
+                                <span class="hidden pvst_{{subGameData.id}}">{{translate[providerStatus]}}|{{providerStatus}}</span>
+                                <strong class="text-{{otherStatus}}">{{translate[otherStatus]}}</strong>
+                                <span class="fa fa-question-circle popup_status" data-id="{{subGameData.id}}" data-toggle="modal" data-target="#popup-status"></span>
+                            </li>
                             <li class="col-sm-2 col-xs-3 list-group-item">
                                 <select class="status">
                                     {% for key, value in status %}
@@ -75,10 +109,58 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="popup-status" tabindex="-1" role="dialog" aria-labelledby="popup-status-label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form class="form-horizontal" action="#" method="post" id="form">
+                    <div class="modal-header">
+                        <label class="col-xs-6">
+                            <h3 class="modal-title" id="popup-status-label">Sub-Game Status</h3>
+                        </label>
+                        <label class="col-xs-6">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </label>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">Parent Status</label>
+                            <label class="col-xs-3 control-label" id="parent_status"></label>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">Status</label>
+                            <label class="col-xs-3 control-label" id="status"></label>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">Provider Status</label>
+                            <label class="col-xs-3 control-label" id="provider_status"></label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block action_js %}
     <script>
+        $(".popup_status").click(function () {
+            var id = $(this).data('id');
+            var pst = $(".pst_"+id).html().split("|");
+            var st = $(".st_"+id).html().split("|");
+            var pvst = $(".pvst_"+id).html().split("|");
+
+            $(".modal-body #parent_status").html('<b class="text-'+pst[1]+'">'+pst[0]+'</b>');
+            $(".modal-body #status").html('<b class="text-'+st[1]+'">'+st[0]+'</b>');
+            $(".modal-body #provider_status").html('<b class="text-'+pvst[1]+'">'+pvst[0]+'</b>');
+        });
+
         jQuery(document).ready(function($){
             var select = $('.status');
             var previouslySelected;

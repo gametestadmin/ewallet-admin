@@ -13,6 +13,8 @@ class ProviderGameEndpointAuthWidget extends BaseWidget
     {
         $limit = $this->_limit;
         $pages = $this->_pages;
+        $gameId = $this->params["gameId"];
+
         if ($this->request->has("pages")){
             $pages = $this->request->get("pages");
 
@@ -21,25 +23,26 @@ class ProviderGameEndpointAuthWidget extends BaseWidget
         }
 
         $DLProviderGameEndpointAuth = new DLProviderGameEndpointAuth();
-        $providerGameEndpointAuth = $DLProviderGameEndpointAuth->getAll($this->params["id"]);
+        $providerGameEndpointAuth = $DLProviderGameEndpointAuth->findByGame($gameId);
 
-        $paginator = new \Phalcon\Paginator\Adapter\Model(
-            array(
-                "data" => $providerGameEndpointAuth,
-                "limit"=> $limit,
-                "page" => $pages
-            )
-        );
-        $records = $paginator->getPaginate();
-
-        $totalPage = ceil($providerGameEndpointAuth->count()/$limit);
+//        $paginator = new \Phalcon\Paginator\Adapter\Model(
+//            array(
+//                "data" => $providerGameEndpointAuth,
+//                "limit"=> $limit,
+//                "page" => $pages
+//            )
+//        );
+//        $records = $paginator->getPaginate();
+//
+//        $totalPage = ceil($providerGameEndpointAuth->count()/$limit);
 
         return $this->setView('game/auth', [
-            'page' => $records->items,
-            'game_endpoints' => $records->items,
-            'total_page' => $totalPage,
-            'pages' => $pages,
-            'limit' => $limit,
+//            'page' => $records->items,
+//            'game_endpoints' => $records->items,
+//            'total_page' => $totalPage,
+//            'pages' => $pages,
+//            'limit' => $limit,
+            'provider_game_endpoint_auth' => $providerGameEndpointAuth
         ]);
     }
 }

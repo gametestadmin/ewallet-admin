@@ -14,7 +14,7 @@
                                     <select name="category" id="category" class="form-control">
                                         <option value="">-Choose One-</option>
                                         {% for category in categoryGame %}
-                                        <option value="{{category.code}}">{{category.name}}</option>
+                                        <option value="{{category.cd}}">{{category.nm}}</option>
                                         {% endfor %}
                                     </select>
                                 </label>
@@ -22,7 +22,7 @@
                             <div class="form-group">
                                 <label class="col-xs-3 control-label">Main Game</label>
                                 <label class="col-sm-7 col-xs-6">
-                                    <select name="main" id="main" class="form-control">
+                                    <select name="game_code" id="main" class="form-control">
                                         <option value="">-Choose One-</option>
                                     </select>
                                 </label>
@@ -42,7 +42,7 @@
                             <div class="form-group">
                                 <label class="col-xs-3 control-label">Name</label>
                                 <label class="col-xs-9">
-                                    <input type="text" name="sub_name" class="form-control" id="sub_name" placeholder="Name">
+                                    <input type="text" name="name" class="form-control" id="sub_name" placeholder="Name">
                                 </label>
                             </div>
                             <div class="form-group">
@@ -97,7 +97,7 @@
                                 <select name="provider" id="provider_modal" class="form-control">
                                     <option value="">-Choose One-</option>
                                     {% for provider in providerGame %}
-                                        <option value="{{provider.id}}">{{provider.name}}</option>
+                                        <option value="{{provider.id}}">{{provider.nm}}</option>
                                     {% endfor %}
                                 </select>
                             </label>
@@ -107,7 +107,7 @@
                             <label class="col-xs-9">
                                 <select name="category" id="category_modal" class="form-control" readonly>
                                     {% for category in categoryGame %}
-                                    <option value="{{category.code}}">{{category.name}}</option>
+                                    <option value="{{category.cd}}">{{category.nm}}</option>
                                     {% endfor %}
                                 </select>
                             </label>
@@ -190,7 +190,8 @@
             });
 
             $("#btn-add").attr("disabled", "disabled");
-            mainGame = new Array();
+            //mainGame = new Array();
+            game = new Array();
             $("#category").change(function(){
                 var selectedCode = $("#category option:selected").val();
                 if($("#category option:selected").val() == ""){
@@ -205,7 +206,7 @@
                     url: "{{url('ajax/game/list')}}",
                     data: { code : selectedCode }
                 }).done(function(response){
-                    //console.log(response);
+                    console.log(response);
                     if(response == false){
                         $("#main").html("<option value=''>-Create One-</option>");
                     }else{
@@ -224,7 +225,7 @@
                 var dataSplit;
                 $.ajax({
                     type: "POST",
-                    url: "{{url('game/ajax')}}",
+                    url: "{{url('ajax/game/list')}}",
                     data: { mainCode : selectedCode }
                 }).done(function(data){
                     dataSplit = data.split("|");

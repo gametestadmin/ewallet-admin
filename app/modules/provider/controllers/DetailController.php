@@ -17,14 +17,12 @@ class DetailController extends \Backoffice\Controllers\ProtectedController
 
         $currentId = $this->dispatcher->getParam("id");
 
-        $module = $this->router->getModuleName();
-        $controller = $this->router->getControllerName();
+        $dlProviderGame = new DLProviderGame();
+        $providerGame = $dlProviderGame->findFirstById($currentId);
 
-        $DLProviderGame = new DLProviderGame();
-        $providerGame = $DLProviderGame->getById($currentId);
         if(!isset($currentId) || !$providerGame){
             $this->flash->error("undefined_provider_id");
-            $this->response->redirect($module."/list/")->send();
+            $this->response->redirect($this->_module."/list/")->send();
         }
 
         $view->provider = $providerGame;

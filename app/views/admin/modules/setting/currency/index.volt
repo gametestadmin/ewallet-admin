@@ -57,6 +57,17 @@
                         {% else %}
                         <h4 class="text-center">{{translate['text_no_data']}}</h4>
                         {% endif %}
+                        <div class="row text-center">
+                            <div class="col-xs-12">
+                                <ul class="pagination">
+                                {% for i in 1..total_pages %}
+                                    <li>
+                                        <a href="{{url(module~'/'~controller)}}?pages={{i}}" {%if i == pages%}class="btn btn-sm btn-primary white-color"{%endif%}>{{i}}</a>
+                                    </li>
+                                {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
                         <!--<div class="row text-center">
                             <div class="col-xs-12">
                                 <ul class="pagination">

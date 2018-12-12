@@ -18,6 +18,7 @@ class EditController extends \Backoffice\Controllers\ProtectedController
 
         $parent = $this->_user;
         $agent = $DLUser->getById($agentId);
+//        $agent = $DLUser->findById($agentId);
         $gmt = $globalVariable->getGmt();
 
         if(!$agent){
@@ -28,22 +29,11 @@ class EditController extends \Backoffice\Controllers\ProtectedController
         $agentSecurity = new Agent();
 
         $security = $agentSecurity->checkAgentAction($parent->getUsername(),$agent->getUsername());
+//        $security = $agentSecurity->checkAgentAction($parent->username,$agent->username);
         if($security <> 1 && $security <> 3){
             $this->errorFlash("cannot_access_security");
             return $this->response->redirect("/agent/list")->send();
         }
-
-//        $parentUsername = \substr($agent->getUsername(), 0, \strlen($parent->getUsername()));
-//
-//        if($parent->getId() != $agent->getParent()){
-//            $this->errorFlash("cannot_access");
-//            return $this->response->redirect("/agent/list")->send();
-//        }
-//
-//        if(($parent->getType() <> 0 && $parent->getType() <> 9) && $parent->getUsername() <> $parentUsername) {
-//            $this->errorFlash("cannot_access");
-//            return $this->response->redirect("/agent/list")->send();
-//        }
 
         if ($this->request->getPost()) {
             try {
@@ -57,6 +47,10 @@ class EditController extends \Backoffice\Controllers\ProtectedController
                 $filterData = $DLUser->filterInputAgent($data);
                 $DLUser->validateEditAgent($filterData);
                 $user = $DLUser->setAgent($filterData);
+
+//                $filterData = $DLUser->filterInputAgentData($data);
+//                $DLUser->validateEditAgentData($filterData);
+//                $user = $DLUser->setAgentData($filterData);
 
                 $this->db->commit();
                 $this->flash->success('agent_edit_success');

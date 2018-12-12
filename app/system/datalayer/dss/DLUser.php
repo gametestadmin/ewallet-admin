@@ -7,17 +7,142 @@ use System\Model\User;
 
 class DLUser extends \System\Datalayers\Main
 {
-
-    public function findById($id)
+    // DSS
+    public function findByParent($parent)
     {
+        $postData = array(
+            "parent" => $parent,
+            "type !=" => 10
+        );
+
+        $url = '/user/find';
+        $user = $this->curlAppsJson($url,$postData);
+
+        return $user['user'];
+    }
+
+    public function findFirstById($id)
+    {
+        $userData = false;
+
         $postData = array(
             "id" => $id
         );
         $url = '/user/'.$id;
-        $user = $this->curlAppsJson($url,$postData);
+        $users = $this->curlAppsJson($url,$postData);
 
-        return $user['user'][0];
+        foreach ($users['user'] as $user){
+            $userData = $user;
+        }
+
+        return $userData;
     }
+
+    public function findFirstByUsername($username)
+    {
+        $userData = false;
+
+        $postData = array(
+            "username" => $username
+        );
+
+        $url = '/user/find';
+        $users = $this->curlAppsJson($url,$postData);
+
+        foreach ($users['user'] as $user){
+            $userData = $user;
+        }
+
+        return $userData;
+    }
+
+    public function findFirstByNickname($nickname)
+    {
+        $userData = false;
+
+        $postData = array(
+            "nickname" => $nickname
+        );
+
+        $url = '/user/find';
+        $users = $this->curlAppsJson($url,$postData);
+
+        foreach ($users['user'] as $user){
+            $userData = $user;
+        }
+
+        return $userData;
+    }
+
+    public function filterInputAgentData($data){
+        $filterData = array();
+
+        if(isset($data["timezone"])) $filterData['tz'] = \intval($data['timezone']);
+        if(isset($data["code"])) $data['code'] = \implode($data['code']);
+
+        if(isset($data['agent'])){
+            $type = \intval($data['agent']->type) - 1;
+            $filterData['tp'] = $type;
+            $filterData['idp'] = \intval($data['agent']->id);
+        }
+        if(isset($data["agent_code"])){
+            $data['code'] = \filter_var(\strip_tags(\addslashes($data['agent_code'])), FILTER_SANITIZE_STRING);
+        }
+
+        if(isset($data["code"])) {
+            $filterData['cd'] = \filter_var(\strip_tags(\addslashes($data['code'])), FILTER_SANITIZE_STRING);
+            $filterData['un'] = \filter_var(\strip_tags(\addslashes($data['code'])), FILTER_SANITIZE_STRING);
+            $filterData['nn'] = \filter_var(\strip_tags(\addslashes($data['code'])), FILTER_SANITIZE_STRING);
+        }
+        if(isset($data["password"])) $filterData['ps'] = \filter_var(\strip_tags(\addslashes($data['password'])), FILTER_SANITIZE_STRING);
+        if(isset($data["username"])) $filterData['un'] = \filter_var(\strip_tags(\addslashes($data['username'])), FILTER_SANITIZE_STRING);
+        if(isset($data["nickname"])) $filterData['nn'] = \filter_var(\strip_tags(\addslashes($data['nickname'])), FILTER_SANITIZE_STRING);
+
+        if(isset($data["currency"])) $filterData['idcu'] = \intval($data['currency']);
+        if(isset($data["ip"])) $filterData['ip'] = \filter_var(\strip_tags(\addslashes($data['ip'])), FILTER_SANITIZE_STRING);
+
+        $filterData['st'] = (isset($data["status"])?\intval($data['status']):1);
+        $filterData['pst'] = (isset($data["parent_status"])?\intval($data['parent_status']):1);
+        $filterData['rn'] = (isset($data["reset_nickname"])?\intval($data['reset_nickname']):0);
+        $filterData['rp'] = (isset($data["reset_password"])?\intval($data['reset_password']):0);
+
+        $securityLibrary = new SecurityUser();
+        $filterData['ps'] = base64_encode($securityLibrary->enc_str($filterData['ps']));
+
+        return $filterData;
+    }
+
+    public function validateEditAgentData($data){
+
+        if($data['id'] == ""){
+            throw new \Exception('undefined_agent');
+        } elseif($data['timezone'] == ""){
+            throw new \Exception('timezone_empty');
+        }
+
+        return true;
+    }
+
+    public function setAgentData($data){
+        $agent = $this->getById($data['id']);
+
+        if(isset($data["timezone"]))$agent->setTimezone($data['timezone']);
+
+        if(!$agent->save()){
+            throw new \Exception('agent_edit_error');
+        }
+
+        return $agent;
+    }
+
+    public function create($postData){
+        $url = '/user/insert';
+        $user = $this->curlAppsJson($url, $postData);
+
+        return $user;
+    }
+
+    // END DSS
     public function getCompany()
     {
         $company = User::findByType(9);
@@ -232,6 +357,7 @@ class DLUser extends \System\Datalayers\Main
     }
 
     public function createAgent($data){
+
         $code = $data['code'];
         if (isset($data['agent_code'])) {
             $code = $data['agent_code'] . $data['code'];

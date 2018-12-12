@@ -13,9 +13,9 @@
                                 <label class="col-xs-9">
                                     <select name="provider" class="form-control">
                                         <option value="">-Choose One-</option>
-                                    {% for provider in providerGame %}
-                                        <option value="{{provider.id}}">{{provider.name}}</option>
-                                    {% endfor %}
+                                        {% for provider in providerGame %}
+                                            <option value="{{provider.id}}">{{provider.nm}}</option>
+                                        {% endfor %}
                                     </select>
                                 </label>
                             </div>
@@ -25,7 +25,7 @@
                                     <select name="category" id="category" class="form-control">
                                         <option value="">-Choose One-</option>
                                         {% for category in categoryGame %}
-                                        <option value="{{category.code}}">{{category.name}}</option>
+                                        <option value="{{category.cd}}">{{category.nm}}</option>
                                         {% endfor %}
                                     </select>
                                 </label>
@@ -38,7 +38,7 @@
                             <div class="form-group">
                                 <label class="col-xs-3 control-label">Name</label>
                                 <label class="col-xs-9">
-                                    <input type="text" name="main_name" class="form-control" id="main_name" placeholder="Name">
+                                    <input type="text" name="name" class="form-control" id="main_name" placeholder="Name">
                                 </label>
                             </div>
                             <div class="form-group">
@@ -47,7 +47,7 @@
                                     <input type="text" name="" id="result" class="form-control" placeholder="Code" readonly size="10">
                                 </label>
                                 <label class="col-xs-6">
-                                    <input type="text" name="main_code" class="form-control" id="main_code" placeholder="Code">
+                                    <input type="text" name="code" class="form-control" id="main_code" placeholder="Code">
                                 </label>
                             </div>
                             <div class="form-group"><div class="hr-line-dashed"></div></div>

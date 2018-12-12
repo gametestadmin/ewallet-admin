@@ -1,6 +1,7 @@
 <?php
 namespace Backoffice\Ajax\Controllers;
 
+use System\Datalayer\DLUser;
 use System\Model\User;
 
 use System\Datalayer\DLGame;
@@ -16,31 +17,24 @@ class AgentController extends \Backoffice\Controllers\BaseController
 
         $response = new \Phalcon\Http\Response();
         $response->setContentType("application/json");
-        $message = "";
 
         if ($this->request->getPost()) {
             $data = $this->request->getPost();
 
             if(isset($data['code'])){
                 $code = \implode($data['code']);
-                $user = User::findFirst(
-                    array(
-                        "conditions" => "username = :code: OR nickname = :code:",
-                        "bind" => array(
-                            "code" => $code
-                        )
-                    )
-                );
-                if($user == false) {
+
+                $dlUser = new DLUser();
+                $downlineUsername = $dlUser->findFirstByUsername($code);
+                $downlineNickname = $dlUser->findFirstByNickname($code);
+
+                if($downlineUsername == false && $downlineNickname == false){
                     $message = 0;
                     $response->setStatusCode(200);
                     $response->setContent($message);
-                }elseif($user == true){
+                }else{
                     $message = 1;
                     $response->setStatusCode(200);
-                    $response->setContent($message);
-                }else{
-                    $response->setStatusCode(404);
                     $response->setContent($message);
                 }
             }

@@ -122,12 +122,12 @@ class GlobalVariable
     );
 
     public static $agentType = array(
-        'god' => 0,
-        'company' => 9,
-        'super_senior_master_agent' => 8,
-        'senior_master_agent' => 7,
-        'master_agent' => 6,
-        'agent' => 5,
+        0 => 'god',
+        9 => 'company',
+        8 => 'super_senior_master_agent',
+        7 => 'senior_master_agent',
+        6 => 'master_agent',
+        5 => 'agent',
     );
 
     public function gameType($data){

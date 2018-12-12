@@ -4,20 +4,20 @@
                 <div class="col-xs-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title row">
-                            <h5>[{{category.name}}] Edit</h5>
+                            <h5>[{{category.nm}}] Edit</h5>
                         </div>
                         <div class="ibox-content row">
                             <form class="form-horizontal col-xs-12" action="{{url(router.getRewriteUri())}}" method="post">
                                 <div class="form-group">
                                     <label class="col-xs-3 control-label">Category Code</label>
                                     <label class="col-xs-9">
-                                        <input type="text" placeholder="Name" class="form-control" value="{{category.code}}" readonly>
+                                        <input type="text" placeholder="Name" class="form-control" value="{{category.cd}}" readonly>
                                     </label>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-xs-3 control-label">Category Name</label>
                                     <label class="col-xs-9">
-                                        <input type="text" name="category_name" id="name" placeholder="Name" class="form-control" value="{{category.name}}">
+                                        <input type="text" name="name" id="name" placeholder="Name" class="form-control" value="{{category.nm}}">
                                     </label>
                                 </div>
                                 <div class="form-group"><div class="hr-line-dashed"></div></div>

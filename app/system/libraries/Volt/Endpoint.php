@@ -7,21 +7,26 @@ use System\Library\General\GlobalVariable;
 class Endpoint
 {
     public static function endPointType($data){
-        $providerGameEndpointType = GlobalVariable::$providerGameEndpointType;
-        foreach ($providerGameEndpointType as $key => $value){
-            if($data == $value){
-                return $key;
+        if(substr($data,0,1) == 1){
+            $providerGameEndpoints = GlobalVariable::$transferProviderGameEndpointTypes;
+        }else{
+            $providerGameEndpoints = GlobalVariable::$seamlessProviderGameEndpointTypes;
+        }
+
+        foreach ($providerGameEndpoints as $providerGameEndpoint => $providerGameEndpointValue){
+            if($data == $providerGameEndpoint){
+                return $providerGameEndpointValue;
             }
         }
     }
 
     public static function endPointAuth($id){
         $dlProviderGameEndpointAuth = new DLProviderGameEndpointAuth;
-        $providerGameEndpointAuth = $dlProviderGameEndpointAuth->getById($id);
+        $providerGameEndpointAuth = $dlProviderGameEndpointAuth->findFirstById($id);
 
         if($id == 0){
             return "-";
         }
-        return $providerGameEndpointAuth->getAppId().":".$providerGameEndpointAuth->getAppSecret();
+        return $providerGameEndpointAuth['aid'].":".$providerGameEndpointAuth['asc'];
     }
 }

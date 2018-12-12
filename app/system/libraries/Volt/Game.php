@@ -8,6 +8,8 @@ class Game
     public static function gameName($data)
     {
         $game = \System\Model\Game::findFirstById($data);
+//        $url = '/game/'.$data;
+//        $game =
 
         return $game->getName();
     }
