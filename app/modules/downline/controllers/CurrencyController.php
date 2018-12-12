@@ -45,13 +45,14 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
                 if($security <> 1 && $security <> 3){
                     $this->errorFlash("cannot_access_security");
                     return $this->response->redirect("/".$this->_module."/list")->send();
+//                    return $this->response->redirect($previousPage->previousPage())->send();
                 }
 
-                $DLUserCurrency = new DLUserCurrency();
+                $dlUserCurrency = new DLUserCurrency();
 
-                $filterData = $DLUserCurrency->filterData($data);
+                $filterData = $dlUserCurrency->filterData($data);
 //                $DLUserCurrency->validateAdd($filterData);
-                $DLUserCurrency->create($filterData['idus'],$filterData['idcu']);
+                $dlUserCurrency->create($filterData['idus'],$filterData['idcu']);
 
                 $this->db->commit();
                 $this->flash->success('notification_downline_create_currency_success');
@@ -69,34 +70,33 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
     {
         $previousPage = new GlobalVariable();
 
-        $data["agent_id"] = $this->dispatcher->getParam("id");
-        $data["currency_id"] = $this->request->get("default");
+        $data["agent_id"] = \intval($this->dispatcher->getParam("id"));
+        $data["id"] = \intval($this->request->get("default"));
         $tab = $this->request->get("tab");
 
-        $userId = $data['agent_id'];
+        $dlUser = new DLUser();
 
-        $DLUser = new DLUser();
         $parent = $this->_user;
-        $agent = $DLUser->getById($userId);
+        $agent = $dlUser->findFirstById($data['agent_id']);
 
         $agentSecurity = new Agent();
-        $security = $agentSecurity->checkAgentAction($parent->getUsername(),$agent->getUsername());
+        $security = $agentSecurity->checkAgentAction($parent->username,$agent->sn);
 
         if($security <> 1 && $security <> 3){
             $this->errorFlash("cannot_access_security");
             return $this->response->redirect($previousPage->previousPage())->send();
-//            return $this->response->redirect("/agent/list")->send();
         }
 
-        if($this->_allowed == 0){
-            return $this->response->redirect($previousPage->previousPage()."#".$tab)->send();
-        }
+//        if($this->_allowed == 0){
+//            return $this->response->redirect($previousPage->previousPage()."#".$tab)->send();
+//        }
         try {
             $this->db->begin();
 
-            $DLUserCurrency = new DLUserCurrency();
+            $dlUserCurrency = new DLUserCurrency();
 
-            $DLUserCurrency->set($data);
+            $dlUserCurrency->setDefault($data['id'],$data['agent_id']);
+//            $dlUserCurrency->set($data);
 
             $this->db->commit();
             $this->flash->success('notification_downline_set_currency_success');
@@ -113,32 +113,31 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
     {
         $previousPage = new GlobalVariable();
 
-        $data["agent_id"] = $this->dispatcher->getParam("id");
-        $data["currency_id"] = $this->request->get("delete");
+        $data["agent_id"] = \intval($this->dispatcher->getParam("id"));
+        $data["id"] = \intval($this->request->get("delete"));
         $tab = $this->request->get("tab");
 
-        $DLUser = new DLUser();
+        $dlUser = new DLUser();
         $parent = $this->_user;
-        $agent = $DLUser->getById($data['agent_id']);
+        $agent = $dlUser->findFirstById($data['agent_id']);
 
         $agentSecurity = new Agent();
-        $security = $agentSecurity->checkAgentAction($parent->getUsername(),$agent->getUsername());
+        $security = $agentSecurity->checkAgentAction($parent->username,$agent->sn);
 
         if($security <> 1 && $security <> 3){
             $this->errorFlash("cannot_access_security");
             return $this->response->redirect($previousPage->previousPage())->send();
-//            return $this->response->redirect("/agent/list")->send();
         }
 
-        if($this->_allowed == 0){
-            return $this->response->redirect($previousPage->previousPage()."#".$tab)->send();
-        }
+//        if($this->_allowed == 0){
+//            return $this->response->redirect($previousPage->previousPage()."#".$tab)->send();
+//        }
         try {
             $this->db->begin();
 
-            $DLUserCurrency = new DLUserCurrency();
+            $dlUserCurrency = new DLUserCurrency();
 
-            $DLUserCurrency->delete($data);
+            $dlUserCurrency->delete($data);
 
             $this->db->commit();
             $this->flash->success('notification_downline_remove_currency_success');

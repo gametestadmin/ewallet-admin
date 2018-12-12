@@ -284,7 +284,7 @@ class DLGame extends Main{
             $this->set($postData);
 
             //change all childs parent status
-            $this->setChildParentStatus($child['id'], $child['st'], $postData['pst']);
+            $this->setChildParentStatus($child['id'], $child['st'], $childParentStatus);
         }
         return true;
     }

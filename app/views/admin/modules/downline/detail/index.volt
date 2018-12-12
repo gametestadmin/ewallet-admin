@@ -115,7 +115,7 @@
                                                 <label>
                                                     <a href="{{url('javascript:history.go(-1)')}}" class="btn btn-sm btn-danger">{{translate['button_back']}}</a>
                                                 </label>
-                                                {% if user.id == agent.idp %}
+                                                {% if realParent == 1 or realParent == 3 %}
                                                 <label>
                                                     <a href="{{url('/'~module~'/edit/'~agent.id)}}" class="btn btn-sm btn-info">{{translate['button_edit']}}</a>
                                                 </label>

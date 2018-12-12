@@ -13,12 +13,11 @@ class EditController extends \Backoffice\Controllers\ProtectedController
 
         $agentId = $this->dispatcher->getParam("id");
 
-        $DLUser = new DLUser();
+        $dlUser = new DLUser();
         $globalVariable = new GlobalVariable();
 
         $parent = $this->_user;
-        $agent = $DLUser->getById($agentId);
-//        $agent = $DLUser->findById($agentId);
+        $agent = $dlUser->findFirstById($agentId);
         $gmt = $globalVariable->getGmt();
 
         if(!$agent){
@@ -28,8 +27,7 @@ class EditController extends \Backoffice\Controllers\ProtectedController
 
         $agentSecurity = new Agent();
 
-        $security = $agentSecurity->checkAgentAction($parent->getUsername(),$agent->getUsername());
-//        $security = $agentSecurity->checkAgentAction($parent->username,$agent->username);
+        $security = $agentSecurity->checkAgentAction($parent->username,$agent->sn);
         if($security <> 1 && $security <> 3){
             $this->errorFlash("cannot_access_security");
             return $this->response->redirect("/".$this->_module."/list")->send();
@@ -41,20 +39,15 @@ class EditController extends \Backoffice\Controllers\ProtectedController
                 $data = $this->request->getPost();
 
                 $data['id'] = $agentId;
-                $data['agent'] = $this->_user;
+//                $data['agent'] = $this->_user;
 
-                $DLUser = new DLUser();
-                $filterData = $DLUser->filterInputAgent($data);
-                $DLUser->validateEditAgent($filterData);
-                $user = $DLUser->setAgent($filterData);
-
-//                $filterData = $DLUser->filterInputAgentData($data);
-//                $DLUser->validateEditAgentData($filterData);
-//                $user = $DLUser->setAgentData($filterData);
+                $filterData = $dlUser->filterInputAgentData($data);
+                $dlUser->validateEditAgentData($filterData);
+                $dlUser->set($filterData);
 
                 $this->db->commit();
                 $this->flash->success('notification_downline_set_success');
-                return $this->response->redirect("/".$this->_module."/detail/".$user->getId())->send();
+                return $this->response->redirect("/".$this->_module."/detail/".$agent['id'])->send();
             } catch (\Exception $e) {
                 $this->db->rollback();
                 $this->flash->error($e->getMessage());
@@ -64,6 +57,7 @@ class EditController extends \Backoffice\Controllers\ProtectedController
 
         $view->agent = $agent;
         $view->gmt = $gmt;
+        $view->realParent = $security;
 
         \Phalcon\Tag::setTitle("Downline System - ".$this->_website->title);
     }

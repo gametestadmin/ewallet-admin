@@ -36,6 +36,7 @@ class DLUserCurrency extends \System\Datalayers\Main {
     }
 
     public function findAgentCurrency($agent,$currency){
+        $userCurrency = false;
         // get user currency by user(us) and currency(cr) return all user currency data
         $postData = array(
             'user_id' => $agent,
@@ -43,13 +44,17 @@ class DLUserCurrency extends \System\Datalayers\Main {
         );
 
         $url = '/usercurr/find';
-        $userCurrency = $this->curlAppsJson($url,$postData);
+        $userCurrencyRecords = $this->curlAppsJson($url,$postData);
 
-        return $userCurrency['uscu'];
+        foreach ($userCurrencyRecords['uscu'] as $userCurrencyRecord){
+            $userCurrency = $userCurrencyRecord;
+        }
+
+        return $userCurrency;
     }
 
     public function findFirstAgentCurrency($agent,$currency){
-        $userCurrencyData = false;
+        $userCurrency = false;
 
         $postData = array(
             'user_id' => $agent,
@@ -57,19 +62,20 @@ class DLUserCurrency extends \System\Datalayers\Main {
         );
 
         $url = '/usercurr/find';
-        $userCurrencies = $this->curlAppsJson($url,$postData);
-        foreach ($userCurrencies['uscu'] as $userCurrency){
-            $userCurrencyData = $userCurrency;
+        $userCurrencyRecords = $this->curlAppsJson($url,$postData);
+        foreach ($userCurrencyRecords['uscu'] as $userCurrencyRecord){
+            $userCurrency = $userCurrencyRecord;
         }
 
-        return $userCurrencyData;
+        return $userCurrency;
     }
 
-    public function findAllByAgent($agent,$status){
+    public function findAllByAgent($agent,$status,$currencyStatus){
         // find user currency by user and status return all user currency data
         $postData = array(
             'user_id' => $agent,
-            'status' => $status
+            'status' => $status,
+            'currency_status' => $currencyStatus
         );
 
         $url = '/usercurr/find';
@@ -133,6 +139,51 @@ class DLUserCurrency extends \System\Datalayers\Main {
         return $userCurrencies['uscu'];
     }
 
+    public function findByAgent($agent){
+        $userCurrency = false;
+
+        $postData = array(
+            "user_id" => $agent,
+        );
+
+        $url = '/usercurr/find';
+        $userCurrencyRecords = $this->curlAppsJson($url,$postData);
+
+        foreach ($userCurrencyRecords['uscu'] as $userCurrencyRecord){
+            $userCurrency = $userCurrencyRecord;
+        }
+        return $userCurrency;
+    }
+
+    public function findFirstById($id){
+        $userCurrency = false;
+        $postData = array(
+            "id" => $id,
+        );
+
+        $url = '/usercurr/'.$postData['id'];
+        $userCurrencyRecords = $this->curlAppsJson($url,$postData);
+        foreach ($userCurrencyRecords['uscu'] as $userCurrencyRecord){
+            $userCurrency = $userCurrencyRecord;
+        }
+
+        return $userCurrency;
+    }
+    public function findByUserCurrencyDefault($user){
+        $userCurrency = false;
+        $postData = array(
+            "user_id" => $user,
+            "default_val" => 1
+        );
+        $url = '/usercurr/find';
+        $userCurrencyRecords = $this->curlAppsJson($url,$postData);
+
+        foreach ($userCurrencyRecords['uscu'] as $userCurrencyRecord){
+            $userCurrency = $userCurrencyRecord;
+        }
+        return $userCurrency;
+    }
+
     public function filterData($data){
         $filterData = array();
 
@@ -144,36 +195,22 @@ class DLUserCurrency extends \System\Datalayers\Main {
         return $filterData;
     }
 
-    public function findByAgent($agent){
-        $agentCurrency = false;
-        $postData = array(
-            "idus" => $agent,
-        );
-
-        $url = '/usercurr/find';
-        $agentCurrencyRecords = $this->curlAppsJson($url,$postData);
-        foreach ($agentCurrencyRecords['uscu'] as $agentCurrencyRecord){
-            $agentCurrency = $agentCurrencyRecord;
-        }
-        return $agentCurrency;
-    }
-
     public function create($agent,$currency){
-        $agentCurrency = $this->findFirstAgentCurrency($agent,$currency);
+        $userCurrency = $this->findFirstAgentCurrency($agent,$currency);
 
-        if($agentCurrency <> false){
+        if($userCurrency <> false){
             $postData = array(
-                "id" => $agentCurrency['id'],
+                "id" => $userCurrency['id'],
                 "st" => 1
             );
-            $url = '/usercurr/'.$postData['id'].'update';
+            $url = '/usercurr/'.$postData['id'].'/update';
             $this->curlAppsJson($url,$postData);
 
         }else {
-            $agentCurrency = $this->findByAgent($agent);
+            $userCurrency = $this->findByAgent($agent);
 
             $default = 0;
-            if($agentCurrency == false){
+            if($userCurrency == false){
                 $default = 1;
             }
             $postData = array(
@@ -190,33 +227,50 @@ class DLUserCurrency extends \System\Datalayers\Main {
         return true;
     }
 
-    public function set($postData){
-        $url = '/usercurr/'.$postData['id'].'/update';
-        $createUserCurrency = $this->curlAppsJson($url,$postData);
-
-        return true;
-        die;
-        $userId = $data["agent_id"];
-        $userCurrencyId = $data["currency_id"];
-
-        $userCurrency = $this->getByUserAndId($userId,$userCurrencyId);
-        if($userCurrency->getStatus() == 0){
+    public function setDefault($id,$user){
+        $userCurrency = $this->findFirstById($id);
+        if($userCurrency->st == 0){
             throw new \Exception('error_set_default_currency');
         }
+        $currencyUserCurrencyDefault = $this->findByUserCurrencyDefault($user);
 
-        $currentUserCurrency = $this->getByUserAndDefault($userId,$userCurrencyId);
-        $currentUserCurrency->setDefault(0);
+        if($currencyUserCurrencyDefault) {
+            $postData = array(
+                "id" => $currencyUserCurrencyDefault['id'],
+                "df" => 0
+            );
 
-        if($currentUserCurrency->save()){
-            $userCurrency->setDefault(1);
-
-            if(!$userCurrency->save()){
-                throw new \Exception('error_set_currency');
-            }
-        }else{
-            throw new \Exception('error_set_currency');
+            $this->set($postData);
         }
-        return $userCurrency;
+
+        $postData = array(
+            "id" => $id,
+            "df" => 1
+        );
+
+        $this->set($postData);
+
+        return true;
+    }
+
+    public function set($postData){
+
+        $url = '/usercurr/'.$postData['id'].'/update';
+        $this->curlAppsJson($url,$postData);
+
+        return true;
+    }
+
+    public function delete($postData){
+        $userCurrency = $this->findFirstById($postData['id']);
+        if($userCurrency['df'] == 1 || $userCurrency['st'] == 0){
+            throw new \Exception('error_remove_currency');
+        }
+
+        $url = '/usercurr/'.$postData['id'].'/delete';
+        $this->curlAppsJson($url,$postData);
+
+        return true;
     }
 
     // END DSS
@@ -464,11 +518,9 @@ class DLUserCurrency extends \System\Datalayers\Main {
             throw new \Exception('error_set_currency');
         }
         return $userCurrency;
-
-
     }
 
-    public function delete($data){
+    public function deletes($data){
         $userId = $data["agent_id"];
         $userCurrencyId = $data["currency_id"];
 

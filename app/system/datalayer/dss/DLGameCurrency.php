@@ -115,16 +115,16 @@ class DLGameCurrency extends \System\Datalayers\Main{
         foreach ($gameCurrencies as $gameCurrency){
             if ($gameCurrency['df'] == 1){
                 $data = array(
+                    'id' => $gameCurrency['id'],
                     'df' => 0
                 );
-                $url = '/gc/'.$gameCurrency['id'].'/update/';
             }else{
                 $data = array(
+                    'id' => $postData['id'],
                     'df' => 1
                 );
-                $url = '/gc/'.$postData['id'].'/update/';
             }
-            $this->curlAppsJson($url,$data);
+            $this->set($data);
         }
 
         return true;
@@ -132,7 +132,7 @@ class DLGameCurrency extends \System\Datalayers\Main{
 
     public function set($postData){
         $url = '/gc/'.$postData['id'].'/update/';
-        $gameCurrencies = $this->curlAppsJson($url,$postData);
+        $this->curlAppsJson($url,$postData);
 
         return true;
     }

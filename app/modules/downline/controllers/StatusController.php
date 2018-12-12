@@ -17,13 +17,13 @@ class StatusController extends \Backoffice\Controllers\ProtectedController
         $module = $this->router->getModuleName();
         $controller = $this->router->getControllerName();
 
-        $currentId = explode("|",$currentId);
-        $id = $currentId[0];
-        $status = $currentId[1];
+        $currentId = \explode("|",$currentId);
+        $id = \intval($currentId[0]);
+        $status = \intval($currentId[1]);
 
-        $DLUser = new DLUser();
+        $dlUser = new DLUser();
         $parent = $this->_user;
-        $agent = $DLUser->getById($id);
+        $agent = $dlUser->findFirstById($id);
 
         if(!isset($currentId) || !$agent){
             $this->flash->error("notification_undefined_downline");
@@ -32,28 +32,16 @@ class StatusController extends \Backoffice\Controllers\ProtectedController
 
         $agentSecurity = new Agent();
 
-        $security = $agentSecurity->checkAgentAction($parent->getUsername(),$agent->getUsername());
+        $security = $agentSecurity->checkAgentAction($parent->username,$agent->sn);
         if($security <> 1 && $security <> 3){
             $this->errorFlash("cannot_access_security");
             return $this->response->redirect("/".$this->_module."/list")->send();
         }
 
-//        $parentUsername = \substr($user->getUsername(), 0, \strlen($parent->getUsername()));
-//
-//        if($parent->getId() != $user->getParent()){
-//            $this->errorFlash("cannot_access");
-//            return $this->response->redirect("/agent/list")->send();
-//        }
-//
-//        if(($parent->getType() <> 0 && $parent->getType() <> 9) && $parent->getUsername() <> $parentUsername) {
-//            $this->errorFlash("cannot_access");
-//            return $this->response->redirect("/agent/list")->send();
-//        }
-
         try {
             $this->db->begin();
 
-            $DLUser->setAgentStatus($id,$status);
+            $dlUser->setAgentStatus($id,$status);
 
             $this->db->commit();
             $this->flash->success("notification_downline_set_status");

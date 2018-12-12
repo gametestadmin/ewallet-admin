@@ -17,8 +17,13 @@ class UserCurrencyWidget extends BaseWidget
         $userId = $this->params["id"];
 
         $DLUserCurrency = new DLUserCurrency();
-//        $userCurrency = $DLUserCurrency->getAllByUser($userId);
-        $userCurrency = $DLUserCurrency->findAllByAgent($userId,1);
+        $userCurrencies = $DLUserCurrency->findAllByAgent($userId,1,1);
+
+//        $userCurrency = array();
+//        foreach ($userCurrencies as $userCurrencyKey => $userCurrencyValue){
+//            $userCurrency[$userCurrencyKey] = $userCurrencyValue;
+//        }
+
 
 //        $paginator = new \Phalcon\Paginator\Adapter\Model(
 //            array(
@@ -38,7 +43,7 @@ class UserCurrencyWidget extends BaseWidget
             'limit' => $limit,
             'loginId' => $this->params["loginId"],
             'agentParent' => $this->params["agentParent"],
-            'user_currency' => $userCurrency,
+            'user_currency' => $userCurrencies,
         ]);
     }
 }

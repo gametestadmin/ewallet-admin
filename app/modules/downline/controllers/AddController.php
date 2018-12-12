@@ -34,17 +34,6 @@ class AddController extends \Backoffice\Controllers\ProtectedController
         foreach(range('A','Z') as $v){
             $code[] = $v;
         }
-//        $dlUserAclResource = new DLUserAclResource();
-//        $dlAclRole = new DLAclRole();
-//        $aclRoles = $dlAclRole->findAll(6);
-//        foreach ($aclRoles as $aclRole){
-//            $postData = array(
-//                "tp" => 5,
-//                "idusaclrs" => $aclRole['idusaclrs']
-//            );
-//            $dlAclRole->create($postData);
-//        }
-//        die;
 
         if ($this->request->getPost()) {
 
@@ -53,6 +42,10 @@ class AddController extends \Backoffice\Controllers\ProtectedController
                 $data = $this->request->getPost();
 
                 $data['agent'] = $this->_user;
+                $data['reset_nickname'] = 1;
+                $data['reset_password'] = 1;
+                $data['status'] = 1;
+                $data['parent_status'] = 1;
 
                 $dlUser = new DLUser();
                 $filterData = $dlUser->filterInputAgentData($data);

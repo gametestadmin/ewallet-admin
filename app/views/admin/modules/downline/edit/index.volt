@@ -4,7 +4,7 @@
         <div class="col-xs-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title row">
-                    <h5>[{{agent.username}}] {{translate['title_text_edit']}}</h5>
+                    <h5>[{{agent.sn}}] {{translate['title_text_edit']}}</h5>
                 </div>
                 <div class="ibox-content row">
                     <div class="panel-body">
@@ -12,7 +12,7 @@
                             <div class="form-group">
                                 <label class="col-xs-3 control-label">{{translate['form_username']}}</label>
                                 <label class="col-xs-9">
-                                    <input type="text" placeholder="{{translate['placeholder_username']}}" class="form-control" value="{{agent.username}}" readonly>
+                                    <input type="text" placeholder="{{translate['placeholder_username']}}" class="form-control" value="{{agent.sn}}" readonly>
                                 </label>
                             </div>
                             <div class="form-group">
@@ -30,7 +30,7 @@
                             <div class="form-group">
                                 <label class="col-xs-3 control-label">{{translate['form_agent']}}</label>
                                 <label class="col-xs-9">
-                                    <input type="text" placeholder="{{translate['placeholder_agent']}}" class="form-control" value="{{agent.type|agentType}}" readonly>
+                                    <input type="text" placeholder="{{translate['placeholder_agent']}}" class="form-control" value="{{translate[agent.tp|agentType]}}" readonly>
                                 </label>
                             </div>
                             <div class="form-group">
@@ -44,7 +44,7 @@
                                             {% elseif gmtTime > 0%}
                                             {% set gmtDisplay = '+'~gmtTime %}
                                             {% endif %}
-                                            <option value="{{gmtTime}}" {% if gmtTime == agent.timezone %}selected{% endif %}>GMT {{gmtDisplay}}</option>
+                                            <option value="{{gmtTime}}" {% if gmtTime == agent.tz %}selected{% endif %}>GMT {{gmtDisplay}}</option>
                                         {% endfor %}
                                     </select>
                                 </label>
@@ -55,7 +55,7 @@
                                     <label>
                                         <a href="{{url('javascript:history.go(-1)')}}" class="btn btn-sm btn-danger">{{translate['button_back']}}</a>
                                     </label>
-                                    {% if user.id == agent.parent %}
+                                    {% if realParent == 1 or realParent == 3 %}
                                     <label>
                                         <input type="submit" name="submit" class="btn btn-sm btn-info" value="{{translate['button_edit']}}">
                                     </label>

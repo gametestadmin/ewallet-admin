@@ -76,7 +76,9 @@ class DLUser extends \System\Datalayers\Main
 
     public function filterInputAgentData($data){
         $filterData = array();
+        $securityLibrary = new SecurityUser();
 
+        if(isset($data["id"])) $filterData['id'] = \intval($data['id']);
         if(isset($data["timezone"])) $filterData['tz'] = \intval($data['timezone']);
         if(isset($data["code"])) $data['code'] = \implode($data['code']);
 
@@ -98,41 +100,34 @@ class DLUser extends \System\Datalayers\Main
         if(isset($data["username"])) $filterData['un'] = \filter_var(\strip_tags(\addslashes($data['username'])), FILTER_SANITIZE_STRING);
         if(isset($data["nickname"])) $filterData['nn'] = \filter_var(\strip_tags(\addslashes($data['nickname'])), FILTER_SANITIZE_STRING);
 
+        if(isset($filterData['ps'])) \base64_encode($securityLibrary->enc_str($filterData['ps']));
+
+        if(isset($data['reset_nickname'])) $filterData['rn'] = \intval($data['reset_nickname']);
+        if(isset($data['reset_password'])) $filterData['rp'] = \intval($data['reset_password']);
+        if(isset($data['status'])) $filterData['st'] = \intval($data['status']);
+        if(isset($data['parent_status'])) $filterData['pst'] = \intval($data['parent_status']);
+
         if(isset($data["currency"])) $filterData['idcu'] = \intval($data['currency']);
         if(isset($data["ip"])) $filterData['ip'] = \filter_var(\strip_tags(\addslashes($data['ip'])), FILTER_SANITIZE_STRING);
-
-        $filterData['st'] = (isset($data["status"])?\intval($data['status']):1);
-        $filterData['pst'] = (isset($data["parent_status"])?\intval($data['parent_status']):1);
-        $filterData['rn'] = (isset($data["reset_nickname"])?\intval($data['reset_nickname']):0);
-        $filterData['rp'] = (isset($data["reset_password"])?\intval($data['reset_password']):0);
-
-        $securityLibrary = new SecurityUser();
-        $filterData['ps'] = base64_encode($securityLibrary->enc_str($filterData['ps']));
 
         return $filterData;
     }
 
     public function validateEditAgentData($data){
-
         if($data['id'] == ""){
             throw new \Exception('undefined_agent');
-        } elseif($data['timezone'] == ""){
+        } elseif($data['tz'] == ""){
             throw new \Exception('timezone_empty');
         }
 
         return true;
     }
 
-    public function setAgentData($data){
-        $agent = $this->getById($data['id']);
+    public function set($postData){
+        $url = '/user/'.$postData['id'].'/update';
+        $this->curlAppsJson($url,$postData);
 
-        if(isset($data["timezone"]))$agent->setTimezone($data['timezone']);
-
-        if(!$agent->save()){
-            throw new \Exception('agent_edit_error');
-        }
-
-        return $agent;
+        return true;
     }
 
     public function create($postData){
@@ -140,6 +135,52 @@ class DLUser extends \System\Datalayers\Main
         $user = $this->curlAppsJson($url, $postData);
 
         return $user;
+    }
+
+    public function setAgentStatus($id, $status){
+        $this->setUserStatus($id, $status);
+
+        return true;
+    }
+
+    protected function setUserStatus($id, $status){
+        $postData = array(
+            "id" => $id,
+            "st" => $status
+        );
+        $this->set($postData);
+
+        $user = $this->findFirstById($id);
+        $this->setChildParentStatus($id, $postData['st'], $user['pst']);
+
+        return true;
+    }
+
+    protected function setChildParentStatus($parentId, $parentStatus, $grandParentStatus){
+        $childParentStatus = 1;
+        if($grandParentStatus == 0 || $parentStatus == 0){
+            $childParentStatus = 0;
+        }else if($grandParentStatus == 2 || $parentStatus == 2){
+            $childParentStatus = 2;
+        }
+
+        //get childs
+        $childs = $this->findByParent($parentId);
+
+        foreach ($childs as $child){
+            $postData = array(
+                "id" => $child['id'],
+                // TODO :: temporary pt harus nya pst
+//                "pt" => $childParentStatus
+                "pst" => $childParentStatus
+            );
+            $this->set($postData);
+
+            //change all childs parent status
+            $this->setChildParentStatus($child['id'], $child['ust'], $childParentStatus);
+        }
+        return true;
+
     }
 
     // END DSS
@@ -400,49 +441,49 @@ class DLUser extends \System\Datalayers\Main
         return $agent;
     }
 
-    public function setAgentStatus($id, $status){
-        $this->setUserStatus($id, $status);
-
-        return true;
-    }
-
-    protected function setUserStatus($id, $status){
-//        $user = User::findFirstById($id);
-        $user = $this->getById($id);
-        $user->setStatus($status);
-        $user->save();
-
-
-        // get agent game
-
-        $this->setChildParentStatus($id, $status, $user->getParentStatus());
-
-        return true;
-    }
-
-//    protected function setChildParentStatus($id, $status){
-    protected function setChildParentStatus($parentId, $parentStatus, $grandParentStatus){
-        $childParentStatus = 1;
-        if($grandParentStatus == 0 || $parentStatus == 0){
-            $childParentStatus = 0;
-        }else if($grandParentStatus == 2 || $parentStatus == 2){
-            $childParentStatus = 2;
-        }
-
-        //get childs
-//        $childs = User::findByParent($parentId);
-        $childs = $this->getByParent($parentId);
-
-        foreach ($childs as $child){
-            $child->setParentStatus($childParentStatus);
-            $child->save();
-
-            //change all childs parent status
-            $this->setChildParentStatus($child->getId(), $child->getStatus(), $childParentStatus);
-        }
-
-        return true;
-    }
+//    public function setAgentStatus($id, $status){
+//        $this->setUserStatus($id, $status);
+//
+//        return true;
+//    }
+//
+//    protected function setUserStatus($id, $status){
+////        $user = User::findFirstById($id);
+//        $user = $this->getById($id);
+//        $user->setStatus($status);
+//        $user->save();
+//
+//
+//        // get agent game
+//
+//        $this->setChildParentStatus($id, $status, $user->getParentStatus());
+//
+//        return true;
+//    }
+//
+////    protected function setChildParentStatus($id, $status){
+//    protected function setChildParentStatus($parentId, $parentStatus, $grandParentStatus){
+//        $childParentStatus = 1;
+//        if($grandParentStatus == 0 || $parentStatus == 0){
+//            $childParentStatus = 0;
+//        }else if($grandParentStatus == 2 || $parentStatus == 2){
+//            $childParentStatus = 2;
+//        }
+//
+//        //get childs
+////        $childs = User::findByParent($parentId);
+//        $childs = $this->getByParent($parentId);
+//
+//        foreach ($childs as $child){
+//            $child->setParentStatus($childParentStatus);
+//            $child->save();
+//
+//            //change all childs parent status
+//            $this->setChildParentStatus($child->getId(), $child->getStatus(), $childParentStatus);
+//        }
+//
+//        return true;
+//    }
 
     public function checkAgent($data, $id = null){
         if(isset($id)){

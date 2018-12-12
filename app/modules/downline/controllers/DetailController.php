@@ -22,7 +22,7 @@ class DetailController extends \Backoffice\Controllers\ProtectedController
         // dss use
         $parent = $this->_user;
         $agent = $DLUser->findFirstById($agentId);
-        $agentCurrency = $DLUserCurrency->findAllByAgent($agentId,1);
+        $agentCurrency = $DLUserCurrency->findAllByAgent($agentId,1,1);
         $agentCurrencyData = count($agentCurrency);
 
         if(!$agent){

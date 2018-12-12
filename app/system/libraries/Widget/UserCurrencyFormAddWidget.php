@@ -15,14 +15,8 @@ class UserCurrencyFormAddWidget extends BaseWidget
         $parentId = $this->params['loginId'];
         $agentId = $this->params['agentId'];
 
-        $parentCurrencies = $dlUserCurrency->findAllByAgent($parentId,1);
-        $agentCurrencies = $dlUserCurrency->findAllByAgent($agentId,1);
-
-//        var_dump($parentId);
-//        var_dump($parentCurrencies);
-//        var_dump($agentId);
-//        var_dump($agentCurrencies);
-//        die;
+        $parentCurrencies = $dlUserCurrency->findAllByAgent($parentId,1,1);
+        $agentCurrencies = $dlUserCurrency->findAllByAgent($agentId,1,1);
 
         $currencyList = array();
 
