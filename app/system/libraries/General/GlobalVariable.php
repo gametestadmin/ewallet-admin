@@ -31,6 +31,12 @@ class GlobalVariable
         'https://' => 1,
     );
 
+    public static $TransactionType = array(
+        0 => "all",
+        1 => "deposit",
+        2 => "withdraw",
+    );
+
     public static $providerGameEndpointType = array(
         'Login' => 1,
         'Register' => 2,

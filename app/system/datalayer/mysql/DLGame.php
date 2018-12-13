@@ -2,8 +2,11 @@
 namespace System\Datalayer;
 
 use System\Model\Game;
+use Backoffice\Controllers\BaseController;
 
-class DLGame{
+class DLGame extends BaseController
+{
+
     public function getAll($type){
         $game = Game::find(
             array(
@@ -329,6 +332,27 @@ class DLGame{
         return true;
     }
 
+    public function getGameCategory(){
+        $sql = 'SELECT * FROM api.game WHERE type = 1 AND status = 1 ';
+        $gamelist = $this->postgre->query( $sql )->fetchAll();
+        $game = array();
+        foreach( $gamelist as $key => $value ){
+            $game[$value['id']] = $value['name'];
+        }
+
+        return $gamelist ;
+    }
+
+    public function getAllinArray(){
+        $sql = 'SELECT * FROM api.game WHERE status = 1 ';
+        $gamelist = $this->postgre->query( $sql )->fetchAll();
+        $game = array();
+        foreach( $gamelist as $key => $value ){
+            $game[$value['id']] = $value['name'];
+        }
+        return $game ;
+    }
+
     protected function setGameStatus($id, $status){
         $game = $this->getById($id);
         $game->setStatus($status);
@@ -359,4 +383,9 @@ class DLGame{
         }
         return true;
     }
+
+
+
+
+
 }

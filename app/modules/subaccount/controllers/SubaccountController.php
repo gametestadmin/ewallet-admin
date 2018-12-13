@@ -4,6 +4,7 @@ namespace Backoffice\Subaccount\Controllers;
 use System\Datalayer\DLUser;
 use System\Datalayer\DLUserAclAccess;
 use System\Datalayer\DLUserAclResource;
+use System\Datalayer\DLUserWhitelistIp;
 use System\Library\User\General ;
 use System\Library\Security\Validation ;
 use System\Library\General\GlobalVariable;
@@ -106,6 +107,9 @@ class SubaccountController extends \Backoffice\Controllers\ProtectedController
                         $access = $generalLibrary->setSubaccountDefault($aclObject , $user->getId());
                         //TODO :: dont insert subaccount, and module user default = 1
 
+                        $whitelist = new DLUserWhitelistIp();
+                        $data['ip'] = '*';
+                        $whitelist->create($user->getId() , $data['ip']);
 
                         $this->db->commit();
                         $this->flash->success("subaccount_add_successful");

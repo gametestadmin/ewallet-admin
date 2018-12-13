@@ -153,14 +153,21 @@ $messages = array(
 
 
     //sidebar
-    "user_player_list" => "player list",
-
     "subaccount" => "subaccount",
     "subaccount_list" => "list",
     "subaccount_add" => "add",
     "subaccount_edit" => "edit",
     "subaccount_detail" => "detail",
     "subaccount_status" => "status",
+
+    "player_player_list" => "player list",
+    "player_game_log" => "game access log",
+    "player_transaction_log" => "transaction log",
+    "player_statement_log" => "statement log",
+
+    "report_statement_log" => "statement log",
+    "report_game_access_log_list" => "game access",
+    "report_transaction_history_list" => "transaction log",
 
     "currency_list" => "currency",
     "currency_add" => "add",
@@ -218,7 +225,8 @@ $messages = array(
     "super_senior_master_agent" => "Super Senior Master Agent",
     "senior_master_agent" => "Senior Master Agent",
     "master_agent" => "Master Agent",
-    "agent" => "Agent",
+    "agent" => "agent",
+    "downline" => "downline",
 //    "subaccount" => "subaccount",
 
     //language

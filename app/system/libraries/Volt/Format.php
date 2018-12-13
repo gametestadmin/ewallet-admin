@@ -10,7 +10,12 @@ class Format
 
     public static function number($amount)
     {
-        return number_format($amount, 0, ',', '.');
+        return number_format($amount, 0, '.', ',');
+    }
+
+    public static function number2dec($amount)
+    {
+        return number_format($amount, 2, '.', ',');
     }
 
     public static function percentage($amount)

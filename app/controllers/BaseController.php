@@ -88,10 +88,12 @@ class BaseController extends Controller
 
     protected function _setBaseUri()
     {
+//        echo $_SERVER['HTTP_HOST'];die;
         $this->view->url = $this->config->url->base;
         $this->view->base_url = $this->config->url->base;
-        $this->view->assets_url = $this->config->url->assets;
         $this->view->media_url = $this->config->url->media;
+        $this->view->assets_url = 'http://'.$_SERVER['HTTP_HOST'].'/assets/';
+//        $this->view->assets_url = $this->config->url->assets;
     }
 
     protected function _setLanguage()
