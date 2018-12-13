@@ -60,6 +60,9 @@ class IndexController extends \Backoffice\Controllers\BaseController
 //                $DLuser->setUserPassword($user->id , $password);
 //                echo "<pre>";
 //                var_dump($password);
+//                var_dump(json_encode($password));
+//                var_dump(json_last_error_msg());
+//                die;
 //                var_dump("something");
 
                 //check Captcha
@@ -73,6 +76,18 @@ class IndexController extends \Backoffice\Controllers\BaseController
                 //DSS format
                 //TODO :: skip password first, cause not yet decided which type in postgresql
                 if( $password === $user->ps && $captchaTime && $captcha ){
+                    // check ip allowed
+                    $security = new \System\Library\Security\General();
+                    $ip = $security->getIP() ;
+
+                    $userGeneral = new \System\Library\User\General();
+                    $ipallowed = $userGeneral->checkIP($user->id , $ip);
+                    if(!$ipallowed){
+                        $this->errorFlash($view->translate['ip_not_allowed']);
+                        return $this->response->redirect("/login");
+                    }
+
+
                     // if Type == 10, subaccount, $user fill with parent, session sidebar and acl filled with its own acl
                     if($user->tp == 10) {
                         //TODO :: save and check to redis
@@ -91,7 +106,8 @@ class IndexController extends \Backoffice\Controllers\BaseController
                         $this->session->set('sidebar', $sideBar);
 
                         $this->session->set('real_user', $user);
-                        $user = $DLuser->getById($user->getParent());
+                        $DLuser = new DLUser() ;
+                        $user = $DLuser->getById($user->idp);
                         $this->session->set('user', $user);
                     } else {
                         $this->session->set('user', $user);

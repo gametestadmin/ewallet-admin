@@ -37,6 +37,8 @@ class BaseController extends Controller
         $this->_setLanguage();
         $this->_setNavigation();
         $this->_checkResetPassword();
+
+
 //        $this->_checkResetNickname();
 //        $this->_checkACL();
 
@@ -151,9 +153,7 @@ class BaseController extends Controller
         if($this->session->has('sidebar')){
             $this->view->navigationlist = $this->session->get('sidebar') ;
         }
-//        echo "<pre>";
-//        var_dump($this->view->navigationlist);
-//        die;
+
 
     }
 

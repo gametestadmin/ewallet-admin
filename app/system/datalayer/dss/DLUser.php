@@ -45,6 +45,21 @@ class DLUser extends \System\Datalayers\Main
     }
 
 
+    public function getById($user)
+    {
+        $postData = array(
+            'id' => $user ,
+            'status' => 1 ,
+        );
+        $url = '/user/find';
+        $result = $this->curlAppsJson( $url , $postData);
+
+        if(isset($result->user) && !empty($result->user) && isset($result->user->{0})){
+            return $result->user->{0};
+        }
+
+        return false;
+    }
 
 
 
@@ -87,11 +102,6 @@ class DLUser extends \System\Datalayers\Main
     }
 
 
-    public function getById($user)
-    {
-        $user = User::findFirstById($user);
-        return $user;
-    }
 
     public function getChildById($user)
     {

@@ -5,7 +5,94 @@ use System\Model\Currency;
 use System\Model\User;
 use System\Model\UserCurrency;
 
-class DLUserCurrency {
+class DLUserCurrency  extends \System\Datalayers\Main
+{
+
+    // 2 , 6
+    public function setCurrencyDefault($userId , $CurrencyId){
+
+        $userCurrency = $this->getByUserAndId( $userId , $CurrencyId );
+        if( $userCurrency->{0}->st == 0){
+            throw new \Exception('error_set_default_currency');
+        }
+        $currentUserCurrency = $this->getByUserAndDefault( $userId , $CurrencyId );
+        $oldcurrency = $this->setDefault( $currentUserCurrency->{0}->id , 0 ) ;
+        $newcurrency = $this->setDefault( $userCurrency->{0}->id , 1 ) ;
+        if ( $oldcurrency->ec == 0 ){
+            if( $newcurrency->ec != 0  ){
+                throw new \Exception('error_set_currency');
+            }
+        }else{
+            throw new \Exception('error_set_currency');
+        }
+//        $currentUserCurrency->setDefault(0);
+//        if($currentUserCurrency->save()){
+//            $userCurrency->setDefault(1);
+//
+//            if(!$userCurrency->save()){
+//                throw new \Exception('error_set_currency');
+//            }
+//        }else{
+//            throw new \Exception('error_set_currency');
+//        }
+
+        return true ;
+
+
+    }
+
+    public function getByUserAndId( $user , $id ){
+        $postData = array(
+            'id' => $id ,
+            'user_id' => $user ,
+        );
+        $url = '/usercurr/find';
+        $result = $this->curlAppsJson( $url , $postData);
+
+        return $result->uscu ;
+    }
+
+
+    public function getByUserAndDefault($user){
+        $postData = array(
+            'default_val' => 1 ,
+            'user_id' => $user ,
+        );
+        $url = '/usercurr/find';
+        $result = $this->curlAppsJson( $url , $postData);
+
+        return $result->uscu ;
+    }
+
+    public function getByUser($user){
+        $postData = array(
+            'status' => 1 ,
+            'user_id' => $user ,
+        );
+        $url = '/usercurr/find';
+        $result = $this->curlAppsJson( $url , $postData);
+
+        return $result->uscu ;
+    }
+
+    public function setDefault( $id , $value ){
+        $postData = array(
+            'df' => $value
+        );
+        $url = '/usercurr/'.$id.'/update';
+        $result = $this->curlAppsJson( $url , $postData);
+
+        return $result ;
+    }
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
     public function getAll($user){
         $userCurrency = UserCurrency::findByUser($user);
 
@@ -66,18 +153,7 @@ class DLUserCurrency {
         return $userCurrency;
     }
 
-    public function getByUser($user){
-        $userCurrency = UserCurrency::find(
-            array(
-                "conditions" => "user = :user: AND status = 1",
-                "bind" => array(
-                    "user" => $user,
-                )
-            )
-        );
 
-        return $userCurrency;
-    }
 
     public function getAllByAgent($agent){
 //        $agentCurrency = UserCurrency::findByUser($agent);
@@ -126,32 +202,7 @@ class DLUserCurrency {
         return $currency;
     }
 
-    public function getByUserAndId($user,$id){
-        $userCurrency = UserCurrency::findFirst(
-            array(
-                "conditions" => "id = :id: AND user = :user:",
-                "bind" => array(
-                    "user" => $user,
-                    "id" => $id,
-                )
-            )
-        );
 
-        return $userCurrency;
-    }
-
-    public function getByUserAndDefault($user){
-        $userCurrency = UserCurrency::findFirst(
-            array(
-                "conditions" => "user = :user: AND default = 1",
-                "bind" => array(
-                    "user" => $user
-                )
-            )
-        );
-
-        return $userCurrency;
-    }
 
     public function checkUser($user){
         $user = User::findFirstById($user);
@@ -245,27 +296,6 @@ class DLUserCurrency {
         return $userCurrency;
     }
 
-    public function setCurrencyDefault($userId , $CurrencyId){
-        $userCurrency = $this->getByUserAndId($userId,$CurrencyId);
-        if($userCurrency->getStatus() == 0){
-            throw new \Exception('error_set_default_currency');
-        }
-        $currentUserCurrency = $this->getByUserAndDefault($userId,$CurrencyId);
-        $currentUserCurrency->setDefault(0);
-
-        if($currentUserCurrency->save()){
-            $userCurrency->setDefault(1);
-
-            if(!$userCurrency->save()){
-                throw new \Exception('error_set_currency');
-            }
-        }else{
-            throw new \Exception('error_set_currency');
-        }
-        return $userCurrency;
-
-
-    }
 
     public function delete($data){
         $userId = $data["agent_id"];

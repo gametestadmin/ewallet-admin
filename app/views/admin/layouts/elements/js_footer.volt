@@ -110,33 +110,28 @@
     }
 
     $(document).on('click', ".setmycurrency", function() {
-        //console.log( $(this).data("id"));
-        $.ajax({
-              type: "POST",
-              url: '{{url('ajax/currency/default')}}',
-              data: {
-                "id" : $(this).data("id") ,
-              },
-              dataType : "json",
+            //console.log( $(this).data("id"));
+            $.ajax({
+                  type: "POST",
+                  url: '{{url('ajax/currency/default')}}',
+                  data: {
+                    "id" : $(this).data("id") ,
+                  },
+                  dataType : "json",
               success: function(result) {
                 successMessage(result['messages']);
                 removeMyCurrency();
                 myCurrency();
 
-              },
+            },
               error: function(jqXHR , textStatus , errorThrown) {
                 //console.log(jqXHR);
                 //console.log(textStatus);
                 //console.log(errorThrown);
                 //errorMessage(jqXHR.responseJSON['messages']);
 
-              }
-
+            }
         });
-
-
-
-
 
     });
 

@@ -3,6 +3,7 @@ namespace System\Library\User;
 
 use \System\Datalayer\DLUserAclResource ;
 use \System\Datalayer\DLUserAclAccess ;
+use System\Datalayer\DLUserWhitelistIp;
 
 class General
 {
@@ -332,6 +333,33 @@ class General
         return $aclList;
     }
 
+    public function checkIP($id , $ip){
+        $ipallowed = true ;
+        $DLWhitelistIp = new DLUserWhitelistIp() ;
+        $whitelistIP = $DLWhitelistIp->getByUser($id) ;
+        foreach ( $whitelistIP as $key => $value ){
+            if($value->ip == '*'){
+                $ipallowed = true ;
+                break ;
+            } else {
+                $wlIp = explode(".", $value->ip);
+                $userIp = explode(".", $ip);
+
+                foreach ($userIp as $key => $value ) {
+                    if( $wlIp[$key] == '*' || $wlIp[$key] == $userIp[$key] ){
+                        $ipallowed = true ;
+                    } else {
+                        $ipallowed = false ;
+                        break ;
+                    }
+                }
+                if($ipallowed == true ) break ;
+
+            }
+        }
+
+        return $ipallowed ;
+    }
 
 
 
