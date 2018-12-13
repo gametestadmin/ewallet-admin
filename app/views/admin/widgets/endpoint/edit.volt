@@ -5,7 +5,7 @@
             <form class="form-horizontal" action="{{url('game/endpoint/edit')}}" method="post" id="form">
             <div class="modal-header">
                 <label class="col-xs-6">
-                    <h3 class="modal-title" id="form-edit-endpoint-label">API Endpoint Edit</h3>
+                    <h3 class="modal-title" id="form-edit-endpoint-label">API Endpoint <span class="endpoint_type_text"></span> Edit</h3>
                 </label>
                 <label class="col-xs-6">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -17,19 +17,19 @@
                 <div class="form-group">
                     <label class="col-xs-9">
                         <input type="hidden" name="endpoint_id" id="endpoint_id">
+                        <input type="hidden" name="game" value="{{game.id}}">
+                        <input type="hidden" name="tab" value="tab-endpoint">
                     </label>
                 </div>
                 <div class="form-group">
                     <label class="col-xs-3 control-label">Type</label>
                     <label class="col-xs-9">
-                        <input type="hidden" name="game" value="{{game.id}}">
-                        <select name="type" id="endpoint_type" class="form-control">
+                        <select name="type" id="endpoint_type" class="form-control" disabled>
                             <option value="">-Choose One-</option>
-                            {% for value, providerGameEndpointTypeData in providerGameEndpointType %}
-                                <option value="{{providerGameEndpointTypeData}}">{{value}}</option>
+                            {% for providerGameEndpointType, providerGameEndpointTypeValue in providerGameEndpointTypes %}
+                                <option disabled value="{{providerGameEndpointType}}" class="{{providerGameEndpointType}}">{{providerGameEndpointTypeValue}}</option>
                             {% endfor %}
                         </select>
-                        <input type="hidden" name="tab" value="tab-endpoint">
                     </label>
                 </div>
                 <div class="form-group">
@@ -52,7 +52,7 @@
                         <select name="auth" id="endpoint_auth" class="form-control">
                             <option value="0">No Auth</option>
                             {% for providerGameEndpointData in providerGameEndpoint %}
-                                <option value="{{providerGameEndpointData.id}}">{{providerGameEndpointData.app_id~":"~providerGameEndpointData.app_secret}}</option>
+                                <option value="{{providerGameEndpointData.id}}">{{providerGameEndpointData.aid~":"~providerGameEndpointData.asc}}</option>
                             {% endfor %}
                         </select>
                     </label>
@@ -68,20 +68,5 @@
 </div>
 
 <script>
-$(document).on("click", ".endpoint-edit", function () {
-    var endPointId = $(this).data('id');
-    var type = $("#endpoint_type_"+endPointId).html();
-    var auth = $("#endpoint_auth_"+endPointId).html();
-    var url = $("#endpoint_url_"+endPointId).html();
-    var dataSplit;
-    dataSplit = url.split("//");
-    var protocol = dataSplit[0]+"//";
 
-    $(".modal-body #endpoint_id").val(endPointId);
-    $(".modal-body #endpoint_type").val(type);
-    $(".modal-body #endpoint_auth").val(auth);
-    $(".modal-body #endpoint_protocol").val(protocol);
-    $(".modal-body #endpoint_url").val(dataSplit[1]);
-
-});
 </script>

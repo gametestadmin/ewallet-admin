@@ -32,20 +32,23 @@ class AuthController extends \Backoffice\Controllers\ProtectedController
         if ($this->request->getPost()) {
 
             $data = $this->request->getPost();
-            $tab = $data['tab'];
 
             try {
                 $this->db->begin();
 
                 if($this->_allowed == 0){
-                    return $this->response->redirect($previousPage->previousPage()."#".$tab)->send();
+                    return $this->response->redirect($previousPage->previousPage()."#".$data['tab'])->send();
                 }
 
-                $DLProviderGameEndpointAuth = new DLProviderGameEndpointAuth();
+                $dlProviderGameEndpointAuth = new DLProviderGameEndpointAuth();
+                $dlGame = new DLGame();
 
-                $filterData = $DLProviderGameEndpointAuth->filterInput($data);
-                $DLProviderGameEndpointAuth->validateAdd($filterData);
-                $DLProviderGameEndpointAuth->create($filterData);
+                $game = $dlGame->findFirstById($data['game']);
+                $data['provider_game'] = $game['idpv'];
+
+                $filterData = $dlProviderGameEndpointAuth->filterData($data);
+                $dlProviderGameEndpointAuth->validateCreate($filterData);
+                $dlProviderGameEndpointAuth->create($filterData);
 
                 $this->db->commit();
                 $this->flash->success('game_auth_added');
@@ -53,26 +56,25 @@ class AuthController extends \Backoffice\Controllers\ProtectedController
                 $this->db->rollback();
                 $this->flash->error($e->getMessage());
             }
-            $this->response->redirect($previousPage->previousPage()."#".$tab)->send();
+            $this->response->redirect($previousPage->previousPage()."#".$data['tab'])->send();
         }
     }
 
     public function editAction()
     {
         $previousPage = new GlobalVariable();
-        $view = $this->view;
 
         if ($this->request->getPost()) {
             $data = $this->request->getPost();
-            $tab = $data['tab'];
+
             try {
                 $this->db->begin();
 
-                $DLProviderGameEndpointAuth = new DLProviderGameEndpointAuth();
+                $dlProviderGameEndpointAuth = new DLProviderGameEndpointAuth();
 
-                $filterData = $DLProviderGameEndpointAuth->filterInput($data);
-                $DLProviderGameEndpointAuth->validateEdit($filterData);
-                $DLProviderGameEndpointAuth->set($data);
+                $filterData = $dlProviderGameEndpointAuth->filterData($data);
+                $dlProviderGameEndpointAuth->validateSet($filterData);
+                $dlProviderGameEndpointAuth->set($filterData);
 
                 $this->db->commit();
                 $this->flash->success('game_auth_edited');
@@ -80,7 +82,7 @@ class AuthController extends \Backoffice\Controllers\ProtectedController
                 $this->db->rollback();
                 $this->flash->error($e->getMessage());
             }
-            $this->response->redirect($previousPage->previousPage()."#".$tab)->send();
+            $this->response->redirect($previousPage->previousPage()."#".$data['tab'])->send();
         }
 
         \Phalcon\Tag::setTitle("Game Auth - ".$this->_website->title);

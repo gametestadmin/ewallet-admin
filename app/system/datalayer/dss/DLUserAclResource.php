@@ -1,11 +1,39 @@
 <?php
 namespace System\Datalayer;
 
+use System\Datalayers\Main;
 use System\Model\UserAclResource;
 
 
-class DLUserAclResource{
+class DLUserAclResource extends Main{
 
+    // DSS
+    public function findAll($start,$limit){
+        $postData = array(
+            "st" => $start,
+            "lm" => $limit
+        );
+        $url = '/useraclres';
+        $userAclResource = $this->curlAppsJson($url,$postData);
+
+        return $userAclResource['data'];
+    }
+
+    public function findFirstById($id){
+        $userAclResource = array();
+        $postData = array(
+            'id' => $id
+        );
+        $url = '/useraclres/'.$postData['id'];
+
+        $userAclResourceRecords = $this->curlAppsJson($url,$postData);
+        foreach ($userAclResourceRecords['data'] as $userAclResourceRecord){
+            $userAclResource[] = $userAclResourceRecord;
+        }
+
+        return $userAclResource;
+    }
+    // END DSS
     public function getByModule($module){
         $module = UserAclResource::findByCode($module);
 

@@ -152,6 +152,7 @@
             success: function(result) {
                 var response = JSON.stringify(result);
                 $('.loading').hide();
+                //console.log(result);
                 if(response == 0){
                     $("#check-available").attr("disabled", "disabled");
                     $(".available").removeClass("fa-times");

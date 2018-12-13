@@ -2,18 +2,18 @@
     <form class="form-horizontal col-xs-12">
         <div class="list-inline text-right">
             <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#form-ip">
-                Add New
+                {{translate['button_add']}}
             </button>
         </div>
         <ul class="list-inline header-list text-center">
-          <li class="col-xs-2 list-group-item">No</li>
-          <li class="col-xs-8 list-group-item">IP</li>
+          <li class="col-xs-2 list-group-item">{{translate['head_list_number']}}</li>
+          <li class="col-xs-8 list-group-item">{{translate['head_list_ip']}}</li>
           <li class="col-xs-2 list-group-item">&nbsp;</li>
         </ul>
         <div style="height:200px; overflow:auto;">
-        {% if page is not null %}
+        {% if game_whitelist_ip is not null %}
             {% set i = 1 %}
-            {% for gameWhitelistIpData in page %}
+            {% for gameWhitelistIpData in game_whitelist_ip %}
                 {% if i%2 == 0 %}
                 {% set class = "content-even" %}
                 {% else %}
@@ -29,14 +29,14 @@
                 {% set i = i +1 %}
             {% endfor %}
         {% else %}
-            <h4 class="text-center">-No data-</h4>
+            <h4 class="text-center">{{translate['text_no_data']}}</h4>
         {% endif %}
         </div>
     </form>
 </div>
 
 {{ widget('GameWhitelistIpFormAddWidget', []) }}
-{{ widget('GameWhitelistIpFormEditWidget', ["id": game.id]) }}
+{{ widget('GameWhitelistIpFormEditWidget', ["gameId": game.id]) }}
 
 <script>
     $(document).ready(function(){

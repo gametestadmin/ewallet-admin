@@ -16,28 +16,30 @@ class GameCurrencyFormAddWidget extends BaseWidget
         $gameParent = $this->params['gameParent'];
         $gameType = $this->params['gameType'];
 
-        $gameCurrencies = $dlGameCurrency->getByGame($gameId);
-        $currencies = $dlCurrency->getAllByStatus(1);
+        $gameCurrencies = $dlGameCurrency->findByGame($gameId);
+        $currencies = $dlCurrency->findAllByStatus(1);
 
         $currencyList = array();
 
         if($gameType == 2){
             foreach ($currencies as $currency){
-                $currencyData = $dlCurrency->getById($currency->getId());
-                $currencyList[$currency->getId()] = $currencyData;
+                $currencyData = $dlCurrency->findFirstById($currency['id']);
+                $currencyList[$currency['id']] = $currencyData;
             }
         } elseif($gameType == 3){
-            $parentCurrencies = $dlGameCurrency->getByGame($gameParent);
+            $parentCurrencies = $dlGameCurrency->findByGame($gameParent);
 
             foreach ($parentCurrencies as $parentCurrency){
-                $currencyData = $dlCurrency->getById($parentCurrency->getCurrency());
-                $currencyList[$parentCurrency->getCurrency()] = $currencyData;
+                $currencyData = $dlCurrency->findFirstById($parentCurrency['cu']['id']);
+                $currencyList[$parentCurrency['cu']['id']] = $currencyData;
             }
         }
 
-        foreach ($gameCurrencies as $gameCurrency){
-            if(isset($currencyList[$gameCurrency->getCurrency()]))
-                unset($currencyList[$gameCurrency->getCurrency()]);
+        if($gameCurrencies) {
+            foreach ($gameCurrencies as $gameCurrency) {
+                if (isset($currencyList[$gameCurrency['cu']['id']]))
+                    unset($currencyList[$gameCurrency['cu']['id']]);
+            }
         }
 
         return $this->setView('currency/game/add', [

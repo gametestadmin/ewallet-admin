@@ -33,13 +33,12 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
                 $this->db->begin();
 
                 $data = $this->request->getPost();
-                $tab = $data['tab'];
 
-                $DLGameCurrency = new DLGameCurrency();
+                $dlGameCurrency = new DLGameCurrency();
 
-                $filterData = $DLGameCurrency->filterInput($data);
-                $DLGameCurrency->validateAdd($filterData);
-                $DLGameCurrency->create($filterData);
+                $filterData = $dlGameCurrency->filterData($data);
+//                $dlGameCurrency->validateCreate($filterData);
+                $dlGameCurrency->create($filterData);
 
                 $this->db->commit();
                 $this->flash->success('game_currency_added');
@@ -47,7 +46,7 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
                 $this->db->rollback();
                 $this->flash->error($e->getMessage());
             }
-            $this->response->redirect($previousPage->previousPage()."#".$tab)->send();
+            $this->response->redirect($previousPage->previousPage()."#".$data['tab'])->send();
         }
 
         \Phalcon\Tag::setTitle("Game Currency - ".$this->_website->title);
@@ -58,7 +57,7 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
         $previousPage = new GlobalVariable();
 
         $data["game_id"] = $this->dispatcher->getParam("id");
-        $data["currency_id"] = $this->request->get("default");
+        $data["id"] = $this->request->get("idgc");
         $tab = $this->request->get("tab");
 
         if($this->_allowed == 0){
@@ -67,9 +66,9 @@ class CurrencyController extends \Backoffice\Controllers\ProtectedController
         try {
             $this->db->begin();
 
-            $DLGameCurrency = new DLGameCurrency();
+            $dlGameCurrency = new DLGameCurrency();
 
-            $DLGameCurrency->set($data);
+            $dlGameCurrency->setDefault($data);
 
             $this->db->commit();
             $this->flash->success('game_currency_default');

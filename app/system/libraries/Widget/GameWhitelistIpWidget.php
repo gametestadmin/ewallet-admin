@@ -13,6 +13,8 @@ class GameWhitelistIpWidget extends BaseWidget
     {
         $limit = $this->_limit;
         $pages = $this->_pages;
+        $gameId = $this->params["gameId"];
+
         if ($this->request->has("pages")){
             $pages = $this->request->get("pages");
 
@@ -20,26 +22,28 @@ class GameWhitelistIpWidget extends BaseWidget
             $pages = $this->session->get("pages");
         }
 
-        $DLGameWhitelistIp = new DLGameWhitelistIp();
-        $gameWhitelistIp = $DLGameWhitelistIp->getByGame($this->params["id"]);
+        $dlGameWhitelistIp = new DLGameWhitelistIp();
+//        $gameWhitelistIp = $dlGameWhitelistIp->getByGame($this->params["id"]);
+        $gameWhitelistIp = $dlGameWhitelistIp->findByGame($gameId);
 
-        $paginator = new \Phalcon\Paginator\Adapter\Model(
-            array(
-                "data" => $gameWhitelistIp,
-                "limit"=> $limit,
-                "page" => $pages
-            )
-        );
-        $records = $paginator->getPaginate();
-
-        $totalPage = ceil($gameWhitelistIp->count()/$limit);
+//        $paginator = new \Phalcon\Paginator\Adapter\Model(
+//            array(
+//                "data" => $gameWhitelistIp,
+//                "limit"=> $limit,
+//                "page" => $pages
+//            )
+//        );
+//        $records = $paginator->getPaginate();
+//
+//        $totalPage = ceil($gameWhitelistIp->count()/$limit);
 
         return $this->setView('game/ip', [
-            'page' => $records->items,
-            'game_ip' => $records->items,
-            'total_page' => $totalPage,
-            'pages' => $pages,
-            'limit' => $limit,
+//            'page' => $records->items,
+//            'game_ip' => $records->items,
+//            'total_page' => $totalPage,
+//            'pages' => $pages,
+//            'limit' => $limit,
+            'game_whitelist_ip' => $gameWhitelistIp
         ]);
     }
 }

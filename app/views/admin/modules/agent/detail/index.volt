@@ -4,7 +4,7 @@
         <div class="col-xs-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title row">
-                    <h5>[{{agent.username}}] {{translate['title_text_detail']}}</h5>
+                    <h5>[{{agent.sn}}] {{translate['title_text_detail']}}</h5>
                 </div>
                 <div class="ibox-content row">
                     <div class="tabs-container">
@@ -21,7 +21,7 @@
                                         <div class="form-group">
                                             <label class="col-xs-3 control-label">{{translate['form_username']}}</label>
                                             <label class="col-xs-9">
-                                                <input type="text" placeholder="{{translate['placeholder_username']}}" class="form-control" value="{{agent.username}}" readonly>
+                                                <input type="text" placeholder="{{translate['placeholder_username']}}" class="form-control" value="{{agent.sn}}" readonly>
                                             </label>
                                         </div>
                                         <div class="form-group">
@@ -75,17 +75,17 @@
                                         <div class="form-group">
                                             <label class="col-xs-3 control-label">{{translate['form_agent']}}</label>
                                             <label class="col-xs-9">
-                                                <input type="text" placeholder="{{translate['placeholder_agent']}}" class="form-control" value="{{translate[agent.type|agentType]}}" readonly>
+                                                <input type="text" placeholder="{{translate['placeholder_agent']}}" class="form-control" value="{{translate[agent.tp|agentType]}}" readonly>
                                             </label>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-xs-3 control-label">{{translate['form_timezone']}}</label>
                                             <label class="col-xs-9">
-                                                {% set gmtDisplay = agent.timezone %}
-                                                {% if agent.timezone == 0%}
+                                                {% set gmtDisplay = agent.tz %}
+                                                {% if agent.tz == 0 %}
                                                 {% set gmtDisplay = '' %}
-                                                {% elseif agent.timezone > 0%}
-                                                {% set gmtDisplay = '+'~agent.timezone %}
+                                                {% elseif agent.tz > 0 %}
+                                                {% set gmtDisplay = '+'~agent.tz %}
                                                 {% endif %}
                                                 <input type="text" placeholder="{{translate['placeholder_timezone']}}" class="form-control" value="GMT {{gmtDisplay}}" readonly>
                                             </label>
@@ -96,7 +96,7 @@
                                             <label class="col-xs-9">
                                                 <select class="status form-control">
                                                     {% for key, value in status %}
-                                                        <option value="{{agent.id~"|"~key}}" {% if agent.status == key %}selected{% endif %}>{{translate[value]}}</option>
+                                                        <option value="{{agent.id~"|"~key}}" {% if agent.ust == key %}selected{% endif %}>{{translate[value]}}</option>
                                                     {% endfor %}
                                                 </select>
                                             </label>
@@ -105,7 +105,7 @@
                                         <div class="form-group">
                                             <label class="col-xs-3 control-label">{{translate['form_status']}}</label>
                                             <label class="col-xs-9">
-                                                <input type="text" placeholder="{{translate['placeholder_status']}}" class="form-control" value="{{translate[agent.status|agentStatus]}}" readonly>
+                                                <input type="text" placeholder="{{translate['placeholder_status']}}" class="form-control" value="{{translate[agent.ust|agentStatus]}}" readonly>
                                             </label>
                                         </div>
                                         {% endif %}
@@ -115,7 +115,7 @@
                                                 <label>
                                                     <a href="{{url('javascript:history.go(-1)')}}" class="btn btn-sm btn-danger">{{translate['button_back']}}</a>
                                                 </label>
-                                                {% if user.id == agent.parent %}
+                                                {% if user.id == agent.idp %}
                                                 <label>
                                                     <a href="{{url('/'~module~'/edit/'~agent.id)}}" class="btn btn-sm btn-info">{{translate['button_edit']}}</a>
                                                 </label>
@@ -127,7 +127,7 @@
                             </div>
                             <div id="tab-currency" class="tab-pane">
                                 <div class="panel-body">
-                                    {{ widget('UserCurrencyWidget', ["id": agent.id,"loginId": user.id,"agentParent": agent.parent]) }}
+                                    {{ widget('UserCurrencyWidget', ["id": agent.id,"loginId": user.id,"agentParent": agent.idp]) }}
                                 </div>
                             </div>
                             <div id="tab-game" class="tab-pane">
@@ -137,7 +137,7 @@
                             </div>
                             <div id="tab-ip" class="tab-pane">
                                 <div class="panel-body">
-                                    {{ widget('UserWhitelistIpWidget', ["id" : agent.id,"loginId": user.id,"agentParent": agent.parent]) }}
+                                    {{ widget('UserWhitelistIpWidget', ["id" : agent.id,"loginId": user.id,"agentParent": agent.idp]) }}
                                 </div>
                             </div>
                         </div>

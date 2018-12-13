@@ -1,9 +1,36 @@
 <?php
 namespace System\Datalayer;
 
+use System\Datalayers\Main;
 use System\Model\UserWhitelistIp;
 
-class DLUserWhitelistIp{
+class DLUserWhitelistIp extends Main{
+    // DSS
+    public function findByUser($user){
+        $postData = array(
+            "user_id" => $user,
+            "status" => 1
+        );
+
+        $url = '/userwlip/find';
+        $userWhitelistIp = $this->curlAppsJson($url,$postData);
+
+        return $userWhitelistIp['data'];
+    }
+
+    public function create($user,$ip){
+        $postData = array(
+            "idus" => $user,
+            "ip" => $ip,
+            "st" => 1
+        );
+
+        $url = '/userwlip/insert';
+        $userWhitelistIp = $this->curlAppsJson($url,$postData);
+
+        return $userWhitelistIp;
+    }
+    // END DSS
     public function getByUser($user){
         $userWhitelistIp = UserWhitelistIp::findByUser($user);
 
@@ -69,7 +96,7 @@ class DLUserWhitelistIp{
         return true;
     }
 
-    public function create($user,$ip){
+    public function creates($user,$ip){
         $userWhitelistIp = new UserWhitelistIp();
 
         $DLUser = new DLUser();

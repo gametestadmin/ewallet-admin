@@ -15,7 +15,7 @@ class Main
     {
         $request = new Request();
         $this->_config = require __DIR__ . '/../../config/config.php';
-        $this->_language = language::getTranslation();
+        $this->_language = Language::getTranslation();
         $this->_server = $request->getServer("HTTP_HOST");
     }
 
@@ -42,5 +42,7 @@ class Main
 
         return $response;
     }
+
+
 
 }

@@ -27,24 +27,26 @@ class ListController extends \Backoffice\Controllers\ProtectedController
         $status = GlobalVariable::$threeLayerStatusTypes;
 
         $DLUser = new DLUser();
-        $agent = $DLUser->getByParent($this->_user->getId());
+//        $agent = $DLUser->getByParent($this->_user->getId());
+        $agent = $DLUser->findByParent($this->_user->getId());
 
-        $paginator = new \Phalcon\Paginator\Adapter\Model(
-            array(
-                "data" => $agent,
-                "limit"=> $limit,
-                "page" => $page
-            )
-        );
-        $records = $paginator->getPaginate();
+//        $paginator = new \Phalcon\Paginator\Adapter\Model(
+//            array(
+//                "data" => $agent,
+//                "limit"=> $limit,
+//                "page" => $page
+//            )
+//        );
+//        $records = $paginator->getPaginate();
+//
+//        $totalPage = ceil($agent->count()/$limit);
 
-        $totalPage = ceil($agent->count()/$limit);
-
-        $view->status = $status;
-        $view->agent_list = $records->items;
-        $view->total_page = $totalPage;
+//        $view->agent_list = $records->items;
+//        $view->total_page = $totalPage;
         $view->page = $page;
         $view->limit = $limit;
+        $view->agent_list = $agent;
+        $view->status = $status;
 
         \Phalcon\Tag::setTitle("Agent System - ".$this->_website->title);
     }
@@ -67,10 +69,12 @@ class ListController extends \Backoffice\Controllers\ProtectedController
 
         $status = GlobalVariable::$threeLayerStatusTypes;
 
-        $DLUser = new DLUser();
+        $dlUser = new DLUser();
         $parent = $this->_user;
-        $agent = $DLUser->getById($agentId);
-        $agentList = $DLUser->getByParent($agentId);
+//        $agent = $DLUser->getById($agentId);
+//        $agentList = $DLUser->getByParent($agentId);
+        $agent = $dlUser->findFirstById($agentId);
+        $agentList = $dlUser->findByParent($agentId);
 
         if(!$agent){
             $this->errorFlash("undefined_id");
@@ -79,27 +83,30 @@ class ListController extends \Backoffice\Controllers\ProtectedController
 
         $agentSecurity = new Agent();
 
-        $security = $agentSecurity->checkAgentAction($parent->getUsername(),$agent->getUsername());
+//        $security = $agentSecurity->checkAgentAction($parent->getUsername(),$agent->getUsername());
+        // TODO :: temp $parent['username'] array data
+        $security = $agentSecurity->checkAgentAction($parent->username,$agent->sn);
         if($security == false){
             $this->errorFlash("cannot_access_security");
             return $this->response->redirect("/agent/list")->send();
         }
 
-        $paginator = new \Phalcon\Paginator\Adapter\Model(
-            array(
-                "data" => $agentList,
-                "limit"=> $limit,
-                "page" => $page
-            )
-        );
-        $records = $paginator->getPaginate();
-
-        $totalPage = ceil($agentList->count()/$limit);
+//        $paginator = new \Phalcon\Paginator\Adapter\Model(
+//            array(
+//                "data" => $agentList,
+//                "limit"=> $limit,
+//                "page" => $page
+//            )
+//        );
+//        $records = $paginator->getPaginate();
+//
+//        $totalPage = ceil($agentList->count()/$limit);
 
         $view->status = $status;
         $view->parent = $agent;
-        $view->agent_list = $records->items;
-        $view->total_page = $totalPage;
+        $view->agent_list = $agentList;
+//        $view->agent_list = $records->items;
+//        $view->total_page = $totalPage;
         $view->page = $page;
         $view->limit = $limit;
 

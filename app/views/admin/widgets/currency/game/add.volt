@@ -21,7 +21,7 @@
                         <select name="currency" class="form-control">
                             <option value="">-Choose One-</option>
                             {% for currencyData in currency %}
-                                <option value="{{currencyData.id}}">{{currencyData.name}}</option>
+                                <option value="{{currencyData.id}}">{{currencyData.nm}}</option>
                             {% endfor %}
                         </select>
                         <input type="hidden" name="tab" value="tab-currency">

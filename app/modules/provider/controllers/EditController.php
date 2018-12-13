@@ -16,8 +16,9 @@ class EditController extends \Backoffice\Controllers\ProtectedController
 
         $currentId = $this->dispatcher->getParam("id");
 
-        $DLProviderGame = new DLProviderGame();
-        $providerGame = $DLProviderGame->getById($currentId);
+        $dlProviderGame = new DLProviderGame();
+        $providerGame = $dlProviderGame->findFirstById($currentId);
+
         if(!isset($currentId) || !$providerGame){
             $this->flash->error("undefined_provider_id");
             $this->response->redirect($this->_module."/".$this->_controller."/")->send();
@@ -29,16 +30,17 @@ class EditController extends \Backoffice\Controllers\ProtectedController
 
                 $data = $this->request->getPost();
 
-                $data['id'] = $providerGame->getId();
+                $data['id'] = $providerGame['id'];
 
-                $data = $DLProviderGame->filterInput($data);
-                $DLProviderGame->validateEdit($data);
-                $DLProviderGame->set($data);
+                $filterData = $dlProviderGame->filterData($data);
+                $dlProviderGame->validateSetData($filterData);
+                $dlProviderGame->set($filterData);
 
                 $this->db->commit();
 
                 $this->flash->success('provider_game_update_success');
-                return $this->response->redirect($this->_module.'/detail/'.$providerGame->getId())->send();
+
+                return $this->response->redirect($this->_module.'/detail/'.$providerGame['id'])->send();
             } catch (\Exception $e) {
                 $this->db->rollback();
                 $this->flash->error($e->getMessage());

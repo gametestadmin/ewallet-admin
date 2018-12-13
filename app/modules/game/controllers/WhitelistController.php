@@ -25,69 +25,68 @@ class WhitelistController extends \Backoffice\Controllers\ProtectedController
         $previousPage = new GlobalVariable();
 
         if ($this->request->getPost()) {
+            $data = $this->request->getPost();
             try {
                 $this->db->begin();
+//                if($this->_allowed == 0){
+//                    return $this->response->redirect($previousPage->previousPage()."#".$data['tab'])->send();
+//                }
 
-                $data = $this->request->getPost();
+                $dlGameWhitelistIp = new DLGameWhitelistIp();
 
-                $tab = $data['tab'];
-                if($this->_allowed == 0){
-                    return $this->response->redirect($previousPage->previousPage()."#".$tab)->send();
-                }
-
-                $DLGameWhitelistIp = new DLGameWhitelistIp();
-
-                $filterData = $DLGameWhitelistIp->filterInput($data);
-                $DLGameWhitelistIp->validateAdd($filterData);
-                $DLGameWhitelistIp->create($filterData);
+                $filterData = $dlGameWhitelistIp->filterData($data);
+                $dlGameWhitelistIp->validateCreate($filterData);
+                $dlGameWhitelistIp->create($filterData);
 
                 $this->db->commit();
                 $this->flash->success('game_whitelist_ip_created');
+
             } catch (\Exception $e) {
                 $this->db->rollback();
                 $this->flash->error($e->getMessage());
             }
-            $this->response->redirect($previousPage->previousPage()."#".$tab)->send();
+            $this->response->redirect($previousPage->previousPage()."#".$data['tab'])->send();
         }
     }
 
-    public function editAction()
-    {
-        $previousPage = new GlobalVariable();
-
-        if ($this->request->getPost()) {
-            $data = $this->request->getPost();
-            $tab = $data['tab'];
-
-            try {
-                $this->db->begin();
-
-                $DLProviderGameEndpoint = new DLGameWhitelistIp();
-
-                $filterData = $DLProviderGameEndpoint->filterInput($data);
-                $DLProviderGameEndpoint->validateEdit($filterData);
-                $DLProviderGameEndpoint->set($data);
-
-                $this->db->commit();
-                $this->flash->success('game_whitelist_ip_edited');
-            } catch (\Exception $e) {
-                $this->db->rollback();
-                $this->flash->error($e->getMessage());
-            }
-            $this->response->redirect($previousPage->previousPage() . "#" . $tab)->send();
-        }
-    }
+//    public function editAction()
+//    {
+//        $previousPage = new GlobalVariable();
+//
+//        if ($this->request->getPost()) {
+//            $data = $this->request->getPost();
+//            $tab = $data['tab'];
+//
+//            try {
+//                $this->db->begin();
+//
+//                $DLProviderGameEndpoint = new DLGameWhitelistIp();
+//
+//                $filterData = $DLProviderGameEndpoint->filterInput($data);
+//                $DLProviderGameEndpoint->validateEdit($filterData);
+//                $DLProviderGameEndpoint->set($data);
+//
+//                $this->db->commit();
+//                $this->flash->success('game_whitelist_ip_edited');
+//            } catch (\Exception $e) {
+//                $this->db->rollback();
+//                $this->flash->error($e->getMessage());
+//            }
+//            $this->response->redirect($previousPage->previousPage() . "#" . $tab)->send();
+//        }
+//    }
 
     public function deleteAction()
     {
         $previousPage = new GlobalVariable();
-        $data["agent_id"] = $this->dispatcher->getParam("id");
+        $data["game_id"] = $this->dispatcher->getParam("id");
         $data["whitelist_id"] = $this->request->get("delete");
 
-        $DLGameWhitelistIp = new DLGameWhitelistIp();
+        $dlGameWhitelistIp = new DLGameWhitelistIp();
 
         // TODO :: Temporary Code
-        if($this->_user->getType() != 9){
+//        if($this->_user->getType() != 9){
+        if($this->_user->tp != 9){
             $this->flash->error("cannot_access");
             return $this->response->redirect($previousPage->previousPage() . "#tab-ip")->send();
         }
@@ -95,7 +94,7 @@ class WhitelistController extends \Backoffice\Controllers\ProtectedController
         try {
             $this->db->begin();
 
-            $DLGameWhitelistIp->delete($data["whitelist_id"]);
+            $dlGameWhitelistIp->delete($data["whitelist_id"]);
 
             $this->db->commit();
             $this->flash->success("ip_deleted");
