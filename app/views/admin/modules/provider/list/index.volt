@@ -21,46 +21,50 @@
                           <li class="col-sm-2 col-xs-3 list-group-item">{{translate['head_list_status']}}</li>
                           <li class="col-sm-2 col-xs-2 list-group-item">{{translate['head_list_action']}}</li>
                         </ul>
-                        {% set i = 1 %}
-                        {% for providerData in page %}
-                        {% if i%2 == 0 %}
-                        {% set class = "content-even" %}
-                        {% else %}
-                        {% set class = "content-odd" %}
-                        {% endif %}
-                        <ul class="list-inline {{class}} text-center">
-                            <li class="col-sm-1 col-xs-1 list-group-item">{{i}}</li>
-                            <li class="col-sm-3 col-xs-2 list-group-item">
-                                {% set gmtDisplay = providerData.timezone %}
-                                {% if providerData.timezone == 0%}
-                                {% set gmtDisplay = '' %}
-                                {% elseif providerData.timezone > 0%}
-                                {% set gmtDisplay = '+'~providerData.timezone %}
+                        {% if provider is not null %}
+                            {% set i = 1 %}
+                            {% for providerData in provider %}
+                                {% if i%2 == 0 %}
+                                    {% set class = "content-even" %}
+                                {% else %}
+                                    {% set class = "content-odd" %}
                                 {% endif %}
-                                GMT {{gmtDisplay}}
-                            </li>
-                            <li class="col-sm-4 col-xs-4 list-group-item">{{providerData.name}}</li>
-                            <li class="col-sm-2 col-xs-3 list-group-item">
-                                <select class="status">
-                                    {% for key, value in status %}
-                                        <option value="{{providerData.id~"|"~key}}" {% if providerData.status == key %}selected{% endif %}>{{translate[value]}}</option>
-                                    {% endfor %}
-                                </select>
-                            </li>
-                            <li class="col-sm-2 col-xs-2 list-group-item text-center">
-                                <a href="{{url(module~'/detail/'~providerData.id)}}">
-                                    <i class="fa fa-search text-danger" data-toggle="tooltip" data-placement="left" title="{{translate['text_detail']}}"></i>
-                                </a>
-                                |
-                                <a href="{{url(module~'/edit/'~providerData.id)}}">
-                                    <i class="fa fa-edit text-primary" data-toggle="tooltip" data-placement="right" title="{{translate['text_edit']}}"></i>
-                                </a>
-                            </li>
-                        </ul>
-                        {% set i = i +1 %}
-                        {% endfor %}
+                                <ul class="list-inline {{class}} text-center">
+                                    <li class="col-sm-1 col-xs-1 list-group-item">{{i}}</li>
+                                    <li class="col-sm-3 col-xs-2 list-group-item">
+                                        {% set gmtDisplay = providerData.tz %}
+                                        {% if providerData.tz == 0%}
+                                        {% set gmtDisplay = '' %}
+                                        {% elseif providerData.tz > 0%}
+                                        {% set gmtDisplay = '+'~providerData.tz %}
+                                        {% endif %}
+                                        GMT {{gmtDisplay}}
+                                    </li>
+                                    <li class="col-sm-4 col-xs-4 list-group-item">{{providerData.nm}}</li>
+                                    <li class="col-sm-2 col-xs-3 list-group-item">
+                                        <select class="status">
+                                            {% for key, value in status %}
+                                                <option value="{{providerData.id~"|"~key}}" {% if providerData.st == key %}selected{% endif %}>{{translate[value]}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </li>
+                                    <li class="col-sm-2 col-xs-2 list-group-item text-center">
+                                        <a href="{{url(module~'/detail/'~providerData.id)}}">
+                                            <i class="fa fa-search text-danger" data-toggle="tooltip" data-placement="left" title="{{translate['text_detail']}}"></i>
+                                        </a>
+                                        |
+                                        <a href="{{url(module~'/edit/'~providerData.id)}}">
+                                            <i class="fa fa-edit text-primary" data-toggle="tooltip" data-placement="right" title="{{translate['text_edit']}}"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            {% set i = i +1 %}
+                            {% endfor %}
+                        {% else %}
+                            <h4 class="text-center">{{translate['text_no_data']}}</h4>
+                        {% endif %}
 
-                        <div class="row text-center">
+                        <!--<div class="row text-center">
                             <div class="col-xs-12">
                                 <ul class="pagination">
                                 {% set page = pagination %}
@@ -73,7 +77,8 @@
                                 {% endif %}
                                 </ul>
                             </div>
-                        </div>
+                        </div>-->
+
                     </div>
                 </div>
             </div>

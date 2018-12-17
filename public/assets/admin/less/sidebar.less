@@ -49,6 +49,47 @@ li.nav-header{
       }
     }
   }
+  .nav-second-level{
+    li {
+      border-bottom: 1px solid #606060;
+      margin: 0;
+      //padding: 0;
+      >hr {
+        &.header {
+          border: 0.1px solid #606060;
+          margin: 0;
+        }
+      }
+      &.active{
+        border-left: none !important;
+        background: none !important;
+        > a:before {
+          position: absolute;
+          content: '';
+          width: 10px;
+          right: 0;
+          top: 8px;
+          height: 10px;
+          border-top: 8px solid transparent;
+          border-right: 7px solid #E15121;
+          border-bottom: 8px solid transparent;
+        }
+        >a {
+          >:hover{
+            background: #606060;
+          }
+          .nav-label{
+            padding: 0 5px;
+            background: #FFFFFF;
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            border-radius: 20px;
+            color: #000000;
+          }
+        }
+      }
+    }
+  }
 }
 
 .mini-logo{

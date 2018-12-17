@@ -1,6 +1,7 @@
 <?php
 namespace Backoffice\Game\Controllers;
 
+use System\Datalayer\DLGame;
 use System\Datalayer\DLGameCurrency;
 use System\Datalayer\DLProviderGameEndpoint;
 use System\Library\General\GlobalVariable;
@@ -32,24 +33,24 @@ class EndpointController extends \Backoffice\Controllers\ProtectedController
 
                 $data = $this->request->getPost();
 
-                $tab = $data['tab'];
-                if($this->_allowed == 0){
-                    return $this->response->redirect($previousPage->previousPage()."#".$tab)->send();
-                }
+                $dlProviderGameEndpoint = new DLProviderGameEndpoint();
+                $dlGame = new DLGame();
+                $game = $dlGame->findFirstById($data['game']);
 
-                $DLProviderGameEndpoint = new DLProviderGameEndpoint();
+                $data['provider_game'] = $game['idpv'];
+                $data['game_type'] = $game['tp'];
 
-                $filterData = $DLProviderGameEndpoint->filterInput($data);
-                $DLProviderGameEndpoint->validateAdd($filterData);
-                $DLProviderGameEndpoint->create($filterData);
+                $filterData = $dlProviderGameEndpoint->filterData($data);
+                $dlProviderGameEndpoint->validateCreate($filterData);
+                $dlProviderGameEndpoint->create($filterData);
 
                 $this->db->commit();
                 $this->flash->success('game_currency_added');
+                $this->response->redirect($previousPage->previousPage()."#".$data['tab'])->send();
             } catch (\Exception $e) {
                 $this->db->rollback();
                 $this->flash->error($e->getMessage());
             }
-            $this->response->redirect($previousPage->previousPage()."#".$tab)->send();
         }
     }
 
@@ -59,16 +60,15 @@ class EndpointController extends \Backoffice\Controllers\ProtectedController
 
         if ($this->request->getPost()) {
             $data = $this->request->getPost();
-            $tab = $data['tab'];
 
             try {
                 $this->db->begin();
 
-                $DLProviderGameEndpoint = new DLProviderGameEndpoint();
+                $dlProviderGameEndpoint = new DLProviderGameEndpoint();
 
-                $filterData = $DLProviderGameEndpoint->filterInput($data);
-                $DLProviderGameEndpoint->validateEdit($filterData);
-                $DLProviderGameEndpoint->set($data);
+                $filterData = $dlProviderGameEndpoint->filterData($data);
+                $dlProviderGameEndpoint->validateSet($filterData);
+                $dlProviderGameEndpoint->set($filterData);
 
                 $this->db->commit();
                 $this->flash->success('game_endpoint_edited');
@@ -76,7 +76,7 @@ class EndpointController extends \Backoffice\Controllers\ProtectedController
                 $this->db->rollback();
                 $this->flash->error($e->getMessage());
             }
-            $this->response->redirect($previousPage->previousPage() . "#" . $tab)->send();
+            $this->response->redirect($previousPage->previousPage() . "#" . $data['tab'])->send();
         }
 
         \Phalcon\Tag::setTitle("Game Currency - ".$this->_website->title);

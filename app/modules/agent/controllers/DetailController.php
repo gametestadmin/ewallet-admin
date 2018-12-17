@@ -20,10 +20,17 @@ class DetailController extends \Backoffice\Controllers\ProtectedController
         $status = GlobalVariable::$threeLayerStatusTypes;
 
         $parent = $this->_user;
-        $agent = $DLUser->getById($agentId);
+//        $agent = $DLUser->getById($agentId);
+        $agent = $DLUser->findFirstById($agentId);
 
-        $userCurrency = $DLUserCurrency->getAllByUser($agentId);
+        $userCurrency = $DLUserCurrency->findAllByUser($agentId);
         $userCurrencyData = count($userCurrency);
+
+        // dss use
+//        $parent = $this->_user;
+//        $agent = $DLUser->findById($agentId);
+//        $agentCurrency = $DLUserCurrency->findAllByAgent($agentId,1);
+//        $agentCurrencyData = count($agentCurrency);
 
         if(!$agent){
             $this->flash->error("undefined_agent");
@@ -32,7 +39,13 @@ class DetailController extends \Backoffice\Controllers\ProtectedController
 
         $agentSecurity = new Agent();
 
-        $security = $agentSecurity->checkAgentAction($parent->getUsername(),$agent->getUsername());
+//        $security = $agentSecurity->checkAgentAction($parent->getUsername(),$agent->getUsername());
+        $security = $agentSecurity->checkAgentAction($parent->username,$agent->sn);
+
+//        var_dump($security);
+//        die;
+        // dss use
+//        $security = $agentSecurity->checkAgentAction($parent->username,$agent->username);
 
         if($security == false){
             $this->errorFlash("cannot_access_security");
@@ -43,6 +56,7 @@ class DetailController extends \Backoffice\Controllers\ProtectedController
         $view->status = $status;
         $view->userCurrencyData = $userCurrencyData;
         $view->realParent = $security;
+//        $view->agentCurrencyData = $agentCurrencyData;
 
         \Phalcon\Tag::setTitle("Agent System - ".$this->_website->title);
     }

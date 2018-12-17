@@ -4,7 +4,7 @@
         <div class="col-xs-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title row">
-                    <h5>[{{game.name}}] Detail</h5>
+                    <h5>[{{game.nm}}] Detail</h5>
                 </div>
                 <div class="ibox-content row">
                     <div class="tabs-container">
@@ -19,31 +19,31 @@
                                         <div class="form-group">
                                             <label class="col-xs-3 control-label">Type</label>
                                             <label class="col-xs-9">
-                                                <input type="text" placeholder="Type" class="form-control" class="form-control" value="{{game.type|gameType}}" readonly>
+                                                <input type="text" placeholder="Type" class="form-control" class="form-control" value="{{game.tp|gameType}}" readonly>
                                             </label>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-xs-3 control-label">Game Provider</label>
                                             <label class="col-xs-9">
-                                                <input type="text" placeholder="Name" class="form-control" value="{{game.provider|providerName}}" readonly>
+                                                <input type="text" placeholder="Name" class="form-control" value="{{providerGame.nm}}" readonly>
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-xs-3 control-label">Game Parent</label>
+                                            <label class="col-xs-3 control-label">Game</label>
                                             <label class="col-xs-9">
-                                                <input type="text" placeholder="Name" class="form-control" value="{{game.game_parent|gameName}}" readonly>
+                                                <input type="text" placeholder="Name" class="form-control" value="{{game.nm}}" readonly>
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-xs-3 control-label">Game Code</label>
+                                            <label class="col-xs-3 control-label">Sub-Game Code</label>
                                             <label class="col-xs-9">
-                                                <input type="text" placeholder="Name" class="form-control" value="{{game.code}}" readonly>
+                                                <input type="text" placeholder="Name" class="form-control" value="{{game.cd}}" readonly>
                                             </label>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-xs-3 control-label">Game Name</label>
+                                            <label class="col-xs-3 control-label">Sub-Game Name</label>
                                             <label class="col-xs-9">
-                                                <input type="text" placeholder="Name" class="form-control" value="{{game.name}}" readonly>
+                                                <input type="text" placeholder="Name" class="form-control" value="{{game.nm}}" readonly>
                                             </label>
                                         </div>
                                         <div class="form-group">
@@ -51,7 +51,7 @@
                                             <label class="col-xs-9">
                                                 <select class="status form-control">
                                                     {% for key, value in status %}
-                                                        <option value="{{game.id~"|"~value}}" {% if game.status == value %}selected{% endif %}>{{key}}</option>
+                                                        <option value="{{game.id~"|"~key}}" {% if game.st == key %}selected{% endif %}>{{translate[value]}}</option>
                                                     {% endfor %}
                                                 </select>
                                             </label>
@@ -63,7 +63,7 @@
                                                     <a href="{{url('/'~module~'/'~controller)}}" class="btn btn-sm btn-danger">Back</a>
                                                 </label>
                                                 <label>
-                                                    <a href="{{url('/'~module~'/'~controller~'/edit/'~game.code)}}" class="btn btn-sm btn-info">Edit</a>
+                                                    <a href="{{url('/'~module~'/'~controller~'/edit/'~game.id)}}" class="btn btn-sm btn-info">Edit</a>
                                                 </label>
                                             </div>
                                         </div>
@@ -71,7 +71,7 @@
                                 </div>
                             </div>
                             <div id="tab-currency" class="tab-pane">
-                                {{ widget('GameCurrencyWidget', ["id": game.id]) }}
+                                {{ widget('GameCurrencyWidget', ["gameId": game.id]) }}
                             </div>
                         </div>
                     </div>
@@ -110,7 +110,7 @@
             }else{
                 $("#head-tab-general").addClass("active");
                 $("#tab-general").addClass("active");
-                {% if gameCurrencyData != 0 %}
+                {% if gameCurrencyData is not null %}
                     $("#head-tab-currency").removeClass("active");
                     $("#tab-currency").removeClass("active");
 
@@ -118,10 +118,9 @@
                 {% else %}
                     $("#head-tab-general").removeClass("active");
                     $("#tab-general").removeClass("active");
-                    {% if gameCurrencyData == 0 %}
-                        $("#head-tab-currency").addClass("active");
-                        $("#tab-currency").addClass("active");
-                    {% endif %}
+
+                    $("#head-tab-currency").addClass("active");
+                    $("#tab-currency").addClass("active");
                 {% endif %}
             }
         });

@@ -4,26 +4,26 @@
                 <div class="col-xs-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title row">
-                            <h5>[{{currency.name}}] {{translate['title_text_edit']}}</h5>
+                            <h5>[{{currency.nm}}] {{translate['title_text_edit']}}</h5>
                         </div>
                         <div class="ibox-content row">
                             <form class="form-horizontal col-xs-12" action="#" method="post">
                                 <div class="form-group">
                                     <label class="col-xs-3 control-label">{{translate['form_currency_code']}}</label>
                                     <label class="col-xs-9">
-                                        <input type="text" class="form-control" value="{{currency.code}}" readonly placeholder="{{translate['placeholder_currency_code']}}">
+                                        <input type="text" class="form-control" value="{{currency.cd}}" readonly placeholder="{{translate['placeholder_currency_code']}}">
                                     </label>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-xs-3 control-label">{{translate['form_currency_name']}}</label>
                                     <label class="col-xs-9">
-                                        <input type="text" name="name" class="form-control" value="{{currency.name}}" placeholder="{{translate['placeholder_currency_name']}}">
+                                        <input type="text" name="name" class="form-control" value="{{currency.nm}}" placeholder="{{translate['placeholder_currency_name']}}">
                                     </label>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-xs-3 control-label">{{translate['form_currency_symbol']}}</label>
                                     <label class="col-xs-9">
-                                        <input type="text" name="symbol" class="form-control" value="{{currency.symbol}}" placeholder="{{translate['placeholder_currency_symbol']}}">
+                                        <input type="text" name="symbol" class="form-control" value="{{currency.sy}}" placeholder="{{translate['placeholder_currency_symbol']}}">
                                     </label>
                                 </div>
                                 <div class="form-group"><div class="hr-line-dashed"></div></div>

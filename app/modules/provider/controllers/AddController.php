@@ -19,13 +19,16 @@ class AddController extends \Backoffice\Controllers\ProtectedController
 
                 $data = $this->request->getPost();
 
-                $DLProviderGame = new DLProviderGame();
-                $providerGameId = $DLProviderGame->create($data);
+                $dlProviderGame = new DLProviderGame();
+
+                $filterData = $dlProviderGame->filterData($data);
+                $dlProviderGame->validateCreateData($filterData);
+                $providerGame = $dlProviderGame->create($filterData);
 
                 $this->db->commit();
 
                 $this->flash->success('provider_game_create_success');
-                return $this->response->redirect($this->_module.'/detail/'.$providerGameId)->send();
+                return $this->response->redirect($this->_module.'/detail/'.$providerGame['id'])->send();
             } catch (\Exception $e) {
                 $this->db->rollback();
                 $this->flash->error($e->getMessage());

@@ -1,80 +1,81 @@
 <?php
 namespace System\Datalayer;
 
-use System\Model\GameCurrency;
-use System\Model\ProviderGameEndpoint;
-use System\Model\ProviderGameEndpointAuth;
+use System\Datalayers\Main;
 
-class DLProviderGameEndpointAuth {
-    public function getAll($game){
-        $providerGameEndpointAuth = ProviderGameEndpointAuth::findByGame($game);
+class DLProviderGameEndpointAuth extends Main{
+    // DSS
+    public function findByGame($game){
+        $postData = array(
+            'game' => $game
+        );
+        $url = '/pgea/find';
+        $providerGameEndpointAuth = $this->curlAppsJson($url,$postData);
 
-        return $providerGameEndpointAuth;
+        return $providerGameEndpointAuth['pgea'];
     }
 
-    public function getById($id){
-        $providerGameEndpointAuth = ProviderGameEndpointAuth::findFirstById($id);
+    public function findFirstById($id){
+        $providerGameEndpointAuthData = false;
+        $postData = array(
+            'id' => $id
+        );
+        $url = '/pgea/'.$postData['id'];
+        $providerGameEndpointAuths = $this->curlAppsJson($url, $postData);
 
-        return $providerGameEndpointAuth;
+        foreach ($providerGameEndpointAuths['pgea'] as $providerGameEndpointAuth){
+            $providerGameEndpointAuthData = $providerGameEndpointAuth;
+        }
+
+        return $providerGameEndpointAuthData;
     }
 
-    public function filterInput($data){
-        if(isset($data["app_id"])) $data['app_id'] = \filter_var(\strip_tags(\addslashes($data['app_id'])), FILTER_SANITIZE_STRING);
-        if(isset($data["app_secret"])) $data['app_secret'] = \filter_var(\strip_tags(\addslashes($data['app_secret'])), FILTER_SANITIZE_STRING);
+    public function filterData($data){
+        $filterData = array();
 
-        return $data;
+        if(isset($data["auth_id"])) $filterData['id'] = \intval($data['auth_id']);
+        if(isset($data["app_id"])) $filterData['aid'] = \filter_var(\strip_tags(\addslashes($data['app_id'])), FILTER_SANITIZE_STRING);
+        if(isset($data["app_secret"])) $filterData['asc'] = \filter_var(\strip_tags(\addslashes($data['app_secret'])), FILTER_SANITIZE_STRING);
+        if(isset($data['game'])) $filterData['idgm'] = \intval($data['game']);
+        if(isset($data['provider_game'])) $filterData['idpg'] = \intval($data['provider_game']);
+
+        return $filterData;
     }
 
-    public function validateAdd($data){
-        if(empty($data['app_id'])){
+    public function validateCreate($data){
+        if(empty($data['aid'])){
             throw new \Exception('app_id_empty');
-        }elseif(empty($data['app_secret'])){
+        }elseif(empty($data['asc'])){
             throw new \Exception('app_secret_empty');
         }
         return true;
     }
 
-    public function validateEdit($data){
-        if($this->getById($data['auth_id']) == false){
+    public function validateSet($data){
+        if(!$this->findFirstById($data['id'])){
             throw new \Exception('undefined_auth_id');
-        }elseif(empty($data['app_id'])){
+        }elseif(empty($data['aid'])){
             throw new \Exception('app_id_empty');
-        }elseif(empty($data['app_secret'])){
+        }elseif(empty($data['asc'])){
             throw new \Exception('app_secret_empty');
         }
         return true;
     }
 
-    public function create($data){
-        $providerGameEndpointAuth = new ProviderGameEndpointAuth();
-        $game = new DLGame();
-        $gameData = $game->getById($data['game']);
+    public function create($postData){
+        $url = '/pgea/insert';
+        $providerGameEndpointAuth = $this->curlAppsJson($url, $postData);
 
-        if(isset($data["app_id"]))$providerGameEndpointAuth->setAppId($data['app_id']);
-        if(isset($data["app_secret"]))$providerGameEndpointAuth->setAppSecret($data['app_secret']);
-        $providerGameEndpointAuth->setProviderGame($gameData->getProvider());
-        $providerGameEndpointAuth->setGame($gameData->getId());
-
-        if(!$providerGameEndpointAuth->save()){
-            throw new \Exception('error_add_provider_game_auth');
-        }
-
+//        return $providerGameEndpointAuth;
         return true;
     }
 
-    public function set($data){
-        $authId = $data["auth_id"];
+    public function set($postData){
+        $url = '/pgea/' . $postData['id'] . '/update';
+        $providerGameEndpointAuth = $this->curlAppsJson($url, $postData);
 
-        $providerGameEndpointAuth = $this->getById($authId);
-
-        $providerGameEndpointAuth->setAppId($data['app_id']);
-        $providerGameEndpointAuth->setAppSecret($data['app_secret']);
-
-        if(!$providerGameEndpointAuth->save()){
-            throw new \Exception('error_set_currency');
-        }
-
-        return $providerGameEndpointAuth->getId();
+//        return $providerGameEndpointAuth;
+        return true;
     }
-
+    // END DSS
 }

@@ -37,5 +37,9 @@ $application->registerModules(array(
         'className' => 'Backoffice\Provider\Module',
         'path' => __DIR__ . '/../modules/provider/Module.php'
     ),
+    'downline' => array(
+        'className' => 'Backoffice\Downline\Module',
+        'path' => __DIR__ . '/../modules/downline/Module.php'
+    ),
 ));
 

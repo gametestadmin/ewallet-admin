@@ -26,27 +26,30 @@ class GameController extends \Backoffice\Controllers\ProtectedController
         }
 
         $user = $this->_user;
+
         $dlUserGame = new DLUserGame();
-        $myGames = $dlUserGame->getAgentGame($user->getId(),2,0);
+//        $myGames = $dlUserGame->getAgentGame($user->id,2,0);
+        $myGames = $dlUserGame->findUserGame($user->id,2);
 
         $status = GlobalVariable::$threeLayerStatusTypes;
 
-        $paginator = new \Phalcon\Paginator\Adapter\Model(
-            array(
-                "data" => $myGames,
-                "limit"=> $limit,
-                "page" => $pages
-            )
-        );
-        $page = $paginator->getPaginate();
+//        $paginator = new \Phalcon\Paginator\Adapter\Model(
+//            array(
+//                "data" => $myGames,
+//                "limit"=> $limit,
+//                "page" => $pages
+//            )
+//        );
+//        $page = $paginator->getPaginate();
+//
+//        $pagination = ceil($myGames->count()/$limit);
+//
+//        $view->page = $page->items;
+//        $view->pagination = $pagination;
+//        $view->pages = $pages;
+//        $view->limit = $limit;
 
-        $pagination = ceil($myGames->count()/$limit);
-
-        $view->page = $page->items;
-        $view->pagination = $pagination;
-        $view->pages = $pages;
-        $view->limit = $limit;
-
+        $view->my_games = $myGames;
         $view->status = $status;
         \Phalcon\Tag::setTitle("My Game - ".$this->_website->title);
     }
@@ -81,12 +84,12 @@ class GameController extends \Backoffice\Controllers\ProtectedController
         $previousPage = new GlobalVariable();
 
         $param = explode("|", $getParam);
-        $gameId = $param[0];
-        $status = $param[1];
+        $userGameId = $param[0];
+        $status = \intval($param[1]);
         $agent = $this->_user;
 
-        if (!isset($gameId)) {
-            $this->flash->error("undefined_game_id");
+        if (!isset($userGameId)) {
+            $this->flash->error("undefined_user_game_id");
             $this->response->redirect($previousPage->previousPage())->send();
         }
 
@@ -94,13 +97,16 @@ class GameController extends \Backoffice\Controllers\ProtectedController
             $this->db->begin();
 
             $dlUserGame = new DLUserGame();
-            $userGame = $dlUserGame->getByAgentIdAndGameId($agent->getId(),$gameId);
+//            $userGame = $dlUserGame->getByAgentIdAndGameId($agent->getId(),$gameId);
+            $userGame = $dlUserGame->findFirstById($userGameId);
 
-            $data['status'] = $status;
-            $data['user_game_id'] = $userGame->getId();
-            $data['agent_id'] = $agent->getId();
+//            $data['status'] = $status;
+//            $data['user_game_id'] = $userGame->getId();
+//            $data['agent_id'] = $agent->getId();
 
-            $dlUserGame->setAgentGameStatus($data['agent_id'],$data['user_game_id'],$data['status']);
+            $dlUserGame->setAgentGameStatus($userGame->idus,$userGame->id,$status);
+
+//            $dlUserGame->setAgentGameStatus($data['agent_id'],$data['user_game_id'],$data['status']);
 
             $this->db->commit();
             $this->flash->success("status_changed");

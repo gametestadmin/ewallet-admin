@@ -14,26 +14,36 @@ class UserCurrencyWidget extends BaseWidget
         $limit = $this->_limit;
         $pages = $this->_pages;
 
+        $userId = $this->params["id"];
+
         $DLUserCurrency = new DLUserCurrency();
-        $userCurrency = $DLUserCurrency->getAllByUser($this->params["id"]);
+        $userCurrencies = $DLUserCurrency->findAllByAgent($userId,1,1);
 
-        $paginator = new \Phalcon\Paginator\Adapter\Model(
-            array(
-                "data" => $userCurrency,
-                "limit"=> $limit,
-                "page" => $pages
-            )
-        );
-        $records = $paginator->getPaginate();
+//        $userCurrency = array();
+//        foreach ($userCurrencies as $userCurrencyKey => $userCurrencyValue){
+//            $userCurrency[$userCurrencyKey] = $userCurrencyValue;
+//        }
 
-        $total_page = ceil($userCurrency->count()/$limit);
+
+//        $paginator = new \Phalcon\Paginator\Adapter\Model(
+//            array(
+//                "data" => $userCurrency,
+//                "limit"=> $limit,
+//                "page" => $pages
+//            )
+//        );
+//        $records = $paginator->getPaginate();
+//
+//        $total_page = ceil($userCurrency->count()/$limit);
+
         return $this->setView('user/currency', [
-            'user_currency' => $records->items,
-            'total_page' => $total_page,
+//            'user_currency' => $records->items,
+//            'total_page' => $total_page,
             'pages' => $pages,
             'limit' => $limit,
             'loginId' => $this->params["loginId"],
-            'agentParent' => $this->params["agentParent"]
+            'agentParent' => $this->params["agentParent"],
+            'user_currency' => $userCurrencies,
         ]);
     }
 }

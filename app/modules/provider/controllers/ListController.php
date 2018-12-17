@@ -24,24 +24,24 @@ class ListController extends \Backoffice\Controllers\ProtectedController
 
         }
 
-        $providerGame = new DLProviderGame();
+        $dlProviderGame = new DLProviderGame();
         $status = GlobalVariable::$threeLayerStatusTypes;
-        $provider = $providerGame->getAll($this->_type);
+        $provider = $dlProviderGame->listProviderGame(0,$limit);
 
-        $paginator = new \Phalcon\Paginator\Adapter\Model(
-            array(
-                "data" => $provider,
-                "limit"=> $limit,
-                "page" => $pages
-            )
-        );
-        $page = $paginator->getPaginate();
-
-        $pagination = ceil($provider->count()/$limit);
-        $view->page = $page->items;
-        $view->pagination = $pagination;
-        $view->pages = $pages;
-        $view->limit = $limit;
+//        $paginator = new \Phalcon\Paginator\Adapter\Model(
+//            array(
+//                "data" => $provider,
+//                "limit"=> $limit,
+//                "page" => $pages
+//            )
+//        );
+//        $page = $paginator->getPaginate();
+//
+//        $pagination = ceil($provider->count()/$limit);
+//        $view->page = $page->items;
+//        $view->pagination = $pagination;
+//        $view->pages = $pages;
+//        $view->limit = $limit;
 
         $view->provider = $provider;
         $view->status = $status;

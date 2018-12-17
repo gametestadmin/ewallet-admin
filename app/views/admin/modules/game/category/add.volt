@@ -11,7 +11,7 @@
                                 <div class="form-group">
                                     <label class="col-xs-3 control-label">Category Name</label>
                                     <label class="col-xs-9">
-                                        <input type="text" name="category_name" class="form-control" id="name" placeholder="Name">
+                                        <input type="text" name="name" class="form-control" id="name" placeholder="Name">
                                     </label>
                                 </div>
                                 <div class="form-group">

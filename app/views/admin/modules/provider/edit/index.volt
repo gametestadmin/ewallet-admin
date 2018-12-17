@@ -4,7 +4,7 @@
                 <div class="col-xs-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title row">
-                            <h5>[{{provider.name}}] {{translate['title_text_edit']}}</h5>
+                            <h5>[{{provider.nm}}] {{translate['title_text_edit']}}</h5>
                         </div>
                         <div class="ibox-content row">
                             <form class="form-horizontal col-xs-12" action="{{url(router.getRewriteUri())}}" method="post">
@@ -19,7 +19,7 @@
                                                 {% elseif gmtTime > 0%}
                                                 {% set gmtDisplay = '+'~gmtTime %}
                                                 {% endif %}
-                                                <option value="{{gmtTime}}"{%if provider.timezone == gmtTime%}selected{%endif%}>GMT {{gmtDisplay}}</option>
+                                                <option value="{{gmtTime}}"{%if provider.tz == gmtTime%}selected{%endif%}>GMT {{gmtDisplay}}</option>
                                             {% endfor %}
                                         </select>
                                     </label>
@@ -27,7 +27,7 @@
                                 <div class="form-group">
                                     <label class="col-xs-3 control-label">Name</label>
                                     <label class="col-xs-9">
-                                        <input type="text" name="provider_name" class="form-control" placeholder="{{translate['placeholder_provider_name']}}" value="{{provider.name}}">
+                                        <input type="text" name="provider_name" class="form-control" placeholder="{{translate['placeholder_provider_name']}}" value="{{provider.nm}}">
                                     </label>
                                 </div>
                                 <div class="form-group"><div class="hr-line-dashed"></div></div>

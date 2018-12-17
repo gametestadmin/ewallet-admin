@@ -5,7 +5,140 @@ use System\Model\Currency;
 use System\Model\Game;
 use System\Model\GameCurrency;
 
-class DLGameCurrency {
+class DLGameCurrency extends \System\Datalayers\Main{
+    // DSS
+    public function findByCurrency($currency){
+        $postData = array(
+            'currency' => $currency
+        );
+
+        $url = '/gc/find';
+        $gameCurrency = $this->curlAppsJson($url,$postData);
+
+        return $gameCurrency['gc'];
+    }
+
+    public function findByGame($game){
+        $postData = array(
+            'game' => $game,
+            'currency_status' => 1
+        );
+
+//        $url = '/gc/game/'.$postData['game'];
+        $url = '/gc/find/';
+        $gameCurrency = $this->curlAppsJson($url,$postData);
+
+        return $gameCurrency['gc'];
+    }
+
+    public function findFirstByGameAndDefault($game){
+        $postData = array(
+            'game' => $game,
+        );
+
+        $url = '/gc/game'.$postData['game'];
+        $gameCurrency = $this->curlAppsJson($url,$postData);
+
+        return $gameCurrency['gc'];
+    }
+
+    public function filterData($data){
+        $filterData = array();
+
+        if(isset($data["currency"])) $filterData['idcu'] = \intval($data['currency']);
+        if(isset($data['game'])){
+            $filterData['idgm'] = \intval($data['game']);
+
+            $filterData['df'] = intval(0);
+            $gameCurrencies = $this->findByGame($filterData['idgm']);
+            if(!isset($gameCurrencies[0])){
+                $filterData['df'] = intval(1);
+            }
+        }
+
+        $filterData['st'] = (isset($data["status"])?\intval($data['status']):1);
+        $filterData['cust'] = (isset($data["currency_status"])?\intval($data['currency_status']):1);
+
+        return $filterData;
+    }
+
+    public function setCurrencyFromParent($parentId,$gameId){
+        $parentGameCurrency = $this->findByGame($parentId);
+
+        if(isset($parentGameCurrency['pgc'][0])){
+            foreach ($parentGameCurrency as $key => $value){
+                $postData[] = array(
+                    'idgm' => $gameId,
+                    'idcu' => $value['cu']['id'],
+                    'df' => $value['df'],
+                    'cust' => 1,
+                    'st' => 1,
+                );
+                $this->create($postData[$key]);
+            }
+        }
+
+        return true;
+    }
+
+//    public function validateCreate($data){
+//        $dlGame = new DLGame();
+//        $game = $dlGame->getById($data['game']);
+//
+//        if(!$this->checkGame($data['game'])){
+//            throw new \Exception('undefined_game');
+//        }
+//        elseif(!$this->checkCurrency($data['currency'])){
+//            throw new \Exception('undefined_currency');
+//        }elseif($this->checkCurrentGameCurrency($data['game'],$data['currency'])){
+//            throw new \Exception('currency_exist');
+//        }
+//        if($game->gettype() == 3) {
+//            if (!$this->checkCurrencyFromParent($game->getGameParent(), $data['currency'])){
+//                throw new \Exception('undefined_currency_from_parent');
+//            }
+//        }
+//
+//        return true;
+//    }
+
+    public function create($postData){
+        $url = '/gc/insert';
+        $gameCurrency = $this->curlAppsJson($url,$postData);
+
+        return $gameCurrency;
+    }
+
+    public function setDefault($postData){
+        $gameCurrencies = $this->findByGame($postData['game_id']);
+
+        foreach ($gameCurrencies as $gameCurrency){
+            if ($gameCurrency['df'] == 1){
+                $data = array(
+                    'id' => $gameCurrency['id'],
+                    'df' => 0
+                );
+            }else{
+                $data = array(
+                    'id' => $postData['id'],
+                    'df' => 1
+                );
+            }
+            $this->set($data);
+        }
+
+        return true;
+    }
+
+    public function set($postData){
+        $url = '/gc/'.$postData['id'].'/update/';
+        $this->curlAppsJson($url,$postData);
+
+        return true;
+    }
+
+    // END DSS
+
     public function getAll($game){
         $gameCurrency = GameCurrency::findByGame($game);
 
@@ -118,7 +251,7 @@ class DLGameCurrency {
         return true;
     }
 
-    public function create($data){
+    public function creates($data){
         $newGameCurrency = new GameCurrency();
 
         if(isset($data["game"]))$newGameCurrency->setGame($data['game']);
@@ -136,7 +269,7 @@ class DLGameCurrency {
         return true;
     }
 
-    public function set($data){
+    public function sets($data){
         $gameId = $data["game_id"];
         $gameCurrencyId = $data["currency_id"];
 

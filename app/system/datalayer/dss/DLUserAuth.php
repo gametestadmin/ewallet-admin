@@ -1,30 +1,28 @@
 <?php
 namespace System\Datalayer;
 
+use System\Datalayers\Main;
 
-use System\Model\UserAuth;
+class DLUserAuth extends Main{
+    // DSS
+    public function create($user){
 
-class DLUserAuth{
-    public function getByUser($user){
-        $userAuth = UserAuth::findByUser($user);
+        $app_id = md5("app_id".strtotime("now").$user['id'].$user['un']);
+        $app_secret =  md5("app_secret".$user['id'].$user['un'].strtotime("now"));
 
-        return $userAuth;
-    }
-
-    public function createAgentAuth($user){
-        $newUserAuth = new UserAuth();
-
-        $app_id = md5("app_id".strtotime("now").$user->getId().$user->getUsername());
-        $app_secret =  md5("app_secret".$user->getId().$user->getUsername().strtotime("now"));
         $date = "3000-01-01 00:00:00";
 
-        $newUserAuth->setUser($user->getId());
-        $newUserAuth->setAppId($app_id);
-        $newUserAuth->setAppSecret($app_secret);
-        $newUserAuth->setValidUntil($date);
-        $newUserAuth->setStatus(1);
-        $newUserAuth->save();
+        $postData = array(
+            "idus" => $user['id'],
+            "apid" => $app_id,
+            "apsc" => $app_secret,
+            "vu" => $date,
+            "st" => 1,
+        );
+        $url = '/userauth/insert';
+        $this->curlAppsJson($url,$postData);
 
-        return $newUserAuth;
+        return true;
     }
+    // END DSS
 }

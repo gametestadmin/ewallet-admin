@@ -50,15 +50,15 @@
             {% endif %}
             <ul class="list-inline {{class}} text-center">
                 <li class="col-xs-1 list-group-item">{{i}}</li>
-                <li class="col-xs-1 list-group-item">{{userCurrencyData.currency.symbol}}</li>
-                <li class="col-xs-2 list-group-item">{{userCurrencyData.currency.code}}</li>
-                <li class="col-xs-4 list-group-item">{{userCurrencyData.currency.name}}</li>
+                <li class="col-xs-1 list-group-item">{{userCurrencyData.cu.sy}}</li>
+                <li class="col-xs-2 list-group-item">{{userCurrencyData.cu.cd}}</li>
+                <li class="col-xs-4 list-group-item">{{userCurrencyData.cu.nm}}</li>
                 {% if realParent == 1 or realParent == 3 %}
                     <li class="col-xs-2 list-group-item">
-                        {% if userCurrencyData.default == 1 %}
+                        {% if userCurrencyData.df == 1 %}
                             <i class="fa fa-check text-success" data-toggle="tooltip" data-placement="right" title="{{translate['text_default']}}"></i>
                         {% else %}
-                            <a href="{{url('/agent/currency/edit/'~agent.id~'?default='~userCurrencyData.id~'&tab=tab-currency')}}">
+                            <a href="{{url('/downline/currency/edit/'~agent.id~'?default='~userCurrencyData.id~'&tab=tab-currency')}}">
                                 <i class="fa fa-times text-danger"></i>
                             </a>
                         {%endif%}
@@ -68,7 +68,7 @@
                     </li>
                 {% else %}
                     <li class="col-xs-4 list-group-item">
-                        {% if userCurrencyData.default == 1 %}
+                        {% if userCurrencyData.df == 1 %}
                             <i class="fa fa-check text-success" data-toggle="tooltip" data-placement="right" title="{{translate['text_default']}}"></i>
                         {% else %}
                             <i class="fa fa-times text-danger" data-toggle="tooltip" data-placement="right" title="{{translate['text_not_default']}}"></i>
