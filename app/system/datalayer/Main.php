@@ -38,4 +38,17 @@ class Main
         return $response;
     }
 
+    public function curlConditions( $op , $field , $value){
+            $data['op'] = $op ;
+            $data['field'] = $field ;
+            $data['val'] = $value ;
+        return $data ;
+    }
+
+    public function curlOrders( $op , $field){
+        $data['op'] = $op ;
+        $data['field'] = $field ;
+        return $data ;
+    }
+
 }

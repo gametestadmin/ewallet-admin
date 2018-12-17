@@ -60,6 +60,7 @@ class IndexController extends \Backoffice\Controllers\BaseController
 //                $DLuser->setUserPassword($user->id , $password);
 //                echo "<pre>";
 //                var_dump($password);
+//                var_dump($user->ps);
 //                var_dump(json_encode($password));
 //                var_dump(json_last_error_msg());
 //                die;
@@ -134,11 +135,11 @@ class IndexController extends \Backoffice\Controllers\BaseController
                     $this->successFlash($view->translate['login_success']);
                     return $this->response->redirect("/");
                 } else {
-                    $this->errorFlash($view->translate['login_error']);
+                    $this->errorFlash($view->translate['login_error_1']);
                     return $this->response->redirect("/login");
                 }
             } else {
-                $this->errorFlash($view->translate['login_error']);
+                $this->errorFlash($view->translate['login_error_2']);
                 return $this->response->redirect("/login");
             }
 

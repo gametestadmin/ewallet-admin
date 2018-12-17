@@ -7,23 +7,21 @@ class DLUserAclAccess extends \System\Datalayers\Main {
 
     public function getById($user , $subaccount = false ){
         if($subaccount){
-            $postData = array(
-                'user_id' => $user ,
-                'status' => 1 ,
-                'module !=' => "user",
-            );
+            $postData['conditions'][] = $this->curlConditions("=" , "user_id" , $user );
+            $postData['conditions'][] = $this->curlConditions("=" , "status" , 1 );
+            $postData['conditions'][] = $this->curlConditions("!=" , "module" , "user" );
+            $postData['orders'][] = $this->curlOrders("asc" , "sidebar_order" );
         } else {
-            $postData = array(
-                'user_id' => $user ,
-                'status' => 1 ,
-            );
+            $postData['conditions'][] = $this->curlConditions("=" , "user_id" , $user );
+            $postData['conditions'][] = $this->curlConditions("=" , "status" , 1 );
+            $postData['orders'][] = $this->curlOrders("asc" , "sidebar_order" );
         }
-        $url = '/useraclacc/find' ;
+        $url = '/useraclacc/search' ;
         $result = $this->curlAppsJson( $url , $postData);
-
 
         return $result['data'] ;
     }
+
 
 
 
