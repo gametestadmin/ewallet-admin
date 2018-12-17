@@ -139,6 +139,10 @@
         $('.CurrencyClone').remove();
     }
 
+    $('.modal').on('hidden.bs.modal', function () {
+            removeMyCurrency();
+    });
+
     $('#myModal').on('shown.bs.modal', function () {
       $('#myInput').trigger('focus')
     })

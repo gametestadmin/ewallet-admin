@@ -76,6 +76,11 @@
                                         <div class="row" > <b class="col-xs-12" > {{translate['security']|upper}}  </b>  </div>
                                         <div class="row margin-top-5" > <b class="col-xs-12" > <a href="{{url('user/whitelist/index')}}" class="btn btn-sm btn-danger width-100P"> {{translate['manage_whitelist_ip']|upper}} </a>  </b> </div>
                                     </div>
+                                    <div class="profile-password-box margin-top-10">
+                                        <div class="row" > <b class="col-xs-12" > {{translate['currency']|upper}}  </b>  </div>
+                                        <div class="row margin-top-5" > <b class="col-xs-12" >
+                                            <a href="#" class="btn btn-sm btn-danger width-100P" data-toggle="modal" data-target="#header-currency-list" onclick="myCurrency()"> {{translate['manage_currency']|upper}} </a>  </b> </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
