@@ -4,6 +4,7 @@ namespace System\Datalayer;
 use System\Datalayers\Main;
 use System\Model\UserWhitelistIp;
 
+<<<<<<< HEAD
 class DLUserWhitelistIp extends Main{
     // DSS
     public function findByUser($user){
@@ -31,11 +32,67 @@ class DLUserWhitelistIp extends Main{
         return $userWhitelistIp;
     }
     // END DSS
+=======
+class DLUserWhitelistIp extends \System\Datalayers\Main
+{
+>>>>>>> 8afdccbf98f3d33b7315d9b53ca0930b5903294b
     public function getByUser($user){
-        $userWhitelistIp = UserWhitelistIp::findByUser($user);
+        $postData = array(
+            'user_id' => $user,
+            'status' => 1
+        );
+        $url = '/userwlip/find';
+        $result = $this->curlAppsJson( $url , $postData);
 
-        return $userWhitelistIp;
+        return $result->data ;
     }
+    public function getByIp($ip){
+        $postData = array(
+            'ip' => $ip,
+            'status' => 1
+        );
+        $url = '/userwlip/find';
+        $result = $this->curlAppsJson( $url , $postData);
+
+        return $result->data ;
+    }
+
+    public function create($user,$ip){
+        $postData = array(
+            'idus' => $user ,
+            'ip' => $ip ,
+            'st' => 1
+        );
+        $url = '/userwlip/insert';
+        $result = $this->curlAppsJson( $url , $postData);
+
+        if( $result->ec == 0) {
+            return true;
+        }
+        return false ;
+    }
+
+    public function delete($id){
+        $postData = array(
+            'id' => $id
+        );
+        $url = '/userwlip/'.$id.'/delete';
+        $result = $this->curlAppsJson( $url , $postData);
+
+        if( $result->ec == 0) {
+            return true;
+        }
+        return false ;
+    }
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     public function getById($id){
         $userWhitelistIp = UserWhitelistIp::findFirstById($id);
@@ -96,6 +153,7 @@ class DLUserWhitelistIp extends Main{
         return true;
     }
 
+<<<<<<< HEAD
     public function creates($user,$ip){
         $userWhitelistIp = new UserWhitelistIp();
 
@@ -104,23 +162,9 @@ class DLUserWhitelistIp extends Main{
 
         if(isset($user))$userWhitelistIp->setUser($userData->getId());
         if(isset($ip))$userWhitelistIp->setIp($ip);
+=======
+>>>>>>> 8afdccbf98f3d33b7315d9b53ca0930b5903294b
 
-        if(!$userWhitelistIp->save()){
-            throw new \Exception('error_add_user_whitelist_ip');
-        }
-
-        return true;
-    }
-
-    public function delete($ip){
-        $userWhitelistIp = $this->getById($ip);
-
-        if(!$userWhitelistIp->delete()){
-            throw new \Exception('error_delete_user_whitelist_ip');
-        }
-
-        return true;
-    }
 
     public function set($data){
         $userWhitelistIp = $this->getById($data['ip_id']);

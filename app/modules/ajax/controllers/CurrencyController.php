@@ -21,17 +21,15 @@ class CurrencyController extends \Backoffice\Controllers\BaseController
             $data['messages'] = $this->_translate['user_not_found'] ;
         } else {
             $DLUserCurrency = new DLUserCurrency();
-            $currency = $DLUserCurrency->getByUser($this->_user->getId());
-            $DlCurrency = new DLCurrency();
+            $currency = $DLUserCurrency->getByUser( $this->_user->id );
 
             foreach( $currency as $key => $value ){
-                $currencylisting = $DlCurrency->getById($value->getCurrency()) ;
-                $datalist['id'] = $value->getId();
-                $datalist['symbol'] = $currencylisting->getSymbol();
-                $datalist['code'] = $currencylisting->getCode();
-                $datalist['currency_name'] = $currencylisting->getName();
-                $datalist['default'] = $value->getDefault();
-                $datalist['status'] = $value->getStatus();
+                $datalist['id'] = $value->id ;
+                $datalist['default'] = $value->df ;
+                $datalist['status'] = $value->st ;
+                $datalist['symbol'] = $value->cu->sy ;
+                $datalist['code'] = $value->cu->cd ;
+                $datalist['currency_name'] = $value->cu->nm ;
                 $data[] = $datalist ;
             }
 
@@ -49,6 +47,7 @@ class CurrencyController extends \Backoffice\Controllers\BaseController
     {
 
         $this->view->disable();
+        $data = array();
         $response = new \Phalcon\Http\Response();
         $response->setContentType("application/json");
 
@@ -62,10 +61,13 @@ class CurrencyController extends \Backoffice\Controllers\BaseController
                 $data = $this->request->getPost();
 
                 $DLUserCurrency = new DLUserCurrency();
-                $DLUserCurrency->setCurrencyDefault($this->_realUser->getId() , $data['id'] );
+                $data = $DLUserCurrency->setCurrencyDefault( $this->_realUser->id , $data['id'] );
                 $data['messages'] = $this->_translate['user_currency_set_default_success'] ;
                 //response json
                 $response->setStatusCode(200);
+            } else {
+                $response->setStatusCode(404);
+                $data['messages'] = $this->_translate['user_currency_set_default_failed'] ;
             }
         }
 

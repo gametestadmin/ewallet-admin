@@ -33,8 +33,8 @@
                             {% endif %}
                             <ul class="list-inline {{class}} text-center">
                                 <li class="col-sm-1 col-xs-1 list-group-item">{{i}}</li>
-                                <li class="col-sm-3 col-xs-3 list-group-item">{{mainData.username}}</li>
-                                <li class="col-sm-3 col-xs-3 list-group-item">{{mainData.nickname}}</li>
+                                <li class="col-sm-3 col-xs-3 list-group-item">{{mainData.sn}}</li>
+                                <li class="col-sm-3 col-xs-3 list-group-item">{{mainData.nn}}</li>
                                 <li class="col-sm-3 col-xs-3 list-group-item">
                                     <select class="status">
                                         {% for key, value in status %}

@@ -18,9 +18,10 @@
                         </button>
                     </div>
                     <form class="form-horizontal col-xs-12">
-                        <div class="col-xs-6 col-xs-offset-3">
+                        <div class="col-xs-12">
                             <ul class="list-inline header-list text-center">
-                                <li class="col-xs-10 list-group-item list"> {{translate['ip']|upper }}  </li>
+                                <li class="col-xs-2 list-group-item list"> {{translate['no']|upper }}  </li>
+                                <li class="col-xs-8 list-group-item list"> {{translate['ip']|upper }}  </li>
                                 <li class="col-xs-2 list-group-item list"> {{translate['action']|upper }} </li>
                             </ul>
                             {% set i = 1 %}
@@ -31,7 +32,8 @@
                                     {% set class = "content-odd" %}
                                 {% endif %}
                                 <ul class="list-inline {{class}} text-center">
-                                    <li class="col-xs-10 list-group-item"> {{ listip.ip|upper }} </li>
+                                    <li class="col-xs-2 list-group-item"> {{ i }} </li>
+                                    <li class="col-xs-8 list-group-item"> {{ listip.ip|upper }} </li>
                                     <a href="{{url(module~'/whitelist/delete/'~listip.id)}}" class="delete">
                                         <li class="col-xs-2 list-group-item" data-toggle="tooltip" title="Delete">
                                                 <span class="text-danger ip-edit fa fa-ban"data-placement="right" ></span>

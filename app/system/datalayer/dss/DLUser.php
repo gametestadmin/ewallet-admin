@@ -75,15 +75,29 @@ class DLUser extends \System\Datalayers\Main
     public function setUserPassword($user, $password)
     {
         $postData = array(
-            'password' => $password ,
+            'ps' => $password ,
         );
         $url = '/user/'.$user.'/update';
         $result = $this->curlAppsJson( $url , $postData);
 
+        return $result;
+    }
 
+
+<<<<<<< HEAD
         // var_dump($url);
         // var_dump($result);
         // die;
+=======
+    public function getSubaccountById($user)
+    {
+        $postData = array(
+            'type' => 10 ,
+            'parent' => $user ,
+        );
+        $url = '/user/find';
+        $result = $this->curlAppsJson( $url , $postData );
+>>>>>>> 8afdccbf98f3d33b7315d9b53ca0930b5903294b
 
         return $result;
     }
@@ -92,9 +106,28 @@ class DLUser extends \System\Datalayers\Main
         $filterData = array();
         $securityLibrary = new SecurityUser();
 
+<<<<<<< HEAD
         if(isset($data["id"])) $filterData['id'] = \intval($data['id']);
         if(isset($data["timezone"])) $filterData['tz'] = \intval($data['timezone']);
         if(isset($data["code"])) $data['code'] = \implode($data['code']);
+=======
+    public function getById($user)
+    {
+        $postData = array(
+            'id' => $user ,
+            'status' => 1 ,
+        );
+        $url = '/user/find';
+        $result = $this->curlAppsJson( $url , $postData);
+
+        if(isset($result->user) && !empty($result->user) && isset($result->user->{0})){
+            return $result->user->{0};
+        }
+
+        return false;
+    }
+
+>>>>>>> 8afdccbf98f3d33b7315d9b53ca0930b5903294b
 
         if(isset($data['agent'])){
             $type = \intval($data['agent']->type) - 1;
@@ -248,11 +281,6 @@ class DLUser extends \System\Datalayers\Main
         return $user;
     }
 
-    public function getById($user)
-    {
-        $user = User::findFirstById($user);
-        return $user;
-    }
 
     public function getChildById($user)
     {
@@ -267,18 +295,7 @@ class DLUser extends \System\Datalayers\Main
         return $user;
     }
 
-    public function getSubaccountById($user)
-    {
-        $user = User::find(
-            array(
-                "conditions" => "type = 10 and parent = :user:",
-                "bind" => array(
-                    "user" => $user,
-                )
-            )
-        );
-        return $user;
-    }
+
 
     public function getByParent($parent)
     {

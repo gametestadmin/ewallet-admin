@@ -9,7 +9,7 @@ class WhitelistController extends \Backoffice\Controllers\ProtectedController
     public function indexAction()
     {
         $whitelist = new DLUserWhitelistIp();
-        $iplist = $whitelist->getByUser($this->_realUser->getId());
+        $iplist = $whitelist->getByUser($this->_realUser->id );
 
         $this->view->iplist = $iplist ;
         \Phalcon\Tag::setTitle("Profile - ".$this->_website->title);
@@ -20,7 +20,7 @@ class WhitelistController extends \Backoffice\Controllers\ProtectedController
             $data = $this->request->getPost();
             if(isset($data['ip'])){
                 $whitelist = new DLUserWhitelistIp();
-                if($whitelist->create($this->_realUser->getId() , $data['ip'])){
+                if($whitelist->create($this->_realUser->id , $data['ip'])){
                     $this->successFlash("whitelist_ip_add_successfull");
                     return $this->response->redirect("/user/whitelist/");
                 }
@@ -37,13 +37,15 @@ class WhitelistController extends \Backoffice\Controllers\ProtectedController
             $whitelist = new DLUserWhitelistIp();
             if($whitelist->delete($id)){
                 $this->successFlash("whitelist_ip_delete_successfull");
-                return $this->response->redirect("/user/whitelist/");
+            } else {
+                $this->errorFlash("whitelist_ip_delete_failed");
             }
-
         } else {
             $this->errorFlash("cannot_access");
-            return $this->response->redirect("/user/whitelist/");
+//            return $this->response->redirect("/user/whitelist/");
         }
+
+        return $this->response->redirect("/user/whitelist/");
     }
 
 }

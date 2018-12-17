@@ -3,6 +3,7 @@
 namespace Backoffice\Controllers;
 
 use \System\Datalayer\DLUser;
+use \System\Datalayer\DLUserAclAccess;
 use System\Library\Security\User as SecurityUser ;
 use System\Library\General\Captcha;
 use System\Library\User\General;
@@ -53,25 +54,43 @@ class IndexController extends \Backoffice\Controllers\BaseController
             if($user){
                 $securityLibrary = new SecurityUser();
                 $password = $securityLibrary->enc_str($password);
+                $password = base64_encode($password);
 
-                // TODO :: change password manual
-//                $test = $DLuser->setUserPassword($user->id , $password);
+                //change password manual
+//                $DLuser->setUserPassword($user->id , $password);
 
                 //check Captcha
                 $checkcaptcha = new Captcha();
                 $captchaTime = $checkcaptcha->checkCaptchaTime();
                 $captcha = $checkcaptcha->checkCatpcha($data["captcha"]);
 
+                //mysql format
+//                if( $password === $user->getPassword() && $captchaTime && $captcha ){
 
-                if( $password === $user->getPassword() && $captchaTime && $captcha ){
-                    //TODO :: if Type == 10, subaccount, $user fill with parent, session sidebar and acl filled with its own acl
-                    if($user->getType() == 10) {
+                //DSS format
+                //TODO :: skip password first, cause not yet decided which type in postgresql
+                if( $password === $user->ps && $captchaTime && $captcha ){
+                    // check ip allowed
+                    $security = new \System\Library\Security\General();
+                    $ip = $security->getIP() ;
+
+                    $userGeneral = new \System\Library\User\General();
+                    $ipallowed = $userGeneral->checkIP($user->id , $ip);
+                    if(!$ipallowed){
+                        $this->errorFlash($view->translate['ip_not_allowed']);
+                        return $this->response->redirect("/login");
+                    }
+
+
+                    // if Type == 10, subaccount, $user fill with parent, session sidebar and acl filled with its own acl
+                    if($user->tp == 10) {
                         //TODO :: save and check to redis
                         //TODO :: incomplete
                         //set session add acl for the current user
-                        $generalLibrary = new General();
-                        $aclObject = $generalLibrary->getACL($user->getId());
+                        $DLUserAclAccess = new DLUserAclAccess();
+                        $aclObject = $DLUserAclAccess->getById($user->id);
 
+                        $generalLibrary = new General();
                         $acl = $generalLibrary->filterACLlist($aclObject);
                         $sideBar = $generalLibrary->getSidebar($aclObject);
 
@@ -81,8 +100,8 @@ class IndexController extends \Backoffice\Controllers\BaseController
                         $this->session->set('sidebar', $sideBar);
 
                         $this->session->set('real_user', $user);
-
-                        $user = $DLuser->getById($user->getParent());
+                        $DLuser = new DLUser() ;
+                        $user = $DLuser->getById($user->idp);
                         $this->session->set('user', $user);
                     } else {
                         $this->session->set('user', $user);
@@ -91,9 +110,10 @@ class IndexController extends \Backoffice\Controllers\BaseController
                         //TODO :: save and check to redis
                         //TODO :: incomplete
                         //set session add acl for the current user
-                        $generalLibrary = new General();
-                        $aclObject = $generalLibrary->getACL($user->getId());
+                        $DLUserAclAccess = new DLUserAclAccess();
+                        $aclObject = $DLUserAclAccess->getById($user->id);
 
+                        $generalLibrary = new General();
                         $acl = $generalLibrary->filterACLlist($aclObject);
                         $sideBar = $generalLibrary->getSidebar($aclObject);
 
@@ -103,6 +123,7 @@ class IndexController extends \Backoffice\Controllers\BaseController
                         $this->session->set('sidebar', $sideBar);
                         //TODO :: save and check to redis
                     }
+
 
                     $this->successFlash($view->translate['login_success']);
                     return $this->response->redirect("/");

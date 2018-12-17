@@ -3,9 +3,8 @@ namespace System\Datalayer;
 
 use System\Datalayers\Main;
 use System\Model\UserAclAccess;
-use System\Model\UserAclResource;
 
-class DLUserAclAccess extends Main{
+class DLUserAclAccess extends \System\Datalayers\Main{
     // DSS
     public function setAclAccess($id, $records){
         foreach ($records as $record){
@@ -29,21 +28,25 @@ class DLUserAclAccess extends Main{
 
     public function getById($user , $subaccount = false ){
         if($subaccount){
-            $acl = UserAclAccess::query()
-                ->where("user = :user: and module != 'user' ")
-                ->bind(array("user" => $user ))
-                ->orderBy("sidebar_order")
-                ->execute();
+            $postData = array(
+                'user_id' => $user ,
+                'status' => 1 ,
+                'module !=' => "user",
+            );
         } else {
-            $acl = UserAclAccess::query()
-                ->where("user = :user: and status = 1 ")
-                ->bind(array("user" => $user ))
-                ->orderBy("sidebar_order")
-                ->execute();
+            $postData = array(
+                'user_id' => $user ,
+                'status' => 1 ,
+            );
         }
+        $url = '/useraclacc/find' ;
+        $result = $this->curlAppsJson( $url , $postData);
 
-        return $acl;
+
+        return $result['data'] ;
     }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public function getByIdParentSubaccount($user, $subaccount = false){
         if($subaccount){
